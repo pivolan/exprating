@@ -206,4 +206,14 @@ class Image
     {
         return $this->filename;
     }
+
+    /**
+     * Get isMain
+     *
+     * @return boolean
+     */
+    public function getIsMain()
+    {
+        return $this->isMain;
+    }
 }
