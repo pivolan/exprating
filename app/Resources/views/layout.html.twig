@@ -111,52 +111,7 @@
     </button>
 </div>
 <div id="top-menu">
-    <ul class="sf-menu" id="mainSiteMenu">
-        <li>
-            <a href="/rubric/aaa/">Бытовая техника </a>
-        </li>
-        <li>
-            <a href="/rubric/aaa/">Электроника</a>
-            <ul>
-                <li><a href="/rubric/aaa/">Электроника и фото </a></li>
-                <li><a href="/rubric/aaa/">Телефоны и аксессуары </a></li>
-                <li><a href="/rubric/aaa/">Компьютеры</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="/rubric/aaa/">Косметика, парфюмерия</a>
-            <ul>
-                <li><a href="#">Средства по уходу за кожей и волосами </a></li>
-                <li><a href="#">Декоративная косметика </a></li>
-                <li><a href="#">Парфюмерия</a></li>
-                <li><a href="#">Средства гигиены</a></li>
-            </ul>
-        </li>
-        <li><a href="/rubric/aaa/">Товары для детей </a></li>
-        <li><a href="/rubric/aaa/">Спортинвентарь </a></li>
-        <li>
-            <a href="/rubric/aaa/">Мебель интерьер </a>
-            <ul>
-                <li><a href="#">Мебель для малышей </a></li>
-                <li><a href="#">Готовые комплекты </a></li>
-                <li><a href="#">Компьютерные столы, стулья и кресла</a></li>
-                <li><a href="#">Корпусная мебель</a></li>
-                <li><a href="#">Матрасы</a></li>
-                <li><a href="#">Мягкая мебель</a></li>
-                <li><a href="#">Надувная мебель</a></li>
-                <li><a href="#">Основания для матрасов и наматрасникиь</a></li>
-                <li><a href="#">Плетеная мебель</a></li>
-                <li><a href="#">Раскладушки</a></li>
-                <li><a href="#">Специальная мебель</a></li>
-                <li><a href="#">Фурнитура</a></li>
-                <li><a href="#">Постеры, картины</a></li>
-                <li><a href="#">Товары для дачи</a></li>
-                <li><a href="#">Товары для дома и ремонта</a></li>
-            </ul>
-        </li>
-
-
-    </ul>
+    {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
 </div>
 <nav id="mainSiteMenuMMenuNav"></nav>
 

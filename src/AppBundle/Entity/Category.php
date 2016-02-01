@@ -261,7 +261,7 @@ class Category
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|self[]
      */
     public function getChildren()
     {
