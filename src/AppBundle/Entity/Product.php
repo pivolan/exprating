@@ -50,12 +50,23 @@ class Product
     private $minPrice;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="rating", type="integer", nullable=false)
+     */
+    private $rating = 0;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
 
     /**
      * Get id
@@ -185,6 +196,25 @@ class Product
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * @param int $rating
+     *
+     * @return Product
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+        return $this;
     }
 }
 
