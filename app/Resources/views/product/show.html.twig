@@ -1,350 +1,565 @@
 {% extends 'layout.html.twig' %}
+{% block body_type %}product{% endblock %}
 {% block content %}
     <div class="content-inner clearfix">
-
-
-        <h1>Каталог потребительских товаров: мнение и отзывы экспертов России</h1>
-
-        <div class="search-form-wrapper">
-            <form action="" name="search_form">
-                <input type="text" name="search_str" id="search-str">
-                <input type="submit" name="search_btn" id="search-btn" value="Найти"
-                       class="btn btn-primary"/>
-            </form>
+        <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
+            <a href="/rubric/aaa/">Бытовая техника</a> →
+            <a href="/rubric/aaa/">Пылесосы</a> →
         </div>
 
-        <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
-            <div class="index-title">Новые экспертные заключения</div>
-            <ul>
-                {% for product in products %}
-                    <li>
-                        <a href="{{ path('product_show', {'slug':product.slug}) }}">
-                            <div class="img-wrapper"
-                                 style="background-image: url({{ product.previewImage }});">
+        <h1>{{ product.title }}</h1>
+
+        <div class="expert-wrapper">
+            <div class="expert-img-wrapper">
+                <img src="{{ product.expert.avatarImage }}">
+            </div>
+            <div class="expert-name">
+                Экспертное мнение
+                <span>{{ product.expert.fullName }}</span></div>
+        </div>
+
+        <div class="carousel-wrapper" style="width: 300px; height: 300px; float: left">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                <ol class="carousel-indicators">
+                    {% for image in product.images %}
+                        <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}"
+                            class="{{ image.isMain ? 'active':'' }}"></li>
+                    {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for image in product.images %}
+                        <div class="item {{ image.isMain ? 'active':'' }}">
+                            <div class="img-wrapper" style="background-image: url({{ image.url }});"></div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span
+                            class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next"><span
+                            class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+
+
+        <div class="rating-wrapper">
+
+            <ul class="media-list">
+                <li class="media">
+                <span class="pull-right">
+                    <span class="main-label">95</span>
+                </span>
+
+                    <div class="media-body">
+                        <h3>Общая оценка</h3>
+                    </div>
+                </li>
+                <li class="media">
+                <span class="pull-right">
+                    <span style="padding: 10px; font-size: 1.4em;">95</span>
+                </span>
+
+                    <div class="media-body">
+                        <div class="media-heading">Качество работы</div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="95"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 95%">
                             </div>
-                            <div class="sticker-title">
-                                {{ product.title }}
+                        </div>
+                    </div>
+                </li>
+                <li class="media">
+                <span class="pull-right">
+                    <span style="padding: 10px; font-size: 1.4em;">86</span>
+                </span>
+
+                    <div class="media-body">
+                        <div class="media-heading">Уровень шума</div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="86"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 86%">
+                                <span class="sr-only">40% Complete (success)</span>
                             </div>
-                            <div class="sticker-rating">{{ product.rating }}</div>
-                            <div class="sticker-price">от {{ product.minPrice }} <span
-                                        class="sign_ruble">p<span>уб.</span></span></div>
-                        </a>
-
-                        <div class="sticker-icons">
-                            <a href="" data-toggle="tooltip" title="В покупки"><span
-                                        class="glyphicon glyphicon-shopping-cart"></span>
-                                <span>В покупки</span></a>
-                            <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                        class="glyphicon glyphicon-comment"></span> <span>Комментарии</span></a>
                         </div>
-                        <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                    class="glyphicon glyphicon-road"></span> Где купить</a>
-                    </li>
-                {% endfor %}
-                <li>
-                    <a href="/tovar/aaa/">
-
-                        <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Спрей назальный Фармстандарт Рино Стоп
-                        </div>
-                        <div class="sticker-rating">35</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
                     </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
                 </li>
-                <li>
-                    <a href="/tovar/aaa/">
+                <li class="media">
+                <span class="pull-right">
+                    <span style="padding: 10px; font-size: 1.4em;">80</span>
+                </span>
 
-                        <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
+                    <div class="media-body">
+                        <div class="media-heading">Цена/качество</div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                <span class="sr-only">40% Complete (success)</span>
+                            </div>
                         </div>
-                        <div class="sticker-title">
-                            Маска-гоммаж Lac Sante альгинатная
-                        </div>
-                        <div class="sticker-rating">40</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
                     </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
                 </li>
-                <li>
-                    <a href="/tovar/aaa/">
-                        <div class="img-wrapper" style="background-image: url(/images/2.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Гель-лак для ногтей BLUESKY Shellac
-                        </div>
-                        <div class="sticker-rating">75</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
+                <li class="media">
+                <span class="pull-right">
+                    <span style="padding: 10px; font-size: 1.4em;">71</span>
+                </span>
 
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
+                    <div class="media-body">
+                        <div class="media-heading">Отзывы</div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="71"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 71%">
+                                <span class="sr-only">40% Complete (success)</span>
+                            </div>
+                        </div>
                     </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-
-                        <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Спрей назальный Фармстандарт Рино Стоп
-                        </div>
-                        <div class="sticker-rating">35</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
-                    </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-
-                        <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Маска-гоммаж Lac Sante альгинатная
-                        </div>
-                        <div class="sticker-rating">40</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
-                    </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
                 </li>
             </ul>
         </div>
 
 
-        <div class="best-products p-stikers" style="margin-bottom: 40px;">
-            <div class="index-title">Популярные мнения экспертов</div>
-            <ul>
-                <li>
-                    <a href="/tovar/aaa/">
-                        <div class="img-wrapper" style="background-image: url(/images/2.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Гель-лак для ногтей BLUESKY Shellac
-                        </div>
-                        <div class="sticker-rating">75</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
+        <div style="margin-bottom: 20px;">
 
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
+            <div class="plus-wrapper">
+                <div style="padding: 0 0 0 20px;">
+                    <h3>Достоинства</h3>
+                    <ul>
+                        <li>Очень низкий уровень шума</li>
+                        <li>Удобный в использовании и обслуживании пылесборник</li>
+                        <li>Высокая эффективность очистки ковра</li>
+                        <li>Хорошая маневренность</li>
+                        <li>6 насадок, включая турбо-щетку</li>
+                    </ul>
+                </div>
+            </div>
 
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
-                    </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-
-                        <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Спрей назальный Фармстандарт Рино Стоп
-                        </div>
-                        <div class="sticker-rating">35</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
-                    </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-
-                        <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Маска-гоммаж Lac Sante альгинатная
-                        </div>
-                        <div class="sticker-rating">40</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
-                    </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-                        <div class="img-wrapper" style="background-image: url(/images/2.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Гель-лак для ногтей BLUESKY Shellac
-                        </div>
-                        <div class="sticker-rating">75</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
-                    </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-
-                        <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Спрей назальный Фармстандарт Рино Стоп
-                        </div>
-                        <div class="sticker-rating">35</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
-                    </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-
-                        <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
-                        </div>
-                        <div class="sticker-title">
-                            Маска-гоммаж Lac Sante альгинатная
-                        </div>
-                        <div class="sticker-rating">40</div>
-                        <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                        </div>
-                    </a>
-
-                    <div class="sticker-icons">
-                        <a href="" data-toggle="tooltip" title="В покупки"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                        <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                    class="glyphicon glyphicon-comment"></span>
-                            <span>Комментарии</span></a>
-                    </div>
-                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                class="glyphicon glyphicon-road"></span> Где купить</a>
-                </li>
-            </ul>
+            <div class="minus-wrapper">
+                <h3>Недостатки</h3>
+                <ul>
+                    <li>Невысокая мощность всасывания</li>
+                    <li>Нет управления мощностью на рукоятке</li>
+                    <li>Относительно высокая стоимость</li>
+                    <li>Хорошая маневренность</li>
+                    <li>Глянец на боковинах может быстро потерять лоск из-за контакта с мебелью и дверными проемами</li>
+                </ul>
+            </div>
         </div>
 
+        <div style="clear: both"></div>
 
-        <div class="blacklist-products p-stikers" style="margin-bottom: 40px;">
-            <div class="index-title">Черный список</div>
-            <ul>
-                <li>
-                    <a href="/tovar/aaa/">
-                        <div class="img-wrapper" style="background-image: url(/images/2.jpg);">
+        <div class="tabs-wrapper">
+
+            <div class="tabs-container">
+                <div class="tabs-container-inner clearfix">
+
+                    <ul class="nav nav-tabs" style="clear: both">
+                        <li class="active"><a href="#test" data-toggle="tab">Заключение</a></li>
+                        <li><a href="#props" data-toggle="tab">Характеристики</a></li>
+                        <li><a href="#maintainer" data-toggle="tab">Изготовитель</a></li>
+                        <li><a href="#comments" data-toggle="tab">Отзывы</a></li>
+                        <li><a href="#buy" data-toggle="tab">Где купить</a></li>
+                    </ul>
+
+                    <div class="tabs-content">
+                        <div class="tab-pane fade active in" id="test">
+                            <h3>Справка</h3>
+
+                            <p>Модель Bosch BGS5ZOOO1 произведена в Китае. Это пылесос с пылесборником-контейнером.
+                                Заявленная потребляемая мощность составляет 1800 Вт, заявленная мощность всасывания —
+                                300 Вт. Масса устройства в сборе (включая шланг, насадку, пылесборник) — 9,9 килограмма.
+                                Модель оснащена фильтром тонкой очистки (HEPA), комплектуется 6 насадками, включая
+                                турбо-щетку, универсальную насадку для пола и ковра, щелевую и для чистки мягкой
+                                мебели.</p>
+
+                            <h3>Впечатления</h3>
+
+                            <p>Конструктивно основной блок модели похож на тот, что применяется в Bosch BGS 52530 – лишь
+                                цвет отделки другой. Однако, наполнение корпусов разное. То ли в силу своей конструкции,
+                                то ли за счет улучшенной шумоизоляции, но блок BGS5ZOOO1 имеет более низкий КПД
+                                (соотношение мощности всасывания и потребляемой мощности), зато даже на максимальной
+                                скорости шумит значительно слабее. По итогам инструментальных измерений – первое место в
+                                июньском тесте по шуму с итогом 71,1 дБ(А). В испытании на очистку коврового покрытия от
+                                загрязнителей данная модель также заняла лидирующие позиции, уступив только пылесосу
+                                марки Dyson, да и то – лишь при сборе металлических шайб. Имитация шерсти домашних
+                                животных и оба вида нитей были убраны с ковра полностью. Если учесть, что измеренная
+                                мощность всасывания у Bosch BGS5ZOOO1 одна из самых низких в тесте (менее 300 Вт), то
+                                благодарить за высокую эффективность аппарата следует грамотно сконструированную
+                                турбо-щетку, которая входит в комплект поставки. Измеренная потребляемая мощность
+                                совпала с заявленной и составила 1,8 кВт. Специфический внешний вид и эргономика
+                                обезличенного образца не вызвали у фокус-группы серьезных нареканий, хотя и высоких
+                                оценок респонденты не поставили. Недостатком исследовали признали большие габариты и
+                                массу модели, но отметили удобство извлечения и опустошения контейнера. Поставленную в
+                                упрек родственной модели Bosch BGS 52530 малую длину кабеля (6,1м) испытатели не
+                                подтвердили: сетевой провод BGS5ZOOO1 разматывается на длину до 7,6м. Не хотелось бы
+                                думать, что данное различие обусловлено лишь позиционированием устройств на
+                                иерархической лестнице в каталоге Bosch. А вот неудобный регулятор мощности без световой
+                                индикации у BGS5ZOOO1 точно такой же, как и у более доступной модели (если так вообще
+                                можно сказать о пылесосе ценой 18 000 рублей). Тесты на маневренность подтвердили
+                                хороший потенциал аппарата, несмотря на его внушительные габариты: из обеих
+                                испытательных ловушек он выбрался без каких-либо проблем.</p>
+
+                            <h3>Полезные ссылки</h3>
+
+                            <p>Результаты измерений приведены в протоколе (см. ниже) и в сравнительном тесте пылесосов.
+                                Описание методики проведения испытаний опубликовано в отдельной статье.</p>
                         </div>
-                        <div class="sticker-title">
-                            Гель-лак для ногтей BLUESKY Shellac
+                        <div class="tab-pane fade" id="buy">
+                            <h3>Где купить</h3>
+                            <table class="where-by">
+                                <tbody>
+                                <tr>
+                                    <td><img src="/images/logo/logo1.jpg"></td>
+                                    <td><a href="">Media Markt</a></td>
+                                    <td>26139 <span class="sign_ruble">p<span>уб.</span></span></td>
+                                    <td><a class="btn btn-primary btn-md" role="button"><span
+                                                    class="glyphicon glyphicon-shopping-cart"></span> Купить</a></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="/images/logo/logo2.jpg"></td>
+                                    <td><a href=""> МВидео</a></td>
+                                    <td>24139 <span class="sign_ruble">p<span>уб.</span></span></td>
+                                    <td><a class="btn btn-primary btn-md" role="button"><span
+                                                    class="glyphicon glyphicon-shopping-cart"></span> Купить</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-                        <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
+                        <div class="tab-pane fade" id="comments">
+                            <h3>Отзывы покупателей</h3>
+
+                            <div class="comments-summary">3 отзыва
+                                <span class="comments-summary-plus"><span class="glyphicon glyphicon-thumbs-up"></span> 2</span>&nbsp;
+                                <span class="comments-summary-minus"><span
+                                            class="glyphicon glyphicon-thumbs-down"></span> 1</span>
+
+                                <a class="btn btn-primary btn-md" style="float:right" role="button"><span
+                                            class="glyphicon glyphicon-comment"></span> Написать отзыв</a>
+                            </div>
+                            <ul class="comments">
+                                <li class="comment-wrapper">
+                                    <h4>Карпова Анастасия</h4>
+
+                                    <div class="comment-content">
+                                        <h5>Достоинства</h5>
+
+                                        <div>Качество. Сборка в Германии. Большое количество насадок. Работает тихо.
+                                        </div>
+                                        <h5>Недостатки</h5>
+
+                                        <div>Завышенная цена.</div>
+                                        <h5>Комментарии</h5>
+
+                                        <div>У нас такая же модель, только с мешком для сбора пыли.
+                                            Выбрали мешковой, т.к. в нем мощность немного выше.
+                                            Пылесосом очень довольны.
+                                            Все функции выполняет на 5 с плюсом!
+                                            Работает тихо и качественно.
+                                        </div>
+                                    </div>
+                                    <div class="comment-date">18.11.2015</div>
+                                </li>
+                                <li class="comment-wrapper">
+                                    <h4>Карпова Анастасия</h4>
+
+                                    <div class="comment-content">
+                                        <h5>Достоинства</h5>
+
+                                        <div>Качество. Сборка в Германии. Большое количество насадок. Работает тихо.
+                                        </div>
+                                        <h5>Недостатки</h5>
+
+                                        <div>Завышенная цена.</div>
+                                        <h5>Комментарии</h5>
+
+                                        <div>У нас такая же модель, только с мешком для сбора пыли.
+                                            Выбрали мешковой, т.к. в нем мощность немного выше.
+                                            Пылесосом очень довольны.
+                                            Все функции выполняет на 5 с плюсом!
+                                            Работает тихо и качественно.
+                                        </div>
+                                    </div>
+                                    <div class="comment-date">18.11.2015</div>
+                                </li>
+                                <li class="comment-wrapper">
+                                    <h4>Карпова Анастасия</h4>
+
+                                    <div class="comment-content">
+                                        <h5>Достоинства</h5>
+
+                                        <div>Качество. Сборка в Германии. Большое количество насадок. Работает тихо.
+                                        </div>
+                                        <h5>Недостатки</h5>
+
+                                        <div>Завышенная цена.</div>
+                                        <h5>Комментарии</h5>
+
+                                        <div>У нас такая же модель, только с мешком для сбора пыли.
+                                            Выбрали мешковой, т.к. в нем мощность немного выше.
+                                            Пылесосом очень довольны.
+                                            Все функции выполняет на 5 с плюсом!
+                                            Работает тихо и качественно.
+                                        </div>
+                                    </div>
+                                    <div class="comment-date">18.11.2015</div>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="sticker-title">
-                            Спрей назальный Фармстандарт Рино Стоп
+                        <div class="tab-pane fade" id="props">
+                            <div id="props-wrapper">
+                                <h2 class="props-title">Характеристики</h2>
+
+                                <div class="props-block">
+                                    <h3 class="props-title">Основные характеристики</h3>
+
+                                    <div class="props-list">
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Тип пылесборника </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                контейнер
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Тип пылесоса </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                обычный
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Тип уборки </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                сухая
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Потребляемая мощность </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                1800 Вт
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Мощность всасывания </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                300 Вт
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Источник питания </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                сеть
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="props-block">
+                                    <h3 class="props-title">Насадки</h3>
+
+                                    <div class="props-list">
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Дополнительные насадки </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                пол/ковер; для твёрдого пола ProAnimal с мягкой щетиной; для мягкой
+                                                мебели ProAnimal; щелевая; для мягкой мебели со съемной щеткой
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Турбощетка в комплекте </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                есть
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="props-block">
+                                    <h3 class="props-title">Дополнительно</h3>
+
+                                    <div class="props-list">
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Регулятор мощности (на корпусе) </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                на корпусе
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Фильтр тонкой очистки </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                есть
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Конструкция трубы </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                телескопическая
+                                            </div>
+                                        </div>
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Дополнительно </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                автосматывание сетевого шнура, ножной переключатель вкл./выкл. на
+                                                корпусе, место для хранения насадок
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="props-block">
+                                    <h3 class="props-title">Габариты</h3>
+
+                                    <div class="props-list">
+                                        <div class="props-item">
+                                            <div class="props-key">
+                                                <span class="p-text">Вес </span>
+                                                <span class="p-line"></span>
+                                            </div>
+                                            <div class="props-value">
+                                                6,7 кг
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="/tovar/aaa/">
-                        <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
+                        <div class="tab-pane fade" id="maintainer">
+                            <h3>Изготовитель</h3>
+
+                            <div class="logo-wrapper" style="float: left; height: 200px; margin-right: 30px;">
+                                <img src="/images/logo/bosh.jpg">
+                            </div>
+                            <div>
+                                <h4>Bosch</h4>
+
+                                <div class="maintainer-text">
+                                    Немецкая группа компаний - один из ведущих мировых производителей в области
+                                    автомобильных компонентов, потребительских товаров, строительных и упаковочных
+                                    решений.
+                                </div>
+                                <div><a href="">Отзывы</a> 0 | <a href="">Товары</a> 309</div>
+
+                            </div>
                         </div>
-                        <div class="sticker-title">
-                            Маска-гоммаж Lac Sante альгинатная
+                    </div>
+
+                    <div class="comments-wrapper">
+                        <a name="comments"></a>
+
+                        <h3>Обсуждение товара</h3>
+                        <ul>
+                            <li class="comment-item">
+                                <div class="comment-date">
+                                    1 декабря в 12:45
+                                </div>
+                                <div class="comment-author">
+                                    Ильючик Ирина
+                                </div>
+                                <div class="comment-text">
+                                    Хороший и надежный пылесос, пользуюсь им уже давно и ни разу не подводил
+                                </div>
+
+                            </li>
+                            <li class="comment-item">
+                                <div class="comment-date">
+                                    1 декабря в 12:45
+                                </div>
+                                <div class="comment-author">
+                                    Кондратьев Илия
+                                </div>
+                                <div class="comment-text">
+                                    Пылесос хороший, о покупке не жалею
+                                </div>
+
+                            </li>
+                        </ul>
+
+                        <div class="comment-form-wrapper">
+                            <h4>Оставьте комментарий о продукте Пылесос LG VK89382HU</h4>
+
+                            <form name="comment_form" action="">
+                                <div class="form-row">
+                                    <label for="user_name">Ваше имя</label>
+                                    <input name="user_name" type="text">
+                                </div>
+                                <div class="form-row">
+                                    <label for="comment">Отзыв</label>
+                                    <textarea name="comment" id="comment_text" cols="30" rows="10"></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <input class="btn btn-primary btn-md" name="comment_submit" value="Отправить"
+                                           type="submit">
+                                </div>
+                            </form>
                         </div>
-                    </a>
-                </li>
-            </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sidebar-left">
+                <div class="price-from">
+                    Цена от: 25500 <span class="sign_ruble">p<span>уб.</span></span>
+                </div>
+                <div class="block similar-tovar-wrapper">
+                    <div class="content">
+                        <h3>Похожие товары</h3>
+                        <ul class="links-wrapper">
+                            <li class="links-item">
+                                <a href="">
+                                    <img src="/images/link1.jpg">
+
+                                    <div class="link-title">Пылесос Thomas TWIN TT Aquafilter</div>
+                                </a>
+                            </li>
+                            <li class="links-item">
+                                <a href="">
+                                    <img src="/images/link2.jpg">
+
+                                    <div class="link-title">Пылесос Philips FC 9150</div>
+                                </a>
+                            </li>
+                            <li class="links-item">
+                                <a href="">
+                                    <img src="/images/link3.jpg">
+
+                                    <div class="link-title">Пылесос Bosch BSG 61800</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 {% endblock %}
 {% block sidebar_right %}{% endblock %}

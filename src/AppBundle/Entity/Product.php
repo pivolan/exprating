@@ -63,6 +63,16 @@ class Product
      */
     private $createdAt;
 
+    /**
+     * @var User
+     *
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="products")
+     * @ORM\JoinColumn(name="expert_user_id", referencedColumnName="id")
+     *
+     */
+    private $expertUser;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -216,5 +226,28 @@ class Product
         $this->rating = $rating;
         return $this;
     }
-}
 
+    /**
+     * Set expertUser
+     *
+     * @param \AppBundle\Entity\User $expertUser
+     *
+     * @return Product
+     */
+    public function setExpertUser(\AppBundle\Entity\User $expertUser = null)
+    {
+        $this->expertUser = $expertUser;
+
+        return $this;
+    }
+
+    /**
+     * Get expertUser
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getExpertUser()
+    {
+        return $this->expertUser;
+    }
+}
