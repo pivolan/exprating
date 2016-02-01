@@ -14,12 +14,12 @@ class ProductController extends BaseController
 
     /**
      * @Route("/product/{slug}", name="product_show")
-     * @ParamConverter(name="slug", class="AppBundle\Entity\Product")
+     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      */
     public function showAction(Request $request, Product $product)
     {
         return $this->render('product/show.html.twig', [
-            self::KEY_PRODUCT =>$product
+            self::KEY_PRODUCT => $product
         ]);
     }
 }
