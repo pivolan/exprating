@@ -14,6 +14,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Category
 {
+
+    /**
+     * @var int
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
     /**
      * @var string
      * @ORM\Column(name="name", type="string", length=255, unique=true)
@@ -22,8 +31,8 @@ class Category
 
     /**
      * @var string
-     * @ORM\Id
      * @ORM\Column(name="slug", type="string", length=255)
+     * @Gedmo\Slug(fields={"name"})
      */
     private $slug;
 
@@ -49,14 +58,14 @@ class Category
     /**
      * @Gedmo\TreeRoot
      * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="tree_root", referencedColumnName="slug", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="tree_root", referencedColumnName="id", onDelete="CASCADE")
      */
     private $root;
 
     /**
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="slug", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $parent;
 
@@ -75,6 +84,7 @@ class Category
     public function setParent(Category $parent = null)
     {
         $this->parent = $parent;
+        return $this;
     }
 
     public function getParent()
@@ -129,6 +139,7 @@ class Category
     {
         return $this->slug;
     }
+
     /**
      * Constructor
      */
@@ -255,5 +266,15 @@ class Category
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
