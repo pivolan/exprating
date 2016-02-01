@@ -21,6 +21,5 @@ class LoadProductData implements FixtureInterface
             $manager->persist($product);
         }
         $manager->flush();
-
     }
 }

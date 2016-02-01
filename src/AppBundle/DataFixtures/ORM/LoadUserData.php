@@ -18,6 +18,8 @@ class LoadUserData implements FixtureInterface
             ->setPlainPassword('qwerty')
             ->setSuperAdmin(true)
             ->setEnabled(true)
+            ->setFullName('Admin Admin')
+            ->setAvatarImage('avatar.jpg')
             ->addRole(User::ROLE_SUPER_ADMIN);
 
         $manager->persist($userAdmin);

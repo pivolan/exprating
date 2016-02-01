@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,6 +22,20 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="full_name", type="string", unique=false, nullable=true)
+     */
+    private $fullName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar_image", type="string", unique=true, nullable=true)
+     */
+    private $avatarImage;
+
+    /**
      * @var Product[]
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="expertUser", cascade={"persist", "detach"})
@@ -30,6 +45,8 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+
+        $this->products = new ArrayCollection();
         // your own logic
     }
 
@@ -75,5 +92,43 @@ class User extends BaseUser
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param string $fullName
+     *
+     * @return $this
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatarImage()
+    {
+        return $this->avatarImage;
+    }
+
+    /**
+     * @param string $avatarImage
+     *
+     * @return $this
+     */
+    public function setAvatarImage($avatarImage)
+    {
+        $this->avatarImage = $avatarImage;
+        return $this;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -73,9 +74,17 @@ class Product
      */
     private $expertUser;
 
+    /**
+     * @var Image[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $images;
+
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
+        $this->images = new ArrayCollection();
     }
 
     /**
@@ -249,5 +258,39 @@ class Product
     public function getExpertUser()
     {
         return $this->expertUser;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return Product
+     */
+    public function addImage(\AppBundle\Entity\Image $image)
+    {
+        $this->images->add($image);
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \AppBundle\Entity\Image $image
+     */
+    public function removeImage(\AppBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
