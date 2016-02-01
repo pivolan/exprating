@@ -10,9 +10,21 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\User;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadCategoryData extends AbstractFixture implements FixtureInterface
+class LoadCategoryData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     public function load(ObjectManager $manager)
     {
         $categories_names = ["Бытовая электроника",
@@ -45,15 +57,19 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface
                                                        'Товары для дачи',
                                                        'Товары для дома и ремонта',],
         ];
+        /** @var Slugify $slugify */
+        $slugify = $this->container->get('appbundle.slugify');
         foreach ($categories_names as $name) {
             $category = new Category();
             $category->setName($name);
+            $category->setSlug($slugify->slugify($name));
             $manager->persist($category);
             if (isset($categoriesTree[$name])) {
                 foreach ($categoriesTree[$name] as $childName) {
                     $childCategory = new Category();
                     $childCategory->setParent($category)
                         ->setName($childName);
+                    $childCategory->setSlug($slugify->slugify($childName));
                     $manager->persist($childCategory);
                 }
             }
