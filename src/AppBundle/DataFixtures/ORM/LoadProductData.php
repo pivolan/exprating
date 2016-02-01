@@ -16,7 +16,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
         $user = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
         for ($i = 1; $i <= 10; $i++) {
             $product = new Product();
-            $product->setTitle('title ' . $i)
+            $product->setName('title ' . $i)
                 ->setMinPrice(rand(1.00, 1000.00))
                 ->setRating(rand(1, 99))
                 ->setSlug('product_' . $i)

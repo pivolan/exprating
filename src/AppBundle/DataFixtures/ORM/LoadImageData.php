@@ -20,7 +20,7 @@ class LoadImageData extends AbstractFixture implements DependentFixtureInterface
             for ($i = 1; $i <= 3; $i++) {
                 $image = new Image();
                 $image->setFilename($product->getSlug() . "-$i.jpg")
-                    ->setName($product->getTitle() . "-$i")
+                    ->setName($product->getName() . "-$i")
                     ->setProduct($product);
                 if ($i == 1) {
                     $image->setIsMain(true);

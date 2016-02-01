@@ -180,150 +180,137 @@
                     <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
                         <div class="index-title">Новые экспертные заключения</div>
                         <ul>
-                            {% for product in products %}
+                            {% block products_list %}
                                 <li>
-                                    <a href="{{ path('product_show', {'slug':product.slug}) }}">
-                                        <div class="img-wrapper"
-                                             style="background-image: url({{ product.previewImage }});">
+                                    <a href="/tovar/aaa/">
+
+                                        <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
                                         </div>
                                         <div class="sticker-title">
-                                            {{ product.title }}
+                                            Спрей назальный Фармстандарт Рино Стоп
                                         </div>
-                                        <div class="sticker-rating">{{ product.rating }}</div>
-                                        <div class="sticker-price">от {{ product.minPrice }} <span
-                                                    class="sign_ruble">p<span>уб.</span></span></div>
+                                        <div class="sticker-rating">35</div>
+                                        <div class="sticker-price">от 217 <span
+                                                    class="sign_ruble">p<span>уб.</span></span>
+                                        </div>
                                     </a>
 
                                     <div class="sticker-icons">
                                         <a href="" data-toggle="tooltip" title="В покупки"><span
                                                     class="glyphicon glyphicon-shopping-cart"></span>
                                             <span>В покупки</span></a>
+
                                         <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                                    class="glyphicon glyphicon-comment"></span> <span>Комментарии</span></a>
+                                                    class="glyphicon glyphicon-comment"></span>
+                                            <span>Комментарии</span></a>
                                     </div>
                                     <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
                                                 class="glyphicon glyphicon-road"></span> Где купить</a>
                                 </li>
-                            {% endfor %}
-                            <li>
-                                <a href="/tovar/aaa/">
+                                <li>
+                                    <a href="/tovar/aaa/">
 
-                                    <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
-                                    </div>
-                                    <div class="sticker-title">
-                                        Спрей назальный Фармстандарт Рино Стоп
-                                    </div>
-                                    <div class="sticker-rating">35</div>
-                                    <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                                    </div>
-                                </a>
+                                        <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
+                                        </div>
+                                        <div class="sticker-title">
+                                            Маска-гоммаж Lac Sante альгинатная
+                                        </div>
+                                        <div class="sticker-rating">40</div>
+                                        <div class="sticker-price">от 217 <span
+                                                    class="sign_ruble">p<span>уб.</span></span>
+                                        </div>
+                                    </a>
 
-                                <div class="sticker-icons">
-                                    <a href="" data-toggle="tooltip" title="В покупки"><span
-                                                class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
+                                    <div class="sticker-icons">
+                                        <a href="" data-toggle="tooltip" title="В покупки"><span
+                                                    class="glyphicon glyphicon-shopping-cart"></span>
+                                            <span>В покупки</span></a>
 
-                                    <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                                class="glyphicon glyphicon-comment"></span>
-                                        <span>Комментарии</span></a>
-                                </div>
-                                <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                            class="glyphicon glyphicon-road"></span> Где купить</a>
-                            </li>
-                            <li>
-                                <a href="/tovar/aaa/">
+                                        <a href="" data-toggle="tooltip" title="Комментарии"><span
+                                                    class="glyphicon glyphicon-comment"></span>
+                                            <span>Комментарии</span></a>
+                                    </div>
+                                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
+                                                class="glyphicon glyphicon-road"></span> Где купить</a>
+                                </li>
+                                <li>
+                                    <a href="/tovar/aaa/">
+                                        <div class="img-wrapper" style="background-image: url(/images/2.jpg);">
+                                        </div>
+                                        <div class="sticker-title">
+                                            Гель-лак для ногтей BLUESKY Shellac
+                                        </div>
+                                        <div class="sticker-rating">75</div>
+                                        <div class="sticker-price">от 217 <span
+                                                    class="sign_ruble">p<span>уб.</span></span>
+                                        </div>
+                                    </a>
 
-                                    <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
-                                    </div>
-                                    <div class="sticker-title">
-                                        Маска-гоммаж Lac Sante альгинатная
-                                    </div>
-                                    <div class="sticker-rating">40</div>
-                                    <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                                    </div>
-                                </a>
+                                    <div class="sticker-icons">
+                                        <a href="" data-toggle="tooltip" title="В покупки"><span
+                                                    class="glyphicon glyphicon-shopping-cart"></span>
+                                            <span>В покупки</span></a>
 
-                                <div class="sticker-icons">
-                                    <a href="" data-toggle="tooltip" title="В покупки"><span
-                                                class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                                    <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                                class="glyphicon glyphicon-comment"></span>
-                                        <span>Комментарии</span></a>
-                                </div>
-                                <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                            class="glyphicon glyphicon-road"></span> Где купить</a>
-                            </li>
-                            <li>
-                                <a href="/tovar/aaa/">
-                                    <div class="img-wrapper" style="background-image: url(/images/2.jpg);">
+                                        <a href="" data-toggle="tooltip" title="Комментарии"><span
+                                                    class="glyphicon glyphicon-comment"></span>
+                                            <span>Комментарии</span></a>
                                     </div>
-                                    <div class="sticker-title">
-                                        Гель-лак для ногтей BLUESKY Shellac
-                                    </div>
-                                    <div class="sticker-rating">75</div>
-                                    <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                                    </div>
-                                </a>
+                                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
+                                                class="glyphicon glyphicon-road"></span> Где купить</a>
+                                </li>
+                                <li>
+                                    <a href="/tovar/aaa/">
 
-                                <div class="sticker-icons">
-                                    <a href="" data-toggle="tooltip" title="В покупки"><span
-                                                class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
+                                        <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
+                                        </div>
+                                        <div class="sticker-title">
+                                            Спрей назальный Фармстандарт Рино Стоп
+                                        </div>
+                                        <div class="sticker-rating">35</div>
+                                        <div class="sticker-price">от 217 <span
+                                                    class="sign_ruble">p<span>уб.</span></span>
+                                        </div>
+                                    </a>
 
-                                    <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                                class="glyphicon glyphicon-comment"></span>
-                                        <span>Комментарии</span></a>
-                                </div>
-                                <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                            class="glyphicon glyphicon-road"></span> Где купить</a>
-                            </li>
-                            <li>
-                                <a href="/tovar/aaa/">
+                                    <div class="sticker-icons">
+                                        <a href="" data-toggle="tooltip" title="В покупки"><span
+                                                    class="glyphicon glyphicon-shopping-cart"></span>
+                                            <span>В покупки</span></a>
 
-                                    <div class="img-wrapper" style="background-image: url(/images/1.jpg);">
+                                        <a href="" data-toggle="tooltip" title="Комментарии"><span
+                                                    class="glyphicon glyphicon-comment"></span>
+                                            <span>Комментарии</span></a>
                                     </div>
-                                    <div class="sticker-title">
-                                        Спрей назальный Фармстандарт Рино Стоп
-                                    </div>
-                                    <div class="sticker-rating">35</div>
-                                    <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                                    </div>
-                                </a>
+                                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
+                                                class="glyphicon glyphicon-road"></span> Где купить</a>
+                                </li>
+                                <li>
+                                    <a href="/tovar/aaa/">
 
-                                <div class="sticker-icons">
-                                    <a href="" data-toggle="tooltip" title="В покупки"><span
-                                                class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
+                                        <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
+                                        </div>
+                                        <div class="sticker-title">
+                                            Маска-гоммаж Lac Sante альгинатная
+                                        </div>
+                                        <div class="sticker-rating">40</div>
+                                        <div class="sticker-price">от 217 <span
+                                                    class="sign_ruble">p<span>уб.</span></span>
+                                        </div>
+                                    </a>
 
-                                    <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                                class="glyphicon glyphicon-comment"></span>
-                                        <span>Комментарии</span></a>
-                                </div>
-                                <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                            class="glyphicon glyphicon-road"></span> Где купить</a>
-                            </li>
-                            <li>
-                                <a href="/tovar/aaa/">
+                                    <div class="sticker-icons">
+                                        <a href="" data-toggle="tooltip" title="В покупки"><span
+                                                    class="glyphicon glyphicon-shopping-cart"></span>
+                                            <span>В покупки</span></a>
 
-                                    <div class="img-wrapper" style="background-image: url(/images/3.jpg);">
+                                        <a href="" data-toggle="tooltip" title="Комментарии"><span
+                                                    class="glyphicon glyphicon-comment"></span>
+                                            <span>Комментарии</span></a>
                                     </div>
-                                    <div class="sticker-title">
-                                        Маска-гоммаж Lac Sante альгинатная
-                                    </div>
-                                    <div class="sticker-rating">40</div>
-                                    <div class="sticker-price">от 217 <span class="sign_ruble">p<span>уб.</span></span>
-                                    </div>
-                                </a>
-
-                                <div class="sticker-icons">
-                                    <a href="" data-toggle="tooltip" title="В покупки"><span
-                                                class="glyphicon glyphicon-shopping-cart"></span> <span>В покупки</span></a>
-
-                                    <a href="" data-toggle="tooltip" title="Комментарии"><span
-                                                class="glyphicon glyphicon-comment"></span>
-                                        <span>Комментарии</span></a>
-                                </div>
-                                <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                                            class="glyphicon glyphicon-road"></span> Где купить</a>
-                            </li>
+                                    <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
+                                                class="glyphicon glyphicon-road"></span> Где купить</a>
+                                </li>
+                            {% endblock %}
                         </ul>
                     </div>
 

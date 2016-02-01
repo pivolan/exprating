@@ -25,9 +25,9 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $title;
+    private $name;
 
     /**
      * @var string
@@ -104,9 +104,9 @@ class Product
      *
      * @return Product
      */
-    public function setTitle($title)
+    public function setName($title)
     {
-        $this->title = $title;
+        $this->name = $title;
 
         return $this;
     }
@@ -116,9 +116,9 @@ class Product
      *
      * @return string
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
