@@ -76,6 +76,7 @@ easy_admin:
     entities:
         - AppBundle\Entity\User
         - AppBundle\Entity\Product
+        - AppBundle\Entity\Image
 
 knp_menu:
     # use "twig: false" to disable the Twig extension and the TwigRenderer

@@ -2,12 +2,15 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\User;
 
-class LoadUserData implements FixtureInterface
+class LoadUserData extends AbstractFixture implements FixtureInterface
 {
+    const REFERENCE_ADMIN_USER = 'admin_user';
+
     public function load(ObjectManager $manager)
     {
         $userAdmin = new User();
@@ -24,5 +27,6 @@ class LoadUserData implements FixtureInterface
 
         $manager->persist($userAdmin);
         $manager->flush();
+        $this->addReference(self::REFERENCE_ADMIN_USER, $userAdmin);
     }
 }

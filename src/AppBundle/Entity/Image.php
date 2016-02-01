@@ -34,6 +34,13 @@ class Image
     private $name;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_main", type="boolean")
+     */
+    private $isMain = false;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -174,5 +181,29 @@ class Image
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIsMain()
+    {
+        return $this->isMain;
+    }
+
+    /**
+     * @param boolean $isMain
+     *
+     * @return $this
+     */
+    public function setIsMain($isMain)
+    {
+        $this->isMain = $isMain;
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->filename;
     }
 }
