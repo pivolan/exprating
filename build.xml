@@ -237,7 +237,7 @@
             <arg value="--configuration"/>
             <arg path="${basedir}/build/phpunit.xml"/>
             <arg value="--testsuite"/>
-            <arg path="MigrationsTestSuite"/>
+            <arg value="MigrationsTestSuite"/>
         </exec>
         <exec executable="${basedir}/bin/console">
             <arg value="doctrine:schema:drop"/>
@@ -256,7 +256,7 @@
             <arg value="--configuration"/>
             <arg path="${basedir}/build/phpunit.xml"/>
             <arg value="--testsuite"/>
-            <arg path="AppTestSuite"/>
+            <arg value="AppTestSuite"/>
         </exec>
 
         <property name="phpunit.done" value="true"/>
