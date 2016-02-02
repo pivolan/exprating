@@ -79,7 +79,9 @@
   <mkdir dir="${basedir}/build/pdepend"/>
   <mkdir dir="${basedir}/build/phpdox"/>
   <copy file="${basedir}/app/config/parameters.yml.jenkins" tofile="${basedir}/app/config/parameters.yml"/>
-  <exec command="composer install "/>
+  <exec executable="composer">
+      <arg value="install"/>
+  </exec>
   <property name="prepare.done" value="true"/>
  </target>
 
