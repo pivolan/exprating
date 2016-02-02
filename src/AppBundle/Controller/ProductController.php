@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
 use AppBundle\Form\CommentType;
@@ -50,5 +51,15 @@ class ProductController extends BaseController
             self::KEY_PRODUCT => $product,
             'formComment'     => $formComment->createView()
         ]);
+    }
+
+    /**
+     * @Route("/rubric/{slug}", name="product_list")
+     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
+     */
+    public function listAction(Request $request, Category $category)
+    {
+        $products = $this->getEm()->getRepository('AppBundle:Product')->findByCategory($category);
+
     }
 }
