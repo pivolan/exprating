@@ -19,13 +19,13 @@
  <property name="phpunit" value="${basedir}/build/tools/phpunit.phar"/> -->
 
   <!--Use this when the tools are managed by Composer in ${basedir}/vendor/bin-->
- <property name="pdepend" value="${basedir}/vendor/bin/pdepend"/>
- <property name="phpcpd"  value="${basedir}/vendor/bin/phpcpd"/>
- <property name="phpcs"   value="${basedir}/vendor/bin/phpcs"/>
- <property name="phpdox"  value="${basedir}/vendor/bin/phpdox"/>
- <property name="phploc"  value="${basedir}/vendor/bin/phploc"/>
- <property name="phpmd"   value="${basedir}/vendor/bin/phpmd"/>
- <property name="phpunit" value="${basedir}/vendor/bin/phpunit"/>
+ <property name="pdepend" value="${basedir}/../../.composer/vendor/bin/pdepend"/>
+ <property name="phpcpd"  value="${basedir}/../../.composer/vendor/bin/phpcpd"/>
+ <property name="phpcs"   value="${basedir}/../../.composer/vendor/bin/phpcs"/>
+ <property name="phpdox"  value="${basedir}/../../.composer/vendor/bin/phpdox"/>
+ <property name="phploc"  value="${basedir}/../../.composer/vendor/bin/phploc"/>
+ <property name="phpmd"   value="${basedir}/../../.composer/vendor/bin/phpmd"/>
+ <property name="phpunit" value="${basedir}/../../.composer/vendor/bin/phpunit"/>
 
  <target name="full-build"
          depends="prepare,static-analysis,phpunit,phpdox,-check-failure"
@@ -78,6 +78,7 @@
   <mkdir dir="${basedir}/build/logs"/>
   <mkdir dir="${basedir}/build/pdepend"/>
   <mkdir dir="${basedir}/build/phpdox"/>
+  <copy file="${basedir}/app/config/parameters.yml.jenkins" tofile="${basedir}/app/config/parameters.yml"/>
   <exec command="composer install "/>
   <property name="prepare.done" value="true"/>
  </target>
