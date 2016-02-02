@@ -3,7 +3,7 @@
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
     database_host:     192.168.10.110
-    database_port:     ~
+    database_port:     null
     database_name:     exprating_test
     database_user:     exprating
     database_password: rydTyb5Drics
@@ -12,14 +12,14 @@ parameters:
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
+    mailer_user:       null
+    mailer_password:   null
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     database_test_driver:   pdo_mysql
     database_test_host:     192.168.10.110
-    database_test_port:     ~
+    database_test_port:     null
     database_test_name:     exprating_test
     database_test_user:     exprating
     database_test_password: rydTyb5Drics
