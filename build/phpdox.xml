@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<phpdox xmlns="http://phpdox.net/config">
-    <project name="name-of-project" source="src" workdir="build/phpdox">
-        <collector publiconly="false">
-            <include mask="*.php" />
-        </collector>
-
-        <generator output="build">
-            <build engine="html" enabled="true" output="api">
-                <file extension="html" />
-            </build>
+<phpdox xmlns="http://xml.phpdox.net/config">
+    <project name="exprating" source="${basedir}/src" workdir="${basedir}/build/api/xml">
+        <collector backend="parser" />
+        <generator output="${basedir}/build/api">
+            <build engine="html" output="html"/>
         </generator>
     </project>
 </phpdox>
