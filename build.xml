@@ -233,12 +233,7 @@
             unless="phpunit.done"
             depends="prepare"
             description="Run unit tests with PHPUnit">
-        <exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
-            <arg value="--configuration"/>
-            <arg path="${basedir}/build/phpunit.xml"/>
-            <arg value="--testsuite"/>
-            <arg value="MigrationsTestSuite"/>
-        </exec>
+
         <exec executable="${basedir}/bin/console">
             <arg value="doctrine:schema:drop"/>
             <arg value="--force"/>
@@ -255,8 +250,6 @@
         <exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
             <arg value="--configuration"/>
             <arg path="${basedir}/build/phpunit.xml"/>
-            <arg value="--testsuite"/>
-            <arg value="AppTestSuite"/>
         </exec>
 
         <property name="phpunit.done" value="true"/>
