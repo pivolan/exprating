@@ -4,7 +4,7 @@
 parameters:
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    database_name:     exprating
     database_user:     root
     database_password: ~
     # You should uncomment this if you want use pdo_sqlite
@@ -17,3 +17,11 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    database_test_driver:   pdo_mysql
+    database_test_host:     127.0.0.1
+    database_test_port:     ~
+    database_test_name:     exprating_test
+    database_test_user:     root
+    database_test_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_test_path:     %kernel.root_dir%/app.sqlite
