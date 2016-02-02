@@ -80,11 +80,18 @@ class Product
      */
     private $images;
 
+    /**
+     * @var Image[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $comments;
+
 
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->images = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -297,5 +304,39 @@ class Product
     public function __toString()
     {
         return $this->slug;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return Product
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

@@ -476,49 +476,25 @@
 
                         <h3>Обсуждение товара</h3>
                         <ul>
-                            <li class="comment-item">
-                                <div class="comment-date">
-                                    1 декабря в 12:45
-                                </div>
-                                <div class="comment-author">
-                                    Ильючик Ирина
-                                </div>
-                                <div class="comment-text">
-                                    Хороший и надежный пылесос, пользуюсь им уже давно и ни разу не подводил
-                                </div>
-
-                            </li>
-                            <li class="comment-item">
-                                <div class="comment-date">
-                                    1 декабря в 12:45
-                                </div>
-                                <div class="comment-author">
-                                    Кондратьев Илия
-                                </div>
-                                <div class="comment-text">
-                                    Пылесос хороший, о покупке не жалею
-                                </div>
-
-                            </li>
+                            {% for comment in product.comments %}
+                                <li class="comment-item">
+                                    <div class="comment-date">
+                                        {{ comment.createdAt|date }}
+                                    </div>
+                                    <div class="comment-author">
+                                        {{ comment.fullName }}
+                                    </div>
+                                    <div class="comment-text">
+                                        {{ comment.message }}
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
 
                         <div class="comment-form-wrapper">
-                            <h4>Оставьте комментарий о продукте Пылесос LG VK89382HU</h4>
-
-                            <form name="comment_form" action="">
-                                <div class="form-row">
-                                    <label for="user_name">Ваше имя</label>
-                                    <input name="user_name" type="text">
-                                </div>
-                                <div class="form-row">
-                                    <label for="comment">Отзыв</label>
-                                    <textarea name="comment" id="comment_text" cols="30" rows="10"></textarea>
-                                </div>
-                                <div class="form-row">
-                                    <input class="btn btn-primary btn-md" name="comment_submit" value="Отправить"
-                                           type="submit">
-                                </div>
-                            </form>
+                            <h4>Оставьте комментарий о продукте {{ product.name }}</h4>
+                            {% form_theme formComment '/Form/form_comment_custom_layout.html.twig' %}
+                            {{ form(formComment) }}
                         </div>
                     </div>
 

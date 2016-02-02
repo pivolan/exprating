@@ -1,0 +1,35 @@
+{% use "form_div_layout.html.twig" %}
+{% block form_row -%}
+    <div class="form-row {% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row %}
+
+{% block submit_row -%}
+    {% spaceless %}
+        <div class="form-row">
+            {{ form_widget(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock submit_row %}
+
+
+{%- block textarea_widget -%}
+    <textarea {{ block('widget_attributes') }} rows="10" cols="40">{{ value }}</textarea>
+{%- endblock textarea_widget -%}
+
+{%- block submit_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <input class="btn btn-primary btn-md" type="submit" {{ block('button_attributes') }} value="{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}" />
+{%- endblock submit_widget -%}
