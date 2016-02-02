@@ -36,7 +36,7 @@ class Image
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_main", type="boolean")
+     * @ORM\Column(name="is_main", type="boolean", options={"default": 0})
      */
     private $isMain = false;
 
