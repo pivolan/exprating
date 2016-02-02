@@ -82,6 +82,18 @@
   <exec executable="composer">
       <arg value="install"/>
   </exec>
+  <exec executable="${basedir}/bin/console">
+      <arg value="doctrine:schema:drop --force "/>
+      <arg value="--force "/>
+  </exec>
+  <exec executable="${basedir}/bin/console">
+      <arg value="doctrine:migrations:migrate"/>
+      <arg value=" --no-interaction"/>
+  </exec>
+  <exec executable="${basedir}/bin/console">
+      <arg value="doctrine:fixtures:load"/>
+      <arg value="--no-interaction"/>
+  </exec>
   <property name="prepare.done" value="true"/>
  </target>
 
