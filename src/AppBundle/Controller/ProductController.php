@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductController extends BaseController
 {
     const KEY_PRODUCT = 'product';
+    const LIMIT_PER_PAGE = 10;
+    const KEY_PAGINATION = 'pagination';
+    const KEY_CATEGORY = 'category';
 
 
     /**
@@ -54,12 +57,19 @@ class ProductController extends BaseController
     }
 
     /**
-     * @Route("/rubric/{slug}", name="product_list")
-     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
+     * @Route("/rubric/{slug}/{page}", name="product_list", defaults={"page"=1})
+     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
-    public function listAction(Request $request, Category $category)
+    public function listAction(Request $request, Category $category, $page)
     {
-        $products = $this->getEm()->getRepository('AppBundle:Product')->findByCategory($category);
-
+        $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            max($page, 1),
+            self::LIMIT_PER_PAGE
+        );
+        return $this->render('product/list.html.twig', [self::KEY_PAGINATION => $pagination,
+                                                        self::KEY_CATEGORY   => $category]);
     }
 }

@@ -59,7 +59,7 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
         ];
         /** @var Slugify $slugify */
         $slugify = $this->container->get('appbundle.slugify');
-        foreach ($categories_names as $name) {
+        foreach ($categories_names as $key=>$name) {
             $category = new Category();
             $category->setName($name);
             $category->setSlug($slugify->slugify($name));
@@ -73,6 +73,7 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
                     $manager->persist($childCategory);
                 }
             }
+            $this->addReference("category_$key", $category);
         }
         $manager->flush();
     }

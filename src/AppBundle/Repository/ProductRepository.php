@@ -17,7 +17,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function findByCategory(Category $category)
+    public function findByCategoryQuery(Category $category)
     {
         return $this->createQueryBuilder('a')
             ->where('a.category = :category')

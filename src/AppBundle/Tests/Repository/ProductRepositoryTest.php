@@ -46,7 +46,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $em->persist($otherProduct);
         $em->flush();
 
-        $query = $em->getRepository('AppBundle:Product')->findByCategory($category);
+        $query = $em->getRepository('AppBundle:Product')->findByCategoryQuery($category);
         /** @var Product[] $products */
         $products = $query->getResult();
         $this->assertEquals(10, count($products));
@@ -55,7 +55,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertContains('test name ', $product->getName());
         }
 
-        $query = $em->getRepository('AppBundle:Product')->findByCategory($otherCategory);
+        $query = $em->getRepository('AppBundle:Product')->findByCategoryQuery($otherCategory);
         /** @var Product[] $products */
         $products = $query->getResult();
         $this->assertEquals(1, count($products));

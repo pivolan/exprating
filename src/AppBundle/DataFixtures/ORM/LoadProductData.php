@@ -14,12 +14,15 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
     public function load(ObjectManager $manager)
     {
         $user = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
+            $categoryKey = $i % 5;
+            $category = $this->getReference("category_$categoryKey");
             $product = new Product();
             $product->setName('title ' . $i)
                 ->setMinPrice(rand(1.00, 1000.00))
                 ->setRating(rand(1, 99))
                 ->setSlug('product_' . $i)
+                ->setCategory($category)
                 ->setExpertUser($user)
                 ->setPreviewImage('product_' . $i . '.jpg');
 
@@ -36,6 +39,6 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
      */
     function getDependencies()
     {
-        return ['AppBundle\DataFixtures\ORM\LoadUserData'];
+        return ['AppBundle\DataFixtures\ORM\LoadUserData', 'AppBundle\DataFixtures\ORM\LoadCategoryData',];
     }
 }

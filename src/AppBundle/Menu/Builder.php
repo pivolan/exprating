@@ -28,9 +28,13 @@ class Builder implements ContainerAwareInterface
         /** @var Category[] $categories */
         $categories = $entityRepository->getRootNodes();
         foreach ($categories as $category) {
-            $menu->addChild($category->getName(), ['route' => 'homepage']);
+            $menu->addChild($category->getName(), ['route'           => 'product_list',
+                                                   'routeParameters' => ['slug' => $category->getSlug()]]);
             foreach ($category->getChildren() as $childCategory) {
-                $menu[$category->getName()]->addChild($childCategory->getName(), ['route' => 'homepage']);
+                $menu[$category->getName()]->addChild(
+                    $childCategory->getName(),
+                    ['route'           => 'product_list',
+                     'routeParameters' => ['slug' => $childCategory->getSlug()]]);
             }
         }
 

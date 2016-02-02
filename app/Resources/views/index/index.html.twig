@@ -1,28 +1,6 @@
 {% extends 'layout.html.twig' %}
 {% block products_list %}
     {% for product in products %}
-        <li>
-            <a href="{{ path('product_show', {'slug':product.slug}) }}">
-                <div class="img-wrapper"
-                     style="background-image: url({{ product.previewImage }});">
-                </div>
-                <div class="sticker-title">
-                    {{ product.name }}
-                </div>
-                <div class="sticker-rating">{{ product.rating }}</div>
-                <div class="sticker-price">от {{ product.minPrice }} <span
-                            class="sign_ruble">p<span>уб.</span></span></div>
-            </a>
-
-            <div class="sticker-icons">
-                <a href="" data-toggle="tooltip" title="В покупки"><span
-                            class="glyphicon glyphicon-shopping-cart"></span>
-                    <span>В покупки</span></a>
-                <a href="" data-toggle="tooltip" title="Комментарии"><span
-                            class="glyphicon glyphicon-comment"></span> <span>Комментарии</span></a>
-            </div>
-            <a class="btn btn-default btn-sm sticker-where" href="#" role="button"><span
-                        class="glyphicon glyphicon-road"></span> Где купить</a>
-        </li>
+        {{ include("_include/Product/_itemList.twig") }}
     {% endfor %}
 {% endblock %}

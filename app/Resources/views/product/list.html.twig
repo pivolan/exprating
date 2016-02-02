@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+{% block body_type %}rubric{% endblock %}
+{% block content %}
+    <div class="content-inner clearfix">
+        <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
+            <a href="/rubric/aaa/">Бытовая техника</a> →
+            <a href="/rubric/aaa/">Пылесосы</a> →
+        </div>
+        <h1>{{ category.name }} - рейтинг по мнению экспертов</h1>
+
+        <div class="rubric-filters">
+            <div class="btn-group">
+                <button aria-expanded="false" type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> по цене
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#"><span class="glyphicon glyphicon-ok"></span> по цене</a></li>
+                    <li><a href="#">по дате теста</a></li>
+                    <li><a href="#">по рейтингу</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">по возрастанию</a></li>
+                    <li><a href="#">по убыванию</a></li>
+                </ul>
+            </div>
+
+
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input name="options" id="option1" type="radio"> <span class="glyphicon glyphicon-th-large"></span>
+                </label>
+                <label class="btn btn-primary">
+                    <input name="options" id="option2" type="radio"> <span class="glyphicon glyphicon-th-list"></span>
+                </label>
+            </div>
+        </div>
+
+
+        <div class="rubric-wrapper">
+            <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
+                <ul>
+                    {% for product in pagination %}
+                        {{ include("_include/Product/_itemList.twig") }}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

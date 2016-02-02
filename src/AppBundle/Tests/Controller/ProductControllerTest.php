@@ -14,4 +14,13 @@ class ProductControllerTest extends AbstractWebCaseTest
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('title 10', $crawler->filter('.content h1')->text());
     }
+
+    public function testList()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/rubric/elektronika');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('Электроника', $crawler->filter('.content h1')->text());
+    }
 }
