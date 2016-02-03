@@ -46,6 +46,27 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var array|string[]
+     *
+     * @ORM\Column(name="advantages", type="json_array", nullable=true)
+     */
+    private $advantages;
+
+    /**
+     * @var array|string[]
+     *
+     * @ORM\Column(name="disadvantages", type="json_array", nullable=true)
+     */
+    private $disadvantages;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="min_price", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $minPrice;
@@ -80,10 +101,22 @@ class Product
     private $images;
 
     /**
-     * @var Image[]
+     * @var Comment[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="product", cascade={"persist", "remove"})
      */
     private $comments;
+
+    /**
+     * @var Feedback[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Feedback", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $feedbacks;
+
+    /**
+     * @var ProductShopPrice[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductShopPrice", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $productShopPrices;
 
     /**
      * @var Category
@@ -93,11 +126,21 @@ class Product
      */
     private $category;
 
+    /**
+     * @var Manufacturer
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Manufacturer", inversedBy="products")
+     * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
+     */
+    private $manufacturer;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->images = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->feedbacks = new ArrayCollection();
+        $this->productShopPrices = new ArrayCollection();
     }
 
     /**
@@ -368,5 +411,169 @@ class Product
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Product
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set advantages
+     *
+     * @param array $advantages
+     *
+     * @return Product
+     */
+    public function setAdvantages($advantages)
+    {
+        $this->advantages = $advantages;
+
+        return $this;
+    }
+
+    /**
+     * Get advantages
+     *
+     * @return array
+     */
+    public function getAdvantages()
+    {
+        return $this->advantages;
+    }
+
+    /**
+     * Set disadvantages
+     *
+     * @param array $disadvantages
+     *
+     * @return Product
+     */
+    public function setDisadvantages($disadvantages)
+    {
+        $this->disadvantages = $disadvantages;
+
+        return $this;
+    }
+
+    /**
+     * Get disadvantages
+     *
+     * @return array
+     */
+    public function getDisadvantages()
+    {
+        return $this->disadvantages;
+    }
+
+    /**
+     * Set manufacturer
+     *
+     * @param \AppBundle\Entity\Manufacturer $manufacturer
+     *
+     * @return Product
+     */
+    public function setManufacturer(\AppBundle\Entity\Manufacturer $manufacturer = null)
+    {
+        $this->manufacturer = $manufacturer;
+
+        return $this;
+    }
+
+    /**
+     * Get manufacturer
+     *
+     * @return \AppBundle\Entity\Manufacturer
+     */
+    public function getManufacturer()
+    {
+        return $this->manufacturer;
+    }
+
+    /**
+     * Add shopsPrice
+     *
+     * @param \AppBundle\Entity\ProductShopPrice $shopsPrice
+     *
+     * @return Product
+     */
+    public function addShopsPrice(\AppBundle\Entity\ProductShopPrice $shopsPrice)
+    {
+        $this->productShopPrices[] = $shopsPrice;
+
+        return $this;
+    }
+
+    /**
+     * Remove shopsPrice
+     *
+     * @param \AppBundle\Entity\ProductShopPrice $shopsPrice
+     */
+    public function removeShopsPrice(\AppBundle\Entity\ProductShopPrice $shopsPrice)
+    {
+        $this->productShopPrices->removeElement($shopsPrice);
+    }
+
+    /**
+     * Get shopsPrice
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductShopPrices()
+    {
+        return $this->productShopPrices;
+    }
+
+    /**
+     * Add feedback
+     *
+     * @param \AppBundle\Entity\Feedback $feedback
+     *
+     * @return Product
+     */
+    public function addFeedback(\AppBundle\Entity\Feedback $feedback)
+    {
+        $this->feedbacks[] = $feedback;
+
+        return $this;
+    }
+
+    /**
+     * Remove feedback
+     *
+     * @param \AppBundle\Entity\Feedback $feedback
+     */
+    public function removeFeedback(\AppBundle\Entity\Feedback $feedback)
+    {
+        $this->feedbacks->removeElement($feedback);
+    }
+
+    /**
+     * Get feedbacks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFeedbacks()
+    {
+        return $this->feedbacks;
     }
 }
