@@ -22,7 +22,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setSuperAdmin(true)
             ->setEnabled(true)
             ->setFullName('Admin Admin')
-            ->setAvatarImage('avatar.jpg')
+            ->setAvatarImage('http://placehold.it/200x200')
             ->addRole(User::ROLE_SUPER_ADMIN);
 
         $manager->persist($userAdmin);

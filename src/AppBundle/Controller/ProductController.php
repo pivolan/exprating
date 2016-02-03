@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductController extends BaseController
 {
     const KEY_PRODUCT = 'product';
-    const LIMIT_PER_PAGE = 10;
+    const LIMIT_PER_PAGE = 9;
     const KEY_PAGINATION = 'pagination';
     const KEY_CATEGORY = 'category';
 

@@ -51,6 +51,13 @@ class Product
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="expert_opinion", type="text", nullable=true)
+     */
+    private $expertOpinion;
+
+    /**
      * @var array|string[]
      *
      * @ORM\Column(name="advantages", type="json_array", nullable=true)
@@ -65,7 +72,7 @@ class Product
     private $disadvantages;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="min_price", type="decimal", precision=10, scale=2, nullable=true)
      */
@@ -242,7 +249,7 @@ class Product
     /**
      * Get minPrice
      *
-     * @return string
+     * @return float
      */
     public function getMinPrice()
     {
@@ -575,5 +582,53 @@ class Product
     public function getFeedbacks()
     {
         return $this->feedbacks;
+    }
+
+    /**
+     * Add productShopPrice
+     *
+     * @param \AppBundle\Entity\ProductShopPrice $productShopPrice
+     *
+     * @return Product
+     */
+    public function addProductShopPrice(\AppBundle\Entity\ProductShopPrice $productShopPrice)
+    {
+        $this->productShopPrices[] = $productShopPrice;
+
+        return $this;
+    }
+
+    /**
+     * Remove productShopPrice
+     *
+     * @param \AppBundle\Entity\ProductShopPrice $productShopPrice
+     */
+    public function removeProductShopPrice(\AppBundle\Entity\ProductShopPrice $productShopPrice)
+    {
+        $this->productShopPrices->removeElement($productShopPrice);
+    }
+
+    /**
+     * Set expertOpinion
+     *
+     * @param string $expertOpinion
+     *
+     * @return Product
+     */
+    public function setExpertOpinion($expertOpinion)
+    {
+        $this->expertOpinion = $expertOpinion;
+
+        return $this;
+    }
+
+    /**
+     * Get expertOpinion
+     *
+     * @return string
+     */
+    public function getExpertOpinion()
+    {
+        return $this->expertOpinion;
     }
 }

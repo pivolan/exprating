@@ -31,6 +31,13 @@ class Manufacturer
     /**
      * @var string
      *
+     * @ORM\Column(name="image", type="string", length=255, unique=false)
+     */
+    private $image;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text")
      */
     private $description;
@@ -41,6 +48,11 @@ class Manufacturer
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
+
+    function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
 
     /**
@@ -128,5 +140,29 @@ class Manufacturer
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Manufacturer
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

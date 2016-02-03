@@ -28,6 +28,13 @@ class Shop
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, unique=false)
+     */
+    private $image;
+
 
     /**
      * Get id
@@ -66,5 +73,29 @@ class Shop
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Shop
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

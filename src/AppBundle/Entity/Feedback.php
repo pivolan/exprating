@@ -253,4 +253,9 @@ class Feedback
     {
         return (string)$this->getId();
     }
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 }
