@@ -76,6 +76,13 @@ easy_admin:
         - AppBundle\Entity\User
         - AppBundle\Entity\Product
         - AppBundle\Entity\Image
+        - AppBundle\Entity\Comment
+        - AppBundle\Entity\Category
+        - AppBundle\Entity\Feedback
+        - AppBundle\Entity\Shop
+        - AppBundle\Entity\ProductShopPrice
+        - AppBundle\Entity\Manufacturer
+
 
 knp_menu:
     # use "twig: false" to disable the Twig extension and the TwigRenderer

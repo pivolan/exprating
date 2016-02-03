@@ -248,4 +248,9 @@ class Feedback
     {
         return $this->product;
     }
+
+    public function __toString()
+    {
+        return (string)$this->getId();
+    }
 }

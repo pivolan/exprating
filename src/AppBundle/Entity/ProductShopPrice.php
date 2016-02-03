@@ -125,4 +125,9 @@ class ProductShopPrice
     {
         return $this->shop;
     }
+
+    public function __toString()
+    {
+        return $this->getShop()->getName() . '-' . $this->getPrice();
+    }
 }
