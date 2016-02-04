@@ -18,9 +18,11 @@ class ProductCharacteristic
      * @var int
      *
      * @ORM\Id
-     * @ORM\Column()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="bigint")
      */
     private $id;
+
     /**
      * @var string
      *

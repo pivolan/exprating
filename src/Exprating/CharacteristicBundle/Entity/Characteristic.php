@@ -56,7 +56,7 @@ class Characteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="scale", type="string", length=255, nullable=true, options={"default"="Вт"})
+     * @ORM\Column(name="scale", type="string", length=255, nullable=true)
      * @Assert\Choice(choices = {"Вт", "См", "М", "Кг"}, message = "Choose a valid scale.")
      */
     private $scale;
@@ -65,7 +65,7 @@ class Characteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="group", type="string", length=255, nullable=true)
+     * @ORM\Column(name="head_group", type="string", length=255, nullable=true)
      */
     private $group;
 
