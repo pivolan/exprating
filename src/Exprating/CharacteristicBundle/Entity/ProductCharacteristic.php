@@ -1,0 +1,216 @@
+<?php
+
+namespace Exprating\CharacteristicBundle\Entity;
+
+use AppBundle\Entity\Product;
+use Doctrine\ORM\Mapping as ORM;
+use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
+
+/**
+ * ProductCharacteristic
+ *
+ * @ORM\Table(name="product_characteristic")
+ * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\ProductCharacteristicRepository")
+ */
+class ProductCharacteristic
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="string", length=255, nullable=true)
+     */
+    private $valueString;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="value_int", type="integer", nullable=true)
+     */
+    private $valueInt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value_decimal", type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $valueDecimal;
+
+    /**
+     * @var Product
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="productCharacteristics")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *
+     */
+    private $product;
+
+    /**
+     * @var Characteristic
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic", fetch="EAGER")
+     * @ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug")
+     *
+     */
+    private $characteristic;
+
+
+    /**
+     * Set value
+     *
+     * @param string $value
+     *
+     * @return ProductCharacteristic
+     */
+    public function setValueString($value)
+    {
+        $this->valueString = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string
+     */
+    public function getValueString()
+    {
+        return $this->valueString;
+    }
+
+    /**
+     * Set valueInt
+     *
+     * @param integer $valueInt
+     *
+     * @return ProductCharacteristic
+     */
+    public function setValueInt($valueInt)
+    {
+        $this->valueInt = $valueInt;
+
+        return $this;
+    }
+
+    /**
+     * Get valueInt
+     *
+     * @return int
+     */
+    public function getValueInt()
+    {
+        return $this->valueInt;
+    }
+
+    /**
+     * Set valueDecimal
+     *
+     * @param string $valueDecimal
+     *
+     * @return ProductCharacteristic
+     */
+    public function setValueDecimal($valueDecimal)
+    {
+        $this->valueDecimal = $valueDecimal;
+
+        return $this;
+    }
+
+    /**
+     * Get valueDecimal
+     *
+     * @return string
+     */
+    public function getValueDecimal()
+    {
+        return $this->valueDecimal;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return ProductCharacteristic
+     */
+    public function setProduct(\AppBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \AppBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set characteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\Characteristic $characteristic
+     *
+     * @return ProductCharacteristic
+     */
+    public function setCharacteristic(\Exprating\CharacteristicBundle\Entity\Characteristic $characteristic = null)
+    {
+        $this->characteristic = $characteristic;
+
+        return $this;
+    }
+
+    /**
+     * Get characteristic
+     *
+     * @return \Exprating\CharacteristicBundle\Entity\Characteristic
+     */
+    public function getCharacteristic()
+    {
+        return $this->characteristic;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        switch ($this->getCharacteristic()->getType()) {
+            case Characteristic::TYPE_STRING:
+                return (string)$this->getValueString();
+            case Characteristic::TYPE_INT:
+                return (string)$this->getValueInt();
+            case Characteristic::TYPE_DECIMAL:
+                return (string)$this->getValueDecimal();
+            default:
+                throw new CharacteristicTypeException($this->getCharacteristic()->getType());
+        }
+    }
+
+    /**
+     * @return self
+     */
+    public function setValue($value)
+    {
+        switch ($this->getCharacteristic()->getType()) {
+            case Characteristic::TYPE_STRING:
+                $this->setValueString($value);
+                break;
+            case Characteristic::TYPE_INT:
+                $this->setValueInt($value);
+                break;
+            case Characteristic::TYPE_DECIMAL:
+                $this->setValueDecimal($value);
+                break;
+            default:
+                throw new CharacteristicTypeException($this->getCharacteristic()->getType());
+        }
+        return $this;
+    }
+}

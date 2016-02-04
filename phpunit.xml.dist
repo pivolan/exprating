@@ -17,6 +17,7 @@
         </testsuite>
         <testsuite name="AppTestSuite">
             <directory>src/*Bundle/Tests</directory>
+            <directory>src/*/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
 

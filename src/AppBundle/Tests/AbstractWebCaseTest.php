@@ -17,14 +17,14 @@ abstract class AbstractWebCaseTest extends WebTestCase
     public function setUp()
     {
         parent::setUp();
-        $client          = static::createClient();
-        $this->docrine   = $client->getContainer()->get('doctrine');
-//        $this->docrine->getConnection()->beginTransaction();
+        $client = static::createClient();
+        $this->docrine = $client->getContainer()->get('doctrine');
+        $this->docrine->getConnection()->beginTransaction();
     }
 
     public function tearDown()
     {
-//        $this->docrine->getConnection()->rollback();
+        $this->docrine->getConnection()->rollback();
         parent::tearDown();
     }
 }

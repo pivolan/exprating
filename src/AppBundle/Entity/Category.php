@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -66,6 +67,13 @@ class Category
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
+
+    /**
+     * @var Characteristic[]
+     *
+     * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic", mappedBy="slug")
+     */
+    private $characteristics;
 
 
     public function getRoot()
@@ -138,6 +146,7 @@ class Category
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characteristics = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -263,5 +272,39 @@ class Category
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Add characteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\Characteristic $characteristic
+     *
+     * @return Category
+     */
+    public function addCharacteristic(\Exprating\CharacteristicBundle\Entity\Characteristic $characteristic)
+    {
+        $this->characteristics[] = $characteristic;
+
+        return $this;
+    }
+
+    /**
+     * Remove characteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\Characteristic $characteristic
+     */
+    public function removeCharacteristic(\Exprating\CharacteristicBundle\Entity\Characteristic $characteristic)
+    {
+        $this->characteristics->removeElement($characteristic);
+    }
+
+    /**
+     * Get characteristics
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCharacteristics()
+    {
+        return $this->characteristics;
     }
 }

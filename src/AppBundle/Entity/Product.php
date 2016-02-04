@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 
 /**
  * Product
@@ -140,6 +141,12 @@ class Product
      * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
      */
     private $manufacturer;
+
+    /**
+     * @var ProductCharacteristic[]
+     * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\ProductCharacteristic", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $productCharacteristics;
 
     public function __construct()
     {
@@ -630,5 +637,39 @@ class Product
     public function getExpertOpinion()
     {
         return $this->expertOpinion;
+    }
+
+    /**
+     * Add productCharacteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic
+     *
+     * @return Product
+     */
+    public function addProductCharacteristic(\Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic)
+    {
+        $this->productCharacteristics[] = $productCharacteristic;
+
+        return $this;
+    }
+
+    /**
+     * Remove productCharacteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic
+     */
+    public function removeProductCharacteristic(\Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic)
+    {
+        $this->productCharacteristics->removeElement($productCharacteristic);
+    }
+
+    /**
+     * Get productCharacteristics
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductCharacteristics()
+    {
+        return $this->productCharacteristics;
     }
 }
