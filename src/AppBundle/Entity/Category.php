@@ -69,6 +69,13 @@ class Category
     private $children;
 
     /**
+     * @var RatingLabel
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingLabel", mappedBy="category")
+     */
+    private $ratingLabel;
+
+    /**
      * @var Characteristic[]
      *
      * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic")
@@ -308,5 +315,29 @@ class Category
     public function getCharacteristics()
     {
         return $this->characteristics;
+    }
+
+    /**
+     * Set ratingLabel
+     *
+     * @param \AppBundle\Entity\RatingLabel $ratingLabel
+     *
+     * @return Category
+     */
+    public function setRatingLabel(\AppBundle\Entity\RatingLabel $ratingLabel = null)
+    {
+        $this->ratingLabel = $ratingLabel;
+
+        return $this;
+    }
+
+    /**
+     * Get ratingLabel
+     *
+     * @return \AppBundle\Entity\RatingLabel
+     */
+    public function getRatingLabel()
+    {
+        return $this->ratingLabel;
     }
 }

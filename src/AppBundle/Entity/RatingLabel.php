@@ -49,6 +49,13 @@ class RatingLabel
      */
     private $rating4;
 
+    /**
+     * @var Category
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="ratingLabel")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="slug")
+     */
+    private $category;
 
     /**
      * Get id
@@ -154,5 +161,29 @@ class RatingLabel
     public function getRating4()
     {
         return $this->rating4;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return RatingLabel
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }
