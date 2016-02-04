@@ -15,6 +15,13 @@ use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
 class ProductCharacteristic
 {
     /**
+     * @var int
+     *
+     * @ORM\Id
+     * @ORM\Column()
+     */
+    private $id;
+    /**
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=255, nullable=true)
@@ -38,7 +45,6 @@ class ProductCharacteristic
     /**
      * @var Product
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="productCharacteristics")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      *
@@ -48,7 +54,6 @@ class ProductCharacteristic
     /**
      * @var Characteristic
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic", fetch="EAGER")
      * @ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug")
      *
@@ -212,5 +217,29 @@ class ProductCharacteristic
                 throw new CharacteristicTypeException($this->getCharacteristic()->getType());
         }
         return $this;
+    }
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return ProductCharacteristic
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

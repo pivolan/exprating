@@ -18,6 +18,11 @@ class Characteristic
     const TYPE_INT = 'integer';
     const TYPE_DECIMAL = 'decimal';
 
+    const SCALE_WATT = 'Вт';
+    const SCALE_CM = 'См';
+    const SCALE_METERS = 'М';
+    const SCALE_KG = 'Кг';
+
     /**
      * @var string
      *
@@ -43,10 +48,26 @@ class Characteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="type_object", type="string", length=255, nullable=false, options={"default"="string"})
+     * @ORM\Column(name="type", type="string", length=255, nullable=false, options={"default"="string"})
      * @Assert\Choice(choices = {"string", "integer", "decimal"}, message = "Choose a valid type.")
      */
     private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="scale", type="string", length=255, nullable=true, options={"default"="Вт"})
+     * @Assert\Choice(choices = {"Вт", "См", "М", "Кг"}, message = "Choose a valid scale.")
+     */
+    private $scale;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="group", type="string", length=255, nullable=true)
+     */
+    private $group;
 
 
     /**
@@ -143,5 +164,53 @@ class Characteristic
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set scale
+     *
+     * @param string $scale
+     *
+     * @return Characteristic
+     */
+    public function setScale($scale)
+    {
+        $this->scale = $scale;
+
+        return $this;
+    }
+
+    /**
+     * Get scale
+     *
+     * @return string
+     */
+    public function getScale()
+    {
+        return $this->scale;
+    }
+
+    /**
+     * Set group
+     *
+     * @param string $group
+     *
+     * @return Characteristic
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }
