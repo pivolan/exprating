@@ -13,6 +13,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\User;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
+use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -31,19 +32,19 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
     public function load(ObjectManager $manager)
     {
 
-        $keys = ['Тип пылесборника'                => ['Основные характеристики', null, Characteristic::TYPE_STRING],
-                 'Тип пылесоса'                    => ['Основные характеристики', null, Characteristic::TYPE_STRING],
-                 'Тип уборки'                      => ['Основные характеристики', null, Characteristic::TYPE_STRING],
-                 'Потребляемая мощность'           => ['Основные характеристики', 'Вт', Characteristic::TYPE_INT],
-                 'Мощность всасывания'             => ['Основные характеристики', "Вт", Characteristic::TYPE_INT],
-                 'Источник питания'                => ['Основные характеристики', null, Characteristic::TYPE_STRING],
-                 'Дополнительные насадки'          => ['Насадки', null, Characteristic::TYPE_STRING],
-                 'Турбощетка в комплекте'          => ['Насадки', null, Characteristic::TYPE_STRING],
-                 'Регулятор мощности (на корпусе)' => ['Дополнительно', null, Characteristic::TYPE_STRING],
-                 'Фильтр тонкой очистки'           => ['Дополнительно', null, Characteristic::TYPE_STRING],
-                 'Конструкция трубы'               => ['Дополнительно', null, Characteristic::TYPE_STRING],
-                 'Дополнительно'                   => ['Дополнительно', null, Characteristic::TYPE_STRING],
-                 'Вес'                             => ['Габариты', 'кг', Characteristic::TYPE_DECIMAL],
+        $keys = ['Тип пылесборника'                => ['Основные характеристики', null, Characteristic::TYPE_STRING, "контейнер"],
+                 'Тип пылесоса'                    => ['Основные характеристики', null, Characteristic::TYPE_STRING, "обычный"],
+                 'Тип уборки'                      => ['Основные характеристики', null, Characteristic::TYPE_STRING, "сухая"],
+                 'Потребляемая мощность'           => ['Основные характеристики', 'Вт', Characteristic::TYPE_INT, 1800],
+                 'Мощность всасывания'             => ['Основные характеристики', "Вт", Characteristic::TYPE_INT, 300],
+                 'Источник питания'                => ['Основные характеристики', null, Characteristic::TYPE_STRING, "сеть"],
+                 'Дополнительные насадки'          => ['Насадки', null, Characteristic::TYPE_STRING, "пол/ковер; для твёрдого пола ProAnimal с мягкой щетиной; для мягкой мебели ProAnimal; щелевая; для мягкой мебели со съемной щеткой "],
+                 'Турбощетка в комплекте'          => ['Насадки', null, Characteristic::TYPE_STRING, " есть"],
+                 'Регулятор мощности (на корпусе)' => ['Дополнительно', null, Characteristic::TYPE_STRING, "на корпусе"],
+                 'Фильтр тонкой очистки'           => ['Дополнительно', null, Characteristic::TYPE_STRING, "есть"],
+                 'Конструкция трубы'               => ['Дополнительно', null, Characteristic::TYPE_STRING, "телескопическая"],
+                 'Дополнительно'                   => ['Дополнительно', null, Characteristic::TYPE_STRING, "автосматывание сетевого шнура, ножной переключатель вкл./выкл. на корпусе, место для хранения насадок"],
+                 'Вес'                             => ['Габариты', 'кг', Characteristic::TYPE_DECIMAL, 6.7],
         ];
         /** @var Slugify $slugify */
         $slugify = $this->container->get('appbundle.slugify');
@@ -59,16 +60,18 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
 
             $manager->persist($characteristic);
         }
+        $manager->flush();
         /** @var Product[] $products */
         $products = $manager->getRepository('AppBundle:Product')->findAll();
+        $characteristics = $manager->getRepository('CharacteristicBundle:Characteristic')->findAll();
         foreach ($products as $key => $product) {
-            $commentsCount = ($key + 2) % 5;
-            for ($i = 1; $i <= $commentsCount; $i++) {
-                $comment = new \AppBundle\Entity\Comment();
-                $comment->setProduct($product)
-                    ->setFullName('Василий Зайцев ' . $key * $i)
-                    ->setMessage('Хороший и надежный пылесос, пользуюсь им уже давно и ни разу не подводил');
-                $manager->persist($comment);
+            foreach ($characteristics as $characteristic) {
+                $productCharacteristic = new ProductCharacteristic();
+                $productCharacteristic
+                    ->setProduct($product)
+                    ->setCharacteristic($characteristic)
+                    ->setValue($keys[$characteristic->getName()][3]);
+                $manager->persist($productCharacteristic);
             }
         }
         $manager->flush();
