@@ -71,10 +71,21 @@ class Category
     /**
      * @var Characteristic[]
      *
-     * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic", mappedBy="slug")
+     * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic")
+     * @ORM\JoinTable(name="category_characteristic", joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug")},
+     *            inverseJoinColumns={@ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug")})
      */
     private $characteristics;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characteristics = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getRoot()
     {
@@ -138,15 +149,6 @@ class Category
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->characteristics = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

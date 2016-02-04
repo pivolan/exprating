@@ -213,4 +213,9 @@ class Characteristic
     {
         return $this->group;
     }
+
+    public function __toString()
+    {
+        return $this->getName() . ' (' . $this->getGroup() . ')';
+    }
 }
