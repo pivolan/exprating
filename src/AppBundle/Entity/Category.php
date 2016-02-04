@@ -301,7 +301,7 @@ class Category
     /**
      * Get characteristics
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection | Characteristic[]
      */
     public function getCharacteristics()
     {

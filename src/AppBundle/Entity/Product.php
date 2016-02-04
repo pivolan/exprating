@@ -155,6 +155,7 @@ class Product
         $this->comments = new ArrayCollection();
         $this->feedbacks = new ArrayCollection();
         $this->productShopPrices = new ArrayCollection();
+        $this->productCharacteristics = new ArrayCollection();
     }
 
     /**
