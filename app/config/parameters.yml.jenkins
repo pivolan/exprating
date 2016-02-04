@@ -25,3 +25,8 @@ parameters:
     database_test_password: rydTyb5Drics
     # You should uncomment this if you want use pdo_sqlite
     # database_test_path:     %kernel.root_dir%/app.sqlite
+    asset_version: 10
+    commonHost: dev.raritetus.ru
+    cdnLayoutHost: dev.raritetus.ru
+    cdnStorageHost: raritetus.cdnvideo.ru
+    storageHost: static.raritetus.ru
