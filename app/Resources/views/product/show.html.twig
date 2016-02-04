@@ -46,7 +46,7 @@
             <ul class="media-list">
                 <li class="media">
                 <span class="pull-right">
-                    <span class="main-label">95</span>
+                    <span class="main-label">{{ product.rating }}</span>
                 </span>
 
                     <div class="media-body">
@@ -55,28 +55,46 @@
                 </li>
                 <li class="media">
                 <span class="pull-right">
-                    <span style="padding: 10px; font-size: 1.4em;">95</span>
+                    <span style="padding: 10px; font-size: 1.4em;">{{ product.rating1 }}</span>
                 </span>
 
                     <div class="media-body">
-                        <div class="media-heading">Качество работы</div>
+                        <div class="media-heading">{{ product.category.ratingLabel.rating1 }}</div>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="95"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 95%">
+                            <div class="progress-bar progress-bar-success" role="progressbar"
+                                 aria-valuenow="{{ product.rating1 }}"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ product.rating1 }}%">
                             </div>
                         </div>
                     </div>
                 </li>
                 <li class="media">
                 <span class="pull-right">
-                    <span style="padding: 10px; font-size: 1.4em;">86</span>
+                    <span style="padding: 10px; font-size: 1.4em;">{{ product.rating2 }}</span>
                 </span>
 
                     <div class="media-body">
-                        <div class="media-heading">Уровень шума</div>
+                        <div class="media-heading">{{ product.category.ratingLabel.rating2 }}</div>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="86"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 86%">
+                            <div class="progress-bar progress-bar-success" role="progressbar"
+                                 aria-valuenow="{{ product.rating2 }}"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ product.rating2 }}%">
+                                <span class="sr-only">{{ product.rating2 }}% Complete (success)</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="media">
+                <span class="pull-right">
+                    <span style="padding: 10px; font-size: 1.4em;">{{ product.rating3 }}</span>
+                </span>
+
+                    <div class="media-body">
+                        <div class="media-heading">{{ product.category.ratingLabel.rating3 }}</div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar"
+                                 aria-valuenow="{{ product.rating3 }}"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ product.rating3 }}%">
                                 <span class="sr-only">40% Complete (success)</span>
                             </div>
                         </div>
@@ -84,29 +102,15 @@
                 </li>
                 <li class="media">
                 <span class="pull-right">
-                    <span style="padding: 10px; font-size: 1.4em;">80</span>
+                    <span style="padding: 10px; font-size: 1.4em;">{{ product.rating4 }}</span>
                 </span>
 
                     <div class="media-body">
-                        <div class="media-heading">Цена/качество</div>
+                        <div class="media-heading">{{ product.category.ratingLabel.rating4 }}</div>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                <span class="sr-only">40% Complete (success)</span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media">
-                <span class="pull-right">
-                    <span style="padding: 10px; font-size: 1.4em;">71</span>
-                </span>
-
-                    <div class="media-body">
-                        <div class="media-heading">Отзывы</div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="71"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 71%">
+                            <div class="progress-bar progress-bar-success" role="progressbar"
+                                 aria-valuenow="{{ product.rating3 }}"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ product.rating3 }}%">
                                 <span class="sr-only">40% Complete (success)</span>
                             </div>
                         </div>
