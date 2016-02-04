@@ -1,0 +1,19 @@
+{% for group, characteristicFields in characteristics %}
+    <div class="props-block">
+        <h3 class="props-title">{{ group }}</h3>
+
+        <div class="props-list">
+            {% for characteristic in characteristicFields %}
+                <div class="props-item">
+                    <div class="props-key">
+                        <span class="p-text">{{ characteristic.0 }} </span>
+                        <span class="p-line"></span>
+                    </div>
+                    <div class="props-value">
+                        {{ characteristic.1 }} {{ characteristic.2 }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
