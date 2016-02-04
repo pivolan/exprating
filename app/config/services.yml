@@ -6,3 +6,9 @@ parameters:
 services:
     fos_user.doctrine_registry:
         alias: doctrine
+    assetic.filter.cdnfilter:
+        class: AppBundle\Assetic\Filter\AsseticCdnFilter
+        arguments: ['%asset_version%', '%commonhost%', '%cdnlayouthost%', '@filesystem', '%kernel.root_dir%/../web']
+        tags:
+            - { name: assetic.filter, alias: cdnfilter }
+

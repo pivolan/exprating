@@ -113,3 +113,29 @@ stof_doctrine_extensions:
         default:
             tree: true
             sluggable: true
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    bundles: ['AppBundle']
+    filters:
+        cssrewrite: ~
+        cdnfilter:
+            resource: %kernel.root_dir%/config/cdnfilter.xml
+            apply_to: '\.(css|js)$'
+    assets:
+        mainJS:
+            inputs:
+                - '@AppBundle/Resources/public/js/jquery.min.js'
+                - '@AppBundle/Resources/public/js/jquey-cookie/jquery.cookie.js'
+                - '@AppBundle/Resources/public/js/superfish/superfish.js'
+                - '@AppBundle/Resources/public/js/common-2.js'
+                - '@AppBundle/Resources/public/js/jquery.mmenu.min.all.js'
+                - '@AppBundle/Resources/public/js/bootstrap.min.js'
+
+        mainCSS:
+            inputs:
+                - '@AppBundle/Resources/public/css/bootstrap.min.css'
+                - '@AppBundle/Resources/public/css/superfish.css'
+                - '@AppBundle/Resources/public/css/style.css'
+                - '@AppBundle/Resources/public/css/jquery.mmenu.all.css'
