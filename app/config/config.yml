@@ -120,9 +120,6 @@ assetic:
     bundles: ['AppBundle']
     filters:
         cssrewrite: ~
-        cdnfilter:
-            resource: %kernel.root_dir%/config/cdnfilter.xml
-            apply_to: '\.(css|js)$'
     assets:
         mainJS:
             inputs:
