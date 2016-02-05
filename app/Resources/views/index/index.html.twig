@@ -4,3 +4,9 @@
         {{ include("_include/Product/_itemList.twig") }}
     {% endfor %}
 {% endblock %}
+{% block products_popular %}
+    {% for product in popularProducts %}
+        {{ include("_include/Product/_itemList.twig") }}
+    {% endfor %}
+{% endblock %}
+{% block blacklist_block %}{% endblock %}

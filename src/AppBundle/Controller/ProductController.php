@@ -17,6 +17,8 @@ class ProductController extends BaseController
     const LIMIT_PER_PAGE = 9;
     const KEY_PAGINATION = 'pagination';
     const KEY_CATEGORY = 'category';
+    const KEY_FORM_COMMENT = 'formComment';
+    const KEY_SIMILAR_PRODUCTS = 'similarProducts';
 
 
     /**
@@ -50,9 +52,12 @@ class ProductController extends BaseController
         $formComment = $this->createForm(CommentType::class, $comment, [
             'action' => $this->generateUrl('product_comment_create', ['slug' => $product->getSlug()])
         ]);
+        $similarProducts = $this->getEm()->getRepository('AppBundle:Product')->findSimilar($product);
+
         return $this->render('product/show.html.twig', [
-            self::KEY_PRODUCT => $product,
-            'formComment'     => $formComment->createView()
+            self::KEY_PRODUCT          => $product,
+            self::KEY_SIMILAR_PRODUCTS => $similarProducts,
+            self::KEY_FORM_COMMENT     => $formComment->createView()
         ]);
     }
 

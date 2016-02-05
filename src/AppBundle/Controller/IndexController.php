@@ -9,14 +9,19 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends BaseController
 {
     const KEY_PRODUCTS = 'products';
+    const KEY_POPULAR_PRODUCTS = 'popularProducts';
 
     /**
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
     {
-        $products = $this->getEm()->getRepository('AppBundle:Product')->findAll();
+        $productRepository = $this->getEm()->getRepository('AppBundle:Product');
+        $products = $productRepository->findNew();
+        $popularProducts = $productRepository->findPopular();
         // replace this example code with whatever you need
-        return $this->render('index/index.html.twig', [self::KEY_PRODUCTS => $products]);
+        return $this->render('index/index.html.twig', [
+            self::KEY_PRODUCTS         => $products,
+            self::KEY_POPULAR_PRODUCTS => $popularProducts]);
     }
 }

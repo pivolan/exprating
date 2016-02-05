@@ -274,27 +274,15 @@
                     <div class="content">
                         <h3>Похожие товары</h3>
                         <ul class="links-wrapper">
-                            <li class="links-item">
-                                <a href="">
-                                    <img src="/images/link1.jpg">
+                            {% for similarProduct in similarProducts %}
+                                <li class="links-item">
+                                    <a href="{{ path('product_show', {'slug': similarProduct.slug}) }}">
+                                        <img src="{{ similarProduct.previewImage }}">
 
-                                    <div class="link-title">Пылесос Thomas TWIN TT Aquafilter</div>
-                                </a>
-                            </li>
-                            <li class="links-item">
-                                <a href="">
-                                    <img src="/images/link2.jpg">
-
-                                    <div class="link-title">Пылесос Philips FC 9150</div>
-                                </a>
-                            </li>
-                            <li class="links-item">
-                                <a href="">
-                                    <img src="/images/link3.jpg">
-
-                                    <div class="link-title">Пылесос Bosch BSG 61800</div>
-                                </a>
-                            </li>
+                                        <div class="link-title">{{ similarProduct.name }}</div>
+                                    </a>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
