@@ -3,6 +3,8 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Product;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ProductRepository
@@ -12,6 +14,10 @@ use AppBundle\Entity\Category;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    const LIMIT_MAIN_PAGE_NEW_PRODUCTS = 6;
+    const LIMIT_MAIN_PAGE_POPULAR_PRODUCTS = 6;
+    const LIMIT_PRODUCT_PAGE_SIMILAR_PRODUCTS = 3;
+
     /**
      * @param Category $category
      *
@@ -23,5 +29,58 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->where('a.category = :category')
             ->setParameter('category', $category)
             ->getQuery();
+    }
+
+
+    /**
+     * @return Product[]|ArrayCollection
+     */
+    public function findNew()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.isEnabled = :isEnabled')
+            ->orderBy('a.enabledAt', 'DESC')
+            ->setMaxResults(self::LIMIT_MAIN_PAGE_NEW_PRODUCTS)
+            ->setParameter('isEnabled', true)
+            ->getQuery();
+        return $query->getResult();
+    }
+
+    /**
+     * @return array|Product[]
+     */
+    public function findPopular()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.isEnabled = :isEnabled')
+            ->orderBy('a.visitsCount', 'DESC')
+            ->setMaxResults(self::LIMIT_MAIN_PAGE_NEW_PRODUCTS)
+            ->setParameter('isEnabled', true)
+            ->getQuery();
+        return $query->getResult();
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return array|Product[]
+     */
+    public function findSimilar(Product $product)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.category = :category')
+            ->andWhere('a.minPrice > :minPrice')
+            ->andWhere('a.minPrice < :maxPrice')
+            ->andWhere('a.id != :productId')
+            ->orderBy('a.visitsCount', 'DESC')
+            ->setMaxResults(self::LIMIT_PRODUCT_PAGE_SIMILAR_PRODUCTS)
+            ->setParameter('category', $product->getCategory())
+            ->setParameter('isEnabled', true)
+            ->setParameter('productId', $product->getId())
+            ->setParameter('minPrice', $product->getMinPrice() * 0.8)
+            ->setParameter('maxPrice', $product->getMinPrice() * 1.2)
+            ->getQuery();
+        return $query->getResult();
     }
 }

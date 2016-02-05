@@ -101,11 +101,32 @@ class Product
     private $rating3 = 0;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_enabled", type="boolean", nullable=false, options={"default"=false})
+     */
+    private $isEnabled = false;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="rating4", type="integer", nullable=true)
      */
     private $rating4 = 0;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="enabled_at", type="datetime", nullable=true)
+     */
+    private $enabledAt;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="visits_count", type="bigint", options={"default"=0})
+     */
+    private $visitsCount = 0;
 
     /**
      * @var \DateTime
@@ -765,5 +786,77 @@ class Product
     public function getRating4()
     {
         return $this->rating4;
+    }
+
+    /**
+     * Set isEnabled
+     *
+     * @param string $isEnabled
+     *
+     * @return Product
+     */
+    public function setIsEnabled($isEnabled)
+    {
+        $this->isEnabled = $isEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get isEnabled
+     *
+     * @return string
+     */
+    public function getIsEnabled()
+    {
+        return $this->isEnabled;
+    }
+
+    /**
+     * Set enabledAt
+     *
+     * @param \DateTime $enabledAt
+     *
+     * @return Product
+     */
+    public function setEnabledAt($enabledAt)
+    {
+        $this->enabledAt = $enabledAt;
+
+        return $this;
+    }
+
+    /**
+     * Get enabledAt
+     *
+     * @return \DateTime
+     */
+    public function getEnabledAt()
+    {
+        return $this->enabledAt;
+    }
+
+    /**
+     * Set visitsCount
+     *
+     * @param integer $visitsCount
+     *
+     * @return Product
+     */
+    public function setVisitsCount($visitsCount)
+    {
+        $this->visitsCount = $visitsCount;
+
+        return $this;
+    }
+
+    /**
+     * Get visitsCount
+     *
+     * @return integer
+     */
+    public function getVisitsCount()
+    {
+        return $this->visitsCount;
     }
 }
