@@ -2,11 +2,7 @@
 {% block body_type %}product{% endblock %}
 {% block content %}
     <div class="content-inner clearfix">
-        <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
-            <a href="/rubric/aaa/">Бытовая техника</a> →
-            <a href="/rubric/aaa/">Пылесосы</a> →
-        </div>
-
+        {{ breadcrumbs(product.category)|raw }}
         <h1>{{ product.name }}</h1>
 
         <div class="expert-wrapper">

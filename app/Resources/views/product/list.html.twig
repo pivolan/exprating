@@ -2,10 +2,7 @@
 {% block body_type %}rubric{% endblock %}
 {% block content %}
     <div class="content-inner clearfix">
-        <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
-            <a href="/rubric/aaa/">Бытовая техника</a> →
-            <a href="/rubric/aaa/">Пылесосы</a> →
-        </div>
+        {{ breadcrumbs(category)|raw }}
         <h1>{{ category.name }} - рейтинг по мнению экспертов</h1>
 
         <div class="rubric-filters">
