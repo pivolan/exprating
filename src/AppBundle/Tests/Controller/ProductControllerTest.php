@@ -19,8 +19,10 @@ class ProductControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/rubric/elektronika');
+        $crawler = $client->request('GET', '/rubric/elektronika/2');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Электроника', $crawler->filter('.content h1')->text());
+        $this->assertContains('rel="next"', $crawler->filter('ul.pagination')->html());
+        $this->assertContains('rel="prev"', $crawler->filter('ul.pagination')->html());
     }
 }

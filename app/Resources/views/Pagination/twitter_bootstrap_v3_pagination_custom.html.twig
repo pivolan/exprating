@@ -19,7 +19,7 @@
 
     {% if previous is defined %}
         <li>
-            <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo;&nbsp;</a>
+            <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" rel="prev">&laquo;&nbsp;</a>
         </li>
     {% else %}
         <li class="disabled">
@@ -74,7 +74,7 @@
 
     {% if next is defined %}
         <li>
-            <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">&nbsp;&raquo;</a>
+            <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" rel="next">&nbsp;&raquo;</a>
         </li>
     {% else %}
         <li class="disabled">
