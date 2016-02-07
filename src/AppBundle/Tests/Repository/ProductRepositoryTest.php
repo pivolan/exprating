@@ -9,6 +9,7 @@ namespace AppBundle\Tests\Repository;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\User;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
 
@@ -169,6 +170,50 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertTrue($product->getIsEnabled());
             $this->assertLessThanOrEqual($previousProduct->getVisitsCount(), $product->getVisitsCount());
             $previousProduct = $product;
+        }
+    }
+
+    public function testFindByExpert()
+    {
+        /** @var EntityManager $em */
+        $em = $this->docrine->getManager();
+        $expert = new User();
+        $expert->setUsername('expert')
+            ->setUsernameCanonical('expert')
+            ->setEmail('expert@exprating.lo')
+            ->setEmailCanonical('expert@exprating.lo')
+            ->setPlainPassword('qwerty')
+            ->setEnabled(true)
+            ->addRole(User::ROLE_EXPERT);
+
+        $em->persist($expert);
+
+        $category = new Category();
+        $category->setSlug('test_category')
+            ->setName('test category');
+        $em->persist($category);
+        $product = null;
+        for ($i = 0; $i < 10; $i++) {
+            $product = new Product();
+            $product->setName('test name ' . $i)
+                ->setIsEnabled(false)
+                ->setSlug("test_name_$i")
+                ->setCategory($category);
+            if ($i % 2 == 0) {
+                $product->setExpertUser($expert);
+            }
+            if ($i % 4 == 0) {
+                $product->setIsEnabled(true);
+            }
+            $em->persist($product);
+        }
+        $em->flush();
+        /** @var Product[] $products */
+        $products = $em->getRepository('AppBundle:Product')->findByExpertQuery($expert)->getResult();
+        $this->assertCount(3, $products);
+        foreach ($products as $product) {
+            $this->assertTrue($product->getIsEnabled());
+            $this->assertEquals($expert, $product->getExpertUser());
         }
     }
 } 

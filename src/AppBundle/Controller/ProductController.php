@@ -39,14 +39,14 @@ class ProductController extends BaseController
             $entityManager->persist($comment);
             $entityManager->flush();
         }
-        return $this->redirectToRoute('product_show', ['slug' => $comment->getProduct()->getSlug()]);
+        return $this->redirectToRoute('product_detail', ['slug' => $comment->getProduct()->getSlug()]);
     }
 
     /**
-     * @Route("/product/{slug}", name="product_show")
+     * @Route("/product/{slug}", name="product_detail")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      */
-    public function showAction(Request $request, Product $product)
+    public function detailAction(Request $request, Product $product)
     {
         $comment = new Comment();
         $formComment = $this->createForm(CommentType::class, $comment, [
@@ -54,7 +54,7 @@ class ProductController extends BaseController
         ]);
         $similarProducts = $this->getEm()->getRepository('AppBundle:Product')->findSimilar($product);
 
-        return $this->render('product/show.html.twig', [
+        return $this->render('product/detail.html.twig', [
             self::KEY_PRODUCT          => $product,
             self::KEY_SIMILAR_PRODUCTS => $similarProducts,
             self::KEY_FORM_COMMENT     => $formComment->createView()

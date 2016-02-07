@@ -240,7 +240,7 @@
                             {% for comment in product.comments %}
                                 <li class="comment-item">
                                     <div class="comment-date">
-                                        {{ comment.createdAt|date }}
+                                        {{ comment.createdAt|date('d.m.Y') }}
                                     </div>
                                     <div class="comment-author">
                                         {{ comment.fullName }}
@@ -272,7 +272,7 @@
                         <ul class="links-wrapper">
                             {% for similarProduct in similarProducts %}
                                 <li class="links-item">
-                                    <a href="{{ path('product_show', {'slug': similarProduct.slug}) }}">
+                                    <a href="{{ path('product_detail', {'slug': similarProduct.slug}) }}">
                                         <img src="{{ similarProduct.previewImage }}">
 
                                         <div class="link-title">{{ similarProduct.name }}</div>

@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -82,5 +83,17 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('maxPrice', $product->getMinPrice() * 1.2)
             ->getQuery();
         return $query->getResult();
+    }
+
+    public function findByExpertQuery(User $expert)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.expertUser = :expert')
+            ->orderBy('a.enabledAt', 'DESC')
+            ->setParameter('isEnabled', true)
+            ->setParameter(':expert', $expert)
+            ->getQuery();
+        return $query;
     }
 }

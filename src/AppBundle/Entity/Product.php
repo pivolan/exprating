@@ -145,6 +145,13 @@ class Product
     private $expertUser;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="expert_comment", type="string", length=4000, nullable=true)
+     */
+    private $expertComment;
+
+    /**
      * @var Image[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="product", cascade={"persist", "remove"})
      */
@@ -858,5 +865,29 @@ class Product
     public function getVisitsCount()
     {
         return $this->visitsCount;
+    }
+
+    /**
+     * Set expertComment
+     *
+     * @param string $expertComment
+     *
+     * @return Product
+     */
+    public function setExpertComment($expertComment)
+    {
+        $this->expertComment = $expertComment;
+
+        return $this;
+    }
+
+    /**
+     * Get expertComment
+     *
+     * @return string
+     */
+    public function getExpertComment()
+    {
+        return $this->expertComment;
     }
 }

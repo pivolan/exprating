@@ -1,0 +1,48 @@
+{% extends "::layout.html.twig" %}
+{% block body_type %}experts{% endblock %}
+{% block content %}
+    <div class="content-inner clearfix">
+        <h1>Наши эксперты</h1>
+
+        <div class="experts-wrapper">
+            <ul>
+                {% for expert in experts %}
+                    <li class="expert-item">
+                        <div class="expert-img-wrapper">
+                            <img src="{{ expert.avatarImage }}">
+                        </div>
+                        <div class="expert-name">
+                            <a href="{{ path("experts_detail", {"username": expert.username}) }}"><span>{{ expert.fullName }}</span></a>
+                            {{ expert.caption }}
+                        </div>
+                    </li>
+                {% endfor %}
+                <li class="expert-item">
+                    <div class="expert-img-wrapper">
+                    </div>
+                    <div class="expert-name">
+                    </div>
+                </li>
+                <li class="expert-item">
+                    <div class="expert-img-wrapper">
+                    </div>
+                    <div class="expert-name">
+                    </div>
+                </li>
+                <li class="expert-item">
+                    <div class="expert-img-wrapper">
+                    </div>
+                    <div class="expert-name">
+                    </div>
+                </li>
+                <li class="expert-item">
+                    <div class="expert-img-wrapper">
+                    </div>
+                    <div class="expert-name">
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}

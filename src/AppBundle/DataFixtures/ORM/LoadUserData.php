@@ -21,9 +21,13 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setPlainPassword('qwerty')
             ->setSuperAdmin(true)
             ->setEnabled(true)
+            ->setBirthday(new \DateTime('1987-02-08'))
             ->setFullName('Admin Admin')
+            ->setCity('Москва')
+            ->setCaption('Главный эксперт всея Руси ')
             ->setAvatarImage('http://placehold.it/200x200')
-            ->addRole(User::ROLE_SUPER_ADMIN);
+            ->addRole(User::ROLE_SUPER_ADMIN)
+            ->addRole(User::ROLE_EXPERT);
 
         $manager->persist($userAdmin);
         $manager->flush();

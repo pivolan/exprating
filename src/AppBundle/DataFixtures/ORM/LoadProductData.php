@@ -35,6 +35,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
                 ->setCategory($category)
                 ->setManufacturer($manufacturer)
                 ->setExpertUser($user)
+                ->setExpertComment('У нас такая же модель, только с мешком для сбора пыли. Выбрали мешковой, т.к. в нем мощность немного выше. Пылесосом очень довольны. Все функции выполняет на 5 с плюсом! Работает тихо и качественно.')
                 ->setPreviewImage('http://placehold.it/280x250')
                 ->setDisadvantages([
                     'Невысокая мощность всасывания',
