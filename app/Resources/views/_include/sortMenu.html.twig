@@ -1,0 +1,12 @@
+<button aria-expanded="false" type="button" class="btn btn-default dropdown-toggle"
+        data-toggle="dropdown"><span
+            class="glyphicon glyphicon-sort-by-attributes{{ sortProduct.direction=='DESC'?'-alt':'' }}"></span>
+    {% if sortProduct.fieldName == 'minPrice' %}
+        по цене
+    {% elseif sortProduct.fieldName == 'enabledAt' %}
+        по дате
+    {% elseif sortProduct.fieldName == 'rating' %}
+        по рейтингу
+    {% endif %}
+    <span class="caret"></span></button>
+{{ knp_menu_render('AppBundle:Builder:sortProduct') }}

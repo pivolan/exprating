@@ -6,6 +6,7 @@
 namespace AppBundle\Menu;
 
 use AppBundle\Entity\Category;
+use AppBundle\SortProduct\SortProduct;
 use Doctrine\ORM\EntityManager;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Knp\Menu\FactoryInterface;
@@ -41,6 +42,55 @@ class Builder implements ContainerAwareInterface
             }
         }
 
+        return $menu;
+    }
+
+    public function sortProduct(FactoryInterface $factory, array $options)
+    {
+        /** @var ItemInterface|ItemInterface[] $menu */
+        $menu = $factory->createItem('root');
+        $menu->setChildrenAttribute('role', 'menu')
+            ->setChildrenAttribute('class', 'dropdown-menu');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $slug = $request->get('slug');
+        $page = $request->get('page');
+        $direction = $request->get('sortDirection');
+        $field = $request->get('sortField');
+
+        $menu->addChild('по цене', ['route'           => 'product_list',
+                                    'routeParameters' => ['slug'          => $slug,
+                                                          'page'          => $page,
+                                                          'sortField'     => SortProduct::FIELD_MIN_PRICE,
+                                                          'sortDirection' => $direction
+                                    ]]);
+
+        $menu->addChild('по дате', ['route'           => 'product_list',
+                                    'routeParameters' => ['slug'          => $slug,
+                                                          'page'          => $page,
+                                                          'sortField'     => SortProduct::FIELD_ENABLED_AT,
+                                                          'sortDirection' => $direction
+                                    ]]);
+
+        $menu->addChild('по рейтингу', ['route'           => 'product_list',
+                                        'routeParameters' => ['slug'          => $slug,
+                                                              'page'          => $page,
+                                                              'sortField'     => SortProduct::FIELD_RATING,
+                                                              'sortDirection' => $direction
+                                        ]]);
+        $menu->addChild('divider', ['divider' => true])->setAttribute('class', 'divider');
+        $menu->addChild('по возрастанию', ['route'           => 'product_list',
+                                           'routeParameters' => ['slug'          => $slug,
+                                                                 'page'          => $page,
+                                                                 'sortField'     => $field,
+                                                                 'sortDirection' => SortProduct::DIRECTION_ASC
+                                           ]]);
+
+        $menu->addChild('по убыванию', ['route'           => 'product_list',
+                                        'routeParameters' => ['slug'          => $slug,
+                                                              'page'          => $page,
+                                                              'sortField'     => $field,
+                                                              'sortDirection' => SortProduct::DIRECTION_DESC
+                                        ]]);
         return $menu;
     }
 }
