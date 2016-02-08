@@ -8,6 +8,8 @@ use AppBundle\Entity\Product;
 use AppBundle\Form\CommentType;
 use AppBundle\Form\SortProductType;
 use AppBundle\SortProduct\SortProduct;
+use Exprating\SearchBundle\Form\SearchParamsType;
+use Exprating\SearchBundle\SearchParams\SearchParams;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -21,12 +23,37 @@ class ProductController extends BaseController
     const KEY_CATEGORY = 'category';
     const KEY_FORM_COMMENT = 'formComment';
     const KEY_SIMILAR_PRODUCTS = 'similarProducts';
-    const FLASH_SORT_ERRORS = 'sort_errors';
+    const FLASH_SORT_ERRORS = 'sortErrors';
     const KEY_SORT_PRODUCT = 'sortProduct';
 
 
     /**
-     * @Route("/product/{slug}/comment/create", name="product_comment_create")
+     * @Route("/tovar/search/{page}", name="product_search", defaults={"page"=1})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function searchAction(Request $request, $page)
+    {
+        $form = $this->createForm(SearchParamsType::class, null, ['action' => $this->generateUrl('product_search')]);
+        $form->handleRequest($request);
+        $products = [];
+        if ($form->isValid()) {
+            /** @var SearchParams $searchParams */
+            $searchParams = $form->getData();
+            $products = $this->get('search_bundle.product_searcher')->find($searchParams);
+        }
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $products,
+            max($page, 1),
+            self::LIMIT_PER_PAGE
+        );
+        return $this->render('product/search.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORM_SEARCH => $form->createView()]);
+    }
+
+    /**
+     * @Route("/tovar/{slug}/comment/create", name="product_comment_create")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      */
     public function commentCreateAction(Request $request, Product $product)
@@ -47,7 +74,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * @Route("/product/{slug}", name="product_detail")
+     * @Route("/tovar/{slug}", name="product_detail")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      */
     public function detailAction(Request $request, Product $product)

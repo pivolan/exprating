@@ -6,9 +6,15 @@
 
 namespace Exprating\SearchBundle\SearchParams;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 class SearchParams
 {
+    /**
+     * @var string
+     * @Assert\Length(min=3, minMessage = "Минимальный размер строки 3 символа.")
+     */
     protected $string;
 
     /**

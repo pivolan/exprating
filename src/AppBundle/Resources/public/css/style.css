@@ -969,7 +969,7 @@ div.profile-answers {
   padding: 10px 20px;
   background: #eee;
 }
-.search-form-wrapper #search-str {
+.search-form-wrapper .search-str {
   width: 90%;
   height: 35px;
   font-size: 17px;
@@ -978,7 +978,7 @@ div.profile-answers {
   .rating-wrapper {
     margin-left: 5%;
   }
-  .search-form-wrapper #search-str {
+  .search-form-wrapper .search-str {
     width: 75%;
   }
   .navbar-toggle {

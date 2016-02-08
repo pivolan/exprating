@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class BaseController extends Controller
 {
+    const KEY_PRODUCTS = 'products';
+    const KEY_FORM_SEARCH = 'formSearch';
+
     /**
      * @return EntityManager
      */

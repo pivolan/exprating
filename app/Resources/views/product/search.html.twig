@@ -2,14 +2,11 @@
 {% block search_form %}
     {{ include("_include/Form/search.html.twig", {'form': formSearch}) }}
 {% endblock %}
+{% block product_list_title %}Найденные экспертные заключения{% endblock %}
 {% block products_list %}
-    {% for product in products %}
+    {% for product in pagination %}
         {{ include("_include/Product/_itemList.twig") }}
     {% endfor %}
 {% endblock %}
-{% block products_popular_list %}
-    {% for product in popularProducts %}
-        {{ include("_include/Product/_itemList.twig") }}
-    {% endfor %}
-{% endblock %}
+{% block products_popular %}{% endblock %}
 {% block blacklist_block %}{% endblock %}

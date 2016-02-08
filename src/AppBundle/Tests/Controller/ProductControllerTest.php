@@ -10,7 +10,7 @@ class ProductControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/product/product_10');
+        $crawler = $client->request('GET', '/tovar/product_10');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('title 10', $crawler->filter('.content h1')->text());
     }
@@ -24,5 +24,14 @@ class ProductControllerTest extends WebTestCase
         $this->assertContains('Электроника', $crawler->filter('.content h1')->text());
         $this->assertContains('rel="next"', $crawler->filter('ul.pagination')->html());
         $this->assertContains('rel="prev"', $crawler->filter('ul.pagination')->html());
+    }
+
+    public function testSearch()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/tovar/search');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('Найденные экспертные заключения', $crawler->filter('div.index-title')->text());
     }
 }
