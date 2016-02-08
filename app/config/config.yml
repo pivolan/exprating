@@ -136,3 +136,6 @@ assetic:
                 - 'css/superfish.css'
                 - 'css/style.css'
                 - 'css/jquery.mmenu.all.css'
+
+exprating_search:
+    engine: '%search_engine%'

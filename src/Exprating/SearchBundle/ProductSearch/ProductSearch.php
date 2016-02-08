@@ -23,7 +23,6 @@ class ProductSearch
      */
     public function find(SearchParams $searchParams)
     {
-
-        return [];
+        return $this->searchEngine->search($searchParams->getString());
     }
 } 

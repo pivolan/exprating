@@ -8,9 +8,17 @@ namespace Exprating\SearchBundle\Engine;
 
 
 use AppBundle\Entity\Product;
+use Doctrine\ORM\EntityManager;
 
 class SphinxEngine implements EngineInterface
 {
+    /** @var  EntityManager */
+    private $entityManager;
+
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
 
     /**
      * @param $string
@@ -19,6 +27,6 @@ class SphinxEngine implements EngineInterface
      */
     public function search($string)
     {
-        // TODO: Implement search() method.
+        return [];
     }
 }

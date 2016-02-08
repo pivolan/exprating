@@ -25,3 +25,4 @@ parameters:
     database_test_password: rydTyb5Drics
     # You should uncomment this if you want use pdo_sqlite
     # database_test_path:     %kernel.root_dir%/app.sqlite
+    search_engine: sql

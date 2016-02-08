@@ -4,6 +4,6 @@ namespace Exprating\SearchBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class SearchBundle extends Bundle
+class ExpratingSearchBundle extends Bundle
 {
 }
