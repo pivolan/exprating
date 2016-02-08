@@ -123,16 +123,16 @@ assetic:
     assets:
         mainJS:
             inputs:
-                - '@AppBundle/Resources/public/js/jquery.min.js'
-                - '@AppBundle/Resources/public/js/jquey-cookie/jquery.cookie.js'
-                - '@AppBundle/Resources/public/js/superfish/superfish.js'
-                - '@AppBundle/Resources/public/js/common-2.js'
-                - '@AppBundle/Resources/public/js/jquery.mmenu.min.all.js'
-                - '@AppBundle/Resources/public/js/bootstrap.min.js'
+                - 'js/jquery.min.js'
+                - 'js/jquey-cookie/jquery.cookie.js'
+                - 'js/superfish/superfish.js'
+                - 'js/common-2.js'
+                - 'js/jquery.mmenu.min.all.js'
+                - 'js/bootstrap.min.js'
 
         mainCSS:
             inputs:
-                - '@AppBundle/Resources/public/css/bootstrap.min.css'
-                - '@AppBundle/Resources/public/css/superfish.css'
-                - '@AppBundle/Resources/public/css/style.css'
-                - '@AppBundle/Resources/public/css/jquery.mmenu.all.css'
+                - 'css/bootstrap.min.css'
+                - 'css/superfish.css'
+                - 'css/style.css'
+                - 'css/jquery.mmenu.all.css'
