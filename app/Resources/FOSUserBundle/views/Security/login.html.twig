@@ -1,0 +1,38 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+{% block fos_user_content %}
+    <div class="login-box">Логин</div>
+
+    {% if error %}
+        <div class="errmes log">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <div class="login">
+
+        <form id="form_login" role="form" action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+
+            <div>
+                <label for="username">{{ 'security.login.username'|trans }}</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"/>
+
+            </div>
+            <div>
+                <label for="password">{{ 'security.login.password'|trans }}</label>
+                <input type="password" id="password" name="_password" required="required"/>
+            </div>
+            <input type="hidden" id="remember_me" name="_remember_me" value="on"/>
+            <input id="openkey" type="hidden" name="openkey" value=""/>
+
+            <div class="submit">
+                <button id="submit" class="form" type="submit" id="_submit"
+                        name="_submit">{{ 'security.login.submit'|trans }}</button>
+            </div>
+            <div class="links">
+                <a href="{{ path('fos_user_resetting_request') }}">Забыли пароль</a>
+                <a href="{{ path('fos_user_registration_register') }}">Регистрация</a>
+            </div>
+        </form>
+    </div>
+{% endblock fos_user_content %}
