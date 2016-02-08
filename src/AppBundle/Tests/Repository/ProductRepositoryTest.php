@@ -19,7 +19,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
     public function testByCategory()
     {
         /** @var EntityManager $em */
-        $em = $this->docrine->getManager();
+        $em = $this->doctrine->getManager();
         $category = new Category();
         $category->setSlug('test_category')
             ->setName('test category');
@@ -86,7 +86,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
     {
         //Создадим две тестовых категории
         /** @var EntityManager $em */
-        $em = $this->docrine->getManager();
+        $em = $this->doctrine->getManager();
         $category = (new Category())->setSlug('first_category')->setName('first category');
         $em->persist($category);
         $categorySecond = (new Category())->setSlug('second_category')->setName('second category');
@@ -129,7 +129,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
     public function testNew()
     {
         /** @var EntityManager $em */
-        $em = $this->docrine->getManager();
+        $em = $this->doctrine->getManager();
         $category = new Category();
         $category->setSlug('test_category')
             ->setName('test category');
@@ -158,7 +158,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
     public function testPopular()
     {
         /** @var EntityManager $em */
-        $em = $this->docrine->getManager();
+        $em = $this->doctrine->getManager();
         $category = new Category();
         $category->setSlug('test_category')
             ->setName('test category');
@@ -191,7 +191,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
     public function testFindByExpert()
     {
         /** @var EntityManager $em */
-        $em = $this->docrine->getManager();
+        $em = $this->doctrine->getManager();
         $expert = new User();
         $expert->setUsername('expert')
             ->setUsernameCanonical('expert')

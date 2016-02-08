@@ -28,16 +28,20 @@ class SqlEngine implements EngineInterface
     public function search($string)
     {
         $qb = $this->entityManager->getRepository('AppBundle:Product')->createQueryBuilder('p');
-        $qb->where('a.isEnabled = :isEnabled')
+        $qb->where('p.isEnabled = :isEnabled')
             ->setParameter('isEnabled', true);
 
         $words = explode(' ', $string);
         $sqlPart = [];
         foreach ($words as $key => $word) {
-            $sqlPart[] = "p.name LIKE %:word$key%";
-            $qb->setParameter("word$key", trim($word));
+            $processedWord = trim($word);
+            if (mb_strlen($processedWord, 'UTF-8') > 2) {
+                $sqlPart[] = "p.name LIKE :word$key";
+                $qb->setParameter("word$key", '%' . $processedWord . '%');
+            }
         }
-        $qb->andWhere(implode(' OR ', $sqlPart));
+        $qb->andWhere(implode(' OR ', $sqlPart))
+            ->orderBy('p.id', 'ASC');
         $query = $qb->getQuery();
         return $query->getResult();
     }

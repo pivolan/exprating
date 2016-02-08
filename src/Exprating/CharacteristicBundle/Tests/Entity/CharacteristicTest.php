@@ -15,7 +15,7 @@ class CharacteristicTest extends AbstractWebCaseTest
     public function testChoiceType()
     {
 
-        $em = $this->docrine->getManager();
+        $em = $this->doctrine->getManager();
 
         $characteristic = new Characteristic();
         $characteristic->setType(Characteristic::TYPE_STRING)
