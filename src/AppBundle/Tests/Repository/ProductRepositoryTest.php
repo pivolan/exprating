@@ -10,6 +10,7 @@ namespace AppBundle\Tests\Repository;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
+use AppBundle\SortProduct\SortProduct;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
 
@@ -27,6 +28,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $product = new Product();
             $product->setName('test name ' . $i)
                 ->setSlug("test_name_$i")
+                ->setRating($i)
                 ->setCategory($category);
             $em->persist($product);
         }
@@ -64,6 +66,19 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertInstanceOf('\AppBundle\Entity\Product', $product);
             $this->assertContains('other product', $product->getName());
             $this->assertNotContains('test name ', $product->getName());
+        }
+        //sort test
+        $sort = new SortProduct();
+        $sort->setDirection(SortProduct::DIRECTION_ASC)->setFieldName(SortProduct::FIELD_RATING);
+        $query = $em->getRepository('AppBundle:Product')->findByCategoryQuery($category, $sort);
+        /** @var Product[] $products */
+        $products = $query->getResult();
+        $this->assertEquals(10, count($products));
+        $prevProduct = $products[0];
+        foreach ($products as $product) {
+            $this->assertInstanceOf('\AppBundle\Entity\Product', $product);
+            $this->assertGreaterThanOrEqual($prevProduct->getRating(), $product->getRating());
+            $prevProduct = $product;
         }
     }
 

@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
+use AppBundle\SortProduct\SortProduct;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -24,12 +25,15 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function findByCategoryQuery(Category $category)
+    public function findByCategoryQuery(Category $category, SortProduct $sortProduct = null)
     {
-        return $this->createQueryBuilder('a')
+        $qb = $this->createQueryBuilder('a')
             ->where('a.category = :category')
-            ->setParameter('category', $category)
-            ->getQuery();
+            ->setParameter('category', $category);
+        if ($sortProduct) {
+            $qb->orderBy('a.' . $sortProduct->getFieldName(), $sortProduct->getDirection());
+        }
+        return $qb->getQuery();
     }
 
 

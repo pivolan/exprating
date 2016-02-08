@@ -11,12 +11,22 @@
                         data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> по цене
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#"><span class="glyphicon glyphicon-ok"></span> по цене</a></li>
-                    <li><a href="#">по дате</a></li>
-                    <li><a href="#">по рейтингу</a></li>
+                    <li>
+                        <a href="{{ path('product_list', {'slug':category.slug,'page': pagination.currentPageNumber, 'sortField': 'minPrice', 'sortDirection': sortProduct.direction}) }}"><span
+                                    class="glyphicon glyphicon-ok"></span> по цене</a></li>
+                    <li>
+                        <a href="{{ path('product_list', {'slug':category.slug,'page': pagination.currentPageNumber, 'sortField': 'enabledAt', 'sortDirection': sortProduct.direction}) }}">по
+                            дате</a></li>
+                    <li>
+                        <a href="{{ path('product_list', {'slug':category.slug,'page': pagination.currentPageNumber, 'sortField': 'rating', 'sortDirection': sortProduct.direction}) }}">по
+                            рейтингу</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">по возрастанию</a></li>
-                    <li><a href="#">по убыванию</a></li>
+                    <li>
+                        <a href="{{ path('product_list', {'slug':category.slug,'page': pagination.currentPageNumber, 'sortField': sortProduct.fieldName, 'sortDirection': 'ASC'}) }}">по
+                            возрастанию</a></li>
+                    <li>
+                        <a href="{{ path('product_list', {'slug':category.slug,'page': pagination.currentPageNumber, 'sortField': sortProduct.fieldName, 'sortDirection': 'DESC'}) }}">по
+                            убыванию</a></li>
                 </ul>
             </div>
 

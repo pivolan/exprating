@@ -6,6 +6,8 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
 use AppBundle\Form\CommentType;
+use AppBundle\Form\SortProductType;
+use AppBundle\SortProduct\SortProduct;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,6 +21,8 @@ class ProductController extends BaseController
     const KEY_CATEGORY = 'category';
     const KEY_FORM_COMMENT = 'formComment';
     const KEY_SIMILAR_PRODUCTS = 'similarProducts';
+    const FLASH_SORT_ERRORS = 'sort_errors';
+    const KEY_SORT_PRODUCT = 'sortProduct';
 
 
     /**
@@ -62,19 +66,31 @@ class ProductController extends BaseController
     }
 
     /**
-     * @Route("/rubric/{slug}/{page}", name="product_list", defaults={"page"=1})
+     * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}", name="product_list", defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC"})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
-    public function listAction(Request $request, Category $category, $page)
+    public function listAction(Category $category, $page, $sortField, $sortDirection)
     {
-        $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category);
+        $sortProduct = new SortProduct();
+        $sortProduct->setFieldName($sortField)->setDirection($sortDirection);
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($sortProduct);
+
+        if (count($errors) > 0) {
+            $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category);
+            $this->addFlash(self::FLASH_SORT_ERRORS, (string)$errors);
+        } else {
+            $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category, $sortProduct);
+        }
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
-        return $this->render('product/list.html.twig', [self::KEY_PAGINATION => $pagination,
-                                                        self::KEY_CATEGORY   => $category]);
+        return $this->render('product/list.html.twig', [self::KEY_PAGINATION   => $pagination,
+                                                        self::KEY_CATEGORY     => $category,
+                                                        self::KEY_SORT_PRODUCT => $sortProduct]);
     }
 }
