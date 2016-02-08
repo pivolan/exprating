@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new \Exprating\CharacteristicBundle\CharacteristicBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new Exprating\SearchBundle\SearchBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
