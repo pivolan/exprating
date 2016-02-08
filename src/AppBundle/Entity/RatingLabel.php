@@ -24,30 +24,30 @@ class RatingLabel
     /**
      * @var string
      *
-     * @ORM\Column(name="rating1", type="string", length=255)
+     * @ORM\Column(name="rating1label", type="string", length=255)
      */
-    private $rating1;
+    private $rating1label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rating2", type="string", length=255)
+     * @ORM\Column(name="rating2label", type="string", length=255)
      */
-    private $rating2;
+    private $rating2label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rating3", type="string", length=255)
+     * @ORM\Column(name="rating3label", type="string", length=255)
      */
-    private $rating3;
+    private $rating3label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rating4", type="string", length=255)
+     * @ORM\Column(name="rating4label", type="string", length=255)
      */
-    private $rating4;
+    private $rating4label;
 
     /**
      * @var Category
@@ -74,9 +74,9 @@ class RatingLabel
      *
      * @return RatingLabel
      */
-    public function setRating1($rating1)
+    public function setRating1Label($rating1)
     {
-        $this->rating1 = $rating1;
+        $this->rating1label = $rating1;
 
         return $this;
     }
@@ -86,9 +86,9 @@ class RatingLabel
      *
      * @return string
      */
-    public function getRating1()
+    public function getRating1Label()
     {
-        return $this->rating1;
+        return $this->rating1label;
     }
 
     /**
@@ -98,9 +98,9 @@ class RatingLabel
      *
      * @return RatingLabel
      */
-    public function setRating2($rating2)
+    public function setRating2Label($rating2)
     {
-        $this->rating2 = $rating2;
+        $this->rating2label = $rating2;
 
         return $this;
     }
@@ -110,9 +110,9 @@ class RatingLabel
      *
      * @return string
      */
-    public function getRating2()
+    public function getRating2Label()
     {
-        return $this->rating2;
+        return $this->rating2label;
     }
 
     /**
@@ -122,9 +122,9 @@ class RatingLabel
      *
      * @return RatingLabel
      */
-    public function setRating3($rating3)
+    public function setRating3Label($rating3)
     {
-        $this->rating3 = $rating3;
+        $this->rating3label = $rating3;
 
         return $this;
     }
@@ -134,9 +134,9 @@ class RatingLabel
      *
      * @return string
      */
-    public function getRating3()
+    public function getRating3Label()
     {
-        return $this->rating3;
+        return $this->rating3label;
     }
 
     /**
@@ -146,9 +146,9 @@ class RatingLabel
      *
      * @return RatingLabel
      */
-    public function setRating4($rating4)
+    public function setRating4Label($rating4)
     {
-        $this->rating4 = $rating4;
+        $this->rating4label = $rating4;
 
         return $this;
     }
@@ -158,9 +158,9 @@ class RatingLabel
      *
      * @return string
      */
-    public function getRating4()
+    public function getRating4Label()
     {
-        return $this->rating4;
+        return $this->rating4label;
     }
 
     /**
