@@ -33,6 +33,13 @@ class CharacteristicSearchParameter
     protected $valueGTE;
 
     /**
+     * @var string
+     *
+     * @Assert\Choice(choices = {"string", "integer", "decimal"}, message = "Choose a valid type.")
+     */
+    protected $type;
+
+    /**
      * @return mixed
      */
     public function getName()
@@ -94,5 +101,21 @@ class CharacteristicSearchParameter
     public function setValueLTE($valueLTE)
     {
         $this->valueLTE = $valueLTE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 } 

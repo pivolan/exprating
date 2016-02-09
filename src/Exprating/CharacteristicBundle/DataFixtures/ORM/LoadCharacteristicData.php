@@ -68,10 +68,17 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
         foreach ($products as $key => $product) {
             foreach ($characteristics as $characteristic) {
                 $productCharacteristic = new ProductCharacteristic();
+                $value = $keys[$characteristic->getName()][3];
+                if (is_numeric($value) && $value == 300) {
+                    $value = rand(100, 300);
+                } elseif (is_numeric($value)) {
+                    $value = rand(1200, 1800);
+                }
                 $productCharacteristic
                     ->setProduct($product)
                     ->setCharacteristic($characteristic)
-                    ->setValue($keys[$characteristic->getName()][3]);
+                    ->setValue($value);
+
                 $manager->persist($productCharacteristic);
             }
         }

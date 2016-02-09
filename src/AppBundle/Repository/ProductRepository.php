@@ -8,6 +8,7 @@ use AppBundle\Entity\User;
 use AppBundle\SortProduct\SortProduct;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
+use Exprating\CharacteristicBundle\Entity\Characteristic;
 
 /**
  * ProductRepository
@@ -113,6 +114,67 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         if ($commonProductSearch->getName()) {
             $qb->andWhere('a.name LIKE :name')
                 ->setParameter('name', '%' . $commonProductSearch->getName() . '%');
+        }
+        if ($commonProductSearch->getPriceGTE()) {
+            $qb->andWhere('a.minPrice >= :priceGte')
+                ->setParameter('priceGte', $commonProductSearch->getPriceGTE());
+        }
+        if ($commonProductSearch->getPriceLTE()) {
+            $qb->andWhere('a.minPrice <= :priceLte')
+                ->setParameter('priceLte', $commonProductSearch->getPriceLTE());
+        }
+        foreach ($commonProductSearch->getCharacteristics() as $key => $characteristic) {
+            $alias = 'c' . $key;
+            $key1 = 'c1' . $key;
+            $key2 = 'c2' . $key;
+            $key3 = 'c3' . $key;
+            $name = $characteristic->getName();
+            switch ($characteristic->getType()) {
+                case Characteristic::TYPE_STRING:
+                    if ($characteristic->getValue()) {
+                        $qb->innerJoin('a.productCharacteristics', $alias, 'WITH',
+                            "$alias.product=a.id AND $alias.characteristic=:$key1 AND $alias.valueString LIKE :$key2")
+                            ->setParameter($key1, $name)
+                            ->setParameter($key2, $characteristic->getValue());
+                    }
+                    break;
+                case Characteristic::TYPE_DECIMAL:
+                    $condition = '';
+                    if ($characteristic->getValueGTE() || $characteristic->getValueLTE()) {
+                        $condition = "$alias.product=a.id AND $alias.characteristic=:$key1";
+                        $qb->setParameter($key1, $name);
+                    }
+                    if ($characteristic->getValueGTE()) {
+                        $condition .= " AND $alias.valueDecimal >= :$key2";
+                        $qb->setParameter($key2, $characteristic->getValueGTE());
+                    }
+                    if ($characteristic->getValueLTE()) {
+                        $condition .= " AND $alias.valueDecimal <= :$key3";
+                        $qb->setParameter($key3, $characteristic->getValueLTE());
+                    }
+                    if ($condition) {
+                        $qb->innerJoin('a.productCharacteristics', $alias, 'WITH', $condition);
+                    }
+                    break;
+                case Characteristic::TYPE_INT:
+                    $condition = '';
+                    if ($characteristic->getValueGTE() || $characteristic->getValueLTE()) {
+                        $condition = "$alias.product=a.id AND $alias.characteristic=:$key1";
+                        $qb->setParameter($key1, $name);
+                    }
+                    if ($characteristic->getValueGTE()) {
+                        $condition .= " AND $alias.valueInt >= :$key2";
+                        $qb->setParameter($key2, $characteristic->getValueGTE());
+                    }
+                    if ($characteristic->getValueLTE()) {
+                        $condition .= " AND $alias.valueInt <= :$key3";
+                        $qb->setParameter($key3, $characteristic->getValueLTE());
+                    }
+                    if ($condition) {
+                        $qb->innerJoin('a.productCharacteristics', $alias, 'WITH', $condition);
+                    }
+                    break;
+            }
         }
         return $qb->getQuery();
     }

@@ -28,6 +28,13 @@
             <h3>Характеристики</h3>
 
             <div>{{ form(form) }}</div>
+
+            <h3>Найденные товары</h3>
+            <ul>
+                {% for product in products %}
+                    {{ include("_include/Product/_itemList.twig") }}
+                {% endfor %}
+            </ul>
         </div>
 
     </div>

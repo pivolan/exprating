@@ -26,6 +26,7 @@ class SearchTypeFabric
         foreach ($category->getCharacteristics() as $characteristics) {
             $params = new CharacteristicSearchParameter();
             $params->setName($characteristics->getSlug());
+            $params->setType($characteristics->getType());
             $productSearch->addCharacteristics($params);
         }
         return $formFactory->create(CommonProductSearchType::class, $productSearch);

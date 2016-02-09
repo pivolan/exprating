@@ -13,8 +13,6 @@ class CommonProductSearch
 {
     /**
      * @var CharacteristicSearchParameter[]|ArrayCollection
-     * @Assert\Type(type="array")
-     *
      */
     protected $characteristics;
     /**

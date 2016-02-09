@@ -80,7 +80,7 @@ class ExpertsController extends BaseController
         if ($form->isValid()) {
             /** @var CommonProductSearch $searchParams */
             $searchParams = $form->getData();
-            $products = $this->getEm()->getRepository('AppBundle:Product')->findByCharacteristics($searchParams, $category);
+            $products = $this->getEm()->getRepository('AppBundle:Product')->findByCharacteristicsQuery($searchParams, $category)->getResult();
         }
 
         return $this->render('Experts/create.html.twig', [self::KEY_CURRENT_CATEGORY => $category, 'form' => $form->createView(), 'products' => $products]);
