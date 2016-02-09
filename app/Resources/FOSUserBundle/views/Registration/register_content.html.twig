@@ -1,7 +1,8 @@
 {% trans_default_domain 'FOSUserBundle' %}
-<div class="heading">{% trans %}Register{% endtrans %}</div>
 
 <div class="register">
+    <div class="heading">{% trans %}Регистрация{% endtrans %}</div>
+
     {{ form_start(form, { 'action': path('fos_user_registration_register'), 'attr': { 'class': 'fos_user_registration_register' } }) }}
         {{ form_widget(form) }}
         <div class="submit">

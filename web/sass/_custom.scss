@@ -1,0 +1,26 @@
+$site-width: 960px;
+$site-p: 10px;
+$sidebar-w: 367px;
+$sidebar-left-w: 190px;
+$sidebar-right-w: 240px;
+$sidebar-p: 0;
+$main-p: 20px;
+
+$c-sidebar-bg: #999999;
+$c-sidebar-left-bg: #999999;
+$c-sidebar-right-bg: #7F7F7F;
+$c-main-bg: #ffffff;
+
+$sans-serif: Arial, "HelveticaNeue-Light", "Helvetica Neue Light", 'Helvetica Neue', Arial, Helvetica, sans-serif;
+$header: Arial, "arimo";
+$max-width: 1300px;
+$min-width: 800px;
+
+$link: #2076AF;
+$link_hi: #EC4C00;
+$green: #75b937;
+
+@import 'compass/support';                     // Add Compass' IE and vendor prefix support variables.
+@import 'compass/utilities/general/clearfix';  // Better than other clearfix.
+@import 'compass/utilities/sprites';           // See http://compass-style.org/help/tutorials/spriting/
+@import 'compass/css3';                        // Use one CSS3 mixin instead of multiple vendor prefixes.

@@ -1,0 +1,86 @@
+@import 'custom';
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.layout {
+  width: $max-width;
+  margin: 10px auto 30px;
+  background: #fff;
+  border: 1px solid #dddddd;
+  position: relative;
+  @include clearfix();
+}
+
+#left-sidebar {
+  width: 240px;
+  float: left;
+}
+#right-sidebar {
+  width: 240px;
+  float: right;
+
+  .shop & {
+    width: 300px;
+  }
+}
+aside { padding: 10px; }
+
+#main-content {
+  padding: 10px;
+  min-height: 700px;
+  @include clearfix();
+
+  .shop & {
+    margin: 0 322px 0 0;
+
+    .content {
+      padding: 0 0 0 20px;
+    }
+  }
+
+  .content {
+    padding: 0 20px;
+  }
+
+  .main-content-wrap {  
+    float: right;
+    margin: 0;
+    width: 100%;
+  }
+}
+
+.sidebar-right {
+  width: 300px;
+  margin-left: -300px;
+  float: left;
+  clear: none;
+}
+
+.sidebar-left {
+  width: 300px;
+  margin-right: -300px;
+  float: right;
+  clear: none;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #75b937;
+  border-color: #66a835;
+}
+
+.btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #69ad37;
+  border-color: #5b9a33;
+}
+
+
+footer {
+  clear:both;
+}
+
+.clear { clear: both; }
