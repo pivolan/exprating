@@ -85,7 +85,7 @@ class ProductController extends BaseController
         ]);
         $similarProducts = $this->getEm()->getRepository('AppBundle:Product')->findSimilar($product);
 
-        return $this->render('product/detail.html.twig', [
+        return $this->render('Product/detail.html.twig', [
             self::KEY_PRODUCT          => $product,
             self::KEY_SIMILAR_PRODUCTS => $similarProducts,
             self::KEY_FORM_COMMENT     => $formComment->createView()
