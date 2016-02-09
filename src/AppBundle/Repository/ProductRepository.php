@@ -7,6 +7,7 @@ use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\SortProduct\SortProduct;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
 
 /**
  * ProductRepository
@@ -99,5 +100,20 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter(':expert', $expert)
             ->getQuery();
         return $query;
+    }
+
+    public function findByCharacteristicsQuery(CommonProductSearch $commonProductSearch, Category $category)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.category = :category')
+            ->setParameter('category', $category)
+            ->setParameter('isEnabled', false)
+            ->orderBy('a.id', 'DESC');
+        if ($commonProductSearch->getName()) {
+            $qb->andWhere('a.name LIKE :name')
+                ->setParameter('name', '%' . $commonProductSearch->getName() . '%');
+        }
+        return $qb->getQuery();
     }
 }

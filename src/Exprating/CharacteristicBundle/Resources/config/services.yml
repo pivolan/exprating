@@ -5,3 +5,9 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    characteristic.form.characteristic_search_parameter:
+        class: Exprating\CharacteristicBundle\Form\CharacteristicSearchParameterType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type }

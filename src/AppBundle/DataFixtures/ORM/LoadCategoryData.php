@@ -13,7 +13,7 @@ use AppBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadCategoryData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
+class LoadCategoryData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, DependentFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -59,6 +59,8 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
         ];
         /** @var Slugify $slugify */
         $slugify = $this->container->get('appbundle.slugify');
+        /** @var User $admin */
+        $admin = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
         foreach ($categories_names as $key=>$name) {
             $category = new Category();
             $category->setName($name);
@@ -73,8 +75,20 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
                     $manager->persist($childCategory);
                 }
             }
+            $admin->addCategory($category);
             $this->addReference("category_$key", $category);
         }
         $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array
+     */
+    function getDependencies()
+    {
+        return ['AppBundle\DataFixtures\ORM\LoadUserData'];
     }
 }

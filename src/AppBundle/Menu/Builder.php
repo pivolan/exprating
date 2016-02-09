@@ -45,7 +45,7 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
 
-    public function sortProduct(FactoryInterface $factory, array $options)
+    public function sortProductMenu(FactoryInterface $factory, array $options)
     {
         /** @var ItemInterface|ItemInterface[] $menu */
         $menu = $factory->createItem('root');
@@ -91,6 +91,18 @@ class Builder implements ContainerAwareInterface
                                                               'sortField'     => $field,
                                                               'sortDirection' => SortProduct::DIRECTION_DESC
                                         ]]);
+        return $menu;
+    }
+
+    public function expertMenu(FactoryInterface $factory, array $options)
+    {
+        /** @var ItemInterface|ItemInterface[] $menu */
+        $menu = $factory->createItem('root');
+        $menu->setChildrenAttribute('id', 'mainSiteMenu')
+            ->setChildrenAttribute('class', 'sf-menu sf-js-enabled sf-arrows');
+        $menu->addChild('Создать обзор', ['route' => 'homepage']);
+        $menu->addChild('Мои обзоры', ['route' => 'homepage']);
+        $menu->addChild('Не завершенные обзоры', ['route' => 'homepage']);
         return $menu;
     }
 }

@@ -117,7 +117,9 @@
     </button>
 </div>
 <div id="top-menu">
-    {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+    {% block top_menu %}
+        {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+    {% endblock %}
 </div>
 <nav id="mainSiteMenuMMenuNav"></nav>
 
@@ -530,6 +532,9 @@
                     <li><a href="{{ path('experts_list') }}">Наши эксперты</a></li>
                     <li><a href="{{ path('fos_user_security_login') }}">Логин</a></li>
                     <li><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></li>
+                    {% if app.user and app.user.hasRole('ROLE_EXPERT') %}
+                        <li><a href="{{ path('experts_profile') }}">Эксперт - кабинет</a></li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="footer-col3">

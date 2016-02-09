@@ -1,0 +1,34 @@
+{% extends "::layout.html.twig" %}
+{% block body_type %}expert{% endblock %}
+{% block top_menu %}
+    {{ knp_menu_render('AppBundle:Builder:expertMenu') }}
+{% endblock %}
+{% block content %}
+    <div class="content-inner clearfix">
+        <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
+            <a href="{{ path("experts_list") }}">Наши эксперты</a> →
+        </div>
+        {% set expert = app.user %}
+        <h1>{{ expert.fullName }}</h1>
+
+        <div class="expert-page-wrapper">
+            <h3>Категории</h3>
+            <ul>
+                {% for category in expert.categories %}
+                    <li {% if category == currentCategory %}class="current"{% endif %}>
+                        <a href="{{ path('experts_create', {'slug': category.slug}) }}">{{ category.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <h3>Поиск</h3>
+
+            <div></div>
+
+            <h3>Характеристики</h3>
+
+            <div>{{ form(form) }}</div>
+        </div>
+
+    </div>
+{% endblock %}

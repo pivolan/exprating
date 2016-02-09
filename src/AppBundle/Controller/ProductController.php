@@ -49,7 +49,7 @@ class ProductController extends BaseController
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
-        return $this->render('product/search.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORM_SEARCH => $form->createView()]);
+        return $this->render('Product/search.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORM_SEARCH => $form->createView()]);
     }
 
     /**
@@ -116,7 +116,7 @@ class ProductController extends BaseController
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
-        return $this->render('product/list.html.twig', [self::KEY_PAGINATION   => $pagination,
+        return $this->render('Product/list.html.twig', [self::KEY_PAGINATION   => $pagination,
                                                         self::KEY_CATEGORY     => $category,
                                                         self::KEY_SORT_PRODUCT => $sortProduct]);
     }

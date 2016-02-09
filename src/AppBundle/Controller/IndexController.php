@@ -22,7 +22,7 @@ class IndexController extends BaseController
         $products = $productRepository->findNew();
         $popularProducts = $productRepository->findPopular();
         // replace this example code with whatever you need
-        return $this->render('index/index.html.twig', [
+        return $this->render('Index/index.html.twig', [
             self::KEY_PRODUCTS         => $products,
             self::KEY_POPULAR_PRODUCTS => $popularProducts,
             self::KEY_FORM_SEARCH      => $form->createView()]);

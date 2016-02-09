@@ -2,10 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
+use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
+use Exprating\CharacteristicBundle\Form\SearchTypeFabric;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ExpertsController extends BaseController
@@ -14,6 +19,7 @@ class ExpertsController extends BaseController
     const KEY_EXPERTS = 'experts';
     const LIMIT_OPINIONS_PER_PAGE = 5;
     const KEY_EXPERT = 'expert';
+    const KEY_CURRENT_CATEGORY = 'currentCategory';
 
     /**
      * @Route("/experts", name="experts_list")
@@ -51,4 +57,32 @@ class ExpertsController extends BaseController
         ]);
     }
 
+    /**
+     * @Route("/profile/expert", name="experts_profile")
+     * @Security("has_role('ROLE_EXPERT')")
+     */
+    public function profileAction()
+    {
+        return $this->render('Experts/profile.html.twig');
+    }
+
+    /**
+     * @Route("/profile/expert/create/{slug}", name="experts_create")
+     * @Security("has_role('ROLE_EXPERT')")
+     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
+     */
+    public function createAction(Request $request, Category $category)
+    {
+        $form = (new SearchTypeFabric())->create($this->get('form.factory'), $category);
+
+        $form->handleRequest($request);
+        $products = [];
+        if ($form->isValid()) {
+            /** @var CommonProductSearch $searchParams */
+            $searchParams = $form->getData();
+            $products = $this->getEm()->getRepository('AppBundle:Product')->findByCharacteristics($searchParams, $category);
+        }
+
+        return $this->render('Experts/create.html.twig', [self::KEY_CURRENT_CATEGORY => $category, 'form' => $form->createView(), 'products' => $products]);
+    }
 }

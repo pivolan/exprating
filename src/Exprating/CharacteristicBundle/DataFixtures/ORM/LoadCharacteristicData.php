@@ -2,6 +2,7 @@
 
 namespace Exprating\CharacteristicBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Feedback;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
@@ -72,6 +73,14 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
                     ->setCharacteristic($characteristic)
                     ->setValue($keys[$characteristic->getName()][3]);
                 $manager->persist($productCharacteristic);
+            }
+        }
+
+        /** @var Category[] $categories */
+        $categories = $manager->getRepository('AppBundle:Category')->findAll();
+        foreach ($categories as $category) {
+            foreach ($characteristics as $characteristic) {
+                $category->addCharacteristic($characteristic);
             }
         }
         $manager->flush();
