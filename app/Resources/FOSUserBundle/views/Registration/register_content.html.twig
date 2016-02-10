@@ -2,15 +2,12 @@
 
 <div class="register">
     <div class="heading">{% trans %}Регистрация{% endtrans %}</div>
-
+    {% form_theme form '/Form/form_register_layout.html.twig' %}
     {{ form_start(form, { 'action': path('fos_user_registration_register'), 'attr': { 'class': 'fos_user_registration_register' } }) }}
-        {{ form_widget(form) }}
-        <div class="submit">
-            {#<button class="form" type="submit">{{ 'registration.submit'|trans }}</button>#}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'registration.submit'|trans }}</button>
-        </div>
-        <div class="links">
-            <a href="{{ path('fos_user_security_login') }}">Логин</a>
-        </div>
+    {{ form_widget(form) }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'registration.submit'|trans }}</button>
+    <div class="links">
+        <a class="login-link" href="{{ path('fos_user_security_login') }}">Логин</a>
+    </div>
     {{ form_end(form) }}
 </div>

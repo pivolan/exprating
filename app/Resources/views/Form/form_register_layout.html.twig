@@ -1,0 +1,26 @@
+{% use "form_div_layout.html.twig" %}
+{%- block form_widget -%}
+    {{- block('form_widget_simple') -}}
+{%- endblock form_widget -%}
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    <input type="{{ type }}" class="form-control" placeholder="{{ form_label(form) }}"/>
+{%- endblock form_widget_simple -%}
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+    {%- endif -%}
+{%- endblock form_label -%}
+{%- block form_row -%}
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+{%- endblock form_row -%}
+{%- block form_start -%}
+    {{ parent() }}
+    {%- if not render_rest is defined or render_rest -%}
+        {{ form_rest(form) }}
+    {%- endif -%}
+{%- endblock form_start -%}
+{%- block form_end -%}
+    </form>
+{%- endblock form_end -%}
