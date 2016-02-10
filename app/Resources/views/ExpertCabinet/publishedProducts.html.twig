@@ -1,0 +1,10 @@
+{% extends "::layout.html.twig" %}
+{% block body_type %}expert{% endblock %}
+{% block top_menu %}
+    {{ knp_menu_render('ExpratingExpertBundle:Builder:expertMenu') }}
+{% endblock %}
+{% block content %}
+    <div class="content-inner clearfix">
+        Expert index page
+    </div>
+{% endblock %}

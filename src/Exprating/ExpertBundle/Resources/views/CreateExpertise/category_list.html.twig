@@ -1,7 +1,7 @@
 {% extends "::layout.html.twig" %}
 {% block body_type %}expert{% endblock %}
 {% block top_menu %}
-    {{ knp_menu_render('AppBundle:Builder:expertMenu') }}
+    {{ knp_menu_render('ExpratingExpertBundle:Builder:expertMenu') }}
 {% endblock %}
 {% block content %}
     <div class="content-inner clearfix">
@@ -16,7 +16,7 @@
             <ul>
                 {% for category in expert.categories %}
                     <li>
-                        <a href="{{ path('experts_create', {'slug': category.slug}) }}">{{ category.name }}</a>
+                        <a href="{{ path('expert_category_products', {'slug': category.slug}) }}">{{ category.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
