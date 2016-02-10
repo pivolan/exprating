@@ -1393,19 +1393,19 @@ div.profile-answers {
   margin: 10px 0 0;
   min-height: 1em;
 }
-/* line 1228, ../sass/style.scss */
-.auth .form-signin input[type=email],
-.auth .form-signin input[type=password],
-.auth .form-signin input[type=text],
-.auth .form-signin button {
+/* line 1227, ../sass/style.scss */
+.auth input[type=email],
+.auth input[type=password],
+.auth input[type=text],
+.auth button {
   height: 40px;
   margin-bottom: 10px;
 }
-/* line 1239, ../sass/style.scss */
+/* line 1235, ../sass/style.scss */
 .auth .links {
   margin-top: 20px;
 }
-/* line 1242, ../sass/style.scss */
+/* line 1238, ../sass/style.scss */
 .auth .links a.register-link {
   float: right;
 }

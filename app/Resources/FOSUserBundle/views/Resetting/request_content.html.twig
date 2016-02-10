@@ -1,0 +1,22 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<div class="reset">
+    <div class="heading">{% trans %}Сброс пароля{% endtrans %}</div>
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+        <div>
+            {% if invalid_username is defined %}
+                <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+            {% endif %}
+            <input type="text" id="username" class="form-control" name="username" required="required"
+                   placeholder="{{ 'resetting.request.username'|trans }}"/>
+        </div>
+        <div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'resetting.request.submit'|trans }}</button>
+        </div>
+
+        <div class="links">
+            <a href="{{ path('fos_user_security_login') }}">Логин</a>
+        </div>
+    </form>
+</div>
