@@ -1192,8 +1192,7 @@ div.profile-answers {
 }
 
 //Login page
-.login,
-.register {
+.auth {
   max-width: 350px;
   padding: 40px 40px;
 
@@ -1237,15 +1236,6 @@ div.profile-answers {
   }
 
   
-  .btn.btn-signin {
-    padding: 0px;
-    font-weight: 700;
-    font-size: 14px;
-    height: 36px;
-    border-radius: 3px;
-    transition: all 0.218s;
-  }
-
   .links {
     margin-top: 20px;
     a.forgot-link {}

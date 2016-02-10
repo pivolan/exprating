@@ -6,7 +6,8 @@
     {{ form_start(form, { 'action': path('fos_user_registration_register'), 'attr': { 'class': 'fos_user_registration_register' } }) }}
         {{ form_widget(form) }}
         <div class="submit">
-            <button class="form" type="submit">{{ 'registration.submit'|trans }}</button>
+            {#<button class="form" type="submit">{{ 'registration.submit'|trans }}</button>#}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'registration.submit'|trans }}</button>
         </div>
         <div class="links">
             <a href="{{ path('fos_user_security_login') }}">Логин</a>

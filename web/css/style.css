@@ -84,21 +84,27 @@ aside {
   color: #fff;
   background-color: #75b937;
   border-color: #66a835;
+  padding: 0;
+  font-weight: 700;
+  font-size: 14px;
+  height: 36px;
+  border-radius: 3px;
+  transition: all 0.218s;
 }
 
-/* line 75, ../sass/_layout.scss */
+/* line 81, ../sass/_layout.scss */
 .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
   color: #fff;
   background-color: #69ad37;
   border-color: #5b9a33;
 }
 
-/* line 82, ../sass/_layout.scss */
+/* line 88, ../sass/_layout.scss */
 footer {
   clear: both;
 }
 
-/* line 86, ../sass/_layout.scss */
+/* line 92, ../sass/_layout.scss */
 .clear {
   clear: both;
 }
@@ -1356,8 +1362,7 @@ div.profile-answers {
 }
 
 /* line 1195, ../sass/style.scss */
-.login,
-.register {
+.auth {
   max-width: 350px;
   padding: 40px 40px;
   background-color: #F7F7F7;
@@ -1366,61 +1371,42 @@ div.profile-answers {
   margin-top: 50px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
-/* line 1206, ../sass/style.scss */
-.login .heading,
-.register .heading {
+/* line 1205, ../sass/style.scss */
+.auth .heading {
   font-size: 1.6em;
   text-align: center;
   margin-bottom: 10px;
 }
-/* line 1212, ../sass/style.scss */
-.login .profile-img-card,
-.register .profile-img-card {
+/* line 1211, ../sass/style.scss */
+.auth .profile-img-card {
   width: 96px;
   height: 96px;
   margin: 0 auto 10px;
   display: block;
   border-radius: 50%;
 }
-/* line 1220, ../sass/style.scss */
-.login .profile-name-card,
-.register .profile-name-card {
+/* line 1219, ../sass/style.scss */
+.auth .profile-name-card {
   font-size: 16px;
   font-weight: bold;
   text-align: center;
   margin: 10px 0 0;
   min-height: 1em;
 }
-/* line 1229, ../sass/style.scss */
-.login .form-signin input[type=email],
-.login .form-signin input[type=password],
-.login .form-signin input[type=text],
-.login .form-signin button,
-.register .form-signin input[type=email],
-.register .form-signin input[type=password],
-.register .form-signin input[type=text],
-.register .form-signin button {
+/* line 1228, ../sass/style.scss */
+.auth .form-signin input[type=email],
+.auth .form-signin input[type=password],
+.auth .form-signin input[type=text],
+.auth .form-signin button {
   height: 40px;
   margin-bottom: 10px;
 }
-/* line 1240, ../sass/style.scss */
-.login .btn.btn-signin,
-.register .btn.btn-signin {
-  padding: 0px;
-  font-weight: 700;
-  font-size: 14px;
-  height: 36px;
-  border-radius: 3px;
-  transition: all 0.218s;
-}
-/* line 1249, ../sass/style.scss */
-.login .links,
-.register .links {
+/* line 1239, ../sass/style.scss */
+.auth .links {
   margin-top: 20px;
 }
-/* line 1252, ../sass/style.scss */
-.login .links a.register-link,
-.register .links a.register-link {
+/* line 1242, ../sass/style.scss */
+.auth .links a.register-link {
   float: right;
 }
 
