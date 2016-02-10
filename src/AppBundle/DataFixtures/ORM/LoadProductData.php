@@ -80,7 +80,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
      *
      * @return array
      */
-    function getDependencies()
+    public function getDependencies()
     {
         return ['AppBundle\DataFixtures\ORM\LoadUserData',
                 'AppBundle\DataFixtures\ORM\LoadCategoryData',

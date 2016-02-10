@@ -6,11 +6,13 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
 use Exprating\CharacteristicBundle\Form\SearchTypeFabric;
+use JavierEguiluz\Bundle\EasyAdminBundle\Exception\ForbiddenActionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ExpertsController extends BaseController
@@ -73,6 +75,11 @@ class ExpertsController extends BaseController
      */
     public function createAction(Request $request, Category $category)
     {
+        /** @var User $expert */
+        $expert = $this->getUser();
+        if (!$expert->getCategories()->contains($category)) {
+            throw new AccessDeniedHttpException();
+        }
         $form = (new SearchTypeFabric())->create($this->get('form.factory'), $category);
 
         $form->handleRequest($request);

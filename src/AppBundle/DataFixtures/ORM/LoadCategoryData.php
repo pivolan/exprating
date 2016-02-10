@@ -61,7 +61,7 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
         $slugify = $this->container->get('appbundle.slugify');
         /** @var User $admin */
         $admin = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
-        foreach ($categories_names as $key=>$name) {
+        foreach ($categories_names as $key => $name) {
             $category = new Category();
             $category->setName($name);
             $category->setSlug($slugify->slugify($name));
@@ -87,7 +87,7 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
      *
      * @return array
      */
-    function getDependencies()
+    public function getDependencies()
     {
         return ['AppBundle\DataFixtures\ORM\LoadUserData'];
     }

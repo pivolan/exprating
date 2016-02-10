@@ -38,7 +38,7 @@ class LoadRatingLabelData extends AbstractFixture implements DependentFixtureInt
      *
      * @return array
      */
-    function getDependencies()
+    public function getDependencies()
     {
         return ['AppBundle\DataFixtures\ORM\LoadCategoryData'];
     }

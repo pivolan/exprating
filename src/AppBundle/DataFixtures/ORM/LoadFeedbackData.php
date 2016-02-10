@@ -39,7 +39,7 @@ class LoadFeedbackData extends AbstractFixture implements DependentFixtureInterf
      *
      * @return array
      */
-    function getDependencies()
+    public function getDependencies()
     {
         return ['AppBundle\DataFixtures\ORM\LoadProductData'];
     }
