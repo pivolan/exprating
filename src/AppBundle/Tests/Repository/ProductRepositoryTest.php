@@ -13,10 +13,14 @@ use AppBundle\Entity\User;
 use AppBundle\SortProduct\SortProduct;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
+use Exprating\CharacteristicBundle\CharacteristicSearchParam\CharacteristicSearchParameter;
+use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
+use Exprating\CharacteristicBundle\Entity\Characteristic;
+use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 
 class ProductRepositoryTest extends AbstractWebCaseTest
 {
-    public function testByCategory()
+    public function testFindByCategoryQuery()
     {
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
@@ -82,7 +86,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         }
     }
 
-    public function testSimilar()
+    public function testFindSimilar()
     {
         //Создадим две тестовых категории
         /** @var EntityManager $em */
@@ -126,7 +130,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $this->assertNotContains($product3, $products);
     }
 
-    public function testNew()
+    public function testFindNew()
     {
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
@@ -155,7 +159,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         }
     }
 
-    public function testPopular()
+    public function testFindPopular()
     {
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
@@ -188,7 +192,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         }
     }
 
-    public function testFindByExpert()
+    public function testFindByExpertQuery()
     {
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
@@ -230,5 +234,142 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertTrue($product->getIsEnabled());
             $this->assertEquals($expert, $product->getExpertUser());
         }
+    }
+
+    public function testFindByCharacteristicsQuery()
+    {
+        /** @var EntityManager $em */
+        $em = $this->doctrine->getManager();
+
+        //Создадим товар с одной характеристикой, создадим критерий и найдем этот товар.
+        //Создадим критерий чтобы не найти этот товар.
+        //Проверим граничные условия
+        $category = new Category();
+        $category->setName('category_name')->setSlug('category_slug');
+        $em->persist($category);
+
+        $product = new Product();
+        $product->setName('фиолетовый носок')
+            ->setSlug('test_char_product')
+            ->setMinPrice(10000.25)
+            ->setCategory($category);
+        $em->persist($product);
+        $characteristic = new Characteristic();
+        $characteristic->setName('size')
+            ->setSlug('size_foot')
+            ->setLabel('size_foot')
+            ->setType(Characteristic::TYPE_INT);
+        $em->persist($characteristic);
+
+        $productCharacteristic = new ProductCharacteristic();
+        $productCharacteristic->setProduct($product)
+            ->setCharacteristic($characteristic)
+            ->setValue(25);
+        $em->persist($productCharacteristic);
+
+        $em->flush();
+        //Проверяем что размер больше 20, должно найти
+        $criteria = new CharacteristicSearchParameter();
+        $criteria->setName($characteristic->getSlug())
+            ->setType($characteristic->getType())
+            ->setValueGTE(20);
+        $commonCriteria = new CommonProductSearch();
+        $commonCriteria->addCharacteristics($criteria);
+
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $this->assertContains($product, $products);
+
+        //Проверяем что размер больше 20 и меньше 30
+        $criteria = new CharacteristicSearchParameter();
+        $criteria->setName($characteristic->getSlug())
+            ->setType($characteristic->getType())
+            ->setValueGTE(20)
+            ->setValueLTE(30);
+        $commonCriteria = new CommonProductSearch();
+        $commonCriteria->addCharacteristics($criteria);
+
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $this->assertContains($product, $products);
+        //Добавим условие по цене
+        $commonCriteria = new CommonProductSearch();
+        $commonCriteria->setPriceGTE(10000.25)
+            ->setPriceLTE(10000.25)
+            ->addCharacteristics($criteria);
+
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $this->assertContains($product, $products);
+        //Не найдем
+        $criteria->setValueGTE(26);
+        $commonCriteria = new CommonProductSearch();
+        $commonCriteria->setPriceGTE(10000.25)
+            ->setPriceLTE(10000.25)
+            ->addCharacteristics($criteria);
+
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $this->assertNotContains($product, $products);
+
+        $criteria->setValueGTE(20);
+        $commonCriteria = new CommonProductSearch();
+        $commonCriteria->setPriceGTE(10010)
+            ->addCharacteristics($criteria);
+
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $this->assertNotContains($product, $products);
+
+        //Создадим товар с несколькими характеристиками, найдем его по одной характеристике, по 2м, по всем.
+        //Не найдем его по 1 характеристике, не найдем все характеристики верные и одна не верная.
+        $characteristic = new Characteristic();
+        $characteristic->setName('weight_test')
+            ->setSlug('weight_test')
+            ->setLabel('weight_test')
+            ->setType(Characteristic::TYPE_DECIMAL);
+        $em->persist($characteristic);
+
+        $productCharacteristic = new ProductCharacteristic();
+        $productCharacteristic->setProduct($product)
+            ->setCharacteristic($characteristic)
+            ->setValue(100.12);
+        $em->persist($productCharacteristic);
+        $em->flush();
+
+        $characteristic = new Characteristic();
+        $characteristic->setName('options')
+            ->setSlug('options')
+            ->setLabel('options')
+            ->setType(Characteristic::TYPE_STRING);
+        $em->persist($characteristic);
+
+        $productCharacteristic = new ProductCharacteristic();
+        $productCharacteristic->setProduct($product)
+            ->setCharacteristic($characteristic)
+            ->setValue('Больше гантели красные');
+        $em->persist($productCharacteristic);
+        $em->flush();
+        //Ищем по трем критериям
+        $criteria = (new CharacteristicSearchParameter())
+            ->setName('size_foot')
+            ->setType(Characteristic::TYPE_INT)
+            ->setValueGTE(20)
+            ->setValueLTE(30);
+        $criteria2 = (new CharacteristicSearchParameter())
+            ->setName('weight_test')
+            ->setType(Characteristic::TYPE_DECIMAL)
+            ->setValueGTE(100)
+            ->setValueLTE(101);
+        $criteria3 = (new CharacteristicSearchParameter())
+            ->setName('options')
+            ->setType(Characteristic::TYPE_STRING)
+            ->setValue('Гантели');
+
+        $commonCriteria = new CommonProductSearch();
+        $commonCriteria->setPriceGTE(9999)
+            ->setPriceLTE(10001)
+            ->setName('фиолетов')
+            ->addCharacteristics($criteria)
+            ->addCharacteristics($criteria2)
+            ->addCharacteristics($criteria3);
+
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $this->assertContains($product, $products);
     }
 } 

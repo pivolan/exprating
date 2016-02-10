@@ -38,6 +38,20 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * @return array|Product[]
+     */
+    public function findPopular()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.isEnabled = :isEnabled')
+            ->orderBy('a.visitsCount', 'DESC')
+            ->setMaxResults(self::LIMIT_MAIN_PAGE_NEW_PRODUCTS)
+            ->setParameter('isEnabled', true)
+            ->getQuery();
+        return $query->getResult();
+    }
+
 
     /**
      * @return Product[]|ArrayCollection
@@ -47,20 +61,6 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->createQueryBuilder('a')
             ->where('a.isEnabled = :isEnabled')
             ->orderBy('a.enabledAt', 'DESC')
-            ->setMaxResults(self::LIMIT_MAIN_PAGE_NEW_PRODUCTS)
-            ->setParameter('isEnabled', true)
-            ->getQuery();
-        return $query->getResult();
-    }
-
-    /**
-     * @return array|Product[]
-     */
-    public function findPopular()
-    {
-        $query = $this->createQueryBuilder('a')
-            ->where('a.isEnabled = :isEnabled')
-            ->orderBy('a.visitsCount', 'DESC')
             ->setMaxResults(self::LIMIT_MAIN_PAGE_NEW_PRODUCTS)
             ->setParameter('isEnabled', true)
             ->getQuery();
@@ -135,7 +135,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                         $qb->innerJoin('a.productCharacteristics', $alias, 'WITH',
                             "$alias.product=a.id AND $alias.characteristic=:$key1 AND $alias.valueString LIKE :$key2")
                             ->setParameter($key1, $name)
-                            ->setParameter($key2, $characteristic->getValue());
+                            ->setParameter($key2, '%' . $characteristic->getValue() . '%');
                     }
                     break;
                 case Characteristic::TYPE_DECIMAL:

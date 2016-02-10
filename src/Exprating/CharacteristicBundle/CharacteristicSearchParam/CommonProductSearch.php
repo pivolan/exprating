@@ -62,6 +62,7 @@ class CommonProductSearch
     public function addCharacteristics(CharacteristicSearchParameter $characteristic)
     {
         $this->characteristics[] = $characteristic;
+        return $this;
     }
 
     /**
@@ -86,6 +87,7 @@ class CommonProductSearch
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -102,6 +104,7 @@ class CommonProductSearch
     public function setPriceGTE($priceGTE)
     {
         $this->priceGTE = $priceGTE;
+        return $this;
     }
 
     /**
@@ -118,5 +121,6 @@ class CommonProductSearch
     public function setPriceLTE($priceLTE)
     {
         $this->priceLTE = $priceLTE;
+        return $this;
     }
 }
