@@ -9,7 +9,7 @@ use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
 /**
  * ProductCharacteristic
  *
- * @ORM\Table(name="product_characteristic")
+ * @ORM\Table(name="product_characteristic", uniqueConstraints={@ORM\uniqueConstraint(name="product_characteristic", columns={"product_id", "characteristic_id"})})
  * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\ProductCharacteristicRepository")
  */
 class ProductCharacteristic
