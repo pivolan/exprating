@@ -692,7 +692,7 @@ class Product
     /**
      * Get productCharacteristics
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|ProductCharacteristic[]
      */
     public function getProductCharacteristics()
     {
