@@ -45,13 +45,13 @@ class CharacteristicSearchParameterTypeTest extends AbstractWebCaseTest
         $object = new CharacteristicSearchParameter();
         $object->setName($name);
 
-        $form = $this->client->getContainer()->get('form.factory')->create(CharacteristicSearchParameterType::class, $object);
+        $form = $this->client->getContainer()->get('form.factory')->create(CharacteristicSearchParameterType::class, clone $object);
 
         // submit the data to the form directly
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());
-        $object->setValueGTE($objectData['valueLTE'])->setValueLTE($objectData['valueGTE'])->setValue($objectData['value']);
+        $object->setValueGTE($objectData['valueGTE'])->setValueLTE($objectData['valueLTE'])->setValue($objectData['value']);
         $this->assertEquals($object, $form->getData());
 
         $view = $form->createView();
