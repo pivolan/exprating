@@ -45,15 +45,24 @@ class CreateExpertiseControllerTest extends WebTestCase
 
     public function testCreatereview()
     {
-        $client = static::createClient();
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'qwerty',
+        ]);
 
-        $crawler = $client->request('GET', '/expert/cabinet/new-review/products/{slug}');
+        $crawler = $client->request('GET', '/expert/cabinet/new-review/products/product_100');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+
     }
 
     public function testComplete()
     {
-        $client = static::createClient();
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'qwerty',
+        ]);
 
-        $crawler = $client->request('GET', '/expert/cabinet/new-review/complete');
+        $crawler = $client->request('GET', '/expert/cabinet/new-review/complete/product_100');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
     }
 }
