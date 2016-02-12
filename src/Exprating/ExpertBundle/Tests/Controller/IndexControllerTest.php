@@ -15,6 +15,17 @@ class IndexControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/expert/cabinet');
 
-        $this->assertContains('Expert index page', $client->getResponse()->getContent());
+        $this->assertContains('Published products', $client->getResponse()->getContent());
+    }
+    public function testUnpublishedProducts()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'qwerty',
+        ]);
+
+        $crawler = $client->request('GET', '/expert/cabinet/unpublished-products');
+
+        $this->assertContains('Unpublished products', $client->getResponse()->getContent());
     }
 }
