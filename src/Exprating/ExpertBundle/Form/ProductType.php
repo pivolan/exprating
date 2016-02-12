@@ -67,9 +67,9 @@ class ProductType extends AbstractType
         $product = $event->getData();
         $category = $product->getCategory();
         $form
-            ->add('rating1', null, ['label' => $category->getRatingLabel()->getRating1Label()])
-            ->add('rating2', null, ['label' => $category->getRatingLabel()->getRating2Label()])
-            ->add('rating3', null, ['label' => $category->getRatingLabel()->getRating3Label()])
-            ->add('rating4', null, ['label' => $category->getRatingLabel()->getRating4Label()]);
+            ->add('rating1', null, ['label' => $category->getRatingSettings()->getRating1Label()])
+            ->add('rating2', null, ['label' => $category->getRatingSettings()->getRating2Label()])
+            ->add('rating3', null, ['label' => $category->getRatingSettings()->getRating3Label()])
+            ->add('rating4', null, ['label' => $category->getRatingSettings()->getRating4Label()]);
     }
 }

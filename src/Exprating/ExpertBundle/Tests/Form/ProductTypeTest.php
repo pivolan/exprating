@@ -8,7 +8,7 @@ namespace Exprating\ExpertBundle\Tests\Form;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
-use AppBundle\Entity\RatingLabel;
+use AppBundle\Entity\RatingSettings;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
@@ -30,13 +30,13 @@ class ProductTypeTest extends AbstractWebCaseTest
         $category = new Category();
         $category->setSlug($data['categorySlug'])
             ->setName($data['categorySlug']);
-        $ratingLabel = new RatingLabel();
+        $ratingLabel = new RatingSettings();
         $ratingLabel->setCategory($category)
             ->setRating1Label($data['label1'])
             ->setRating2Label($data['label2'])
             ->setRating3Label($data['label3'])
             ->setRating4Label($data['label4']);
-        $category->setRatingLabel($ratingLabel);
+        $category->setRatingSettings($ratingLabel);
         $product = new Product();
         $product->setCategory($category)
             ->setName($data['product']['name'])

@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * RatingLabel
  *
- * @ORM\Table(name="rating_label")
+ * @ORM\Table(name="rating_settings")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RatingLabelRepository")
  */
-class RatingLabel
+class RatingSettings
 {
     /**
      * @var int
@@ -50,9 +50,37 @@ class RatingLabel
     private $rating4label;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="rating1weight", type="integer", nullable=true)
+     */
+    private $rating1weight;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="rating2weight", type="integer", nullable=true)
+     */
+    private $rating2weight;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="rating3weight", type="integer", nullable=true)
+     */
+    private $rating3weight;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="rating4weight", type="integer", nullable=true)
+     */
+    private $rating4weight;
+
+    /**
      * @var Category
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="ratingLabel")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="ratingSettings")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="slug")
      */
     private $category;
@@ -72,7 +100,7 @@ class RatingLabel
      *
      * @param string $rating1
      *
-     * @return RatingLabel
+     * @return RatingSettings
      */
     public function setRating1Label($rating1)
     {
@@ -96,7 +124,7 @@ class RatingLabel
      *
      * @param string $rating2
      *
-     * @return RatingLabel
+     * @return RatingSettings
      */
     public function setRating2Label($rating2)
     {
@@ -120,7 +148,7 @@ class RatingLabel
      *
      * @param string $rating3
      *
-     * @return RatingLabel
+     * @return RatingSettings
      */
     public function setRating3Label($rating3)
     {
@@ -144,7 +172,7 @@ class RatingLabel
      *
      * @param string $rating4
      *
-     * @return RatingLabel
+     * @return RatingSettings
      */
     public function setRating4Label($rating4)
     {
@@ -168,7 +196,7 @@ class RatingLabel
      *
      * @param \AppBundle\Entity\Category $category
      *
-     * @return RatingLabel
+     * @return RatingSettings
      */
     public function setCategory(\AppBundle\Entity\Category $category = null)
     {
@@ -190,5 +218,101 @@ class RatingLabel
     public function __toString()
     {
         return $this->getCategory()->getName() . ' label';
+    }
+
+    /**
+     * Set rating1weight
+     *
+     * @param integer $rating1weight
+     *
+     * @return RatingSettings
+     */
+    public function setRating1weight($rating1weight)
+    {
+        $this->rating1weight = $rating1weight;
+
+        return $this;
+    }
+
+    /**
+     * Get rating1weight
+     *
+     * @return integer
+     */
+    public function getRating1weight()
+    {
+        return $this->rating1weight;
+    }
+
+    /**
+     * Set rating2weight
+     *
+     * @param integer $rating2weight
+     *
+     * @return RatingSettings
+     */
+    public function setRating2weight($rating2weight)
+    {
+        $this->rating2weight = $rating2weight;
+
+        return $this;
+    }
+
+    /**
+     * Get rating2weight
+     *
+     * @return integer
+     */
+    public function getRating2weight()
+    {
+        return $this->rating2weight;
+    }
+
+    /**
+     * Set rating3weight
+     *
+     * @param integer $rating3weight
+     *
+     * @return RatingSettings
+     */
+    public function setRating3weight($rating3weight)
+    {
+        $this->rating3weight = $rating3weight;
+
+        return $this;
+    }
+
+    /**
+     * Get rating3weight
+     *
+     * @return integer
+     */
+    public function getRating3weight()
+    {
+        return $this->rating3weight;
+    }
+
+    /**
+     * Set rating4weight
+     *
+     * @param integer $rating4weight
+     *
+     * @return RatingSettings
+     */
+    public function setRating4weight($rating4weight)
+    {
+        $this->rating4weight = $rating4weight;
+
+        return $this;
+    }
+
+    /**
+     * Get rating4weight
+     *
+     * @return integer
+     */
+    public function getRating4weight()
+    {
+        return $this->rating4weight;
     }
 }

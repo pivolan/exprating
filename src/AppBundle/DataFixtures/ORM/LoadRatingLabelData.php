@@ -6,7 +6,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Feedback;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
-use AppBundle\Entity\RatingLabel;
+use AppBundle\Entity\RatingSettings;
 use AppBundle\Form\CommentType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -21,7 +21,7 @@ class LoadRatingLabelData extends AbstractFixture implements DependentFixtureInt
         /** @var Category[] $categories */
         $categories = $manager->getRepository('AppBundle:Category')->findAll();
         foreach ($categories as $key => $category) {
-            $ratingLabel = new RatingLabel();
+            $ratingLabel = new RatingSettings();
             $ratingLabel->setRating1Label('Качество работы')
                 ->setCategory($category)
                 ->setRating2Label('Уровень шума')

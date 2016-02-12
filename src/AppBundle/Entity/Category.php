@@ -69,11 +69,11 @@ class Category
     private $children;
 
     /**
-     * @var RatingLabel
+     * @var RatingSettings
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingLabel", mappedBy="category")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingSettings", mappedBy="category")
      */
-    private $ratingLabel;
+    private $ratingSettings;
 
     /**
      * @var Characteristic[]
@@ -320,13 +320,13 @@ class Category
     /**
      * Set ratingLabel
      *
-     * @param \AppBundle\Entity\RatingLabel $ratingLabel
+     * @param \AppBundle\Entity\RatingSettings $ratingLabel
      *
      * @return Category
      */
-    public function setRatingLabel(\AppBundle\Entity\RatingLabel $ratingLabel = null)
+    public function setRatingSettings(\AppBundle\Entity\RatingSettings $ratingLabel = null)
     {
-        $this->ratingLabel = $ratingLabel;
+        $this->ratingSettings = $ratingLabel;
 
         return $this;
     }
@@ -334,10 +334,10 @@ class Category
     /**
      * Get ratingLabel
      *
-     * @return \AppBundle\Entity\RatingLabel
+     * @return \AppBundle\Entity\RatingSettings
      */
-    public function getRatingLabel()
+    public function getRatingSettings()
     {
-        return $this->ratingLabel;
+        return $this->ratingSettings;
     }
 }
