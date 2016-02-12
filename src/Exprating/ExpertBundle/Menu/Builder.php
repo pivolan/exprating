@@ -27,14 +27,14 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('Мои обзоры', ['route' => 'expert_cabinet']);
         $menu->addChild('Не завершенные обзоры', ['route' => 'expert_unpublished_products']);
         if ($user->hasRole(User::ROLE_EXPERT_CATEGORY_ADMIN)) {
-            $menu->addChild('Редактирование категорий', ['route' => 'homepage']);
+            $menu->addChild('Редактирование категорий', ['route' => 'expert_category_admin_list']);
         }
         if($user->hasRole(User::ROLE_EXPERT_CURATOR)){
-            $menu->addChild('Обзоры на модерации', ['route' => 'homepage']);
-            $menu->addChild('Редактирование экспертов', ['route' => 'homepage']);
+            $menu->addChild('Обзоры на модерации', ['route' => 'expert_curator_product_list_wait']);
+            $menu->addChild('Редактирование экспертов', ['route' => 'expert_curator_product_list']);
         }
         if($user->hasRole(User::ROLE_ADMIN)){
-            $menu->addChild('Назначение прав', ['route' => 'homepage']);
+            $menu->addChild('Назначение прав', ['route' => 'expert_admin_user_list']);
         }
         return $menu;
     }
