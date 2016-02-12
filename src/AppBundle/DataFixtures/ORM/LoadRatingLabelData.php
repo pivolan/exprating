@@ -14,20 +14,20 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\User;
 
-class LoadRatingLabelData extends AbstractFixture implements DependentFixtureInterface
+class LoadratingSettingsData extends AbstractFixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
         /** @var Category[] $categories */
         $categories = $manager->getRepository('AppBundle:Category')->findAll();
         foreach ($categories as $key => $category) {
-            $ratingLabel = new RatingSettings();
-            $ratingLabel->setRating1Label('Качество работы')
+            $ratingSettings = new RatingSettings();
+            $ratingSettings->setRating1Label('Качество работы')
                 ->setCategory($category)
                 ->setRating2Label('Уровень шума')
                 ->setRating3Label("Цена/Качество")
                 ->setRating4Label("Отзывы");
-            $manager->persist($ratingLabel);
+            $manager->persist($ratingSettings);
         }
         $manager->flush();
     }

@@ -318,21 +318,21 @@ class Category
     }
 
     /**
-     * Set ratingLabel
+     * Set ratingSettings
      *
-     * @param \AppBundle\Entity\RatingSettings $ratingLabel
+     * @param \AppBundle\Entity\RatingSettings $ratingSettings
      *
      * @return Category
      */
-    public function setRatingSettings(\AppBundle\Entity\RatingSettings $ratingLabel = null)
+    public function setRatingSettings(\AppBundle\Entity\RatingSettings $ratingSettings = null)
     {
-        $this->ratingSettings = $ratingLabel;
+        $this->ratingSettings = $ratingSettings;
 
         return $this;
     }
 
     /**
-     * Get ratingLabel
+     * Get ratingSettings
      *
      * @return \AppBundle\Entity\RatingSettings
      */

@@ -30,13 +30,13 @@ class ProductTypeTest extends AbstractWebCaseTest
         $category = new Category();
         $category->setSlug($data['categorySlug'])
             ->setName($data['categorySlug']);
-        $ratingLabel = new RatingSettings();
-        $ratingLabel->setCategory($category)
+        $ratingSettings = new RatingSettings();
+        $ratingSettings->setCategory($category)
             ->setRating1Label($data['label1'])
             ->setRating2Label($data['label2'])
             ->setRating3Label($data['label3'])
             ->setRating4Label($data['label4']);
-        $category->setRatingSettings($ratingLabel);
+        $category->setRatingSettings($ratingSettings);
         $product = new Product();
         $product->setCategory($category)
             ->setName($data['product']['name'])

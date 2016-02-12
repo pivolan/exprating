@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * RatingLabel
+ * ratingSettings
  *
  * @ORM\Table(name="rating_settings")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RatingLabelRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ratingSettingsRepository")
  */
 class RatingSettings
 {
@@ -52,30 +52,30 @@ class RatingSettings
     /**
      * @var int
      *
-     * @ORM\Column(name="rating1weight", type="integer", nullable=true)
+     * @ORM\Column(name="rating1weight", type="integer", nullable=true, options={"default"=25})
      */
-    private $rating1weight;
+    private $rating1weight=25;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating2weight", type="integer", nullable=true)
+     * @ORM\Column(name="rating2weight", type="integer", nullable=true, options={"default"=25})
      */
-    private $rating2weight;
+    private $rating2weight=25;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating3weight", type="integer", nullable=true)
+     * @ORM\Column(name="rating3weight", type="integer", nullable=true, options={"default"=25})
      */
-    private $rating3weight;
+    private $rating3weight=25;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating4weight", type="integer", nullable=true)
+     * @ORM\Column(name="rating4weight", type="integer", nullable=true, options={"default"=25})
      */
-    private $rating4weight;
+    private $rating4weight=25;
 
     /**
      * @var Category
