@@ -24,42 +24,42 @@ class Feedback
     /**
      * @var string
      *
-     * @ORM\Column(name="advantages", type="string", length=4000, nullable=true)
+     * @ORM\Column(name="advantages", type="string", length=4000, nullable=true, options={"comment":"Достоинства товара"})
      */
     private $advantages;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="disadvantages", type="string", length=4000, nullable=true)
+     * @ORM\Column(name="disadvantages", type="string", length=4000, nullable=true, options={"comment":"Недостатки товара"})
      */
     private $disadvantages;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text")
+     * @ORM\Column(name="comment", type="text", options={"comment":"Комментарий"})
      */
     private $comment;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_like", type="boolean", nullable=true)
+     * @ORM\Column(name="is_like", type="boolean", nullable=true, options={"comment":"Понравился ли товар"})
      */
     private $isLike;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="full_name", type="string", length=255)
+     * @ORM\Column(name="full_name", type="string", length=255, options={"comment":"Полное имя автора отзыва"})
      */
     private $fullName;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", options={"comment":"Дата создания отзыва"})
      */
     private $createdAt;
 

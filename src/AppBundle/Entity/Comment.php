@@ -25,21 +25,21 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="full_name", type="string", length=255)
+     * @ORM\Column(name="full_name", type="string", length=255, options={"comment":"Полное имя автора комментария"})
      */
     private $fullName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="message", type="text")
+     * @ORM\Column(name="message", type="text", options={"comment":"Сообщение комментария"})
      */
     private $message;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", options={"comment":"Дата создания пользователя. Или дата его регистрации."})
      */
     private $createdAt;
 

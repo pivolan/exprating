@@ -15,35 +15,35 @@ class Image
     /**
      * @var string
      * @ORM\Id
-     * @ORM\Column(name="filename", type="string", length=255)
+     * @ORM\Column(name="filename", type="string", length=255, options={"comment":"Уникальное имя файла без пути"})
      */
     private $filename;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="alt", type="string", length=255, nullable=true)
+     * @ORM\Column(name="alt", type="string", length=255, nullable=true, options={"comment":"Заполнения для тега в картинке"})
      */
     private $alt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, options={"comment":"Имя картинки"})
      */
     private $name;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_main", type="boolean", options={"default": 0})
+     * @ORM\Column(name="is_main", type="boolean", options={"default": 0}, options={"comment":"На странице товара эта картинка будет отображаться первой в списке"})
      */
     private $isMain = false;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", options={"comment":"Дата создания картинки"})
      */
     private $createdAt;
 

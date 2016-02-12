@@ -27,28 +27,28 @@ class Characteristic
      * @var string
      *
      * @ORM\Id
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=255, options={"comment":"Уникальный идентфикатор характерстики"})
      */
     private $slug;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, unique=true, options={"comment":"Название характеристики"})
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="label", type="string", length=255)
+     * @ORM\Column(name="label", type="string", length=255, options={"comment":"Метка характеристики, может быть не уникальна. Для использования на странице товара."})
      */
     private $label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=false, options={"default"="string"})
+     * @ORM\Column(name="type", type="string", length=255, nullable=false, options={"default"="string", "comment":"Тип значения, используется для поиска по характеристикам."})
      * @Assert\Choice(choices = {"string", "integer", "decimal"}, message = "Choose a valid type.")
      */
     private $type;
@@ -56,7 +56,7 @@ class Characteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="scale", type="string", length=255, nullable=true)
+     * @ORM\Column(name="scale", type="string", length=255, nullable=true, options={"comment":"Единица измерения"})
      * @Assert\Choice(choices = {"Вт", "См", "М", "Кг"}, message = "Choose a valid scale.")
      */
     private $scale;
@@ -65,7 +65,7 @@ class Characteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="head_group", type="string", length=255, nullable=true)
+     * @ORM\Column(name="head_group", type="string", length=255, nullable=true, options={"comment":"Группа к которой принадлежит характеристика. Используется при отображении характеристик на странице товара."})
      */
     private $group;
 

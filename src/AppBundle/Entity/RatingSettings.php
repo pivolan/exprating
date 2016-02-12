@@ -15,56 +15,56 @@ class RatingSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="rating1label", type="string", length=255)
+     * @ORM\Column(name="rating1label", type="string", length=255, options={"comment":"Название оценки №1, заполняется админом категорий"})
      */
     private $rating1label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rating2label", type="string", length=255)
+     * @ORM\Column(name="rating2label", type="string", length=255, options={"comment":"Название оценки №2"})
      */
     private $rating2label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rating3label", type="string", length=255)
+     * @ORM\Column(name="rating3label", type="string", length=255, options={"comment":"Название оценки №3"})
      */
     private $rating3label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rating4label", type="string", length=255)
+     * @ORM\Column(name="rating4label", type="string", length=255, options={"comment":"Название оценки №4"})
      */
     private $rating4label;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating1weight", type="integer", nullable=true, options={"default"=25})
+     * @ORM\Column(name="rating1weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1, используется для подсчета общей оценки товара"})
      */
     private $rating1weight=25;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating2weight", type="integer", nullable=true, options={"default"=25})
+     * @ORM\Column(name="rating2weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1"})
      */
     private $rating2weight=25;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating3weight", type="integer", nullable=true, options={"default"=25})
+     * @ORM\Column(name="rating3weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1"})
      */
     private $rating3weight=25;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating4weight", type="integer", nullable=true, options={"default"=25})
+     * @ORM\Column(name="rating4weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1"})
      */
     private $rating4weight=25;
 

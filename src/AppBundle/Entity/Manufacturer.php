@@ -24,28 +24,28 @@ class Manufacturer
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, unique=true, options={"comment":"Название изготовителя"})
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255, unique=false)
+     * @ORM\Column(name="image", type="string", length=255, unique=false, options={"comment":"имя файла картинки изготовителя"})
      */
     private $image;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", options={"comment":"Описание изготовителя, видно на странице товара"})
      */
     private $description;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", options={"comment":"Дата создания записи"})
      */
     private $createdAt;
 

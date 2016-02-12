@@ -26,21 +26,21 @@ class ProductCharacteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="value_string", type="string", length=255, nullable=true)
+     * @ORM\Column(name="value_string", type="string", length=255, nullable=true, options={"comment":"Значение характеристики товара. Строка"})
      */
     private $valueString;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="value_int", type="integer", nullable=true)
+     * @ORM\Column(name="value_int", type="integer", nullable=true, options={"comment":"Значение характеристики товара. целочисленное"})
      */
     private $valueInt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="value_decimal", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="value_decimal", type="decimal", precision=10, scale=2, nullable=true, options={"comment":"Значение характеристики товара. Цифра 0,00"})
      */
     private $valueDecimal;
 

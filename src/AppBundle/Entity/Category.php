@@ -18,33 +18,33 @@ class Category
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, unique=true, options={"comment":"Название категории"})
      */
     private $name;
 
     /**
      * @var string
      * @ORM\Id
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=255, options={"comment":"уникальное название на латинице. Используется для ссылки"})
      */
     private $slug;
 
 
     /**
      * @Gedmo\TreeLeft
-     * @ORM\Column(name="lft", type="integer")
+     * @ORM\Column(name="lft", type="integer", options={"comment":"Поле формируется автоматически для дерева."})
      */
     private $lft;
 
     /**
      * @Gedmo\TreeLevel
-     * @ORM\Column(name="lvl", type="integer")
+     * @ORM\Column(name="lvl", type="integer", options={"comment":"Уровень вложенности внутри дерева. Формируется автоматически."})
      */
     private $lvl;
 
     /**
      * @Gedmo\TreeRight
-     * @ORM\Column(name="rgt", type="integer")
+     * @ORM\Column(name="rgt", type="integer", options={"comment":"Полу формируется автоматически для дерева."})
      */
     private $rgt;
 

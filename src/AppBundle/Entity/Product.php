@@ -26,112 +26,112 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, options={"comment":"Наименование товара"})
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true, options={"comment":"Наименование для использования в ссылке, уникально"})
      */
     private $slug;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="preview_image", type="string", length=255, nullable=true)
+     * @ORM\Column(name="preview_image", type="string", length=255, nullable=true, options={"comment":"Картинка превью, показывается в списках товаров"})
      */
     private $previewImage;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="expert_opinion", type="text", nullable=true)
+     * @ORM\Column(name="expert_opinion", type="text", nullable=true, options={"comment":"Краткое мнение эксперта о товаре. Отображается на странице эксперта"})
      */
     private $expertOpinion;
 
     /**
      * @var array|string[]
      *
-     * @ORM\Column(name="advantages", type="json_array", nullable=true)
+     * @ORM\Column(name="advantages", type="json_array", nullable=true, options={"comment":"Список достоинств товара. Сериализованный массив строк"})
      */
     private $advantages;
 
     /**
      * @var array|string[]
      *
-     * @ORM\Column(name="disadvantages", type="json_array", nullable=true)
+     * @ORM\Column(name="disadvantages", type="json_array", nullable=true, options={"comment":"Список недостатков товара. Сериализованный массив строк"})
      */
     private $disadvantages;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="min_price", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="min_price", type="decimal", precision=10, scale=2, nullable=true, options={"comment":"Минимальная найденная цена на товар, среди всех продавцов. Ставится во время импорта товаров"})
      */
     private $minPrice;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating", type="integer", nullable=true)
+     * @ORM\Column(name="rating", type="integer", nullable=true, options={"comment":"Общий рейтинг товара. Автоматически ставится после создания обзора, на основе других оценок."})
      */
     private $rating = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating1", type="integer", nullable=true)
+     * @ORM\Column(name="rating1", type="integer", nullable=true, options={"comment":"Оценка №1, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
      */
     private $rating1 = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating2", type="integer", nullable=true)
+     * @ORM\Column(name="rating2", type="integer", nullable=true, options={"comment":"Оценка №2, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
      */
     private $rating2 = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating3", type="integer", nullable=true)
+     * @ORM\Column(name="rating3", type="integer", nullable=true, options={"comment":"Оценка №3, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
      */
     private $rating3 = 0;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="is_enabled", type="boolean", nullable=false, options={"default"=false})
-     */
-    private $isEnabled = false;
-
-    /**
      * @var int
      *
-     * @ORM\Column(name="rating4", type="integer", nullable=true)
+     * @ORM\Column(name="rating4", type="integer", nullable=true, options={"comment":"Оценка №4, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
      */
     private $rating4 = 0;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_enabled", type="boolean", nullable=false, options={"default"=false, "comment":"Будет ли товар отображаться на сайте. Означает что на товар готово экспертное мнение и оно одобрена модератором."})
+     */
+    private $isEnabled = false;
+
+    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="enabled_at", type="datetime", nullable=true)
+     * @ORM\Column(name="enabled_at", type="datetime", nullable=true, options={"comment":"Дата написания обзора и одобрения модератором"})
      */
     private $enabledAt;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="visits_count", type="bigint", options={"default"=0})
+     * @ORM\Column(name="visits_count", type="bigint", options={"default"=0, "comment":"Количество просмотров товара"})
      */
     private $visitsCount = 0;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", options={"comment":"Дата создания записи"})
      */
     private $createdAt;
 

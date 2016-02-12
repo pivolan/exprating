@@ -30,35 +30,35 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="full_name", type="string", unique=false, nullable=true)
+     * @ORM\Column(name="full_name", type="string", unique=false, nullable=true, options={"comment":"Полное имя Эксперта"})
      */
     private $fullName;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthday", type="date", nullable=true)
+     * @ORM\Column(name="birthday", type="date", nullable=true, options={"comment":"Дата рождения эксперта"})
      */
     private $birthday;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", nullable=true)
+     * @ORM\Column(name="city", type="string", nullable=true, options={"comment":"город. Отображается на странице эксперта"})
      */
     private $city;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="caption", type="string", nullable=true, unique=false)
+     * @ORM\Column(name="caption", type="string", nullable=true, unique=false, options={"comment":"Подпись эксперта, показывается в списке экспертов"})
      */
     private $caption;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="avatar_image", type="string", unique=true, nullable=true)
+     * @ORM\Column(name="avatar_image", type="string", unique=true, nullable=true, options={"comment":"Аватар картинка эксперта"})
      */
     private $avatarImage;
 

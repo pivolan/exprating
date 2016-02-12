@@ -24,14 +24,14 @@ class Shop
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, unique=true, options={"comment":"Название магазина"})
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255, unique=false)
+     * @ORM\Column(name="image", type="string", length=255, unique=false, options={"comment":"Картинка превью магазина"})
      */
     private $image;
 
