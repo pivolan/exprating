@@ -186,4 +186,9 @@ class RatingLabel
     {
         return $this->category;
     }
+
+    public function __toString()
+    {
+        return $this->getCategory()->getName() . ' label';
+    }
 }
