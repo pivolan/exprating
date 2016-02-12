@@ -29,7 +29,6 @@ class Version20160212114647 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE rating_settings DROP FOREIGN KEY FK_BB78153212469DE2');
         $this->addSql('ALTER TABLE rating_settings DROP rating1weight, DROP rating2weight, DROP rating3weight, DROP rating4weight');
     }
 }

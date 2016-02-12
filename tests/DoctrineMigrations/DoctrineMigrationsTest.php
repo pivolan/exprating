@@ -33,6 +33,21 @@ class AllMigrationsTest extends CommandTestCase
         // проверим что разницы между базой и схемой из кода нету
         $this->checkDiffTableAndSchema();
 
+        $output = $this->runCommand('doctrine:fixtures:load --no-interaction');
+        $this->assertNotContains('error', $output);
+        $this->assertNotContains('Exception', $output);
+
+        $output = $this->runCommand('doctrine:migrations:migrate 20160201095333 --no-interaction');
+        $this->assertContains('sql queries', $output, 'Миграция не удалась');
+        $output = $this->runCommand('doctrine:migrations:migrate prev --no-interaction');
+        $this->assertContains('sql queries', $output, 'Миграция не удалась');
+        $output = $this->runCommand('doctrine:migrations:migrate prev --no-interaction');
+        $this->assertContains('Already at first version.', $output, 'Миграция не удалась');
+
+        $output = $this->runCommand('doctrine:migrations:migrate --no-interaction');
+        $this->assertContains('sql queries', $output, 'Миграция не удалась');
+        // проверим что разницы между базой и схемой из кода нету
+        $this->checkDiffTableAndSchema();
     }
 
     /**

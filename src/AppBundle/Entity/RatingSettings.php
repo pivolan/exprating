@@ -13,15 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class RatingSettings
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="rating1label", type="string", length=255)
@@ -80,20 +71,11 @@ class RatingSettings
     /**
      * @var Category
      *
+     * @ORM\Id
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="ratingSettings")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="slug")
      */
     private $category;
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set rating1
