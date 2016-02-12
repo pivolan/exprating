@@ -14,7 +14,7 @@ class IndexController extends BaseController
      */
     public function publishedProductsAction()
     {
-        $products = $this->getEm()->getRepository('AppBundle:Product')->findByExpertQuery($this->getUser());
+        $products = $this->getEm()->getRepository('AppBundle:Product')->findByExpertQuery($this->getUser())->getResult();
         return $this->render('ExpertCabinet/publishedProducts.html.twig', ['products' => $products]);
     }
 
@@ -23,7 +23,7 @@ class IndexController extends BaseController
      */
     public function unpublishedProductsAction()
     {
-        $products = $this->getEm()->getRepository('AppBundle:Product')->findByExpertQuery($this->getUser());
+        $products = $this->getEm()->getRepository('AppBundle:Product')->findByExpertQuery($this->getUser())->getResult();
         return $this->render('ExpertCabinet/unpublishedProducts.html.twig', ['products' => $products]);
     }
 }
