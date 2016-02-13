@@ -1,6 +1,6 @@
 services:
     import.command.repair_tree_rubrics_command:
-        class: Exprating\ImportBundle\Command\RepairTreeRubricsCommand
+        class: Exprating\ImportBundle\Command\ImportRubricsToCategoryCommand
         calls:
             - [setEm, ['@doctrine.orm.entity_manager']]
             - [setEmImport, ['@doctrine.orm.import_entity_manager']]

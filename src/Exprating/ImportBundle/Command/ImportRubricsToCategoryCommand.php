@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RepairTreeRubricsCommand extends ContainerAwareCommand
+class ImportRubricsToCategoryCommand extends ContainerAwareCommand
 {
     /**
      * @var EntityManager
@@ -70,7 +70,7 @@ class RepairTreeRubricsCommand extends ContainerAwareCommand
     {
 
         $entityManagerImport = $this->emImport;
-        $repo = $entityManagerImport->getRepository('AppBundle:SiteProductRubrics');
+        $repo = $entityManagerImport->getRepository('ExpratingImportBundle:SiteProductRubrics');
         $appEntityManager = $this->em;
         /** @var SiteProductRubrics[] $rubrics */
         $rubrics = $repo->createQueryBuilder('a')->where('a.parent is null')
@@ -87,8 +87,8 @@ class RepairTreeRubricsCommand extends ContainerAwareCommand
 
                 if ($root) {
                     $category->setParent($root)
-                        ->setName($rubric->getName() . '-' . $root->getName())
-                        ->setSlug($slug . $root->getSlug());
+                        ->setName($rubric->getName())
+                        ->setSlug($root->getSlug() . '->' . $slug);
                 }
                 $appEntityManager->persist($category);
                 if (count($rubric->getChildren())) {

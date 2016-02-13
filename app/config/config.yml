@@ -47,9 +47,6 @@ twig:
 doctrine:
     dbal:
         connections:
-            import:
-                driver: pdo_sqlite
-                path: %kernel.root_dir%/data/import_data.db3
             default:
                 driver:   pdo_mysql
                 host:     "%database_host%"
@@ -58,6 +55,9 @@ doctrine:
                 user:     "%database_user%"
                 password: "%database_password%"
                 charset:  UTF8
+            import:
+                driver: pdo_sqlite
+                path: %kernel.root_dir%/data/import_data.db3
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
