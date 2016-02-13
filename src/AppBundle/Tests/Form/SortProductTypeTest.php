@@ -21,7 +21,7 @@ class SortProductTypeTest extends TypeTestCase
             'direction' => SortProduct::DIRECTION_DESC,
         ];
 
-        $form = $this->factory->create(SortProductType::class);
+        $form = $this->factory->create(SortProductType::class, new SortProduct());
 
         $object = new SortProduct();
         $object->setFieldName(SortProduct::FIELD_MIN_PRICE);
