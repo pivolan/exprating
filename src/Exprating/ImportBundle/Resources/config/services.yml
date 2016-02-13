@@ -1,4 +1,9 @@
 services:
-#    exprating_import.example:
-#        class: Exprating\ImportBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    import.command.repair_tree_rubrics_command:
+        class: Exprating\ImportBundle\Command\RepairTreeRubricsCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setEmImport, ['@doctrine.orm.import_entity_manager']]
+            - [setSlugify, ['@appbundle.slugify']]
+        tags:
+            -  { name: console.command }
