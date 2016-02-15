@@ -110,7 +110,7 @@ class IndexController extends BaseController
      * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}", name="product_list", defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC"})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
-    public function listAction(Category $category, $page, $sortField, $sortDirection)
+    public function listAction(Request $request, Category $category, $page, $sortField, $sortDirection)
     {
         $sortProduct = new SortProduct();
         $sortProduct->setFieldName($sortField)->setDirection($sortDirection);
@@ -130,7 +130,11 @@ class IndexController extends BaseController
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
-        return $this->render('Product/list.html.twig', [self::KEY_PAGINATION   => $pagination,
+        $template = 'Product/list.html.twig';
+        if($request->isXmlHttpRequest()){
+            $template = 'Product/listPart.html.twig';
+        }
+        return $this->render($template, [self::KEY_PAGINATION   => $pagination,
                                                         self::KEY_CATEGORY     => $category,
                                                         self::KEY_SORT_PRODUCT => $sortProduct]);
     }
