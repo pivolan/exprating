@@ -1,0 +1,33 @@
+    <div class="content-inner clearfix">
+        {{ breadcrumbs(category)|raw }}
+        <h1>{{ category.name }} - рейтинг по мнению экспертов</h1>
+
+        <div class="rubric-filters">
+            <div class="btn-group">
+                {{ include('_include/sortMenu.html.twig') }}
+            </div>
+
+
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input name="options" id="option1" type="radio"> <span class="glyphicon glyphicon-th-large"></span>
+                </label>
+                <label class="btn btn-primary">
+                    <input name="options" id="option2" type="radio"> <span class="glyphicon glyphicon-th-list"></span>
+                </label>
+            </div>
+        </div>
+
+
+        <div class="rubric-wrapper">
+            <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
+                <ul>
+                    {% for product in pagination %}
+                        {{ include("_include/Product/_itemList.twig") }}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        {{ knp_pagination_render(pagination) }}
+    </div>
