@@ -18,10 +18,10 @@ class CommentTypeTest extends TypeTestCase
             'fullName' => 'full name',
             'message' => 'some message',
         ];
-
-        $form = $this->factory->create(CommentType::class, new Comment());
-
         $object = new Comment();
+
+        $form = $this->factory->create(CommentType::class, clone $object);
+
         $object->setFullName('full name');
         $object->setMessage('some message');
 
