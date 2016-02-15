@@ -27,11 +27,16 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function findByCategoryQuery(Category $category, SortProduct $sortProduct = null)
+    public function findByCategoryQuery(Category $category, SortProduct $sortProduct = null, $isEnabled = true)
     {
         $qb = $this->createQueryBuilder('a')
             ->where('a.category = :category')
-            ->setParameter('category', $category);
+            ->andWhere('a.isEnabled = :is_enabled')
+            ->setParameter('category', $category)
+            ->setParameter('is_enabled', $isEnabled);
+        if (!$isEnabled) {
+            $qb->andWhere('a.expertUser IS NULL');
+        }
         if ($sortProduct) {
             $qb->orderBy('a.' . $sortProduct->getFieldName(), $sortProduct->getDirection());
         }

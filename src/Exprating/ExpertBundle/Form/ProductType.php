@@ -15,6 +15,8 @@ use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -30,18 +32,18 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rating1', null)
-            ->add('rating2', null)
-            ->add('rating3', null)
-            ->add('rating4', null)
+            ->add('rating1', TextType::class)
+            ->add('rating2', TextType::class)
+            ->add('rating3', TextType::class)
+            ->add('rating4', TextType::class)
             ->add('advantages', CollectionType::class, ['label'        => 'Достоинства',
                                                         'allow_add'    => true,
                                                         'allow_delete' => true])
             ->add('disadvantages', CollectionType::class, ['label'        => 'Недостатки',
                                                            'allow_add'    => true,
                                                            'allow_delete' => true])
-            ->add('expertOpinion', CKEditorType::class, ['label' => 'Заключение'])
-            ->add('expertComment', null, ['label' => 'Комментарий'])
+            ->add('expertOpinion', null, ['label' => 'Заключение'])
+            ->add('expertComment', TextareaType::class, ['label' => 'Комментарий'])
             ->add('productCharacteristics', CollectionType::class, ['entry_type'    => ProductCharacteristicType::class,
                                                                     'entry_options' => ['label' => false],
                                                                     'label'         => 'Характеристики'])
@@ -67,9 +69,9 @@ class ProductType extends AbstractType
         $product = $event->getData();
         $category = $product->getCategory();
         $form
-            ->add('rating1', null, ['label' => $category->getRatingSettings()->getRating1Label()])
-            ->add('rating2', null, ['label' => $category->getRatingSettings()->getRating2Label()])
-            ->add('rating3', null, ['label' => $category->getRatingSettings()->getRating3Label()])
-            ->add('rating4', null, ['label' => $category->getRatingSettings()->getRating4Label()]);
+            ->add('rating1', TextType::class, ['label' => $category->getRatingSettings()->getRating1Label()])
+            ->add('rating2', TextType::class, ['label' => $category->getRatingSettings()->getRating2Label()])
+            ->add('rating3', TextType::class, ['label' => $category->getRatingSettings()->getRating3Label()])
+            ->add('rating4', TextType::class, ['label' => $category->getRatingSettings()->getRating4Label()]);
     }
 }

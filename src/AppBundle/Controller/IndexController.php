@@ -11,6 +11,7 @@ use Exprating\SearchBundle\Form\SearchParamsType;
 use Exprating\SearchBundle\SearchParams\SearchParams;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends BaseController
@@ -90,6 +91,7 @@ class IndexController extends BaseController
     /**
      * @Route("/tovar/{slug}", name="product_detail")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
+     * @Security("is_granted('VIEW', product)")
      */
     public function detailAction(Request $request, Product $product)
     {
@@ -107,10 +109,10 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}", name="product_list", defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC"})
+     * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list", defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
-    public function listAction(Request $request, Category $category, $page, $sortField, $sortDirection)
+    public function listAction(Request $request, Category $category, $page, $sortField, $sortDirection, $status)
     {
         $sortProduct = new SortProduct();
         $sortProduct->setFieldName($sortField)->setDirection($sortDirection);
@@ -118,11 +120,12 @@ class IndexController extends BaseController
         $validator = $this->get('validator');
         $errors = $validator->validate($sortProduct);
 
+        $isEnabled = ($status == 'free') ? false : true;
         if (count($errors) > 0) {
             $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category);
             $this->addFlash(self::FLASH_SORT_ERRORS, (string)$errors);
         } else {
-            $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category, $sortProduct);
+            $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category, $sortProduct, $isEnabled);
         }
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -131,11 +134,11 @@ class IndexController extends BaseController
             self::LIMIT_PER_PAGE
         );
         $template = 'Product/list.html.twig';
-        if($request->isXmlHttpRequest()){
+        if ($request->isXmlHttpRequest()) {
             $template = 'Product/listPart.html.twig';
         }
         return $this->render($template, [self::KEY_PAGINATION   => $pagination,
-                                                        self::KEY_CATEGORY     => $category,
-                                                        self::KEY_SORT_PRODUCT => $sortProduct]);
+                                         self::KEY_CATEGORY     => $category,
+                                         self::KEY_SORT_PRODUCT => $sortProduct]);
     }
 }

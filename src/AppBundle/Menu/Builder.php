@@ -55,41 +55,47 @@ class Builder implements ContainerAwareInterface
         $slug = $request->get('slug');
         $page = $request->get('page');
         $direction = $request->get('sortDirection');
+        $status = $request->get('status');
         $field = $request->get('sortField');
 
         $menu->addChild('по цене', ['route'           => 'product_list',
                                     'routeParameters' => ['slug'          => $slug,
                                                           'page'          => $page,
                                                           'sortField'     => SortProduct::FIELD_MIN_PRICE,
-                                                          'sortDirection' => $direction
+                                                          'sortDirection' => $direction,
+                                                          'status'        => $status
                                     ]]);
 
         $menu->addChild('по дате', ['route'           => 'product_list',
                                     'routeParameters' => ['slug'          => $slug,
                                                           'page'          => $page,
                                                           'sortField'     => SortProduct::FIELD_ENABLED_AT,
-                                                          'sortDirection' => $direction
+                                                          'sortDirection' => $direction,
+                                                          'status'        => $status
                                     ]]);
 
         $menu->addChild('по рейтингу', ['route'           => 'product_list',
                                         'routeParameters' => ['slug'          => $slug,
                                                               'page'          => $page,
                                                               'sortField'     => SortProduct::FIELD_RATING,
-                                                              'sortDirection' => $direction
+                                                              'sortDirection' => $direction,
+                                                              'status'        => $status
                                         ]]);
         $menu->addChild('divider', ['divider' => true])->setAttribute('class', 'divider');
         $menu->addChild('по возрастанию', ['route'           => 'product_list',
                                            'routeParameters' => ['slug'          => $slug,
                                                                  'page'          => $page,
                                                                  'sortField'     => $field,
-                                                                 'sortDirection' => SortProduct::DIRECTION_ASC
+                                                                 'sortDirection' => SortProduct::DIRECTION_ASC,
+                                                                 'status'        => $status
                                            ]]);
 
         $menu->addChild('по убыванию', ['route'           => 'product_list',
                                         'routeParameters' => ['slug'          => $slug,
                                                               'page'          => $page,
                                                               'sortField'     => $field,
-                                                              'sortDirection' => SortProduct::DIRECTION_DESC
+                                                              'sortDirection' => SortProduct::DIRECTION_DESC,
+                                                              'status'        => $status
                                         ]]);
         return $menu;
     }
