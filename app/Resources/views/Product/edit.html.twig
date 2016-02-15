@@ -1,282 +1,52 @@
-{% extends 'layout.html.twig' %}
-{% block body_type %}product{% endblock %}
-{% block content %}
-    <div class="content-inner clearfix">
-        {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% extends 'Product/detail.html.twig' %}
+{% block form_start_block %}
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
-        {{ form_start(form) }}
-        {{ breadcrumbs(product.category)|raw }}
-        {% if is_granted('EXPERTISE', product) %}
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
-                        <input class="btn btn-default" type="submit" value="Сохранить"/>
-                        <input class="btn btn-default" type="button" value="Опубликовать"/>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-        <h1>{{ product.name }}</h1>
-
-        <div class="expert-wrapper">
-            <div class="expert-img-wrapper">
-                <img src="{{ product.expertUser.avatarImage|default("http://placehold.it/90x90") }}">
-            </div>
-            <div class="expert-name">
-                Экспертное мнение
-                <span>{{ product.expertUser.fullName | default("Пусто") }}</span></div>
-        </div>
-
-        <div class="carousel-wrapper" style="width: 300px; height: 300px; float: left">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                <ol class="carousel-indicators">
-                    {% for image in product.images %}
-                        <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}"
-                            class="{{ image.isMain ? 'active':'' }}"></li>
-                    {% endfor %}
-                </ol>
-                <div class="carousel-inner">
-                    {% for image in product.images %}
-                        <div class="item {{ image.isMain ? 'active':'' }}">
-                            <div class="img-wrapper" style="background-image: url({{ image.filename }});"></div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span
-                            class="glyphicon glyphicon-chevron-left"></span></a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next"><span
-                            class="glyphicon glyphicon-chevron-right"></span></a>
-            </div>
-        </div>
-
-
-        <div class="rating-wrapper">
-
-            <ul class="media-list">
-                <li class="media">
-                <span class="pull-right">
-                    <span class="main-label">{{ product.rating }}</span>
-                </span>
-
-                    <div class="media-body">
-                        <h3>Общая оценка</h3>
-                    </div>
-                </li>
-                <style type="text/css">.media input{width: 22px;height: 23px; display: inline;}</style>
-                <li class="media">
-                <span class="pull-right">
-                    <span style="padding: 10px; font-size: 1.4em;">{{ form_widget(form.rating1) }}</span>
-                </span>
-
-                    <div class="media-body">
-                        <div class="media-heading">{{ product.category.ratingSettings.rating1label }}</div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar"
-                                 aria-valuenow="{{ product.rating1 }}"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ product.rating1 }}%">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media">
-                <span class="pull-right">
-                    <span style="padding: 10px; font-size: 1.4em;">{{ form_widget(form.rating2) }}</span>
-                </span>
-
-                    <div class="media-body">
-                        <div class="media-heading">{{ product.category.ratingSettings.rating2label }}</div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar"
-                                 aria-valuenow="{{ product.rating2 }}"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ product.rating2 }}%">
-                                <span class="sr-only">{{ product.rating2 }}% Complete (success)</span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media">
-                <span class="pull-right">
-                    <span style="padding: 10px; font-size: 1.4em;">{{ form_widget(form.rating3) }}</span>
-                </span>
-
-                    <div class="media-body">
-                        <div class="media-heading">{{ product.category.ratingSettings.rating3label }}</div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar"
-                                 aria-valuenow="{{ product.rating3 }}"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ product.rating3 }}%">
-                                <span class="sr-only">{{ product.rating3 }}% Complete (success)</span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media">
-                <span class="pull-right">
-                    <span style="padding: 10px; font-size: 1.4em;">{{ form_widget(form.rating4) }}</span>
-                </span>
-
-                    <div class="media-body">
-                        <div class="media-heading">{{ product.category.ratingSettings.rating4label }}</div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar"
-                                 aria-valuenow="{{ product.rating3 }}"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ product.rating4 }}%">
-                                <span class="sr-only">{{ product.rating4 }}% Complete (success)</span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-
-        <div style="margin-bottom: 20px;">
-
-            <div class="plus-wrapper">
-                <div style="padding: 0 0 0 20px;">
-                    <h3>Достоинства</h3>
-                    <ul>
-                        {{ form_widget(form.advantages) }}
-                    </ul>
-                </div>
-            </div>
-
-            <div class="minus-wrapper">
-                <h3>Недостатки</h3>
-                <ul>
-                    {{ form_widget(form.disadvantages) }}
-                </ul>
-            </div>
-        </div>
-
-        <div style="clear: both"></div>
-
-        <div class="tabs-wrapper">
-
-            <div class="tabs-container">
-                <div class="tabs-container-inner clearfix">
-
-                    <ul class="nav nav-tabs" style="clear: both">
-                        <li class="active"><a href="#test" data-toggle="tab">Заключение</a></li>
-                        <li><a href="#props" data-toggle="tab">Характеристики</a></li>
-                        <li><a href="#maintainer" data-toggle="tab">Изготовитель</a></li>
-                        <li><a href="#comments" data-toggle="tab">Отзывы</a></li>
-                        <li><a href="#buy" data-toggle="tab">Где купить</a></li>
-                    </ul>
-
-                    <div class="tabs-content">
-                        <div class="tab-pane fade active in" id="test">
-                            {{ form_widget(form.expertOpinion) }}
-                            {{ form_row(form.expertComment) }}
-                        </div>
-                        <div class="tab-pane fade" id="buy">
-                            <h3>Где купить</h3>
-                            <table class="where-by">
-                                <tbody>
-                                {% for productShopPrice in product.productShopPrices %}
-                                    <tr>
-                                        <td><img src="{{ productShopPrice.shop.image }}"></td>
-                                        <td><a href="">{{ productShopPrice.shop.name }}</a></td>
-                                        <td>{{ productShopPrice.price }} <span
-                                                    class="sign_ruble">p<span>уб.</span></span></td>
-                                        <td><a class="btn btn-primary btn-md" role="button"><span
-                                                        class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="comments">
-                            <h3>Отзывы покупателей</h3>
-
-                            <div class="comments-summary">3 отзыва
-                                <span class="comments-summary-plus"><span class="glyphicon glyphicon-thumbs-up"></span> 2</span>&nbsp;
-                                <span class="comments-summary-minus"><span
-                                            class="glyphicon glyphicon-thumbs-down"></span> 1</span>
-
-                                <a class="btn btn-primary btn-md" style="float:right" role="button"><span
-                                            class="glyphicon glyphicon-comment"></span> Написать отзыв</a>
-                            </div>
-                            <ul class="comments">
-                                {% for feedback in product.feedbacks %}
-                                    <li class="comment-wrapper">
-                                        <h4>{{ feedback.fullName }}</h4>
-
-                                        <div class="comment-content">
-                                            <h5>Достоинства</h5>
-
-                                            <div>{{ feedback.advantages }}</div>
-                                            <h5>Недостатки</h5>
-
-                                            <div>{{ feedback.disadvantages }}</div>
-                                            <h5>Комментарии</h5>
-
-                                            <div>{{ feedback.comment }}</div>
-                                        </div>
-                                        <div class="comment-date">{{ feedback.createdAt|date('d.m.Y') }}</div>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="tab-pane fade" id="props">
-                            <div id="props-wrapper">
-                                <h2 class="props-title">Характеристики</h2>
-                                {{ form_widget(form.productCharacteristics) }}
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="maintainer">
-                            <h3>Изготовитель</h3>
-
-                            <div class="logo-wrapper" style="float: left; height: 200px; margin-right: 30px;">
-                                <img src="{{ product.manufacturer.image }}">
-                            </div>
-                            <div>
-                                <h4>{{ product.manufacturer.name }}</h4>
-
-                                <div class="maintainer-text">
-                                    {{ product.manufacturer.description }}
-                                </div>
-                                <div><a href="">Отзывы</a> 0 | <a href="">Товары</a> 309</div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="comments-wrapper">
-                        <a name="comments"></a>
-
-                        <h3>Обсуждение товара</h3>
-                        <ul>
-                            {% for comment in product.comments %}
-                                <li class="comment-item">
-                                    <div class="comment-date">
-                                        {{ comment.createdAt|date('d.m.Y') }}
-                                    </div>
-                                    <div class="comment-author">
-                                        {{ comment.fullName }}
-                                    </div>
-                                    <div class="comment-text">
-                                        {{ comment.message }}
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="sidebar-left">
-                <div class="price-from">
-                    Цена от: {{ product.minPrice }} <span class="sign_ruble">p<span>уб.</span></span>
-                </div>
-
-            </div>
-        </div>
-        {{ form_end(form) }}
-    </div>
+    {{ form_start(form) }}
 {% endblock %}
-{% block sidebar_right %}{% endblock %}
+{% block edit_buttons_label %}
+    <a class="btn btn-default" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
+    <input class="btn btn-default" type="submit" value="Сохранить"/>
+    <input class="btn btn-default" type="button" value="Опубликовать"/>
+{% endblock %}
+
+
+{% block ratings %}
+    {% set rating_list = [form.rating1, form.rating2, form.rating3, form.rating4] %}
+
+    {% set rating_labels = [product.category.ratingSettings.rating1label,
+    product.category.ratingSettings.rating2label,
+    product.category.ratingSettings.rating3label,
+    product.category.ratingSettings.rating4label] %}
+    {% for rating in rating_list %}
+        <li class="media">
+            <span class="pull-right">
+            <span style="padding: 10px; font-size: 1.4em;">{% block rating_value %}{{ form_widget(rating) }}{% endblock %}</span>
+            </span>
+
+            <div class="media-body">
+                <div class="media-heading">{{ rating_labels[loop.index0] }}</div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                         aria-valuenow="{{ rating.vars.value }}"
+                         aria-valuemin="0" aria-valuemax="100" style="width: {{ rating.vars.value }}%">
+                    </div>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+{% endblock %}
+
+{% block advantages %}{{ form_widget(form.advantages) }}{% endblock %}
+{% block disadvantages %}{{ form_widget(form.disadvantages) }}{% endblock %}
+{% block expert_opinion %}
+    {{ form_widget(form.expertOpinion) }}
+    {{ form_row(form.expertComment) }}
+{% endblock %}
+{% block characteristics %}
+    {{ form_widget(form.productCharacteristics) }}
+{% endblock %}
+{% block form_comment_block %}{% endblock %}
+{% block similar_products %}{% endblock %}
+
+{% block form_end_block %}{{ form_end(form) }}{% endblock %}
