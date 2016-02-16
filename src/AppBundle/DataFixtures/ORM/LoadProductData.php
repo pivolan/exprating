@@ -28,7 +28,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
                 ->setRating2(rand(1, 99))
                 ->setRating3(rand(1, 99))
                 ->setRating4(rand(1, 99))
-                ->setIsEnabled($i % 3 == 0)
+                ->setIsEnabled($i % 3 != 0)
                 ->setVisitsCount(rand(0, 100))
                 ->setEnabledAt(new \DateTime())
                 ->setSlug('product_' . $i)

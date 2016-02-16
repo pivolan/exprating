@@ -32,6 +32,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $product = new Product();
             $product->setName('test name ' . $i)
                 ->setSlug("test_name_$i")
+                ->setIsEnabled(true)
                 ->setRating($i)
                 ->setCategory($category);
             $em->persist($product);
