@@ -99,7 +99,7 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
      *
      * @return array
      */
-    function getDependencies()
+    public function getDependencies()
     {
         return ['AppBundle\DataFixtures\ORM\LoadProductData', 'AppBundle\DataFixtures\ORM\LoadCategoryData',];
     }

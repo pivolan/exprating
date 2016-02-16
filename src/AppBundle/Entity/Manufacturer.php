@@ -49,7 +49,7 @@ class Manufacturer
      */
     private $createdAt;
 
-    function __construct()
+    public function __construct()
     {
         $this->createdAt = new \DateTime();
     }

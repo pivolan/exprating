@@ -7,10 +7,10 @@
 namespace AppBundle\Listener\Product;
 
 
-use AppBundle\Event\ProductReservationEvent;
+use AppBundle\Event\ProductReservationOverEvent;
 use Doctrine\ORM\EntityManager;
 
-class ReserveProduct
+class ReserveOverProduct
 {
     /**
      * @var EntityManager
@@ -22,13 +22,10 @@ class ReserveProduct
         $this->em = $em;
     }
 
-    public function handler(ProductReservationEvent $event)
+    public function handler(ProductReservationOverEvent $event)
     {
-        $expert = $event->getExpert();
         $product = $event->getProduct();
-        $product->setExpertUser($expert)
-            ->setReservedAt(new \DateTime());
-        $this->em->persist($product);
-        $this->em->flush();
+        $product->setExpertUser(null)
+            ->setReservedAt(null);
     }
 } 

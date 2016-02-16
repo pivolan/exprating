@@ -31,5 +31,6 @@ monolog:
         #    type:   chromephp
         #    level:  info
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    spool: { type: file, path: '%kernel.root_dir%/spool' }
+    disable_delivery: true

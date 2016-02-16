@@ -7,9 +7,9 @@
 namespace AppBundle\Event;
 
 
+use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
-use use AppBundle\Entity\Product;
 
 class ProductReservationEvent extends Event
 {

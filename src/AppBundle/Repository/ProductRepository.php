@@ -186,4 +186,15 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         }
         return $qb->getQuery();
     }
+
+    public function findReserved()
+    {
+        $date = new \DateTime('-1 month');
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.reservedAt < :monthAgoDate')
+            ->andWhere('a.reservedAt IS NOT NULL')
+            ->setParameter('monthAgoDate', $date);
+
+        return $qb->getQuery()->getResult();
+    }
 }

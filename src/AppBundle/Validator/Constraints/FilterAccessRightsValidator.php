@@ -27,7 +27,7 @@ class FilterAccessRightsValidator extends ConstraintValidator
     /**
      * @param AuthorizationChecker $authorizationChecker
      */
-    function __construct(AuthorizationChecker $authorizationChecker)
+    public function __construct(AuthorizationChecker $authorizationChecker)
     {
         $this->authorizationChecker = $authorizationChecker;
     }

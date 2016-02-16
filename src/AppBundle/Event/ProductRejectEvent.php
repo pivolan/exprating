@@ -27,4 +27,52 @@ class ProductRejectEvent extends Event
      * @var string
      */
     protected $reason;
+
+    /**
+     * @return Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
+    }
+
+    /**
+     * @return User
+     */
+    public function getCurator()
+    {
+        return $this->curator;
+    }
+
+    /**
+     * @param User $curator
+     */
+    public function setCurator($curator)
+    {
+        $this->curator = $curator;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReason()
+    {
+        return $this->reason;
+    }
+
+    /**
+     * @param string $reason
+     */
+    public function setReason($reason)
+    {
+        $this->reason = $reason;
+    }
 } 

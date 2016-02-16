@@ -159,7 +159,7 @@ class SiteProductRubrics
      */
     private $children;
 
-    function __construct($children)
+    public  function __construct($children)
     {
         $this->children = new ArrayCollection();
     }

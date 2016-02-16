@@ -15,7 +15,7 @@ class CharacteristicExtension extends \Twig_Extension
     /** @var  \Twig_Environment */
     protected $twig;
 
-    function __construct(\Twig_Environment $twig)
+    public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
     }

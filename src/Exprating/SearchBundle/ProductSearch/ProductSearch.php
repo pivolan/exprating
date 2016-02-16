@@ -16,7 +16,7 @@ class ProductSearch
     /** @var  SearchEngineInterface */
     protected $searchEngine;
 
-    function __construct(SearchEngineInterface $searchEngine)
+    public function __construct(SearchEngineInterface $searchEngine)
     {
         $this->searchEngine = $searchEngine;
     }

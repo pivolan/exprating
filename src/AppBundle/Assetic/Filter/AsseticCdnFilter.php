@@ -40,7 +40,7 @@ class AsseticCdnFilter implements FilterInterface
      * @param Filesystem $fileSystem
      * @param string     $webDir
      */
-    function __construct($assetVersion, $cdnLayoutHost, $cdnStorageHost, Filesystem $fileSystem, $webDir)
+    public function __construct($assetVersion, $cdnLayoutHost, $cdnStorageHost, Filesystem $fileSystem, $webDir)
     {
         $this->assetVersion = $assetVersion;
         $this->cdnLayoutHost = $cdnLayoutHost;

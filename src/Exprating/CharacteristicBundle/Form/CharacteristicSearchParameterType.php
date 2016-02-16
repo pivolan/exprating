@@ -24,7 +24,7 @@ class CharacteristicSearchParameterType extends AbstractType
      */
     protected $em;
 
-    function __construct(EntityManager $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }

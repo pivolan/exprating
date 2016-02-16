@@ -7,9 +7,8 @@
 namespace AppBundle\Listener\Product;
 
 
-use AppBundle\Entity\Product;
+use AppBundle\Entity\CuratorDecision;
 use AppBundle\Event\ProductPublishEvent;
-use AppBundle\Event\ProductReservationEvent;
 use Doctrine\ORM\EntityManager;
 
 class PublishProduct
@@ -19,14 +18,21 @@ class PublishProduct
      */
     protected $em;
 
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     public function handler(ProductPublishEvent $event)
     {
         $product = $event->getProduct();
         $expert = $product->getExpertUser();
 
-        $product->setCuratorDecisionStatus(Product::CURATOR_DECISION_STATUS_WAIT)
-            ->setReservationAt(new \DateTime());
-        $this->em->persist($product);
+        $curatorDecision = new CuratorDecision();
+        $curatorDecision->setCurator($expert->getCurator())
+            ->setProduct($product)
+            ->setUpdatedAt(new \DateTime());
+        $this->em->persist($curatorDecision);
         $this->em->flush();
     }
 } 

@@ -4,8 +4,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -63,6 +63,19 @@ class User extends BaseUser
     private $avatarImage;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="experts")
+     * @ORM\JoinColumn(name="curator_id", referencedColumnName="id")
+     */
+    private $curator;
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="curator")
+     */
+    private $experts;
+
+    /**
      * @var Product[]
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="expertUser", cascade={"persist", "detach"})
@@ -83,7 +96,7 @@ class User extends BaseUser
         parent::__construct();
 
         $this->products = new ArrayCollection();
-        // your own logic
+        $this->experts = new ArrayCollection();
     }
 
     public function getExpiresAt()
@@ -279,5 +292,63 @@ class User extends BaseUser
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set curator
+     *
+     * @param \AppBundle\Entity\User $curator
+     *
+     * @return User
+     */
+    public function setCurator(\AppBundle\Entity\User $curator = null)
+    {
+        $this->curator = $curator;
+
+        return $this;
+    }
+
+    /**
+     * Get curator
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCurator()
+    {
+        return $this->curator;
+    }
+
+    /**
+     * Add expert
+     *
+     * @param \AppBundle\Entity\User $expert
+     *
+     * @return User
+     */
+    public function addExpert(\AppBundle\Entity\User $expert)
+    {
+        $this->experts[] = $expert;
+
+        return $this;
+    }
+
+    /**
+     * Remove expert
+     *
+     * @param \AppBundle\Entity\User $expert
+     */
+    public function removeExpert(\AppBundle\Entity\User $expert)
+    {
+        $this->experts->removeElement($expert);
+    }
+
+    /**
+     * Get experts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExperts()
+    {
+        return $this->experts;
     }
 }

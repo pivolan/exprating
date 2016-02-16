@@ -33,7 +33,7 @@ class CommonProductSearch
      */
     protected $priceGTE;
 
-    function __construct()
+    public function __construct()
     {
         $this->characteristics = new ArrayCollection();
     }
