@@ -14,8 +14,18 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 
+/**
+ * Class FilterAccessRights
+ * @Annotation
+ * @package AppBundle\Validator\Constraints
+ */
 class FilterAccessRights extends Constraint
 {
+    public function validatedBy()
+    {
+        return 'filter_access_rights';
+    }
+
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;

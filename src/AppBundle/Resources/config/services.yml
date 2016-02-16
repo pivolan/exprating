@@ -1,9 +1,30 @@
 services:
     appbundle.slugify:
         class: Cocur\Slugify\Slugify
+
     appbundle.twig_extension:
         class: AppBundle\Twig\AppExtension
         arguments: ['@twig', '@doctrine.orm.entity_manager']
         public: false
         tags:
             - { name: twig.extension }
+
+    validator.filter_access_rights:
+        class: AppBundle\Validator\Constraints\FilterAccessRightsValidator
+        arguments: ['@security.authorization_checker']
+        tags:
+            - { name: validator.constraint_validator, alias: 'filter_access_rights'}
+
+    app.product_voter:
+        class: AppBundle\Security\ProductVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    app.product_filter_voter:
+        class: AppBundle\Security\ProductFilterVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }

@@ -7,9 +7,3 @@ services:
     fos_user.doctrine_registry:
         alias: doctrine
 
-    app.product_voter:
-        class: AppBundle\Security\ProductVoter
-        arguments: ['@security.access.decision_manager']
-        public: false
-        tags:
-            - { name: security.voter }

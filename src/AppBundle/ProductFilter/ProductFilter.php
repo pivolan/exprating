@@ -8,7 +8,14 @@ namespace AppBundle\ProductFilter;
 
 use AppBundle\Entity\Category;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as AcmeAssert;
 
+/**
+ * Class ProductFilter
+ * @package AppBundle\ProductFilter
+ *
+ * @AcmeAssert\FilterAccessRights
+ */
 class ProductFilter
 {
     const DIRECTION_ASC = 'ASC';
