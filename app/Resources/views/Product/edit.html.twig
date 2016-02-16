@@ -7,7 +7,8 @@
 {% block edit_buttons_label %}
     <a class="btn btn-default" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
     <input class="btn btn-default" type="submit" value="Сохранить"/>
-    <input class="btn btn-default" type="button" value="Опубликовать"/>
+
+    <input class="btn btn-default {{ is_granted('PUBLISH', product)?'':'disabled' }}" type="button" value="Опубликовать"/>
 {% endblock %}
 
 

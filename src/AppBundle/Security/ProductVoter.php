@@ -8,6 +8,7 @@ namespace AppBundle\Security;
 
 namespace AppBundle\Security;
 
+use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -19,6 +20,7 @@ class ProductVoter extends Voter
     const EXPERTISE = 'EXPERTISE';
     // these strings are just invented: you can use anything
     const VIEW = 'VIEW';
+    const PUBLISH = 'PUBLISH';
 
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
@@ -39,7 +41,7 @@ class ProductVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::EXPERTISE, self::VIEW])) {
+        if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH])) {
             return false;
         }
 
@@ -71,6 +73,8 @@ class ProductVoter extends Voter
                 return $this->canView($product, $token);
             case self::EXPERTISE:
                 return $this->canExpertise($product, $token);
+            case self::PUBLISH:
+                return $this->canPublish($product, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -108,6 +112,29 @@ class ProductVoter extends Voter
 
         //Если товар не имеет эксперта, и у эксперта есть права на категорию в которой находится товар
         if (($product->getExpertUser() == null) && $user->getCategories()->contains($product->getCategory())) {
+            return true;
+        }
+        return false;
+    }
+
+    private function canPublish(Product $product, TokenInterface $token)
+    {
+        /** @var User $user */
+        $user = $token->getUser();
+
+        //Если товар уже привязан к эксперту, не был опубликован, и не в ожидании решения куратора
+        if ($user === $product->getExpertUser() && ($product->getIsEnabled() == false)) {
+            $decisions = $product->getCuratorDecisions();
+            foreach ($decisions as $decision) {
+                if (in_array($decision->getStatus(), [CuratorDecision::STATUS_WAIT])) {
+                    return false;
+                }
+                if($decision->getStatus() == CuratorDecision::STATUS_APPROVE)
+                {
+                    throw new \LogicException('Во время публикации найдена ошибка. Одобренный куратором товар,
+                    не опубликован');
+                }
+            }
             return true;
         }
         return false;

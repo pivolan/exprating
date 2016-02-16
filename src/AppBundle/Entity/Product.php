@@ -136,6 +136,13 @@ class Product
     private $createdAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="reserved_at", type="datetime", options={"comment":"Дата резервации экспертом"})
+     */
+    private $reservedAt;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="products")
@@ -168,6 +175,12 @@ class Product
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Feedback", mappedBy="product", cascade={"persist", "remove"})
      */
     private $feedbacks;
+
+    /**
+     * @var CuratorDecision[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CuratorDecision", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $curatorDecisions;
 
     /**
      * @var ProductShopPrice[]
@@ -205,6 +218,7 @@ class Product
         $this->feedbacks = new ArrayCollection();
         $this->productShopPrices = new ArrayCollection();
         $this->productCharacteristics = new ArrayCollection();
+        $this->curatorDecisions = new ArrayCollection();
     }
 
     /**
@@ -889,5 +903,63 @@ class Product
     public function getExpertComment()
     {
         return $this->expertComment;
+    }
+
+    /**
+     * Set reservedAt
+     *
+     * @param \DateTime $reservedAt
+     *
+     * @return Product
+     */
+    public function setReservedAt($reservedAt)
+    {
+        $this->reservedAt = $reservedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get reservedAt
+     *
+     * @return \DateTime
+     */
+    public function getReservedAt()
+    {
+        return $this->reservedAt;
+    }
+
+    /**
+     * Add curatorDecision
+     *
+     * @param \AppBundle\Entity\CuratorDecision $curatorDecision
+     *
+     * @return Product
+     */
+    public function addCuratorDecision(\AppBundle\Entity\CuratorDecision $curatorDecision)
+    {
+        $this->curatorDecisions[] = $curatorDecision;
+
+        return $this;
+    }
+
+    /**
+     * Remove curatorDecision
+     *
+     * @param \AppBundle\Entity\CuratorDecision $curatorDecision
+     */
+    public function removeCuratorDecision(\AppBundle\Entity\CuratorDecision $curatorDecision)
+    {
+        $this->curatorDecisions->removeElement($curatorDecision);
+    }
+
+    /**
+     * Get curatorDecisions
+     *
+     * @return \Doctrine\Common\Collections\Collection|CuratorDecision[]
+     */
+    public function getCuratorDecisions()
+    {
+        return $this->curatorDecisions;
     }
 }
