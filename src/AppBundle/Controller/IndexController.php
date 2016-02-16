@@ -126,7 +126,7 @@ class IndexController extends BaseController
         $errors = $validator->validate($productFilter);
         if (count($errors) > 0) {
             $this->addFlash(self::FLASH_SORT_ERRORS, (string)$errors);
-            throw new HttpException((string)$errors);
+            throw new HttpException(403, (string)$errors);
         }
 
         $query = $this->getEm()->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);

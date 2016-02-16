@@ -13,8 +13,8 @@ use AppBundle\Validator\Constraints as AcmeAssert;
 /**
  * Class ProductFilter
  * @package AppBundle\ProductFilter
- *
- * @AcmeAssert\FilterAccessRights
+ * @Assert\GroupSequence({"ProductFilter", "After"})
+ * @AcmeAssert\FilterAccessRights(groups={"After"})
  */
 class ProductFilter
 {

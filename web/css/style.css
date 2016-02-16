@@ -218,10 +218,7 @@ a:link, a:visited {
   text-decoration: none;
   color: #2076AF;
 }
-a.btn:link, a.btn:visited {
-  text-decoration: none;
-  color: white;
-}
+
 /* line 114, ../sass/style.scss */
 a:hover, a:focus {
   text-decoration: underline;
