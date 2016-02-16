@@ -1,12 +1,12 @@
 <button aria-expanded="false" type="button" class="btn btn-default dropdown-toggle"
         data-toggle="dropdown"><span
-            class="glyphicon glyphicon-sort-by-attributes{{ sortProduct.direction=='DESC'?'-alt':'' }}"></span>
-    {% if sortProduct.fieldName == 'minPrice' %}
+            class="glyphicon glyphicon-sort-by-attributes{{  productFilter.direction=='DESC'?'-alt':'' }}"></span>
+    {% if productFilter.fieldName == 'minPrice' %}
         по цене
-    {% elseif sortProduct.fieldName == 'enabledAt' %}
+    {% elseif productFilter.fieldName == 'enabledAt' %}
         по дате
-    {% elseif sortProduct.fieldName == 'rating' %}
+    {% elseif productFilter.fieldName == 'rating' %}
         по рейтингу
     {% endif %}
     <span class="caret"></span></button>
-{{ knp_menu_render('AppBundle:Builder:sortProductMenu') }}
+{{ knp_menu_render('AppBundle:Builder:productFilterMenu') }}

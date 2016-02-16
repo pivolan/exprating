@@ -6,13 +6,15 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
 use AppBundle\Form\CommentType;
-use AppBundle\SortProduct\SortProduct;
+use AppBundle\Form\ProductFilterType;
+use AppBundle\ProductFilter\ProductFilter;
 use Exprating\SearchBundle\Form\SearchParamsType;
 use Exprating\SearchBundle\SearchParams\SearchParams;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class IndexController extends BaseController
 {
@@ -23,7 +25,7 @@ class IndexController extends BaseController
     const KEY_FORM_COMMENT = 'formComment';
     const KEY_SIMILAR_PRODUCTS = 'similarProducts';
     const FLASH_SORT_ERRORS = 'sortErrors';
-    const KEY_SORT_PRODUCT = 'sortProduct';
+    const KEY_SORT_PRODUCT = 'productFilter';
 
     /**
      * @Route("/", name="homepage")
@@ -109,24 +111,25 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list", defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
+     * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list",
+     * defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
     public function listAction(Request $request, Category $category, $page, $sortField, $sortDirection, $status)
     {
-        $sortProduct = new SortProduct();
-        $sortProduct->setFieldName($sortField)->setDirection($sortDirection);
-
+        $productFilter = new ProductFilter();
+        $productFilter->setCategory($category)
+            ->setStatus($status)
+            ->setFieldName($sortField)
+            ->setDirection($sortDirection);
         $validator = $this->get('validator');
-        $errors = $validator->validate($sortProduct);
-
-        $isEnabled = ($status == 'free') ? false : true;
+        $errors = $validator->validate($productFilter);
         if (count($errors) > 0) {
-            $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category);
             $this->addFlash(self::FLASH_SORT_ERRORS, (string)$errors);
-        } else {
-            $query = $this->getEm()->getRepository('AppBundle:Product')->findByCategoryQuery($category, $sortProduct, $isEnabled);
+            throw new HttpException((string)$errors);
         }
+
+        $query = $this->getEm()->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
@@ -139,6 +142,6 @@ class IndexController extends BaseController
         }
         return $this->render($template, [self::KEY_PAGINATION   => $pagination,
                                          self::KEY_CATEGORY     => $category,
-                                         self::KEY_SORT_PRODUCT => $sortProduct]);
+                                         self::KEY_SORT_PRODUCT => $productFilter]);
     }
 }

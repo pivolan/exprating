@@ -6,7 +6,7 @@
 namespace AppBundle\Menu;
 
 use AppBundle\Entity\Category;
-use AppBundle\SortProduct\SortProduct;
+use AppBundle\ProductFilter\ProductFilter;
 use Doctrine\ORM\EntityManager;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Knp\Menu\FactoryInterface;
@@ -45,7 +45,7 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
 
-    public function sortProductMenu(FactoryInterface $factory, array $options)
+    public function productFilterMenu(FactoryInterface $factory, array $options)
     {
         /** @var ItemInterface|ItemInterface[] $menu */
         $menu = $factory->createItem('root');
@@ -61,7 +61,7 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('по цене', ['route'           => 'product_list',
                                     'routeParameters' => ['slug'          => $slug,
                                                           'page'          => $page,
-                                                          'sortField'     => SortProduct::FIELD_MIN_PRICE,
+                                                          'sortField'     => ProductFilter::FIELD_MIN_PRICE,
                                                           'sortDirection' => $direction,
                                                           'status'        => $status
                                     ]]);
@@ -69,7 +69,7 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('по дате', ['route'           => 'product_list',
                                     'routeParameters' => ['slug'          => $slug,
                                                           'page'          => $page,
-                                                          'sortField'     => SortProduct::FIELD_ENABLED_AT,
+                                                          'sortField'     => ProductFilter::FIELD_ENABLED_AT,
                                                           'sortDirection' => $direction,
                                                           'status'        => $status
                                     ]]);
@@ -77,7 +77,7 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('по рейтингу', ['route'           => 'product_list',
                                         'routeParameters' => ['slug'          => $slug,
                                                               'page'          => $page,
-                                                              'sortField'     => SortProduct::FIELD_RATING,
+                                                              'sortField'     => ProductFilter::FIELD_RATING,
                                                               'sortDirection' => $direction,
                                                               'status'        => $status
                                         ]]);
@@ -86,7 +86,7 @@ class Builder implements ContainerAwareInterface
                                            'routeParameters' => ['slug'          => $slug,
                                                                  'page'          => $page,
                                                                  'sortField'     => $field,
-                                                                 'sortDirection' => SortProduct::DIRECTION_ASC,
+                                                                 'sortDirection' => ProductFilter::DIRECTION_ASC,
                                                                  'status'        => $status
                                            ]]);
 
@@ -94,7 +94,7 @@ class Builder implements ContainerAwareInterface
                                         'routeParameters' => ['slug'          => $slug,
                                                               'page'          => $page,
                                                               'sortField'     => $field,
-                                                              'sortDirection' => SortProduct::DIRECTION_DESC,
+                                                              'sortDirection' => ProductFilter::DIRECTION_DESC,
                                                               'status'        => $status
                                         ]]);
         return $menu;

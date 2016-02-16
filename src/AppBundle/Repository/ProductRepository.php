@@ -5,7 +5,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
-use AppBundle\SortProduct\SortProduct;
+use AppBundle\ProductFilter\ProductFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
@@ -27,19 +27,22 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function findByCategoryQuery(Category $category, SortProduct $sortProduct = null, $isEnabled = true)
+    public function findByFilterQuery(ProductFilter $productFilter)
     {
+        $category = $productFilter->getCategory();
+
+        $isEnabled = in_array($productFilter->getStatus(),
+            [ProductFilter::STATUS_FREE, ProductFilter::STATUS_WAIT]);
+
         $qb = $this->createQueryBuilder('a')
             ->where('a.category = :category')
             ->andWhere('a.isEnabled = :is_enabled')
             ->setParameter('category', $category)
-            ->setParameter('is_enabled', $isEnabled);
+            ->setParameter('is_enabled', !$isEnabled);
         if (!$isEnabled) {
             $qb->andWhere('a.expertUser IS NULL');
         }
-        if ($sortProduct) {
-            $qb->orderBy('a.' . $sortProduct->getFieldName(), $sortProduct->getDirection());
-        }
+        $qb->orderBy('a.' . $productFilter->getFieldName(), $productFilter->getDirection());
         return $qb->getQuery();
     }
 

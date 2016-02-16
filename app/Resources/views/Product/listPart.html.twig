@@ -19,11 +19,11 @@
 
             <div class="btn-group">
                 {% if is_granted('ROLE_EXPERT') %}
-                    <a href="{{ path('product_list', {'slug':category.slug, 'status': 'free'}) }}"
+                    <a href="{{ path('product_list', {'slug':category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')}) }}"
                        class="btn btn-success">Посмотреть свободные товары</a>
                 {% endif %}
                 {% if is_granted('ROLE_EXPERT_CURATOR') %}
-                    <a href="{{ path('product_list', {'slug': category.slug, 'status':'wait'}) }}"
+                    <a href="{{ path('product_list', {'slug': category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')}) }}"
                        class="btn btn-success">Смотреть ожидающие подтверждения</a>
                 {% endif %}
             </div>

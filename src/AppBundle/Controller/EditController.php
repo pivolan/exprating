@@ -10,7 +10,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
 use AppBundle\Form\CommentType;
-use AppBundle\SortProduct\SortProduct;
+use AppBundle\ProductFilter\ProductFilter;
 use Exprating\ExpertBundle\Form\ProductType;
 use Exprating\SearchBundle\Form\SearchParamsType;
 use Exprating\SearchBundle\SearchParams\SearchParams;

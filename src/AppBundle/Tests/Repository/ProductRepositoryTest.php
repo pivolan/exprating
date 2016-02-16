@@ -10,7 +10,7 @@ namespace AppBundle\Tests\Repository;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
-use AppBundle\SortProduct\SortProduct;
+use AppBundle\ProductFilter\ProductFilter;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
 use Exprating\CharacteristicBundle\CharacteristicSearchParam\CharacteristicSearchParameter;
@@ -54,7 +54,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $em->persist($otherProduct);
         $em->flush();
 
-        $query = $em->getRepository('AppBundle:Product')->findByCategoryQuery($category);
+        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($category);
         /** @var Product[] $products */
         $products = $query->getResult();
         $this->assertEquals(10, count($products));
@@ -63,7 +63,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertContains('test name ', $product->getName());
         }
 
-        $query = $em->getRepository('AppBundle:Product')->findByCategoryQuery($otherCategory);
+        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($otherCategory);
         /** @var Product[] $products */
         $products = $query->getResult();
         $this->assertEquals(1, count($products));
@@ -73,9 +73,9 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertNotContains('test name ', $product->getName());
         }
         //sort test
-        $sort = new SortProduct();
-        $sort->setDirection(SortProduct::DIRECTION_ASC)->setFieldName(SortProduct::FIELD_RATING);
-        $query = $em->getRepository('AppBundle:Product')->findByCategoryQuery($category, $sort);
+        $sort = new ProductFilter();
+        $sort->setDirection(ProductFilter::DIRECTION_ASC)->setFieldName(ProductFilter::FIELD_RATING);
+        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($category, $sort);
         /** @var Product[] $products */
         $products = $query->getResult();
         $this->assertEquals(10, count($products));
