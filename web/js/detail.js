@@ -9,3 +9,11 @@ History.Adapter.bind(window, 'statechange', function () {
     History.log(State.data, State.title, State.url);
     $('div.content-inner.clearfix').load(State.url);
 });
+$(document).on('submit', 'form[name="comment"]', function (event) {
+    event.preventDefault();
+    $(this).ajaxSubmit({
+        success: function (response) {
+            $('div.content-inner.clearfix').html(response);
+        }
+    });
+});
