@@ -7,10 +7,10 @@
 namespace AppBundle\Tests\Acceptance;
 
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\Tests\AbstractWebCaseTest;
 
 
-class IndexPageTest extends WebTestCase
+class IndexPageTest extends AbstractWebCaseTest
 {
     public function testIndexPage()
     {
@@ -53,6 +53,7 @@ class IndexPageTest extends WebTestCase
         //Берем на редактирование
         $takeEditlink = $crawler->selectLink('Взять на редактирование')->link();
         $client->click($takeEditlink);
+        $this->assertContains('Сохранить', $client->getResponse()->getContent());
         $this->assertContains('До окончания резервирования осталось 30 дней', $client->getResponse()->getContent());
 
         //Проверяем что другим товар больше не доступен
