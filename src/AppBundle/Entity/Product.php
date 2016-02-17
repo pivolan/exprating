@@ -962,4 +962,15 @@ class Product
     {
         return $this->curatorDecisions;
     }
+
+    public function getDaysLeft()
+    {
+        $date = $this->getReservedAt();
+        if ($date) {
+            $endDate = $date->modify('+30 day');
+            $timeLeft = new \DateTime();
+            return $timeLeft->diff($endDate)->d;
+        }
+        return null;
+    }
 }
