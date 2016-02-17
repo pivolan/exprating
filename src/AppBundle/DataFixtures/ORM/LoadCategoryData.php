@@ -3,13 +3,12 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\Product;
+use AppBundle\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -61,6 +60,8 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
         $slugify = $this->container->get('appbundle.slugify');
         /** @var User $admin */
         $admin = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
+        $curator = $this->getReference(LoadUserData::REFERENCE_CURATOR_USER);
+        $expert = $this->getReference(LoadUserData::REFERENCE_EXPERT_USER);
         foreach ($categories_names as $key => $name) {
             $category = new Category();
             $category->setName($name);
@@ -76,6 +77,8 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
                 }
             }
             $admin->addCategory($category);
+            $curator->addCategory($category);
+            $expert->addCategory($category);
             $this->addReference("category_$key", $category);
         }
         $manager->flush();

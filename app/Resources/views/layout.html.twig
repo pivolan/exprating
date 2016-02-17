@@ -491,9 +491,6 @@
                         <li><a href="{{ path('fos_user_security_login') }}">Логин</a></li>
                         {% endif %}
                         <li><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></li>
-                        {% if app.user and app.user.hasRole('ROLE_EXPERT') %}
-                            <li><a href="{{ path('expert_cabinet') }}">Эксперт - кабинет</a></li>
-                        {% endif %}
                     </ul>
                 </div>
                 <div class="footer-col3">
