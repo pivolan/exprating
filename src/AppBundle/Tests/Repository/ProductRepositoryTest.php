@@ -202,10 +202,10 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
         $expert = new User();
-        $expert->setUsername('expert')
-            ->setUsernameCanonical('expert')
-            ->setEmail('expert@exprating.lo')
-            ->setEmailCanonical('expert@exprating.lo')
+        $expert->setUsername('expert1')
+            ->setUsernameCanonical('expert1')
+            ->setEmail('expert1@exprating.lo')
+            ->setEmailCanonical('expert1@exprating.lo')
             ->setPlainPassword('qwerty')
             ->setEnabled(true)
             ->addRole(User::ROLE_EXPERT);

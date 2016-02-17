@@ -44,7 +44,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('Curator Curator')
             ->setCity('Москва')
             ->setCaption('Главный куратор')
-            ->setAvatarImage('http://placehold.it/200x200')
+            ->setAvatarImage('http://placehold.it/201x201')
             ->addRole(User::ROLE_EXPERT_CURATOR)
             ->addRole(User::ROLE_EXPERT);
 
@@ -62,7 +62,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('expert expert')
             ->setCity('Москва')
             ->setCaption('Обычный Эксперт')
-            ->setAvatarImage('http://placehold.it/200x200')
+            ->setAvatarImage('http://placehold.it/202x202')
             ->addRole(User::ROLE_EXPERT_CURATOR)
             ->addRole(User::ROLE_EXPERT);
 
