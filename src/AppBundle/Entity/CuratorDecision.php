@@ -54,7 +54,7 @@ class CuratorDecision
     /**
      * @var string
      *
-     * @ORM\Column(name="reject_reason", type="string", length=4000)
+     * @ORM\Column(name="reject_reason", nullable=true, type="string", length=4000)
      */
     private $rejectReason;
 
