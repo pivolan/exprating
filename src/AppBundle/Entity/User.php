@@ -66,7 +66,7 @@ class User extends BaseUser
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="experts")
-     * @ORM\JoinColumn(name="curator_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="curator_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $curator;
 
