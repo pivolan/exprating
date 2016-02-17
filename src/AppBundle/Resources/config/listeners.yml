@@ -1,0 +1,18 @@
+services:
+    app.reserve_product_listener:
+        class: AppBundle\Listener\Product\ReserveProduct
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: kernel.event_listener, event: reserve_product, method: handler}
+
+    app.publish_request_product_listener:
+        class: AppBundle\Listener\Product\PublishRequestProduct
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: kernel.event_listener, event: publish_request_product, method: handler, priority: 1}
+
+    app.notify_publish_product_listener:
+        class: AppBundle\Listener\Product\NotifyCurator
+        arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig']
+        tags:
+            - { name: kernel.event_listener, event: publish_product, method: handler}

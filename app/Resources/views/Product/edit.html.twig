@@ -1,59 +1,6 @@
 {% extends 'Product/detail.html.twig' %}
-{% block form_start_block %}
-    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-
-    {{ form_start(form) }}
+{% block content %}
+    <div class="content-inner clearfix">
+        {{ include(":Product:editPart.html.twig") }}
+    </div>
 {% endblock %}
-{% block edit_buttons_label %}
-    {% if product.reservedAt %}
-        <span class="label label-info">До окончания резервирования осталось {% transchoice product.daysLeft %}
-            %count% день|%count% дня|%count% дней
-            {% endtranschoice %}</span>
-    {% endif %}
-    <a class="btn btn-default" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
-    <input class="btn btn-default" type="submit" value="Сохранить"/>
-
-    <input class="btn btn-default {{ is_granted('PUBLISH', product)?'':'disabled' }}" type="button"
-           value="Опубликовать"/>
-{% endblock %}
-
-
-{% block ratings %}
-    {% set rating_list = [form.rating1, form.rating2, form.rating3, form.rating4] %}
-
-    {% set rating_labels = [product.category.ratingSettings.rating1label,
-    product.category.ratingSettings.rating2label,
-    product.category.ratingSettings.rating3label,
-    product.category.ratingSettings.rating4label] %}
-    {% for rating in rating_list %}
-        <li class="media">
-            <span class="pull-right">
-            <span style="padding: 10px; font-size: 1.4em;">{% block rating_value %}{{ form_widget(rating) }}{% endblock %}</span>
-            </span>
-
-            <div class="media-body">
-                <div class="media-heading">{{ rating_labels[loop.index0] }}</div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar"
-                         aria-valuenow="{{ rating.vars.value }}"
-                         aria-valuemin="0" aria-valuemax="100" style="width: {{ rating.vars.value }}%">
-                    </div>
-                </div>
-            </div>
-        </li>
-    {% endfor %}
-{% endblock %}
-
-{% block advantages %}{{ form_widget(form.advantages) }}{% endblock %}
-{% block disadvantages %}{{ form_widget(form.disadvantages) }}{% endblock %}
-{% block expert_opinion %}
-    {{ form_widget(form.expertOpinion) }}
-    {{ form_row(form.expertComment) }}
-{% endblock %}
-{% block characteristics %}
-    {{ form_widget(form.productCharacteristics) }}
-{% endblock %}
-{% block form_comment_block %}{% endblock %}
-{% block similar_products %}{% endblock %}
-
-{% block form_end_block %}{{ form_end(form) }}{% endblock %}

@@ -10,12 +10,22 @@ namespace AppBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use AppBundle\Entity\Product;
 
-class ProductPublishEvent extends Event
+class ProductPublishRequestEvent extends Event
 {
     /**
      * @var Product
      */
     protected $product;
+
+    /**
+     * ProductPublishEvent constructor.
+     *
+     * @param Product $product
+     */
+    public function __construct(Product $product = null)
+    {
+        $this->product = $product;
+    }
 
     /**
      * @return Product

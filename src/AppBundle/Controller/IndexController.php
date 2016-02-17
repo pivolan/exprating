@@ -6,7 +6,6 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
 use AppBundle\Form\CommentType;
-use AppBundle\Form\ProductFilterType;
 use AppBundle\ProductFilter\ProductFilter;
 use Exprating\SearchBundle\Form\SearchParamsType;
 use Exprating\SearchBundle\SearchParams\SearchParams;
@@ -103,7 +102,12 @@ class IndexController extends BaseController
         ]);
         $similarProducts = $this->getEm()->getRepository('AppBundle:Product')->findSimilar($product);
 
-        return $this->render('Product/detail.html.twig', [
+        $template = 'Product/detail.html.twig';
+        if($request->isXmlHttpRequest())
+        {
+            $template = 'Product/detailPart.html.twig';
+        }
+        return $this->render($template, [
             self::KEY_PRODUCT          => $product,
             self::KEY_SIMILAR_PRODUCTS => $similarProducts,
             self::KEY_FORM_COMMENT     => $formComment->createView()

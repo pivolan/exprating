@@ -11,7 +11,7 @@ use AppBundle\Entity\CuratorDecision;
 use AppBundle\Event\ProductRejectEvent;
 use Doctrine\ORM\EntityManager;
 
-class PublishProduct
+class RejectProduct
 {
     /**
      * @var EntityManager

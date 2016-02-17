@@ -7,7 +7,7 @@
 namespace AppBundle\Listener\Product;
 
 
-use AppBundle\Event\ProductPublishEvent;
+use AppBundle\Event\ProductPublishRequestEvent;
 use Doctrine\ORM\EntityManager;
 
 class NotifyCurator
@@ -35,7 +35,7 @@ class NotifyCurator
     }
 
 
-    public function handler(ProductPublishEvent $event)
+    public function handler(ProductPublishRequestEvent $event)
     {
         $product = $event->getProduct();
         $expert = $product->getExpertUser();

@@ -28,7 +28,6 @@ class ReserveProduct
         $product = $event->getProduct();
         $product->setExpertUser($expert)
             ->setReservedAt(new \DateTime());
-        $this->em->persist($product);
         $this->em->flush();
     }
 } 

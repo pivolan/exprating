@@ -25,6 +25,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
 {
+    const PUBLISH_SUBMIT = 'publish';
+    const SAVE_SUBMIT = 'save';
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -47,7 +50,8 @@ class ProductType extends AbstractType
             ->add('productCharacteristics', CollectionType::class, ['entry_type'    => ProductCharacteristicType::class,
                                                                     'entry_options' => ['label' => false],
                                                                     'label'         => 'Характеристики'])
-            ->add('Сохранить', SubmitType::class)
+            ->add(self::SAVE_SUBMIT, SubmitType::class, ['label'=>"Сохранить"])
+            ->add(self::PUBLISH_SUBMIT, SubmitType::class, ['label'=>'Опубликовать'])
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);;
     }
 

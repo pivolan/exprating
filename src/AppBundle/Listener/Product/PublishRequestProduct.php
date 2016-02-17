@@ -11,7 +11,7 @@ use AppBundle\Entity\CuratorDecision;
 use AppBundle\Event\ProductPublishRequestEvent;
 use Doctrine\ORM\EntityManager;
 
-class PublishProduct
+class PublishRequestProduct
 {
     /**
      * @var EntityManager
@@ -28,11 +28,16 @@ class PublishProduct
         $product = $event->getProduct();
         $expert = $product->getExpertUser();
 
-        $curatorDecision = new CuratorDecision();
-        $curatorDecision->setCurator($expert->getCurator())
-            ->setProduct($product)
-            ->setUpdatedAt(new \DateTime());
-        $this->em->persist($curatorDecision);
+        if ($expert) {
+            $curatorDecision = new CuratorDecision();
+            $curatorDecision->setCurator($expert->getCurator())
+                ->setProduct($product)
+                ->setUpdatedAt(new \DateTime());
+            $this->em->persist($curatorDecision);
+        } else {
+            $product->setIsEnabled(true)->setEnabledAt(new \DateTime())->setReservedAt(null);
+            $event->stopPropagation();
+        }
         $this->em->flush();
     }
 } 

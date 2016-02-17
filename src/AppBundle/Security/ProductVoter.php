@@ -21,6 +21,7 @@ class ProductVoter extends Voter
     // these strings are just invented: you can use anything
     const VIEW = 'VIEW';
     const PUBLISH = 'PUBLISH';
+    const RESERVE = 'RESERVE';
 
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
@@ -41,7 +42,7 @@ class ProductVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH])) {
+        if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH, self::RESERVE])) {
             return false;
         }
 
@@ -75,6 +76,8 @@ class ProductVoter extends Voter
                 return $this->canExpertise($product, $token);
             case self::PUBLISH:
                 return $this->canPublish($product, $token);
+            case self::RESERVE:
+                return $this->canReserve($product, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -129,8 +132,7 @@ class ProductVoter extends Voter
                 if (in_array($decision->getStatus(), [CuratorDecision::STATUS_WAIT])) {
                     return false;
                 }
-                if($decision->getStatus() == CuratorDecision::STATUS_APPROVE)
-                {
+                if ($decision->getStatus() == CuratorDecision::STATUS_APPROVE) {
                     throw new \LogicException('Во время публикации найдена ошибка. Одобренный куратором товар,
                     не опубликован');
                 }
@@ -138,5 +140,18 @@ class ProductVoter extends Voter
             return true;
         }
         return false;
+    }
+
+    private function canReserve(Product $product, TokenInterface $token)
+    {
+        /** @var User $user */
+        $user = $token->getUser();
+
+        //Можно если товар свободен, есть роль эксперта, есть права на категорию
+        return ($product->getExpertUser() == null)
+               &&
+               ($this->decisionManager->decide($token, [User::ROLE_EXPERT]))
+               &&
+               ($user->getCategories()->contains($product->getCategory()));
     }
 }

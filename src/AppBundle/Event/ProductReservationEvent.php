@@ -24,6 +24,18 @@ class ProductReservationEvent extends Event
     protected $expert;
 
     /**
+     * ProductReservationEvent constructor.
+     *
+     * @param Product $product
+     * @param User    $expert
+     */
+    public function __construct(Product $product = null, User $expert = null)
+    {
+        $this->product = $product;
+        $this->expert = $expert;
+    }
+
+    /**
      * @return Product
      */
     public function getProduct()
