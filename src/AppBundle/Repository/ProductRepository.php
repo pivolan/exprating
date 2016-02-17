@@ -31,14 +31,13 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
     {
         $category = $productFilter->getCategory();
 
-        $isEnabled = in_array($productFilter->getStatus(),
-            [ProductFilter::STATUS_FREE, ProductFilter::STATUS_WAIT]);
+        $isEnabled = ($productFilter->getStatus() == null);
 
         $qb = $this->createQueryBuilder('a')
             ->where('a.category = :category')
             ->andWhere('a.isEnabled = :is_enabled')
             ->setParameter('category', $category)
-            ->setParameter('is_enabled', !$isEnabled);
+            ->setParameter('is_enabled', $isEnabled);
         if (!$isEnabled) {
             $qb->andWhere('a.expertUser IS NULL');
         }

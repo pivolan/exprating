@@ -77,7 +77,7 @@ class IndexController extends BaseController
     {
         $comment = new Comment();
         if ($request->getUser()) {
-            $comment->setUser($request->getUser());
+            $comment->setUser($this->getUser());
         }
         $comment->setProduct($product);
         $form = $this->createForm(CommentType::class, $comment);

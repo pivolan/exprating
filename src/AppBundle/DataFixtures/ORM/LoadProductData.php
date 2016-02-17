@@ -15,12 +15,13 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
     public function load(ObjectManager $manager)
     {
         $user = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 150; $i++) {
             $categoryKey = $i % 5;
             $category = $this->getReference("category_$categoryKey");
             $manufacturerKey = $i % 10;
             $manufacturer = $this->getReference(LoadManufacturerData::REFERENCE_MANUFACTURER . $manufacturerKey);
             $product = new Product();
+            $isEnabled = $i % 3 != 0;
             $product->setName('title ' . $i)
                 ->setMinPrice(rand(1.00, 1000.00))
                 ->setRating(rand(1, 99))
@@ -28,13 +29,13 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
                 ->setRating2(rand(1, 99))
                 ->setRating3(rand(1, 99))
                 ->setRating4(rand(1, 99))
-                ->setIsEnabled($i % 3 != 0)
+                ->setIsEnabled($isEnabled)
                 ->setVisitsCount(rand(0, 100))
                 ->setEnabledAt(new \DateTime())
                 ->setSlug('product_' . $i)
                 ->setCategory($category)
                 ->setManufacturer($manufacturer)
-                ->setExpertUser(($i % 3 == 0) ? $user : null)
+                ->setExpertUser(($isEnabled) ? $user : null)
                 ->setExpertComment('У нас такая же модель, только с мешком для сбора пыли. Выбрали мешковой, т.к. в нем мощность немного выше. Пылесосом очень довольны. Все функции выполняет на 5 с плюсом! Работает тихо и качественно.')
                 ->setPreviewImage('http://placehold.it/280x250')
                 ->setDisadvantages([

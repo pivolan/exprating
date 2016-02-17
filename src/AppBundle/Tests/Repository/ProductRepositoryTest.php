@@ -20,7 +20,7 @@ use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 
 class ProductRepositoryTest extends AbstractWebCaseTest
 {
-    public function testFindByCategoryQuery()
+    public function testFindByFilterQuery()
     {
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
@@ -39,6 +39,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         }
         $product = new Product();
         $product->setName('not in category ' . $i)
+            ->setIsEnabled(true)
             ->setSlug("not_in_category_$i");
         $em->persist($product);
 
@@ -49,12 +50,14 @@ class ProductRepositoryTest extends AbstractWebCaseTest
 
         $otherProduct = new Product();
         $otherProduct->setName('other product')
+            ->setIsEnabled(true)
             ->setSlug('other_product')
             ->setCategory($otherCategory);
         $em->persist($otherProduct);
         $em->flush();
-
-        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($category);
+        $productFilter = new ProductFilter();
+        $productFilter->setCategory($category);
+        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);
         /** @var Product[] $products */
         $products = $query->getResult();
         $this->assertEquals(10, count($products));
@@ -62,8 +65,8 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertInstanceOf('\AppBundle\Entity\Product', $product);
             $this->assertContains('test name ', $product->getName());
         }
-
-        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($otherCategory);
+        $productFilter->setCategory($otherCategory);
+        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);
         /** @var Product[] $products */
         $products = $query->getResult();
         $this->assertEquals(1, count($products));
@@ -72,10 +75,11 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertContains('other product', $product->getName());
             $this->assertNotContains('test name ', $product->getName());
         }
-        //sort test
-        $sort = new ProductFilter();
-        $sort->setDirection(ProductFilter::DIRECTION_ASC)->setFieldName(ProductFilter::FIELD_RATING);
-        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($category, $sort);
+        //productFilter test
+        $productFilter = new ProductFilter();
+        $productFilter->setDirection(ProductFilter::DIRECTION_ASC)->setFieldName(ProductFilter::FIELD_RATING)
+        ->setCategory($category);
+        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);
         /** @var Product[] $products */
         $products = $query->getResult();
         $this->assertEquals(10, count($products));

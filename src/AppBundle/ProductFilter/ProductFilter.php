@@ -33,7 +33,7 @@ class ProductFilter
      *
      * @Assert\Choice(choices = {"minPrice", "enabledAt", "rating"}, message = "Выберите верный тип сортировки")
      */
-    protected $fieldName;
+    protected $fieldName = self::FIELD_MIN_PRICE;
 
     /**
      * @var string
@@ -46,7 +46,7 @@ class ProductFilter
      * @var string
      * @Assert\Choice(choices = {"ASC", "DESC"}, message = "Выберите верное направление сортировки")
      */
-    protected $direction;
+    protected $direction = self::DIRECTION_ASC;
 
     /**
      * @var Category

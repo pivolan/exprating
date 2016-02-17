@@ -89,7 +89,7 @@ class ProductVoter extends Voter
 
         // the Post object could have, for example, a method isPrivate()
         // that checks a boolean $private property
-        return !$product->getIsEnabled();
+        return $product->getIsEnabled();
     }
 
     private function canExpertise(Product $product, TokenInterface $token)

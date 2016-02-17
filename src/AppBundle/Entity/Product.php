@@ -138,7 +138,7 @@ class Product
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="reserved_at", type="datetime", options={"comment":"Дата резервации экспертом"})
+     * @ORM\Column(name="reserved_at", type="datetime", nullable=true, options={"comment":"Дата резервации экспертом"})
      */
     private $reservedAt;
 
