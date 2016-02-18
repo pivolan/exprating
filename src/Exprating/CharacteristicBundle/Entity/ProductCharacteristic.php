@@ -5,10 +5,12 @@ namespace Exprating\CharacteristicBundle\Entity;
 use AppBundle\Entity\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ProductCharacteristic
- *
+ * @UniqueEntity(fields={"product", "characteristic"})
  * @ORM\Table(name="product_characteristic", uniqueConstraints={@ORM\uniqueConstraint(name="product_characteristic", columns={"product_id", "characteristic_id"})})
  * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\ProductCharacteristicRepository")
  */
@@ -188,6 +190,10 @@ class ProductCharacteristic
      */
     public function getValue()
     {
+        if(empty($this->getCharacteristic())){
+            return $this->getValueString();
+        }
+
         switch ($this->getCharacteristic()->getType()) {
             case Characteristic::TYPE_STRING:
                 return (string)$this->getValueString();
@@ -205,6 +211,10 @@ class ProductCharacteristic
      */
     public function setValue($value)
     {
+        if(empty($this->getCharacteristic())){
+            $this->setValueString($value);
+            return $this;
+        }
         switch ($this->getCharacteristic()->getType()) {
             case Characteristic::TYPE_STRING:
                 $this->setValueString($value);

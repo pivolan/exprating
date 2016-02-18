@@ -17,10 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class EditController extends BaseController
 {
     const FLASH_EXPERTISE_MESSAGE = 'flash.expertise.message';
+    const FLASH_EXPERTISE_ERROR_MESSAGE = 'flash.expertise.error_message';
 
     /**
      * @Route("/tovar/{slug}/edit", name="product_edit")
@@ -56,10 +58,11 @@ class EditController extends BaseController
             }
             $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Изменения сохранены');
             return $this->redirect($request->getRequestUri());
+        } elseif ($form->getErrors(true)->count()) {
+            $this->addFlash(self::FLASH_EXPERTISE_ERROR_MESSAGE, 'Ошибка заполнения данных: ' . (string)$form->getErrors(true));
         }
         $template = 'Product/edit.html.twig';
-        if($request->isXmlHttpRequest())
-        {
+        if ($request->isXmlHttpRequest()) {
             $template = 'Product/editPart.html.twig';
         }
         return $this->render($template, [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]);

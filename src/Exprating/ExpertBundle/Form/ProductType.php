@@ -43,18 +43,22 @@ class ProductType extends AbstractType
                                                         'allow_add'     => true,
                                                         'allow_delete'  => true,
                                                         'entry_options' => ['label' => false]])
-            ->add('disadvantages', CollectionType::class, ['label'         => 'Недостатки',
-                                                           'allow_add'     => true,
-                                                           'allow_delete'  => true,
-                                                           'entry_options' => ['label' => false]])
+            ->add('disadvantages', CollectionType::class, ['label'          => 'Недостатки',
+                                                           'allow_add'      => true,
+                                                           'allow_delete'   => true,
+                                                           'error_bubbling' => true,
+                                                           'entry_options'  => ['label' => false]])
             ->add('expertOpinion', null, ['label' => 'Заключение'])
             ->add('expertComment', TextareaType::class, ['label' => 'Комментарий'])
-            ->add('productCharacteristics', CollectionType::class, ['entry_type'    => ProductCharacteristicType::class,
-                                                                    'entry_options' => ['label' => false],
-                                                                    'allow_add'     => true,
-                                                                    'allow_delete'  => true,
-                                                                    'by_reference'  => false,
-                                                                    'label'         => 'Характеристики'])
+            ->add('productCharacteristics', CollectionType::class, ['entry_type'     => ProductCharacteristicType::class,
+                                                                    'entry_options'  => ['label'         => false, 'error_bubbling' => false,
+                                                                                         'error_mapping' => ['.' => 'value']],
+                                                                    'allow_add'      => true,
+                                                                    'allow_delete'   => true,
+                                                                    'by_reference'   => false,
+                                                                    'error_bubbling' => false,
+                                                                    'error_mapping'  => ['.' => 'value'],
+                                                                    'label'          => 'Характеристики'])
             ->add(self::SAVE_SUBMIT, SubmitType::class, ['label' => "Сохранить"])
             ->add(self::PUBLISH_SUBMIT, SubmitType::class, ['label' => 'Опубликовать'])
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);;

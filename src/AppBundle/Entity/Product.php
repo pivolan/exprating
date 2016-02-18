@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
@@ -104,6 +105,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="rating4", type="integer", nullable=true, options={"comment":"Оценка №4, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
+     * @Assert\GreaterThan(50)
      */
     private $rating4 = 0;
 
@@ -206,7 +208,8 @@ class Product
 
     /**
      * @var ProductCharacteristic[]
-     * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\ProductCharacteristic", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\ProductCharacteristic", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @Assert\Valid
      */
     private $productCharacteristics;
 
