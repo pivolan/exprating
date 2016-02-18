@@ -11,7 +11,7 @@ use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 
-class ProductReservationEvent extends Event
+class ProductReservationEvent extends Event implements ProductEventInterface
 {
     /**
      * @var Product

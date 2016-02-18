@@ -9,7 +9,9 @@ namespace AppBundle\Listener\Product;
 
 use AppBundle\Entity\CuratorDecision;
 use AppBundle\Event\ProductApproveEvent;
+use AppBundle\Event\ProductEvents;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ApproveProduct
 {
@@ -23,7 +25,8 @@ class ApproveProduct
         $this->em = $em;
     }
 
-    public function handler(ProductApproveEvent $event)
+    public function handler(ProductApproveEvent $event, $eventName,
+                            EventDispatcherInterface $dispatcher)
     {
         $product = $event->getProduct();
 
@@ -33,8 +36,7 @@ class ApproveProduct
                     ->setUpdatedAt(new \DateTime());
             }
         }
-        $product->setReservedAt(null)
-            ->setIsEnabled(true)->setEnabledAt(new \DateTime());
+        $dispatcher->dispatch(ProductEvents::PUBLISH, $event);
         $this->em->flush();
     }
 }

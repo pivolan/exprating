@@ -45,7 +45,7 @@ class NotifyCurator
             ->setTo($curator->getEmail())
             ->setBody(
                 $this->twig->render(
-                    'Email/notifyCuratorPublishProduct.html.twig',
+                    'Email/notifyCuratorPublishRequestProduct.html.twig',
                     ['product' => $product]
                 )
             );

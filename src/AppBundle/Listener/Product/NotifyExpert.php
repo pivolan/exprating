@@ -8,6 +8,7 @@ namespace AppBundle\Listener\Product;
 
 
 use AppBundle\Event\ProductApproveEvent;
+use AppBundle\Event\ProductEventInterface;
 use AppBundle\Event\ProductRejectEvent;
 use AppBundle\Event\ProductReservationOverEvent;
 use Doctrine\ORM\EntityManager;
@@ -66,6 +67,23 @@ class NotifyExpert
                 $this->twig->render(
                     'Email/notifyExpertApproveProduct.html.twig',
                     ['product' => $product, 'curator' => $curator]
+                )
+            );
+        $this->mailer->send($message);
+    }
+
+    public function onPublished(ProductEventInterface $event)
+    {
+        $product = $event->getProduct();
+        $expert = $product->getExpertUser();
+        $curator = $expert->getCurator();
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Ваша публикация была опубликована ' . $product->getName())
+            ->setTo($expert->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'Email/notifyExpertApproveProduct.html.twig',
+                    ['product' => $product]
                 )
             );
         $this->mailer->send($message);

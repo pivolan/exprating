@@ -37,8 +37,9 @@ class EditController extends BaseController
         $expert = $this->getUser();
         if ($this->isGranted(ProductVoter::RESERVE, $product)) {
             //Резервируем товар за текущим экспертом
-            $this->get('debug.event_dispatcher')
-                ->dispatch(ProductEvents::RESERVATION, new ProductReservationEvent($product, $expert));
+            $event = new ProductReservationEvent($product, $expert);
+            $this->get('event_dispatcher')
+                ->dispatch(ProductEvents::RESERVATION, $event);
         }
         $form = $this->createForm(ProductType::class, $product);
 
@@ -49,9 +50,9 @@ class EditController extends BaseController
             if ($form->get(ProductType::PUBLISH_SUBMIT)->isSubmitted() &&
                 $this->isGranted(ProductVoter::PUBLISH, $product)
             ) {
-                $this->get('debug.event_dispatcher')
+                $this->get('event_dispatcher')
                     ->dispatch(ProductEvents::PUBLISH_REQUEST, new ProductPublishRequestEvent($product));
-                $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Обзор отправлен на модерацию куратору');
+                $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email');
             }
             $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Изменения сохранены');
             return $this->redirect($request->getRequestUri());

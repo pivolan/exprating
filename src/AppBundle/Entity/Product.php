@@ -965,12 +965,10 @@ class Product
 
     public function getDaysLeft()
     {
-        $date = $this->getReservedAt();
-        if ($date) {
-            $endDate = $date->modify('+30 day');
-            $timeLeft = new \DateTime();
-            return $timeLeft->diff($endDate)->d;
+        if ($this->getReservedAt()) {
+            $timeLeft = new \DateTime('+30 days');
+            return $timeLeft->diff($this->getReservedAt())->days;
         }
-        return null;
+        return 0;
     }
 }

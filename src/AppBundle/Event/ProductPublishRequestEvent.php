@@ -10,7 +10,7 @@ namespace AppBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use AppBundle\Entity\Product;
 
-class ProductPublishRequestEvent extends Event
+class ProductPublishRequestEvent extends Event implements ProductEventInterface
 {
     /**
      * @var Product

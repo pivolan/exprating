@@ -63,7 +63,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setCity('Москва')
             ->setCaption('Обычный Эксперт')
             ->setAvatarImage('http://placehold.it/202x202')
-            ->addRole(User::ROLE_EXPERT_CURATOR)
             ->addRole(User::ROLE_EXPERT);
 
         $manager->persist($expert);

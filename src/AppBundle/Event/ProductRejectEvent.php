@@ -11,7 +11,7 @@ use AppBundle\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 use AppBundle\Entity\Product;
 
-class ProductRejectEvent extends Event
+class ProductRejectEvent extends Event implements ProductEventInterface
 {
     /**
      * @var Product

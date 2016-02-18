@@ -11,7 +11,7 @@ use AppBundle\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 use AppBundle\Entity\Product;
 
-class ProductChangeExpertEvent extends Event
+class ProductChangeExpertEvent extends Event implements ProductEventInterface
 {
     /**
      * @var Product
@@ -32,4 +32,20 @@ class ProductChangeExpertEvent extends Event
      * @var User
      */
     protected $curator;
+
+    /**
+     * @return Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
+    }
 }

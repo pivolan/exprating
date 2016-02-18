@@ -14,7 +14,7 @@ class IndexPageTest extends AbstractWebCaseTest
 {
     public function testIndexPage()
     {
-        $client = static::createClient();
+        $client = $this->client;
 
         //Проверяем главную страницу
         $crawler = $client->request('GET', '/');
@@ -40,6 +40,7 @@ class IndexPageTest extends AbstractWebCaseTest
         //Входим на страницу категорий
         $link = $crawler->selectLink('Электроника')->link();
         $crawler = $client->click($link);
+        $this->assertContains('Посмотреть свободные товары', $client->getResponse()->getContent());
         $linkExpert = $crawler->selectLink('Посмотреть свободные товары')->link();
 
         //Находим свободный товар
@@ -52,9 +53,9 @@ class IndexPageTest extends AbstractWebCaseTest
         $crawler = $client->request('GET', $href);
         //Берем на редактирование
         $takeEditlink = $crawler->selectLink('Взять на редактирование')->link();
-        $client->click($takeEditlink);
+        $crawler = $client->click($takeEditlink);
         $this->assertContains('Сохранить', $client->getResponse()->getContent());
-        $this->assertContains('До окончания резервирования осталось 30 дней', $client->getResponse()->getContent());
+        $this->assertContains('До окончания резервирования осталось 30 дней', $crawler->filter('span.label')->text());
 
         //Проверяем что другим товар больше не доступен
         $crawler = $client->click($linkExpert);
@@ -63,19 +64,21 @@ class IndexPageTest extends AbstractWebCaseTest
         $crawler = $client->click($takeEditlink);
         $form = $crawler->selectButton('Сохранить')->form();
         $form['product[rating1]'] = 50;
-        $crawler = $client->submit($form);
+        $client->submit($form);
+        $crawler = $client->followRedirect();
         //Сохраняем проверяем что изменения сохранены
         $this->assertContains('Изменения сохранены', $client->getResponse()->getContent());
         $this->assertEquals(50, $crawler->filter('input[name="product[rating1]"]')->attr('value'));
         //Посмотрим на страницу товара, проверим что изменение сохранилось
         $link = $crawler->selectLink('Просмотр')->link();
         $crawler = $client->click($link);
-        $this->assertContains(50, $crawler->filter('ul.media-list')->text());
+        $this->assertContains('50', $crawler->filter('ul.media-list')->text());
         //Зайдем на страницу товара и попробуем опубликовать
         $crawler = $client->click($takeEditlink);
         $form = $crawler->selectButton('Опубликовать')->form();
-        $crawler = $client->submit($form);
-        $this->assertContains('Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email', $client->getResponse()->getContent());
+        $client->submit($form);
+        $crawler = $client->followRedirect();
+        $this->assertContains('Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email', $crawler->filter('span.label')->parents()->text());
         //Проверим что повторно опубликовать обзор нельзя
         $crawler = $client->click($takeEditlink);
         $this->assertContains('disabled', $crawler->filter('input[value="Опубликовать"]')->attr('class'));

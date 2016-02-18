@@ -10,7 +10,7 @@ namespace AppBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use AppBundle\Entity\Product;
 
-class ProductReservationOverEvent extends Event
+class ProductReservationOverEvent extends Event implements ProductEventInterface
 {
     /**
      * @var Product
