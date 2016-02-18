@@ -78,7 +78,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         //productFilter test
         $productFilter = new ProductFilter();
         $productFilter->setDirection(ProductFilter::DIRECTION_ASC)->setFieldName(ProductFilter::FIELD_RATING)
-        ->setCategory($category);
+            ->setCategory($category);
         $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);
         /** @var Product[] $products */
         $products = $query->getResult();

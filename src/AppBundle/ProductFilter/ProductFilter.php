@@ -32,6 +32,7 @@ class ProductFilter
      * @var string
      *
      * @Assert\Choice(choices = {"minPrice", "enabledAt", "rating"}, message = "Выберите верный тип сортировки")
+     * @Assert\NotBlank()
      */
     protected $fieldName = self::FIELD_MIN_PRICE;
 
@@ -45,6 +46,7 @@ class ProductFilter
     /**
      * @var string
      * @Assert\Choice(choices = {"ASC", "DESC"}, message = "Выберите верное направление сортировки")
+     * @Assert\NotBlank()
      */
     protected $direction = self::DIRECTION_ASC;
 
