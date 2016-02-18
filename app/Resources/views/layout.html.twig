@@ -37,7 +37,20 @@
                 Экспертные заключения
             </span>
             </div>
-
+            {% if is_granted('ROLE_EXPERT_CURATOR') %}
+            <div class="col-md-offset-5 btn-group">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Куратор <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('expert_curator_product_list_wait') }}">Ожидающие обзоры</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+            {% endif %}
             <div class="socialWrapper">
                 <script type="text/javascript">(function (w, doc) {
                         if (!w.__utlWdgt) {

@@ -76,7 +76,7 @@ class IndexPageTest extends AbstractWebCaseTest
         //Зайдем на страницу товара и попробуем опубликовать
         $crawler = $client->click($takeEditlink);
         $form = $crawler->selectButton('Опубликовать')->form();
-        $client->submit($form);
+        $client->submit($form, ['product[publish]'=>'Опубликовать']);
         $crawler = $client->followRedirect();
         $this->assertContains('Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email', $crawler->filter('span.label')->parents()->text());
         //Проверим что повторно опубликовать обзор нельзя
