@@ -1,6 +1,6 @@
 {% extends ':Product:detailPart.html.twig' %}
 {% block form_start_block %}
-    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {% form_theme form 'Form/form_product_edit.html.twig' %}
 
     {{ form_start(form) }}
 {% endblock %}
@@ -16,7 +16,8 @@
             {% endtranschoice %}</span>
     {% endif %}
     {% for flash_message in app.session.flashbag.get('flash.expertise.message') %}
-        <span class="label label-success">{{ flash_message }}</span>
+        <span id="flash_{{ loop.index }}" class="label label-success">{{ flash_message }}</span>
+        <script type="text/javascript">setTimeout(function(){$('#flash_{{ loop.index }}').remove()}, 5000)</script>
     {% endfor %}
 {% endblock %}
 
@@ -46,8 +47,38 @@
     {% endfor %}
 {% endblock %}
 
-{% block advantages %}{{ form_widget(form.advantages) }}{% endblock %}
-{% block disadvantages %}{{ form_widget(form.disadvantages) }}{% endblock %}
+{% block advantages %}
+    {% for advantage in form.advantages %}
+        <li>{{ form_widget(advantage) }}
+            <button data-type="remove" class="btn btn-error label label-danger" type="button">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+        </li>
+    {% endfor %}
+    <li>
+        <button data-type="add" data-prototype="<li><input name='product[advantages][]' required='required' class='form-control' type='text'>
+        <button data-type='remove' class='btn btn-error label label-danger' type='button'>
+            <span class='glyphicon glyphicon-trash'></span>
+        </button>
+    </li>" class="btn btn-success" type="button">Добавить</button>
+    </li>
+{% endblock %}
+{% block disadvantages %}
+    {% for disadvantage in form.disadvantages %}
+        <li>{{ form_widget(disadvantage) }}
+            <button data-type="remove" class="btn btn-error label label-danger" type="button">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+        </li>
+    {% endfor %}
+    <li>
+        <button data-type="add" data-prototype="<li><input name='product[disadvantages][]' required='required' class='form-control' type='text'>
+        <button data-type='remove' class='btn btn-error label label-danger' type='button'>
+            <span class='glyphicon glyphicon-trash'></span>
+        </button>
+    </li>" class="btn btn-success" type="button">Добавить</button>
+    </li>
+{% endblock %}
 {% block expert_opinion %}
     {{ form_widget(form.expertOpinion) }}
     {{ form_row(form.expertComment) }}

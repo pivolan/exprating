@@ -206,7 +206,7 @@ class Product
 
     /**
      * @var ProductCharacteristic[]
-     * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\ProductCharacteristic", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\ProductCharacteristic", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $productCharacteristics;
 

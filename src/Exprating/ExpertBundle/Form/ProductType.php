@@ -39,19 +39,24 @@ class ProductType extends AbstractType
             ->add('rating2', TextType::class)
             ->add('rating3', TextType::class)
             ->add('rating4', TextType::class)
-            ->add('advantages', CollectionType::class, ['label'        => 'Достоинства',
-                                                        'allow_add'    => true,
-                                                        'allow_delete' => true])
-            ->add('disadvantages', CollectionType::class, ['label'        => 'Недостатки',
-                                                           'allow_add'    => true,
-                                                           'allow_delete' => true])
+            ->add('advantages', CollectionType::class, ['label'         => 'Достоинства',
+                                                        'allow_add'     => true,
+                                                        'allow_delete'  => true,
+                                                        'entry_options' => ['label' => false]])
+            ->add('disadvantages', CollectionType::class, ['label'         => 'Недостатки',
+                                                           'allow_add'     => true,
+                                                           'allow_delete'  => true,
+                                                           'entry_options' => ['label' => false]])
             ->add('expertOpinion', null, ['label' => 'Заключение'])
             ->add('expertComment', TextareaType::class, ['label' => 'Комментарий'])
             ->add('productCharacteristics', CollectionType::class, ['entry_type'    => ProductCharacteristicType::class,
                                                                     'entry_options' => ['label' => false],
+                                                                    'allow_add'     => true,
+                                                                    'allow_delete'  => true,
+                                                                    'by_reference'  => false,
                                                                     'label'         => 'Характеристики'])
-            ->add(self::SAVE_SUBMIT, SubmitType::class, ['label'=>"Сохранить"])
-            ->add(self::PUBLISH_SUBMIT, SubmitType::class, ['label'=>'Опубликовать'])
+            ->add(self::SAVE_SUBMIT, SubmitType::class, ['label' => "Сохранить"])
+            ->add(self::PUBLISH_SUBMIT, SubmitType::class, ['label' => 'Опубликовать'])
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);;
     }
 

@@ -60,6 +60,7 @@ class AssertValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testProductFilter($data, $count, $messages)
     {
+
         $productFilter = new ProductFilter();
         $productFilter->setCategory($data['category'])->setStatus($data['status'])->setDirection($data['direction'])
             ->setFieldName($data['fieldName']);
@@ -71,6 +72,7 @@ class AssertValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function getProductFilters()
     {
+        //Нет возможности проверить Юнит тестированием права доступа к фильтру.
         return [
             [
                 ['category' => new Category(), 'status' => 'invalid status', 'direction' => 'dsf', 'fieldName' => 'wer'],
@@ -88,9 +90,9 @@ class AssertValidatorTest extends \PHPUnit_Framework_TestCase
                 ['Выберите верный фильтр']
             ],
             [
-                ['category' => new Category(), 'status' => null, 'direction' => ProductFilter::DIRECTION_ASC, 'fieldName' => ProductFilter::FIELD_ENABLED_AT],
-                0,
-                []
+                ['category' => new Category(), 'status' => null, 'direction' => 'j', 'fieldName' => ProductFilter::FIELD_ENABLED_AT],
+                1,
+                ['Выберите верное направление сортировки',]
             ],
         ];
     }

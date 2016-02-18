@@ -1419,3 +1419,19 @@ div.profile-answers {
 }
 
 /*# sourceMappingURL=style.css.map */
+.media .pull-right input {
+  height:23px;
+  width: 22px;
+  font-size:0.9em;
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+
+.plus-wrapper input, .minus-wrapper input {
+  width: 209px;
+  height: 30px;
+  margin: 0;
+  display: inline;
+  font-size: 0.95em;
+}
