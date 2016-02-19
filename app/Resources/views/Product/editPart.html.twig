@@ -90,8 +90,10 @@
     </li>
 {% endblock %}
 {% block expert_opinion %}
-    {{ form_widget(form.expertOpinion) }}
-    {{ form_row(form.expertComment) }}
+    <h3>{{ form_label(form.expertOpinion) }}</h3>
+    {{ form_widget(form.expertOpinion, {'attr':{'rows':20}}) }}
+    <h3>{{ form_label(form.expertComment) }}</h3>
+    {{ form_widget(form.expertComment, {'attr':{'rows':7}}) }}
 {% endblock %}
 {% block characteristics %}
     {% for fields in form.productCharacteristics %}
