@@ -19,7 +19,7 @@ class ExpertsControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/experts/admin');
+        $crawler = $client->request('GET', '/experts/expert');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
         $this->assertEquals(5, $crawler->filter('li.comment-wrapper')->count());
     }
