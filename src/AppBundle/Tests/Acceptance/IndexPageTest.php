@@ -81,11 +81,8 @@ class IndexPageTest extends AbstractWebCaseTest
         $this->assertContains('Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email', $crawler->filter('span.label')->parents()->text());
         //Проверим что повторно опубликовать обзор нельзя
         $crawler = $client->click($takeEditlink);
-        $this->assertContains('disabled', $crawler->filter('input[value="Опубликовать"]')->attr('class'));
-        //Все равно попробуем сделать submit на публикацию
-        $form = $crawler->selectButton('Опубликовать')->form();
-        $client->submit($form);
-        $this->assertEquals('Невозможно опубликовать. Обзор уже был опубликован, или ожидает решения куратора.', $client->getResponse()->getContent());
+        $buttonPublish = $crawler->filter('#product_publish');
+        $this->assertContains('disabled', $buttonPublish->attr('disabled'));
         //Логинимся под Куратором
         $client->restart();
         $crawler = $client->request('GET', '/login');

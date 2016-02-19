@@ -50,10 +50,14 @@ class EditController extends BaseController
             $this->getEm()->flush();
             //Если нажал кнопку опубликовать, тогда запускаем событие публикации
             $isClicked = $form->get(ProductType::PUBLISH_SUBMIT)->isClicked();
-            if ($isClicked && $this->isGranted(ProductVoter::PUBLISH, $product)) {
-                $this->get('event_dispatcher')
-                    ->dispatch(ProductEvents::PUBLISH_REQUEST, new ProductPublishRequestEvent($product));
-                $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email');
+            if ($isClicked) {
+                if ($this->isGranted(ProductVoter::PUBLISH, $product)) {
+                    $this->get('event_dispatcher')
+                        ->dispatch(ProductEvents::PUBLISH_REQUEST, new ProductPublishRequestEvent($product));
+                    $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email');
+                } else {
+                    throw new HttpException(403, 'Невозможно опубликовать. Обзор уже был опубликован, или ожидает решения куратора.');
+                }
             }
             $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Изменения сохранены');
             return $this->redirect($request->getRequestUri());
