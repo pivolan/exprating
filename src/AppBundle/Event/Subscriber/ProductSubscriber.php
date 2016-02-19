@@ -47,16 +47,18 @@ class ProductSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ProductEvents::RESERVATION      => ['reserveProduct', 0],
+            ProductEvents::RESERVATION      => [['reserveProduct', 0], ['flush']],
             ProductEvents::PUBLISH_REQUEST  => [
                 ['publishRequestProduct', 1],
-                ['notifyCurator']],
-            ProductEvents::APPROVE          => [['approveProduct', 1], ['onApproveNotifyExpert']],
-            ProductEvents::REJECT           => [['rejectProduct', 1], ['onRejectNotifyExpert']],
-            ProductEvents::PUBLISH          => [['publishProduct', 1], ['onPublishNotifyExpert']],
-            ProductEvents::CHANGE_EXPERT    => ['changeExpert', 0],
-            ProductEvents::RESERVATION_OVER => [['reserveOver', 1], ['onReserveOverNotifyExpert']],
-            ProductEvents::COMMENTED        => ['commentProduct', 0],
+                ['notifyCurator'],
+                ['flush']
+            ],
+            ProductEvents::APPROVE          => [['approveProduct', 1], ['onApproveNotifyExpert'], ['flush']],
+            ProductEvents::REJECT           => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
+            ProductEvents::PUBLISH          => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
+            ProductEvents::CHANGE_EXPERT    => [['changeExpert', 1], ['flush']],
+            ProductEvents::RESERVATION_OVER => [['reserveOver', 1], ['onReserveOverNotifyExpert'], ['flush']],
+            ProductEvents::COMMENTED        => [['commentProduct', 1], ['flush']],
         ];
     }
 
@@ -221,5 +223,10 @@ class ProductSubscriber implements EventSubscriberInterface
     public function commentProduct($event)
     {
         //todo
+    }
+
+    public function flush($event)
+    {
+        $this->em->flush();
     }
 }
