@@ -1420,12 +1420,21 @@ div.profile-answers {
 
 /*# sourceMappingURL=style.css.map */
 .media .pull-right input {
-  height:23px;
-  width: 22px;
+  height:24px;
+  width: 37px;
   font-size:0.9em;
   padding: 0;
   margin: 0;
   display: inline;
+  text-align: center;
+}
+.media .pull-right .help-block {
+  font-size: 0.5em;
+  color: red;
+  display: block;
+  float: right;
+  position: absolute;
+  margin-left: -200px;
 }
 
 .plus-wrapper input, .minus-wrapper input {

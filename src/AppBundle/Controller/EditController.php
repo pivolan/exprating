@@ -59,7 +59,7 @@ class EditController extends BaseController
             $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Изменения сохранены');
             return $this->redirect($request->getRequestUri());
         } elseif ($form->getErrors(true)->count()) {
-            $this->addFlash(self::FLASH_EXPERTISE_ERROR_MESSAGE, 'Ошибка заполнения данных: ' . (string)$form->getErrors(true));
+            $this->addFlash(self::FLASH_EXPERTISE_ERROR_MESSAGE, 'Ошибка заполнения данных');
         }
         $template = 'Product/edit.html.twig';
         if ($request->isXmlHttpRequest()) {

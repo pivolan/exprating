@@ -77,6 +77,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="rating", type="integer", nullable=true, options={"comment":"Общий рейтинг товара. Автоматически ставится после создания обзора, на основе других оценок."})
+     * @Assert\Range(min = 0, max = 100)
      */
     private $rating = 0;
 
@@ -84,6 +85,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="rating1", type="integer", nullable=true, options={"comment":"Оценка №1, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
+     * @Assert\Range(min = 0, max = 100)
      */
     private $rating1 = 0;
 
@@ -91,6 +93,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="rating2", type="integer", nullable=true, options={"comment":"Оценка №2, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
+     * @Assert\Range(min = 0, max = 100)
      */
     private $rating2 = 0;
 
@@ -98,6 +101,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="rating3", type="integer", nullable=true, options={"comment":"Оценка №3, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
+     * @Assert\Range(min = 0, max = 100)
      */
     private $rating3 = 0;
 
@@ -105,7 +109,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="rating4", type="integer", nullable=true, options={"comment":"Оценка №4, описание за что оценка, зависит от Категории и прописано здесь RatingSettings"})
-     * @Assert\GreaterThan(50)
+     * @Assert\Range(min = 0, max = 100)
      */
     private $rating4 = 0;
 

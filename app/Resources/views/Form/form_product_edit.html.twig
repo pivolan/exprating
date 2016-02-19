@@ -4,3 +4,7 @@
 {% block form_group_class -%}
     col-sm-5
 {%- endblock form_group_class %}
+{%- block form_widget_simple -%}
+    {{ parent() }}
+    {{ form_errors(form) }}
+{%- endblock -%}

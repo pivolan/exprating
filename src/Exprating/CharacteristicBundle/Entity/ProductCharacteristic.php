@@ -36,6 +36,7 @@ class ProductCharacteristic
      * @var int
      *
      * @ORM\Column(name="value_int", type="integer", nullable=true, options={"comment":"Значение характеристики товара. целочисленное"})
+     * @Assert\Type(type="numeric")
      */
     private $valueInt;
 
@@ -43,6 +44,7 @@ class ProductCharacteristic
      * @var string
      *
      * @ORM\Column(name="value_decimal", type="decimal", precision=10, scale=2, nullable=true, options={"comment":"Значение характеристики товара. Цифра 0,00"})
+     * @Assert\Type(type="numeric")
      */
     private $valueDecimal;
 

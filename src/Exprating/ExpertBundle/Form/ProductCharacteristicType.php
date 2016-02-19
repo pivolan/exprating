@@ -33,9 +33,7 @@ class ProductCharacteristicType extends AbstractType
     {
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData'])
-            ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onSubmit'])
-            ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit'])
-            ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
+            ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
 
     /**
@@ -44,11 +42,7 @@ class ProductCharacteristicType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'     => ProductCharacteristic::class,
-            'error_mapping'  => [
-                '.' => 'value'
-            ],
-            'error_bubbling' => false
+            'data_class'     => ProductCharacteristic::class
         ]);
     }
 
@@ -83,20 +77,6 @@ class ProductCharacteristicType extends AbstractType
         }
     }
 
-    public function onPreSubmit(FormEvent $event)
-    {
-        $data = $event->getData();
-        $form = $event->getForm();
-        $a = '';
-    }
-
-    public function onSubmit(FormEvent $event)
-    {
-        $data = $event->getData();
-        $form = $event->getForm();
-        $a = '';
-    }
-
     public function onPostSubmit(FormEvent $event)
     {
         /** @var ProductCharacteristic $data */
@@ -108,6 +88,5 @@ class ProductCharacteristicType extends AbstractType
             $data->setValue($data->getValueString());
             $event->setData($data);
         }
-        $a = '';
     }
 }
