@@ -20,6 +20,8 @@ abstract class BaseController extends Controller
     const KEY_PRODUCTS = 'products';
     const KEY_FORM_SEARCH = 'formSearch';
     const KEY_FORM = 'form';
+    const LIMIT_PER_PAGE = 9;
+    const KEY_PAGINATION = 'pagination';
 
     /**
      * @return EntityManager

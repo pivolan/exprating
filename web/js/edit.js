@@ -49,3 +49,6 @@ $(document).on('submit', 'form[name="product"]', function (event) {
         }
     });
 });
+$(document).on('click', '.dropdown-menu', function (event) {
+    event.stopPropagation();
+});

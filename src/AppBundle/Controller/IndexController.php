@@ -18,8 +18,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class IndexController extends BaseController
 {
     const KEY_POPULAR_PRODUCTS = 'popularProducts';
-    const LIMIT_PER_PAGE = 9;
-    const KEY_PAGINATION = 'pagination';
     const KEY_CATEGORY = 'category';
     const KEY_FORM_COMMENT = 'formComment';
     const KEY_SIMILAR_PRODUCTS = 'similarProducts';

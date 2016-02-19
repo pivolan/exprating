@@ -14,7 +14,8 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
 {
     public function load(ObjectManager $manager)
     {
-        $user = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
+        srand(1);
+        $user = $this->getReference(LoadUserData::REFERENCE_EXPERT_USER);
         for ($i = 1; $i <= 150; $i++) {
             $categoryKey = $i % 5;
             $category = $this->getReference("category_$categoryKey");
@@ -35,7 +36,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
                 ->setSlug('product_' . $i)
                 ->setCategory($category)
                 ->setManufacturer($manufacturer)
-                ->setExpertUser(($isEnabled) ? $user : null)
+                ->setExpertUser(($isEnabled || rand(0,1)) ? $user : null)
                 ->setExpertComment('У нас такая же модель, только с мешком для сбора пыли. Выбрали мешковой, т.к. в нем мощность немного выше. Пылесосом очень довольны. Все функции выполняет на 5 с плюсом! Работает тихо и качественно.')
                 ->setPreviewImage('http://placehold.it/280x250')
                 ->setDisadvantages([

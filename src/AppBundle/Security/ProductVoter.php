@@ -22,6 +22,7 @@ class ProductVoter extends Voter
     const VIEW = 'VIEW';
     const PUBLISH = 'PUBLISH';
     const RESERVE = 'RESERVE';
+    const MODERATE = 'MODERATE';
 
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
@@ -42,7 +43,7 @@ class ProductVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH, self::RESERVE])) {
+        if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH, self::RESERVE, self::MODERATE])) {
             return false;
         }
 
@@ -78,15 +79,53 @@ class ProductVoter extends Voter
                 return $this->canPublish($product, $token);
             case self::RESERVE:
                 return $this->canReserve($product, $token);
+            case self::MODERATE:
+                return $this->canModerate($product, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
+    }
+
+    private function canModerate(Product $product, TokenInterface $token)
+    {
+        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
+            return true;
+        }
+
+        if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
+            return false;
+        }
+
+        /** @var User $user */
+        $user = $token->getUser();
+
+        //Если товар принадлежит подчиненному эксперту
+        if ($user != $product->getExpertUser()->getCurator()) {
+            return false;
+        }
+
+        foreach ($product->getCuratorDecisions() as $decision) {
+            if ($decision->getStatus() == CuratorDecision::STATUS_WAIT
+                && $decision->getCurator() == $user
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private function canView(Product $product, TokenInterface $token)
     {
         // if they can edit, they can view
         if ($this->canExpertise($product, $token)) {
+            return true;
+        }
+
+        /** @var User $user */
+        $user = $token->getUser();
+
+        //Если товар принадлежит подчиненному эксперту
+        if ($user == $product->getExpertUser()->getCurator()) {
             return true;
         }
 

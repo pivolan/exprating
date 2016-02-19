@@ -2,32 +2,34 @@
         {{ breadcrumbs(category)|raw }}
         <h1>{{ category.name }} - рейтинг по мнению экспертов</h1>
 
-        <div class="rubric-filters">
-            <div class="btn-group">
-                {{ include('_include/sortMenu.html.twig') }}
-            </div>
+        {% block rubric_filter %}
+            <div class="rubric-filters">
+                <div class="btn-group">
+                    {{ include('_include/sortMenu.html.twig') }}
+                </div>
 
 
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                    <input name="options" id="option1" type="radio"> <span class="glyphicon glyphicon-th-large"></span>
-                </label>
-                <label class="btn btn-primary">
-                    <input name="options" id="option2" type="radio"> <span class="glyphicon glyphicon-th-list"></span>
-                </label>
-            </div>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                        <input name="options" id="option1" type="radio"> <span class="glyphicon glyphicon-th-large"></span>
+                    </label>
+                    <label class="btn btn-primary">
+                        <input name="options" id="option2" type="radio"> <span class="glyphicon glyphicon-th-list"></span>
+                    </label>
+                </div>
 
-            <div class="btn-group">
-                {% if is_granted('ROLE_EXPERT') %}
-                    <a href="{{ path('product_list', {'slug':category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')}) }}"
-                       class="btn btn-success">Посмотреть свободные товары</a>
-                {% endif %}
-                {% if is_granted('ROLE_EXPERT_CURATOR') %}
-                    <a href="{{ path('product_list', {'slug': category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')}) }}"
-                       class="btn btn-success">Смотреть ожидающие подтверждения</a>
-                {% endif %}
+                <div class="btn-group">
+                    {% if is_granted('ROLE_EXPERT') %}
+                        <a href="{{ path('product_list', {'slug':category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')}) }}"
+                           class="btn btn-success">Посмотреть свободные товары</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_EXPERT_CURATOR') %}
+                        <a href="{{ path('product_list', {'slug': category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')}) }}"
+                           class="btn btn-success">Смотреть ожидающие подтверждения</a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
+        {% endblock %}
 
         {{ knp_pagination_render(pagination) }}
 

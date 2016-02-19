@@ -1,0 +1,9 @@
+{% extends 'layout.html.twig' %}
+{% block body_type %}rubric{% endblock %}
+{% block content %}
+    {{ include("Curator/wait_listPart.html.twig") }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" async="async" src="{{ asset('js/list.js') }}"></script>
+{% endblock %}

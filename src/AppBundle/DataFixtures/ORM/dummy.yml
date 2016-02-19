@@ -1,0 +1,4 @@
+AppBundle\Entity\Image:
+    image_{1..10}:
+        filename: <slug()>.jpg
+        name: <name()>
