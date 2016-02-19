@@ -24,6 +24,18 @@ class ProductApproveEvent extends Event implements ProductEventInterface
     protected $curator;
 
     /**
+     * ProductApproveEvent constructor.
+     *
+     * @param Product $product
+     * @param User    $curator
+     */
+    public function __construct(Product $product = null, User $curator = null)
+    {
+        $this->product = $product;
+        $this->curator = $curator;
+    }
+
+    /**
      * @return Product
      */
     public function getProduct()

@@ -1,0 +1,14 @@
+services:
+#    exprating_faker.example:
+#        class: Exprating\FakerBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+    service.faker:
+        class: Faker\Generator
+        factory: [Faker\Factory, create]
+        arguments: [ %locale% ]
+        calls:
+            - [seed, [1]]
+
+    exprating_faker.faker.fake_entities_generator:
+        class: Exprating\FakerBundle\Faker\FakeEntitiesGenerator
+        arguments: ['@service.faker']

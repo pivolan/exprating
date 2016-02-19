@@ -57,7 +57,7 @@ class ProductSubscriber implements EventSubscriberInterface
             ProductEvents::REJECT           => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
             ProductEvents::PUBLISH          => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
             ProductEvents::CHANGE_EXPERT    => [['changeExpert', 1], ['flush']],
-            ProductEvents::RESERVATION_OVER => [['reserveOver', 1], ['onReserveOverNotifyExpert'], ['flush']],
+            ProductEvents::RESERVATION_OVER => [['reserveOver', 0], ['onReserveOverNotifyExpert', 1], ['flush']],
             ProductEvents::COMMENTED        => [['commentProduct', 1], ['flush']],
         ];
     }
@@ -167,7 +167,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function publishProduct(ProductPublishRequestEvent $event)
+    public function publishProduct(ProductEventInterface $event)
     {
         $product = $event->getProduct();
 
@@ -185,7 +185,7 @@ class ProductSubscriber implements EventSubscriberInterface
             ->setTo($expert->getEmail())
             ->setBody(
                 $this->twig->render(
-                    'Email/notifyExpertApproveProduct.html.twig',
+                    'Email/notifyExpertPublishedProduct.html.twig',
                     ['product' => $product]
                 )
             );

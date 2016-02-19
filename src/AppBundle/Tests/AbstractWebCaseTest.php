@@ -19,15 +19,21 @@ abstract class AbstractWebCaseTest extends WebTestCase
 
     public function setUp()
     {
-        parent::setUp();
-        $this->client = $client = static::createClient();
-        $this->doctrine = $client->getContainer()->get('doctrine');
-        $this->doctrine->getConnection()->beginTransaction();
+        if (!$this->hasDependencies()) {
+            // do setup tasks
+            parent::setUp();
+            $this->client = $client = static::createClient();
+            $this->doctrine = $client->getContainer()->get('doctrine');
+            $this->doctrine->getConnection()->beginTransaction();
+        }
     }
 
     public function tearDown()
     {
-        $this->doctrine->getConnection()->rollback();
-        parent::tearDown();
+        if (!$this->hasDependencies()) {
+            // do setup tasks
+            $this->doctrine->getConnection()->rollback();
+            parent::tearDown();
+        }
     }
 }

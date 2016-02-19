@@ -45,6 +45,11 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery();
     }
 
+    public function findFree()
+    {
+        return $this->findBy(['isEnabled' => false]);
+    }
+
     /**
      * @return array|Product[]
      */

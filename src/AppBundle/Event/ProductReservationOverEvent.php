@@ -18,6 +18,16 @@ class ProductReservationOverEvent extends Event implements ProductEventInterface
     protected $product;
 
     /**
+     * ProductReservationOverEvent constructor.
+     *
+     * @param Product $product
+     */
+    public function __construct(Product $product)
+    {
+        $this->product = $product;
+    }
+
+    /**
      * @return Product
      */
     public function getProduct()

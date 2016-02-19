@@ -29,6 +29,20 @@ class ProductRejectEvent extends Event implements ProductEventInterface
     protected $reason;
 
     /**
+     * ProductRejectEvent constructor.
+     *
+     * @param Product $product
+     * @param User    $curator
+     * @param string  $reason
+     */
+    public function __construct(Product $product, User $curator, $reason)
+    {
+        $this->product = $product;
+        $this->curator = $curator;
+        $this->reason = $reason;
+    }
+
+    /**
      * @return Product
      */
     public function getProduct()
