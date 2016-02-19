@@ -49,9 +49,8 @@ class EditController extends BaseController
         if ($form->isValid()) {
             $this->getEm()->flush();
             //Если нажал кнопку опубликовать, тогда запускаем событие публикации
-            if ($form->get(ProductType::PUBLISH_SUBMIT)->isSubmitted() &&
-                $this->isGranted(ProductVoter::PUBLISH, $product)
-            ) {
+            $isClicked = $form->get(ProductType::PUBLISH_SUBMIT)->isClicked();
+            if ($isClicked && $this->isGranted(ProductVoter::PUBLISH, $product)) {
                 $this->get('event_dispatcher')
                     ->dispatch(ProductEvents::PUBLISH_REQUEST, new ProductPublishRequestEvent($product));
                 $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email');
@@ -67,10 +66,4 @@ class EditController extends BaseController
         }
         return $this->render($template, [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]);
     }
-
-    public function publishAction()
-    {
-
-    }
-
-} 
+}

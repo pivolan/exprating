@@ -7,7 +7,13 @@
 {% block edit_buttons_label %}
     <a class="btn btn-default" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
     {{ form_widget(form.save) }}
-    {{ form_widget(form.publish, {'attr':{'class': is_granted('PUBLISH', product)?'':'disabled'}}) }}
+    {% if is_granted('PUBLISH', product) %}
+        {{ form_widget(form.publish) }}
+    {% elseif product.isEnabled %}
+        {{ form_widget(form.publish, {'label':'Опубликован', 'attr':{'disabled':true}}) }}
+    {% else %}
+        {{ form_widget(form.publish, {'label':'Ожидает решения куратора', 'attr':{'disabled':true}}) }}
+    {% endif %}
 {% endblock %}
 {% block notifications %}
     {% if product.reservedAt %}
