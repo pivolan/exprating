@@ -30,5 +30,4 @@ services:
             - { name: security.voter }
 
 imports:
-    - { resource: "listeners.yml" }
     - { resource: "subscribers.yml" }
