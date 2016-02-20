@@ -7,6 +7,7 @@
 namespace AppBundle\ProductFilter;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AcmeAssert;
 
@@ -49,6 +50,11 @@ class ProductFilter
      * @Assert\NotBlank()
      */
     protected $direction = self::DIRECTION_ASC;
+
+    /**
+     * @var User
+     */
+    protected $user;
 
     /**
      * @var Category
@@ -129,6 +135,25 @@ class ProductFilter
     public function setStatus($status)
     {
         $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return $this
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
         return $this;
     }
 

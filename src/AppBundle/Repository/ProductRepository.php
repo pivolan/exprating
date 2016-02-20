@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\ProductFilter\ProductFilter;
@@ -39,7 +40,16 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('category', $category)
             ->setParameter('is_enabled', $isEnabled);
         if (!$isEnabled) {
-            $qb->andWhere('a.expertUser IS NULL');
+            if ($productFilter->getStatus() == ProductFilter::STATUS_FREE) {
+                $qb->andWhere('a.expertUser IS NULL');
+            } elseif ($productFilter->getStatus() == ProductFilter::STATUS_WAIT) {
+                $qb->andWhere('a.expertUser IS NOT NULL')
+                    ->innerJoin('a.curatorDecisions', 'd')
+                    ->andWhere('d.curator = :curator')
+                    ->andWhere('d.status = :status')
+                    ->setParameter('curator', $productFilter->getUser())
+                    ->setParameter('status', CuratorDecision::STATUS_WAIT);
+            }
         }
         $qb->orderBy('a.' . $productFilter->getFieldName(), $productFilter->getDirection());
         return $qb->getQuery();
