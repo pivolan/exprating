@@ -88,6 +88,12 @@ class ProductVoter extends Voter
 
     private function canModerate(Product $product, TokenInterface $token)
     {
+        if ($product->getIsEnabled()) {
+            return false;
+        }
+        if ($product->getExpertUser() == null) {
+            return false;
+        }
         if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
             return true;
         }

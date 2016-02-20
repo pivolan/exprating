@@ -1,27 +1,15 @@
         {% block form_start_block %}{% endblock %}
         {{ breadcrumbs(product.category)|raw }}
         {% if is_granted('MODERATE', product) %}
-            <div class="row edit-menu">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="btn-group">
-                        <form action="#" method="post">
-                            <button type="submit" class="btn btn-success">Одобрить</button>
-                            <button type="button" class="btn btn-danger dropdown-toggle" aria-haspopup="true"
-                                    aria-expanded="true" data-toggle="dropdown">
-                                Отклонить <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu form-group">
-                                <li><textarea class="form-input" name="ololo" id="ololo" cols="60" rows="4"
-                                              placeholder="Укажите причину отказа"></textarea></li>
-                                <li>
-                                    <button type="submit" class="btn btn-default pull-right">Отправить</button>
-                                </li>
-                            </ul>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            {{ render(controller('AppBundle:Curator:decision', {'slug': product.slug})) }}
         {% endif %}
+        {% for flash_message in app.session.flashbag.get('flash.curator.decision.info') %}
+            <span id="flash_info_{{ loop.index }}" class="label label-info">{{ flash_message }}</span>
+            <script type="text/javascript">setTimeout(function () {
+                    $('#flash_info_{{ loop.index }}').remove()
+                }, 5000)</script>
+        {% endfor %}
+
         {% if is_granted('EXPERTISE', product) %}
             <div class="row edit-menu">
                 <div class="col-md-4 col-md-offset-4">

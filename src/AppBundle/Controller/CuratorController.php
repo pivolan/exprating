@@ -7,6 +7,11 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\CuratorDecision;
+use AppBundle\Entity\Product;
+use AppBundle\Event\DecisionCreateEvent;
+use AppBundle\Event\ProductEvents;
+use AppBundle\Form\DecisionType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,10 +24,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class CuratorController extends BaseController
 {
+    const FLASH_DECISION_INFO = 'flash.curator.decision.info';
+
     /**
      * @Route("/wait_list/{page}", name="curator_wait_list", defaults={"page":1})
      */
-    public function waitList(Request $request, $page)
+    public function waitListAction(Request $request, $page)
     {
         $query = $this->getEm()->getRepository('AppBundle:CuratorDecision')->waitByCurator($this->getUser());
         $paginator = $this->get('knp_paginator');
@@ -36,5 +43,32 @@ class CuratorController extends BaseController
             $template = 'Curator/wait_listPart.html.twig';
         }
         return $this->render($template, [self::KEY_PAGINATION => $pagination]);
+    }
+
+    /**
+     * @param Request $request
+     * @param         $product
+     *
+     * @Route("/curator/decision/{slug}", name="curator_decision")
+     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
+     * @Security("is_granted('MODERATE', product)")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function decisionAction(Request $request, Product $product)
+    {
+        $decision = $this->getEm()->getRepository('AppBundle:CuratorDecision')
+            ->waitByCuratorByProduct($this->getUser(), $product)->getSingleResult();
+        $decision->setProduct($product)->setCurator($this->getUser());
+
+        $form = $this->createForm(DecisionType::class, $decision,
+            ['action' => $this->generateUrl('curator_decision', ['slug' => $product->getSlug()])]);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->get('event_dispatcher')->dispatch(ProductEvents::DECISION, new DecisionCreateEvent($decision));
+            $this->addFlash(self::FLASH_DECISION_INFO, 'Решение принято');
+            return $this->redirectToRoute('product_detail', ['slug' => $product->getSlug()]);
+        }
+        return $this->render('Curator/decision_form.html.twig', [self::KEY_FORM => $form->createView()]);
     }
 }

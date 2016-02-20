@@ -38,7 +38,6 @@ framework:
     assets:
         version: 'v1'
         base_path: ~
-        base_urls: ~
 
 
 # Twig Configuration

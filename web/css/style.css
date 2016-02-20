@@ -1444,3 +1444,8 @@ div.profile-answers {
   display: inline;
   font-size: 0.95em;
 }
+
+textarea.decision.form-control {
+  width: 400px;
+  height: 130px;
+}

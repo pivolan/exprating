@@ -23,7 +23,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
             $manufacturer = $this->getReference(LoadManufacturerData::REFERENCE_MANUFACTURER . $manufacturerKey);
             $product = new Product();
             $isEnabled = $i % 3 != 0;
-            $product->setName('title ' . $i)
+            $product->setName('title_' . $i)
                 ->setMinPrice(rand(1.00, 1000.00))
                 ->setRating(rand(1, 99))
                 ->setRating1(rand(1, 99))

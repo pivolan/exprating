@@ -17,4 +17,5 @@ final class ProductEvents
     const CHANGE_EXPERT = 'change_expert_product';
     const RESERVATION_OVER = 'reserve_over_product';
     const COMMENTED = 'commented_product';
+    const DECISION = 'curator_decision';
 } 

@@ -8,6 +8,7 @@ namespace AppBundle\Event\Subscriber;
 
 use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\User;
+use AppBundle\Event\DecisionCreateEvent;
 use AppBundle\Event\ProductApproveEvent;
 use AppBundle\Event\ProductEventInterface;
 use AppBundle\Event\ProductEvents;
@@ -59,6 +60,7 @@ class ProductSubscriber implements EventSubscriberInterface
             ProductEvents::CHANGE_EXPERT    => [['changeExpert', 1], ['flush']],
             ProductEvents::RESERVATION_OVER => [['reserveOver', 0], ['onReserveOverNotifyExpert', 1], ['flush']],
             ProductEvents::COMMENTED        => [['commentProduct', 1], ['flush']],
+            ProductEvents::DECISION         => [['curatorDecision', 1],],
         ];
     }
 
@@ -77,7 +79,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $product = $event->getProduct();
         $expert = $product->getExpertUser();
 
-        if ($expert) {
+        if ($expert->getCurator()) {
             $curatorDecision = new CuratorDecision();
             $curatorDecision->setCurator($expert->getCurator())
                 ->setProduct($product)
@@ -86,6 +88,8 @@ class ProductSubscriber implements EventSubscriberInterface
         } elseif ($expert->hasRole(User::ROLE_EXPERT_CURATOR)) {
             $dispatcher->dispatch(ProductEvents::PUBLISH, $event);
             $event->stopPropagation();
+        } else {
+            throw new \LogicException('Невозможно опубликовать товар, у эксперта нет куратора. Некому проверить.');
         }
     }
 
@@ -225,8 +229,25 @@ class ProductSubscriber implements EventSubscriberInterface
         //todo
     }
 
+    public function curatorDecision(DecisionCreateEvent $event, $eventName,
+                                    EventDispatcherInterface $dispatcher)
+    {
+        /** @var CuratorDecision $decision */
+        $decision = $event->getDecision();
+        if ($decision->getStatus() == CuratorDecision::STATUS_APPROVE) {
+            $dispatcher->dispatch(ProductEvents::APPROVE, new ProductApproveEvent($decision->getProduct(),
+                $decision->getCurator()));
+        } elseif ($decision->getStatus() == CuratorDecision::STATUS_REJECT) {
+            $dispatcher->dispatch(ProductEvents::REJECT, new ProductRejectEvent($decision->getProduct(),
+                $decision->getCurator(), $decision->getRejectReason()));
+        } else {
+            throw new \LogicException('Invalid status for create decision about product, maybe approve or reject only');
+        }
+    }
+
     public function flush($event)
     {
         $this->em->flush();
     }
+
 }
