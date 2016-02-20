@@ -22,7 +22,7 @@ class IndexControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/tovar/product_10');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
-        $this->assertContains('title 10', $crawler->filter('.content h1')->text());
+        $this->assertContains('title_10', $crawler->filter('.content h1')->text());
     }
 
     public function testList()
