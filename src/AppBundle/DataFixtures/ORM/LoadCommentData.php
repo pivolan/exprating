@@ -39,6 +39,6 @@ class LoadCommentData extends AbstractFixture implements DependentFixtureInterfa
      */
     public function getDependencies()
     {
-        return ['AppBundle\DataFixtures\ORM\LoadProductData'];
+        return [LoadProductData::class];
     }
 }

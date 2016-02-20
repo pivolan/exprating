@@ -40,6 +40,6 @@ class LoadImageData extends AbstractFixture implements DependentFixtureInterface
      */
     public function getDependencies()
     {
-        return ['AppBundle\DataFixtures\ORM\LoadProductData'];
+        return [LoadProductData::class];
     }
 }

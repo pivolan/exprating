@@ -66,6 +66,6 @@ class LoadCuratorDecisionData extends AbstractFixture implements DependentFixtur
      */
     public function getDependencies()
     {
-        return ['AppBundle\DataFixtures\ORM\LoadProductData'];
+        return [LoadProductData::class];
     }
 }

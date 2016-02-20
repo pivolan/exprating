@@ -84,9 +84,9 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
      */
     public function getDependencies()
     {
-        return ['AppBundle\DataFixtures\ORM\LoadUserData',
-                'AppBundle\DataFixtures\ORM\LoadCategoryData',
-                'AppBundle\DataFixtures\ORM\LoadShopData',
-                'AppBundle\DataFixtures\ORM\LoadManufacturerData',];
+        return [LoadUserData::class,
+                LoadCategoryData::class,
+                LoadShopData::class,
+                LoadManufacturerData::class,];
     }
 }

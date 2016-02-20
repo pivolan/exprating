@@ -40,6 +40,6 @@ class LoadratingSettingsData extends AbstractFixture implements DependentFixture
      */
     public function getDependencies()
     {
-        return ['AppBundle\DataFixtures\ORM\LoadCategoryData'];
+        return [LoadCategoryData::class];
     }
 }

@@ -92,6 +92,6 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
      */
     public function getDependencies()
     {
-        return ['AppBundle\DataFixtures\ORM\LoadUserData'];
+        return [LoadUserData::class];
     }
 }
