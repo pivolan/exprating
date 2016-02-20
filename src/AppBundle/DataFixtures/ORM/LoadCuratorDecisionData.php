@@ -45,9 +45,11 @@ class LoadCuratorDecisionData extends AbstractFixture implements DependentFixtur
                     ->setRejectReason($faker->text);
                 if ($i == $decisionsCount) {
                     if ($product->getIsEnabled()) {
-                        $decision->setStatus(CuratorDecision::STATUS_APPROVE);
+                        $decision->setStatus(CuratorDecision::STATUS_APPROVE)
+                            ->setRejectReason(null);
                     } elseif (rand(0, 1)) {
-                        $decision->setStatus(CuratorDecision::STATUS_WAIT);
+                        $decision->setStatus(CuratorDecision::STATUS_WAIT)
+                            ->setRejectReason(null);
                     }
                 }
                 $manager->persist($decision);
