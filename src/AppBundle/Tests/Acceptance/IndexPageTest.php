@@ -8,13 +8,14 @@ namespace AppBundle\Tests\Acceptance;
 
 
 use AppBundle\Tests\AbstractWebCaseTest;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 
-class IndexPageTest extends AbstractWebCaseTest
+class IndexPageTest extends WebTestCase
 {
     public function testIndexPage()
     {
-        $client = $this->client;
+        $client = static::createClient();
 
         //Проверяем главную страницу
         $crawler = $client->request('GET', '/');
@@ -91,8 +92,6 @@ class IndexPageTest extends AbstractWebCaseTest
         $form['_password'] = 'qwerty';
         $client->submit($form);
         $crawler = $client->followRedirect();
-        //Проверяем всплывашку на всех страницах
-        $this->assertContains('Ожидающих обзоров: 1', $client->getResponse()->getContent());
         //Смотрим в списке ожидающих
         $link = $crawler->selectLink('Ожидающие обзоры')->link();
         $crawler = $client->click($link);
@@ -100,25 +99,31 @@ class IndexPageTest extends AbstractWebCaseTest
         $this->assertContains($tovatTitle, $tovarWait->text());
         $crawler = $client->request('GET', $tovarWait->attr('href'));
         //Проверяем наличие кнопок одобрить и отклонить
-        $approveForm = $crawler->selectButton('Одобрить и опубликовать')->form();
-        $rejectForm = $crawler->selectButton('Отклонить')->form();
+        $this->assertEquals(1, $crawler->filter('button:contains("Одобрить")')->count());
+        $approveForm = $crawler->selectButton('Одобрить')->form();
         //Одобряем
-        $client->submit($approveForm);
+        $client->submit($approveForm, ['decision[approve]'=>'Одобрить']);
+        $client->followRedirect();
         $this->assertContains('Обзор успешно опубликован', $client->getResponse()->getContent());
-        $this->assertContains('Ожидающих обзоров: 0', $client->getResponse()->getContent());
         $link = $crawler->selectLink('Ожидающие обзоры')->link();
         $crawler = $client->click($link);
-        $this->assertEquals(1, $crawler->filter('div.rubric-wrapper li a')->count());
+        //Проверим что в списке ожидающих товара больше нет
+        $this->assertNotContains($tovatTitle, $client->getResponse()->getContent());
 
-        //Проверим что товар появился в общем списке
+        //Проверим что товар появился в общем списке c фильтром по дате по убывающей
         $link = $crawler->selectLink('Электроника')->link();
+        $crawler = $client->click($link);
+        $link = $crawler->selectLink('по дате')->link();
+        $crawler = $client->click($link);
+        $link = $crawler->selectLink('по убыванию')->link();
         $client->click($link);
+
         $this->assertContains($tovatTitle, $client->getResponse()->getContent());
         //Проверим что товар доступен не авторизованным
-        $client->restart();
+        $client->request('GET', '/logout');
 
         $client->request('GET', '/');
-        $link = $crawler->selectLink('Электроника')->link();
+        //Сразу войдем по ссылке с фильтром по убывающей по дате.
         $client->click($link);
         $this->assertContains($tovatTitle, $client->getResponse()->getContent());
     }

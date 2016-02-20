@@ -37,6 +37,9 @@
             <directory>src/*/*Bundle/Tests</directory>
             <exclude>src/AppBundle/Tests/Acceptance/</exclude>
         </testsuite>
+        <testsuite name="AcceptanceTestSuite">
+            <directory>src/AppBundle/Tests/Acceptance/</directory>
+        </testsuite>
     </testsuites>
 
     <php>

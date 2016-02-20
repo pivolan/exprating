@@ -56,6 +56,7 @@ class CuratorController extends BaseController
      */
     public function decisionAction(Request $request, Product $product)
     {
+        /** @var CuratorDecision $decision */
         $decision = $this->getEm()->getRepository('AppBundle:CuratorDecision')
             ->waitByCuratorByProduct($this->getUser(), $product)->getSingleResult();
         $decision->setProduct($product)->setCurator($this->getUser());
@@ -66,7 +67,11 @@ class CuratorController extends BaseController
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->get('event_dispatcher')->dispatch(ProductEvents::DECISION, new DecisionCreateEvent($decision));
-            $this->addFlash(self::FLASH_DECISION_INFO, 'Решение принято');
+            if ($decision->getStatus() == CuratorDecision::STATUS_APPROVE) {
+                $this->addFlash(self::FLASH_DECISION_INFO, 'Обзор успешно опубликован');
+            } else {
+                $this->addFlash(self::FLASH_DECISION_INFO, 'Обзор отклонен');
+            }
             return $this->redirectToRoute('product_detail', ['slug' => $product->getSlug()]);
         }
         return $this->render('Curator/decision_form.html.twig', [self::KEY_FORM => $form->createView()]);
