@@ -73,5 +73,8 @@ class RatingSettingsSumWeightTest extends WebTestCase
         foreach ($errors as $error) {
             $this->assertContains('Сумма всех весов для оценки должна быть равна 100', $error->getMessage());
         }
+        $ratingSettings->setRating4weight(25);
+        $errors = $validator->validate($ratingSettings);
+        $this->assertCount(0, $errors);
     }
 }
