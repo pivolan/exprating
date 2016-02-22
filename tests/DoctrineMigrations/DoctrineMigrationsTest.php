@@ -5,6 +5,7 @@ namespace Application\Migrations\Tests;
 use AppBundle\Tests\Command\CommandTestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
+use ProxyManager\ProxyGenerator\PropertyGenerator\PublicPropertiesDefaults;
 
 class AllMigrationsTest extends CommandTestCase
 {
@@ -12,7 +13,9 @@ class AllMigrationsTest extends CommandTestCase
     {
         parent::setUp();
         // удалим все из таблицы
-        $this->dropTables();
+        if (!$this->hasDependencies()) {
+            $this->dropTables();
+        }
     }
 
     public function tearDown()
@@ -23,7 +26,7 @@ class AllMigrationsTest extends CommandTestCase
         parent::tearDown();
     }
 
-    public function testMigrations()
+    public function testMigrationsUp()
     {
         // зальем в таблицу начальные данные
         $this->importFromFile();
@@ -32,7 +35,13 @@ class AllMigrationsTest extends CommandTestCase
         $this->assertContains('sql queries', $output, 'Миграция не удалась');
         // проверим что разницы между базой и схемой из кода нету
         $this->checkDiffTableAndSchema();
+    }
 
+    /**
+     * @depends testMigrationsUp
+     */
+    public function testMigrationsDown()
+    {
         $output = $this->runCommand('doctrine:fixtures:load --no-interaction');
         $this->assertNotContains('error', $output);
         $this->assertNotContains('Exception', $output);
@@ -43,11 +52,27 @@ class AllMigrationsTest extends CommandTestCase
         $this->assertContains('sql queries', $output, 'Миграция не удалась');
         $output = $this->runCommand('doctrine:migrations:migrate prev --no-interaction');
         $this->assertContains('Already at first version.', $output, 'Миграция не удалась');
+    }
 
+    /**
+     * @depends testMigrationsDown
+     */
+    public function testMigrationsUpFromStart()
+    {
         $output = $this->runCommand('doctrine:migrations:migrate --no-interaction');
         $this->assertContains('sql queries', $output, 'Миграция не удалась');
         // проверим что разницы между базой и схемой из кода нету
         $this->checkDiffTableAndSchema();
+    }
+
+    /**
+     * @depends testMigrationsUpFromStart
+     */
+    public function testFixtures()
+    {
+        $output = $this->runCommand('doctrine:fixtures:load --no-interaction');
+        $this->assertNotContains('error', $output);
+        $this->assertNotContains('Exception', $output);
     }
 
     /**
