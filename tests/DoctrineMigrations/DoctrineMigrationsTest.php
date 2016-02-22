@@ -19,7 +19,7 @@ class AllMigrationsTest extends CommandTestCase
     {
         // удалим все из таблицы
 //        $this->dropTables();
-        $this->clearTables();
+//        $this->clearTables();
         parent::tearDown();
     }
 
