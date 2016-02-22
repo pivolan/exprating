@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,6 +17,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Product
 {
+    const RATING_1 = 'rating1';
+    const RATING_2 = 'rating2';
+    const RATING_3 = 'rating3';
+    const RATING_4 = 'rating4';
     /**
      * @var int
      *
@@ -981,16 +986,28 @@ class Product
     }
 
     /** @ORM\PreUpdate */
-    public function rateOnPreUpdate()
+    public function rateOnPreUpdate(PreUpdateEventArgs $event)
     {
-        $args = func_get_args();
-        $rating = 0;
-        /** @var RatingSettings $settings */
-        $settings = $this->getCategory()->getRatingSettings();
-        $rating = $settings->getRating1weight() / 100 * $this->getRating1()
-                  + $settings->getRating2weight() / 100 * $this->getRating2()
-                  + $settings->getRating3weight() / 100 * $this->getRating3()
-                  + $settings->getRating4weight() / 100 * $this->getRating4();
-        $this->setRating($rating);
+        $entityChangeSet = $event->getEntityChangeSet();
+
+        if (
+            isset($entityChangeSet[self::RATING_1]) ||
+            isset($entityChangeSet[self::RATING_2]) ||
+            isset($entityChangeSet[self::RATING_3]) ||
+            isset($entityChangeSet[self::RATING_4])
+        ) {
+            /** @var RatingSettings $settings */
+            $category = $this->getCategory();
+            if ($category) {
+                $settings = $category->getRatingSettings();
+                if ($settings) {
+                    $rating = $settings->getRating1weight() / 100 * $this->getRating1()
+                              + $settings->getRating2weight() / 100 * $this->getRating2()
+                              + $settings->getRating3weight() / 100 * $this->getRating3()
+                              + $settings->getRating4weight() / 100 * $this->getRating4();
+                    $this->setRating($rating);
+                }
+            }
+        }
     }
 }
