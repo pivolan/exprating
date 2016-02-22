@@ -25,7 +25,7 @@
     <property name="phpdox" value="${basedir}/../../.composer/vendor/bin/phpdox"/>
     <property name="phploc" value="${basedir}/../../.composer/vendor/bin/phploc"/>
     <property name="phpmd" value="${basedir}/../../.composer/vendor/bin/phpmd"/>
-    <property name="phpunit" value="${basedir}/../../.composer/vendor/bin/phpunit"/>
+    <property name="phpunit" value="${basedir}/vendor/bin/phpunit"/>
 
     <target name="full-build"
             depends="prepare,static-analysis,phpunit,phpdox,-check-failure"
