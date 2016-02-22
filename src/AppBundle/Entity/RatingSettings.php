@@ -50,21 +50,21 @@ class RatingSettings
     /**
      * @var int
      *
-     * @ORM\Column(name="rating2weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1"})
+     * @ORM\Column(name="rating2weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №2"})
      */
     private $rating2weight=25;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating3weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1"})
+     * @ORM\Column(name="rating3weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №3"})
      */
     private $rating3weight=25;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rating4weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1"})
+     * @ORM\Column(name="rating4weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №4"})
      */
     private $rating4weight=25;
 
