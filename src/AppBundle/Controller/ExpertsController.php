@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ExpertsController extends BaseController
 {
     const KEY_EXPERT_OPINIONS = 'expertOpinions';
-    const KEY_EXPERTS = 'experts';
     const LIMIT_OPINIONS_PER_PAGE = 5;
     const KEY_EXPERT = 'expert';
 

@@ -62,6 +62,8 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
         $admin = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
         $curator = $this->getReference(LoadUserData::REFERENCE_CURATOR_USER);
         $expert = $this->getReference(LoadUserData::REFERENCE_EXPERT_USER);
+        /** @var User $categoryAdmin */
+        $categoryAdmin = $this->getReference(LoadUserData::REFERENCE_CATEGORY_ADMIN_USER);
         foreach ($categories_names as $key => $name) {
             $category = new Category();
             $category->setName($name);
@@ -79,6 +81,8 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
             $admin->addCategory($category);
             $curator->addCategory($category);
             $expert->addCategory($category);
+            $categoryAdmin->addCategory($category);
+            $categoryAdmin->addAdminCategory($category);
             $this->addReference("category_$key", $category);
         }
         $manager->flush();

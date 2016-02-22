@@ -21,8 +21,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class EditController extends BaseController
 {
-    const FLASH_EXPERTISE_MESSAGE = 'flash.expertise.message';
     const FLASH_EXPERTISE_ERROR_MESSAGE = 'flash.expertise.error_message';
+    const FLASH_EXPERTISE_MESSAGE = 'flash.expertise.message';
 
     /**
      * @Route("/tovar/{slug}/edit", name="product_edit")

@@ -34,6 +34,22 @@ class ProductChangeExpertEvent extends Event implements ProductEventInterface
     protected $curator;
 
     /**
+     * ProductChangeExpertEvent constructor.
+     *
+     * @param Product $product
+     * @param User    $newExpert
+     * @param User    $previousExpert
+     * @param User    $curator
+     */
+    public function __construct(Product $product, User $newExpert, User $previousExpert, User $curator)
+    {
+        $this->product = $product;
+        $this->newExpert = $newExpert;
+        $this->previousExpert = $previousExpert;
+        $this->curator = $curator;
+    }
+
+    /**
      * @return Product
      */
     public function getProduct()

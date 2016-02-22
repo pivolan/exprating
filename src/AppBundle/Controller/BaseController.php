@@ -22,6 +22,11 @@ abstract class BaseController extends Controller
     const KEY_FORM = 'form';
     const LIMIT_PER_PAGE = 9;
     const KEY_PAGINATION = 'pagination';
+    const KEY_CATEGORY = 'category';
+    const KEY_EXPERTS = 'experts';
+
+    const FLASH_MESSAGE = 'flash.message';
+    const FLASH_ERROR_MESSAGE = 'flash.error_message';
 
     /**
      * @return EntityManager

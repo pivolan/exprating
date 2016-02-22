@@ -12,6 +12,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
     const REFERENCE_ADMIN_USER = 'admin_user';
     const REFERENCE_CURATOR_USER = 'curator_user';
     const REFERENCE_EXPERT_USER = 'expert_user';
+    const REFERENCE_CATEGORY_ADMIN_USER = 'category_admin_user';
 
     public function load(ObjectManager $manager)
     {
@@ -64,9 +65,27 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->addRole(User::ROLE_EXPERT);
 
         $manager->persist($expert);
+        $categoryAdmin = new User();
+        $categoryAdmin->setUsername('category')
+            ->setUsernameCanonical('category')
+            ->setEmail('category@exprating.lo')
+            ->setEmailCanonical('category@exprating.lo')
+            ->setPlainPassword('qwerty')
+            ->setCurator($curator)
+            ->setEnabled(true)
+            ->setBirthday(new \DateTime('1985-02-08'))
+            ->setFullName('category admin')
+            ->setCity('Москва')
+            ->setCaption('Эксперт Админ категорий')
+            ->setAvatarImage('http://placehold.it/202x202')
+            ->addRole(User::ROLE_EXPERT_CATEGORY_ADMIN)
+            ->addRole(User::ROLE_EXPERT);
+
+        $manager->persist($categoryAdmin);
         $manager->flush();
         $this->addReference(self::REFERENCE_ADMIN_USER, $userAdmin);
         $this->addReference(self::REFERENCE_CURATOR_USER, $curator);
         $this->addReference(self::REFERENCE_EXPERT_USER, $expert);
+        $this->addReference(self::REFERENCE_CATEGORY_ADMIN_USER, $categoryAdmin);
     }
 }

@@ -23,6 +23,7 @@ class ProductVoter extends Voter
     const PUBLISH = 'PUBLISH';
     const RESERVE = 'RESERVE';
     const MODERATE = 'MODERATE';
+    const CHANGE_EXPERT = 'CHANGE_EXPERT';
 
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
@@ -43,7 +44,10 @@ class ProductVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH, self::RESERVE, self::MODERATE])) {
+        if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH, self::RESERVE,
+                                   self::MODERATE,
+                                   self::CHANGE_EXPERT,
+        ])) {
             return false;
         }
 
@@ -81,6 +85,8 @@ class ProductVoter extends Voter
                 return $this->canReserve($product, $token);
             case self::MODERATE:
                 return $this->canModerate($product, $token);
+            case self::CHANGE_EXPERT:
+                return $this->canChangeExpert($product, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -118,6 +124,30 @@ class ProductVoter extends Voter
             }
         }
         return false;
+    }
+
+    private function canChangeExpert(Product $product, TokenInterface $token)
+    {
+        if ($product->getExpertUser() == null) {
+            return false;
+        }
+        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
+            return true;
+        }
+
+        if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
+            return false;
+        }
+
+        /** @var User $user */
+        $user = $token->getUser();
+
+        //Если товар принадлежит подчиненному эксперту
+        if ($user != $product->getExpertUser()->getCurator()) {
+            return false;
+        }
+
+        return true;
     }
 
     private function canView(Product $product, TokenInterface $token)

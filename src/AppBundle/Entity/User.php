@@ -91,12 +91,22 @@ class User extends BaseUser
      */
     private $categories;
 
+    /**
+     * @var Category[]
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
+     * @ORM\JoinTable(name="user_admin_category", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *            inverseJoinColumns={@ORM\JoinColumn(name="admin_category_id", referencedColumnName="slug")})
+     */
+    private $adminCategories;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->products = new ArrayCollection();
         $this->experts = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->adminCategories = new ArrayCollection();
     }
 
     public function getExpiresAt()
@@ -350,5 +360,39 @@ class User extends BaseUser
     public function getExperts()
     {
         return $this->experts;
+    }
+
+    /**
+     * Add adminCategory
+     *
+     * @param \AppBundle\Entity\Category $adminCategory
+     *
+     * @return User
+     */
+    public function addAdminCategory(\AppBundle\Entity\Category $adminCategory)
+    {
+        $this->adminCategories[] = $adminCategory;
+
+        return $this;
+    }
+
+    /**
+     * Remove adminCategory
+     *
+     * @param \AppBundle\Entity\Category $adminCategory
+     */
+    public function removeAdminCategory(\AppBundle\Entity\Category $adminCategory)
+    {
+        $this->adminCategories->removeElement($adminCategory);
+    }
+
+    /**
+     * Get adminCategories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdminCategories()
+    {
+        return $this->adminCategories;
     }
 }

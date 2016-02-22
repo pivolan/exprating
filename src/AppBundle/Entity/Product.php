@@ -985,7 +985,9 @@ class Product
         return 0;
     }
 
-    /** @ORM\PreUpdate */
+    /**
+     * @ORM\PreUpdate
+     */
     public function rateOnPreUpdate(PreUpdateEventArgs $event)
     {
         $entityChangeSet = $event->getEntityChangeSet();

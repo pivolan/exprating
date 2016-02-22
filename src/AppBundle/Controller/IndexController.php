@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class IndexController extends BaseController
 {
     const KEY_POPULAR_PRODUCTS = 'popularProducts';
-    const KEY_CATEGORY = 'category';
     const KEY_FORM_COMMENT = 'formComment';
     const KEY_SIMILAR_PRODUCTS = 'similarProducts';
     const FLASH_SORT_ERRORS = 'sortErrors';
