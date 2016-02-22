@@ -15,6 +15,11 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: 'filter_access_rights'}
 
+    validator.rating_settings_sum_weight_validator:
+        class: AppBundle\Validator\Constraints\RatingSettingsSumWeightValidator
+        tags:
+            - { name: validator.constraint_validator, alias: 'rating_settings_sum_weight_validator'}
+
     app.product_voter:
         class: AppBundle\Security\ProductVoter
         arguments: ['@security.access.decision_manager']

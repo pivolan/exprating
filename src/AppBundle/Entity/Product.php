@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
@@ -977,5 +978,19 @@ class Product
             return $timeLeft->diff($this->getReservedAt())->days;
         }
         return 0;
+    }
+
+    /** @ORM\PreUpdate */
+    public function rateOnPreUpdate()
+    {
+        $args = func_get_args();
+        $rating = 0;
+        /** @var RatingSettings $settings */
+        $settings = $this->getCategory()->getRatingSettings();
+        $rating = $settings->getRating1weight() / 100 * $this->getRating1()
+                  + $settings->getRating2weight() / 100 * $this->getRating2()
+                  + $settings->getRating3weight() / 100 * $this->getRating3()
+                  + $settings->getRating4weight() / 100 * $this->getRating4();
+        $this->setRating($rating);
     }
 }
