@@ -1,25 +1,29 @@
         {% block form_start_block %}{% endblock %}
         {{ breadcrumbs(product.category)|raw }}
-        {% if is_granted('MODERATE', product) %}
-            {{ render(controller('AppBundle:Curator:decision', {'slug': product.slug})) }}
-        {% endif %}
-        {% for flash_message in app.session.flashbag.get('flash.curator.decision.info') %}
-            <span id="flash_info_{{ loop.index }}" class="label label-info">{{ flash_message }}</span>
-            <script type="text/javascript">setTimeout(function () {
-                    $('#flash_info_{{ loop.index }}').remove()
-                }, 5000)</script>
-        {% endfor %}
-        {% if is_granted('CHANGE_EXPERT', product) %}
-            <div class="row edit-menu">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="btn-group">
-                        {% block change_expert_buttons %}
-                            <a href="{{ path('curator_product_change_expert', {'slug': product.slug}) }}" class="btn btn-default">Сменить эксперта</a>
-                        {% endblock %}
+        {% block curator_decision %}
+            {% if is_granted('MODERATE', product) %}
+                {{ render(controller('AppBundle:Curator:decision', {'slug': product.slug})) }}
+            {% endif %}
+            {% for flash_message in app.session.flashbag.get('flash.curator.decision.info') %}
+                <span id="flash_info_{{ loop.index }}" class="label label-info">{{ flash_message }}</span>
+                <script type="text/javascript">setTimeout(function () {
+                        $('#flash_info_{{ loop.index }}').remove()
+                    }, 5000)</script>
+            {% endfor %}
+        {% endblock %}
+        {% block curator_change_expert %}
+            {% if is_granted('CHANGE_EXPERT', product) %}
+                <div class="row edit-menu">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="btn-group">
+                            {% block change_expert_buttons %}
+                                <a href="{{ path('curator_product_change_expert', {'slug': product.slug}) }}" class="btn btn-default">Сменить эксперта</a>
+                            {% endblock %}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        {% endblock %}
 
         {% if is_granted('EXPERTISE', product) %}
             <div class="row edit-menu">
