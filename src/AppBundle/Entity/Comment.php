@@ -37,9 +37,23 @@ class Comment
     private $message;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_published", type="boolean", options={"comment": "Комментарий опубликован или ожидает решения модератора"})
+     */
+    private $isPublished = false;
+
+    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", options={"comment":"Дата создания пользователя. Или дата его регистрации."})
+     * @ORM\Column(name="published_at", type="datetime", options={"comment": "Дата публикации комментария"})
+     */
+    private $publishedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", options={"comment":"Дата создания комментария."})
      */
     private $createdAt;
 
@@ -188,5 +202,53 @@ class Comment
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set isPublished
+     *
+     * @param boolean $isPublished
+     *
+     * @return Comment
+     */
+    public function setIsPublished($isPublished)
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublished
+     *
+     * @return boolean
+     */
+    public function getIsPublished()
+    {
+        return $this->isPublished;
+    }
+
+    /**
+     * Set publishedAt
+     *
+     * @param \DateTime $publishedAt
+     *
+     * @return Comment
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get publishedAt
+     *
+     * @return \DateTime
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
     }
 }

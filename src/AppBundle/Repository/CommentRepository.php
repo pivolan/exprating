@@ -10,4 +10,12 @@ namespace AppBundle\Repository;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findDisabledQuery()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.isPublished = :isPublished')
+            ->orderBy('a.createdAt', 'DESC')
+            ->setParameter('isPublished', false);
+        return $qb->getQuery();
+    }
 }

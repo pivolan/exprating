@@ -14,7 +14,6 @@ use AppBundle\Event\ProductChangeExpertEvent;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Form\DecisionType;
 use AppBundle\Form\ProductChangeExpertType;
-use Exprating\CharacteristicBundle\Tests\Entity\ProductCharacteristicTest;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -115,5 +114,22 @@ class CuratorController extends BaseController
             $template = 'Product/editChangeExpertPart.html.twig';
         }
         return $this->render($template, [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]);
+    }
+
+    /**
+     * @Route("/curator/experts/{page}", name="curator_experts", defaults={"page":1})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function expertsAction(Request $request, $page)
+    {
+        $query = $this->getUser()->getExperts();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            max($page, 1),
+            self::LIMIT_PER_PAGE
+        );
+        return $this->render('Curator/experts.html.twig', [self::KEY_PAGINATION => $pagination]);
     }
 }

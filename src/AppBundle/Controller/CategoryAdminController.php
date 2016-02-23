@@ -28,9 +28,10 @@ class CategoryAdminController extends BaseController
 
     const FLASH_CATEGORY_SAVED = 'flash.category_saved';
 
-    public function categoryListAction()
+    public function categoriesAction()
     {
-        return $this->render('CategoryAdmin/list.html.twig', [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories()]);
+        return $this->render('CategoryAdmin/categories.html.twig',
+            [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories()]);
     }
 
     /**
