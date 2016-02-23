@@ -84,12 +84,12 @@ class CuratorController extends BaseController
      * @param Request $request
      * @param         $product
      *
-     * @Route("/curator/product/change_expert/{slug}", name="curator_product_change_expert")
+     * @Route("/change_expert/{slug}", name="curator_product_change_expert")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      * @Security("is_granted('CHANGE_EXPERT', product)")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeProductExpert(Request $request, Product $product)
+    public function changeProductExpertAction(Request $request, Product $product)
     {
         $currentExpert = $product->getExpertUser();
         $form = $this->createForm(ProductChangeExpertType::class, $product);

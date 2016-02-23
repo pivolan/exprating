@@ -1,0 +1,32 @@
+{% extends ':Product:detailPart.html.twig' %}
+{% block form_start_block %}
+    {% form_theme form 'Form/form_product_edit.html.twig' %}
+
+    {{ form_start(form) }}
+{% endblock %}
+{% block change_expert_buttons %}
+    <a class="btn btn-default" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
+    {{ form_widget(form.save) }}
+{% endblock %}
+{% block notifications %}
+    {% for flash_message in app.session.flashbag.get('flash.message') %}
+        <span id="flash_{{ loop.index }}" class="label label-success">{{ flash_message }}</span>
+        <script type="text/javascript">setTimeout(function () {
+                $('#flash_{{ loop.index }}').remove()
+            }, 5000)</script>
+    {% endfor %}
+{% endblock %}
+{% block expert_logo %}
+    <div class="expert-wrapper">
+        <div class="expert-img-wrapper">
+            <img src="{{ product.expertUser.avatarImage|default("http://placehold.it/90x90") }}">
+        </div>
+        <div class="expert-name">
+            Экспертное мнение
+            <span>{{ form_widget(form.expertUser) }}</span></div>
+    </div>
+{% endblock %}
+{% block form_comment_block %}{% endblock %}
+{% block similar_products %}{% endblock %}
+
+{% block form_end_block %}{{ form_end(form) }}{% endblock %}

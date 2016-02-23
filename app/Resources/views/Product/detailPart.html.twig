@@ -9,6 +9,17 @@
                     $('#flash_info_{{ loop.index }}').remove()
                 }, 5000)</script>
         {% endfor %}
+        {% if is_granted('CHANGE_EXPERT', product) %}
+            <div class="row edit-menu">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="btn-group">
+                        {% block change_expert_buttons %}
+                            <a href="{{ path('curator_product_change_expert', {'slug': product.slug}) }}" class="btn btn-default">Сменить эксперта</a>
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
         {% if is_granted('EXPERTISE', product) %}
             <div class="row edit-menu">
@@ -25,26 +36,29 @@
                             {% endif %}
                         {% endblock %}
                     </div>
-                    {% block notifications %}
-                        {% if product.reservedAt %}
-                            <span class="label label-info">До окончания резервирования осталось {% transchoice product.daysLeft %}
-                                %count% день|%count% дня|%count% дней
-                                {% endtranschoice %}</span>
-                        {% endif %}
-                    {% endblock %}
                 </div>
             </div>
         {% endif %}
+        {% block notifications %}
+            {% if product.reservedAt %}
+                <span class="label label-info">До окончания резервирования осталось {% transchoice product.daysLeft %}
+                    %count% день|%count% дня|%count% дней
+                    {% endtranschoice %}</span>
+            {% endif %}
+        {% endblock %}
+
         <h1>{{ product.name }}</h1>
 
-        <div class="expert-wrapper">
-            <div class="expert-img-wrapper">
-                <img src="{{ product.expertUser.avatarImage|default("http://placehold.it/90x90") }}">
+        {% block expert_logo %}
+            <div class="expert-wrapper">
+                <div class="expert-img-wrapper">
+                    <img src="{{ product.expertUser.avatarImage|default("http://placehold.it/90x90") }}">
+                </div>
+                <div class="expert-name">
+                    Экспертное мнение
+                    <span>{{ product.expertUser.fullName | default("Пусто") }}</span></div>
             </div>
-            <div class="expert-name">
-                Экспертное мнение
-                <span>{{ product.expertUser.fullName | default("Пусто") }}</span></div>
-        </div>
+        {% endblock %}
 
         <div class="carousel-wrapper" style="width: 300px; height: 300px; float: left">
             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">

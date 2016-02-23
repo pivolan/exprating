@@ -35,7 +35,7 @@ $(document).on('click', 'button[data-type="remove-ch"]', function (event) {
     var $this = $(this);
     $this.parent().parent().remove();
 });
-$(document).on('submit', 'form[name="product"]', function (event) {
+$(document).on('submit', 'form', function (event) {
     event.preventDefault();
     var buttonId = event.originalEvent.explicitOriginalTarget.id;
     var data = {};
