@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Exprating\SearchBundle\ExpratingSearchBundle(),
             new Exprating\ExpertBundle\ExpratingExpertBundle(),
             new Exprating\ImportBundle\ExpratingImportBundle(),
+            new Jogaram\ReactPHPBundle\JogaramReactPHPBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
