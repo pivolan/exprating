@@ -1,0 +1,9 @@
+<span class="label">
+    {% for flash_message in app.session.flashbag.get('flash.category_saved') %}
+        <span id="flash_info_{{ loop.index }}" class="label label-info">{{ flash_message }}</span>
+        <script type="text/javascript">setTimeout(function () {
+                $('#flash_info_{{ loop.index }}').remove()
+            }, 5000)</script>
+    {% endfor %}
+</span>
+{{ form(form) }}

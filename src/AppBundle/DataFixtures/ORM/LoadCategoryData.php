@@ -76,6 +76,7 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
                         ->setName($childName);
                     $childCategory->setSlug($slugify->slugify($childName));
                     $manager->persist($childCategory);
+                    $categoryAdmin->addAdminCategory($childCategory);
                 }
             }
             $admin->addCategory($category);

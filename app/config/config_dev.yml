@@ -34,3 +34,54 @@ monolog:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                auto_mapping: true
+                connection: default
+                query_cache_driver:
+                    type:                 array # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+                metadata_cache_driver:
+                    type:                 array # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+                result_cache_driver:
+                    type:                 array # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+            import:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                connection: import
+                query_cache_driver:
+                    type:                 array # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+                metadata_cache_driver:
+                    type:                 array # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+                result_cache_driver:
+                    type:                 array # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+                mappings:
+                    ExpratingImportBundle: ~
+

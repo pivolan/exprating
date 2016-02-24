@@ -389,7 +389,7 @@ class User extends BaseUser
     /**
      * Get adminCategories
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|Category[]
      */
     public function getAdminCategories()
     {

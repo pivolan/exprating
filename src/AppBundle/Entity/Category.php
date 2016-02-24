@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @Gedmo\Tree(type="nested")
  *
  * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
 class Category
 {
@@ -84,6 +84,11 @@ class Category
      */
     private $characteristics;
 
+    /**
+     * @var User[]
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="adminCategories")
+     */
+    private $admins;
 
     /**
      * Constructor
