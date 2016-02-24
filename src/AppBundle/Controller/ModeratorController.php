@@ -23,6 +23,7 @@ class ModeratorController extends BaseController
 {
     const KEY_MESSAGES = 'messages';
     const KEY_COMMENT = 'comment';
+    const KEY_FORMS = 'forms';
 
     /**
      * @Route("/moderator/messages/{page}", defaults={"page":1}, name="moderator_messages")
@@ -35,17 +36,26 @@ class ModeratorController extends BaseController
     {
         $query = $this->getEm()->getRepository('AppBundle:Comment')->findDisabledQuery();
         $paginator = $this->get('knp_paginator');
+        /** @var Comment[] $pagination */
         $pagination = $paginator->paginate(
             $query,
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
-        return $this->render('Moderator/messages.html.twig', [self::KEY_PAGINATION => $pagination]);
+        $forms = [];
+        foreach ($pagination as $comment) {
+            $form = $this->createForm(ModeratorCommentType::class,
+                $comment,
+                ['action' => $this->generateUrl('moderator_decision', ['id' => $comment->getId()])]
+            );
+            $forms[] = $form->createView();
+        }
+        return $this->render('Moderator/messages.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORMS =>$forms]);
     }
 
     /**
      * @Route("/moderator/decision/{id}", name="moderator_decision")
-     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
+     * @ParamConverter(name="comment", class="AppBundle\Entity\Comment", options={"mapping":{"id":"id"}})
      * @param Request $request
      * @param Comment $comment
      *
