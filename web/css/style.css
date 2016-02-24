@@ -1456,3 +1456,38 @@ textarea.decision.form-control {
 .rubric-filters .btn-primary{
   padding:6px 12px !important;
 }
+
+.alert-message{
+  position:fixed;
+  right:5px;
+  top:5px;
+  z-index:2101;
+  width:30%;
+  transition:all 0.3s ease-in-out;
+}
+.alert-message .message-box{
+  border:4px solid #75B937;
+  border-radius:10px;
+  padding:10px 20px;
+  margin:0 0 10px;
+  position:relative;
+  box-shadow:0 0 3px #666;
+  transition:0.3s ease;
+}
+.alert-message .alert-danger{
+  border:4px solid #ce4844;
+}
+.alert-message .message-box p{
+  margin:0;
+  font-size:14px;
+  line-height:20px;
+}
+.alert-message .message-box .close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:12px;
+  line-height:14px;
+  font-weight:bold;
+  cursor:pointer;
+}

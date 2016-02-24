@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="pull-left">
+        {{ treeHtml|raw }}
+    </div>
+    <div class="pull-right">
+        {{ form(form) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

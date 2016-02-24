@@ -4,7 +4,7 @@
 parameters:
     database_host:     192.168.10.110
     database_port:     null
-    database_name:     exprating_test
+    database_name:     exprating_dev
     database_user:     exprating
     database_password: rydTyb5Drics
     # You should uncomment this if you want use pdo_sqlite

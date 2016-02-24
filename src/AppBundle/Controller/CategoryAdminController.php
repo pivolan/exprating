@@ -33,7 +33,7 @@ class CategoryAdminController extends BaseController
      * @Route("/category_admin/categories", name="category_admin_categories")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoriesAction()
+    public function categoriesAction(Request $request)
     {
         $categoryRepository = $this->getEm()->getRepository('AppBundle:Category');
         $treeHtml = $categoryRepository
@@ -43,7 +43,11 @@ class CategoryAdminController extends BaseController
 
         $category = $this->getUser()->getAdminCategories()[0];
         $form = $this->createForm(RatingSettingsType::class, $category->getRatingSettings());
+        $form->handleRequest($request);
+        if($form->isValid())
+        {
 
+        }
         return $this->render('CategoryAdmin/categories.html.twig',
             [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(), 'treeHtml' => $treeHtml, self::KEY_FORM => $form->createView()]);
     }

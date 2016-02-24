@@ -29,6 +29,21 @@
 
 <body class="{% block body_type %}index{% endblock %}">
 {% block body %}
+    <!-- Оповещения -->
+    <div class="alert-message">
+        <!-- Блоков message-box можно добавлять сколько угодно -->
+        {#<div class="message-box alert-danger">
+            <span class="close">X</span>
+            <p>Создан новый обзор на товар <a href="#">Кусачки железные</a>, ожидает вашего одобрения</p>
+        </div>
+
+        <div class="message-box alert-success">
+            <span class="close">X</span>
+            <p>Создан новый обзор на товар <a href="#">Кусачки железные</a>, ожидает вашего одобрения</p>
+        </div>#}
+
+    </div>
+    <!-- END Оповещения -->
     <div id="header">
         <div class="header-wrapper">
             <div class="logo">
@@ -447,7 +462,8 @@
                 {% endblock %}
             </div>
             {% block sidebar_right %}
-                <div class="sidebar-right">
+
+                {#<div class="sidebar-right">
                     <div class="banner336" style="height: 600px; margin-top: 60px;">
                         Реклама
                     </div>
@@ -460,7 +476,7 @@
                     <div class="banner336" style="height: 600px; margin-top: 20px;">
                         Реклама
                     </div>
-                </div>
+                </div>#}
             {% endblock %}
 
             <div style="clear: both"></div>
