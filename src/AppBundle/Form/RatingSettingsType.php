@@ -20,12 +20,12 @@ class RatingSettingsType extends AbstractType
     {
         $builder
             ->add('rating1label', null, ['label'=>''])
-            ->add('rating2label', null, ['label'=>''])
-            ->add('rating3label', null, ['label'=>''])
-            ->add('rating4label', null, ['label'=>''])
             ->add('rating1weight', null, ['label'=>''])
+            ->add('rating2label', null, ['label'=>''])
             ->add('rating2weight', null, ['label'=>''])
+            ->add('rating3label', null, ['label'=>''])
             ->add('rating3weight', null, ['label'=>''])
+            ->add('rating4label', null, ['label'=>''])
             ->add('rating4weight', null, ['label'=>''])
             ->add('save', SubmitType::class, ['label'=>'Сохранить'])
         ;

@@ -163,6 +163,11 @@ h2,
   margin-top: 20px;
   position: relative;
 }
+.page-wrapper:after{
+  content:"";
+  display:block;
+  clear:both;
+}
 /* line 55, ../sass/style.scss */
 .user .page-wrapper {
   background: none;
@@ -1490,4 +1495,24 @@ textarea.decision.form-control {
   line-height:14px;
   font-weight:bold;
   cursor:pointer;
+}
+
+#rating_settings .box:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+#rating_settings .box{
+  width:100%;
+  margin:0 0 30px;
+  text-align:center;
+}
+#rating_settings .box .form-group:first-child{
+  float:left;
+}
+#rating_settings .box .form-group{
+  float:right;
+  margin:0;
+  width:49%;
+
 }
