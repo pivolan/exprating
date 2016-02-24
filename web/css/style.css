@@ -1269,10 +1269,13 @@ div.profile-answers {
 /* line 1100, ../sass/style.scss */
 .search-form-wrapper .search-str {
   width: 90%;
-  height: 35px;
+  height: 36px;
+  display:inline-block !important;
   font-size: 17px;
 }
-
+.search-form-wrapper .btn-primary{
+  padding:6px 12px;
+}
 @media (max-width: 840px) {
   /* line 1113, ../sass/style.scss */
   .rating-wrapper {
@@ -1448,4 +1451,8 @@ div.profile-answers {
 textarea.decision.form-control {
   width: 400px;
   height: 130px;
+}
+
+.rubric-filters .btn-primary{
+  padding:6px 12px !important;
 }
