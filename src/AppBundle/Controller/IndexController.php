@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
+use AppBundle\Event\ProductCommentedEvent;
+use AppBundle\Event\ProductEvents;
 use AppBundle\Form\CommentType;
 use AppBundle\ProductFilter\ProductFilter;
 use Exprating\SearchBundle\Form\SearchParamsType;
@@ -22,6 +24,7 @@ class IndexController extends BaseController
     const KEY_SIMILAR_PRODUCTS = 'similarProducts';
     const FLASH_SORT_ERRORS = 'sortErrors';
     const KEY_SORT_PRODUCT = 'productFilter';
+    const FLASH_COMMENT_MESSAGE = 'flash.comment.message';
 
     /**
      * @Route("/", name="homepage")
@@ -79,9 +82,8 @@ class IndexController extends BaseController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $entityManager = $this->getEm();
-            $entityManager->persist($comment);
-            $entityManager->flush();
+            $this->get('event_dispatcher')->dispatch(ProductEvents::COMMENTED, new ProductCommentedEvent($comment));
+            $this->addFlash(self::FLASH_COMMENT_MESSAGE, 'Ваш комментарий будет опубликован после модерации');
         }
         return $this->redirectToRoute('product_detail', ['slug' => $comment->getProduct()->getSlug()]);
     }
@@ -100,8 +102,7 @@ class IndexController extends BaseController
         $similarProducts = $this->getEm()->getRepository('AppBundle:Product')->findSimilar($product);
 
         $template = 'Product/detail.html.twig';
-        if($request->isXmlHttpRequest())
-        {
+        if ($request->isXmlHttpRequest()) {
             $template = 'Product/detailPart.html.twig';
         }
         return $this->render($template, [

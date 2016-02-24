@@ -64,4 +64,52 @@ class ProductChangeExpertEvent extends Event implements ProductEventInterface
     {
         $this->product = $product;
     }
+
+    /**
+     * @return User
+     */
+    public function getNewExpert()
+    {
+        return $this->newExpert;
+    }
+
+    /**
+     * @param User $newExpert
+     */
+    public function setNewExpert($newExpert)
+    {
+        $this->newExpert = $newExpert;
+    }
+
+    /**
+     * @return User
+     */
+    public function getPreviousExpert()
+    {
+        return $this->previousExpert;
+    }
+
+    /**
+     * @param User $previousExpert
+     */
+    public function setPreviousExpert($previousExpert)
+    {
+        $this->previousExpert = $previousExpert;
+    }
+
+    /**
+     * @param User $curator
+     */
+    public function setCurator($curator)
+    {
+        $this->curator = $curator;
+    }
+
+    /**
+     * @return User
+     */
+    public function getCurator()
+    {
+        return $this->curator;
+    }
 }

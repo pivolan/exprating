@@ -10,6 +10,7 @@ use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\User;
 use AppBundle\Event\DecisionCreateEvent;
 use AppBundle\Event\ProductApproveEvent;
+use AppBundle\Event\ProductChangeExpertEvent;
 use AppBundle\Event\ProductEventInterface;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Event\ProductPublishRequestEvent;
@@ -57,9 +58,9 @@ class ProductSubscriber implements EventSubscriberInterface
             ProductEvents::APPROVE          => [['approveProduct', 1], ['onApproveNotifyExpert'], ['flush']],
             ProductEvents::REJECT           => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
             ProductEvents::PUBLISH          => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
-            ProductEvents::CHANGE_EXPERT    => [['changeExpert', 1], ['flush']],
+            ProductEvents::CHANGE_EXPERT    => [['changeExpert', 1], ['onChangeExpertNotify'], ['flush']],
             ProductEvents::RESERVATION_OVER => [['reserveOver', 0], ['onReserveOverNotifyExpert', 1], ['flush']],
-            ProductEvents::COMMENTED        => [['commentProduct', 1], ['flush']],
+            ProductEvents::COMMENTED        => [['flush']],
             ProductEvents::DECISION         => [['curatorDecision', 1],],
         ];
     }
@@ -196,9 +197,41 @@ class ProductSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function changeExpert($event)
+    public function changeExpert(ProductChangeExpertEvent $event)
     {
-        //todo
+        $nextExpert = $event->getNewExpert();
+        $product = $event->getProduct();
+        $product->setExpertUser($nextExpert);
+    }
+
+    public function onChangeExpertNotify(ProductChangeExpertEvent $event)
+    {
+        $product = $event->getProduct();
+        $nextExpert = $event->getNewExpert();
+        $prevExpert = $event->getPreviousExpert();
+        $curator = $event->getCurator();
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Ваш товар был передан другому эксперту ' . $product->getName())
+            ->setTo($prevExpert->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'Email/ChangeExpertPrevNotify.html.twig',
+                    ['product' => $product, 'curator' => $curator]
+                )
+            );
+        $this->mailer->send($message);
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Вам был передан товар на обзор ' . $product->getName())
+            ->setTo($nextExpert->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'Email/ChangeExpertNextNotify.html.twig',
+                    ['product' => $product, 'curator' => $curator]
+                )
+            );
+        $this->mailer->send($message);
+
     }
 
     public function reserveOver(ProductReservationOverEvent $event)
@@ -222,11 +255,6 @@ class ProductSubscriber implements EventSubscriberInterface
                 )
             );
         $this->mailer->send($message);
-    }
-
-    public function commentProduct($event)
-    {
-        //todo
     }
 
     public function curatorDecision(DecisionCreateEvent $event, $eventName,
