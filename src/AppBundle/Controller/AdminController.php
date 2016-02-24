@@ -7,11 +7,12 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserEditType;
-use Exprating\CharacteristicBundle\Tests\Entity\ProductCharacteristicTest;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Security("is_granted('ROLE_ADMIN')")
