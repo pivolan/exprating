@@ -1,1 +1,24 @@
 {% extends "layout.html.twig" %}
+{% block body_type %}experts{% endblock %}
+{% block content %}
+    <div class="content-inner clearfix">
+        <h1>Подчиненные эксперты</h1>
+
+        <div class="experts-wrapper">
+            <ul>
+                {% for expert in pagination %}
+                    <li class="expert-item">
+                        <div class="expert-img-wrapper">
+                            <img src="{{ expert.avatarImage }}">
+                        </div>
+                        <div class="expert-name">
+                            <a href="{{ path("experts_detail", {"username": expert.username}) }}"><span>{{ expert.fullName }}</span></a>
+                            {{ expert.caption }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

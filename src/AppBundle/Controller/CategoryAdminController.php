@@ -27,7 +27,6 @@ class CategoryAdminController extends BaseController
     const KEY_CATEGORIES = 'categories';
 
     const FLASH_CATEGORY_SAVED = 'flash.category_saved';
-    const KEY_TREE_HTML = 'treeHtml';
 
     /**
      * @Route("/category_admin/categories", name="category_admin_categories")

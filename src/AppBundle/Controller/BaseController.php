@@ -24,6 +24,7 @@ abstract class BaseController extends Controller
     const KEY_PAGINATION = 'pagination';
     const KEY_CATEGORY = 'category';
     const KEY_EXPERTS = 'experts';
+    const KEY_TREE_HTML = 'treeHtml';
 
     const FLASH_MESSAGE = 'flash.message';
     const FLASH_ERROR_MESSAGE = 'flash.error_message';
