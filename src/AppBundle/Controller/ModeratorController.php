@@ -26,13 +26,13 @@ class ModeratorController extends BaseController
     const KEY_FORMS = 'forms';
 
     /**
-     * @Route("/moderator/messages/{page}", defaults={"page":1}, name="moderator_messages")
+     * @Route("/moderator/comments/{page}", defaults={"page":1}, name="moderator_comments")
      * @param Request $request
      * @param         $page
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function messagesAction(Request $request, $page)
+    public function commentsAction(Request $request, $page)
     {
         $query = $this->getEm()->getRepository('AppBundle:Comment')->findDisabledQuery();
         $paginator = $this->get('knp_paginator');
@@ -50,7 +50,15 @@ class ModeratorController extends BaseController
             );
             $forms[] = $form->createView();
         }
-        return $this->render('Moderator/messages.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORMS =>$forms]);
+        return $this->render('Moderator/messages.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORMS => $forms]);
+    }
+
+    /**
+     * @Route("/moderator/feedbacks/{page}", name="moderator_feedbacks", defaults={"page": 1})
+     */
+    public function feedbacksAction($page)
+    {
+        return $this->render('Moderator/feedbacks.html.twig');
     }
 
     /**
@@ -71,5 +79,16 @@ class ModeratorController extends BaseController
             $this->addFlash(self::FLASH_MESSAGE, $event->getMessage());
         }
         return $this->render('Moderator/decision.html.twig', [self::KEY_FORM => $form, self::KEY_COMMENT => $comment]);
+    }
+
+    public function _menuAction()
+    {
+        $commentCount = $this->getEm()->getRepository('AppBundle:Comment')->newCount();
+        $feedbackCount = $this->getEm()->getRepository('AppBundle:Feedback')->newCount();
+
+        return $this->render('Moderator/_menu.html.twig',
+            ['commentCount'  => $commentCount,
+             'feedbackCount' => $feedbackCount
+            ]);
     }
 }

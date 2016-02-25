@@ -1,5 +1,5 @@
-{% extends "layout.html.twig" %}
-{% block content %}
+{% extends "Profile/moderator.html.twig" %}
+{% block profile_body %}
     {{ knp_pagination_render(pagination) }}
     <div class="row">
         {% for comment in pagination %}
@@ -22,4 +22,9 @@
         {% endfor %}
     </div>
     {{ knp_pagination_render(pagination) }}
+{% endblock %}
+
+{% block breadcrumbs %}
+{{ parent() }}
+    <a href="{{ path("moderator_profile") }}">Профиль модератора</a> →
 {% endblock %}

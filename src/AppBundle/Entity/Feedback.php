@@ -57,6 +57,13 @@ class Feedback
     private $fullName;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_published", type="boolean", options={"comment": "Опубликован ли фидбэк, или ожидает решения модератора", "default": false})
+     */
+    private $isPublished = false;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", options={"comment":"Дата создания отзыва"})
@@ -257,5 +264,29 @@ class Feedback
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * Set isPublished
+     *
+     * @param boolean $isPublished
+     *
+     * @return Feedback
+     */
+    public function setIsPublished($isPublished)
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublished
+     *
+     * @return boolean
+     */
+    public function getIsPublished()
+    {
+        return $this->isPublished;
     }
 }
