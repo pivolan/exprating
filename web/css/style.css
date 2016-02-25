@@ -84,6 +84,9 @@ aside {
   color: #fff;
   background-color: #75b937;
   border-color: #66a835;
+}
+
+.auth .btn-primary {
   padding: 0;
   font-weight: 700;
   font-size: 14px;
@@ -513,7 +516,7 @@ textarea:hover {
   box-shadow: 0 2px 5px #ccc;
 }
 /* line 401, ../sass/style.scss */
-.p-stikers ul li a {
+.p-stikers ul li a, .p-stikers ul li a:link, .p-stikers ul li a:visited {
   color: #999;
   text-decoration: none;
 }
@@ -1278,15 +1281,13 @@ div.profile-answers {
   background: #eee;
 }
 /* line 1100, ../sass/style.scss */
-.search-form-wrapper .search-str {
+.search-form-wrapper input.search-str {
   width: 90%;
-  height: 36px;
-  display:inline-block !important;
+  height: 35px;
+  display:inline;
   font-size: 17px;
 }
-.search-form-wrapper .btn-primary{
-  padding:6px 12px;
-}
+
 @media (max-width: 840px) {
   /* line 1113, ../sass/style.scss */
   .rating-wrapper {
