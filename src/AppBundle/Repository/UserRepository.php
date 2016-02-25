@@ -36,4 +36,19 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb;
     }
+
+    /**
+     * @param User $curator
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function level2Query(User $curator)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->innerJoin('a.curator', 'p')
+            ->where('p.curator = :curator')
+            ->setParameter('curator', $curator)
+            ->orderBy('a.id', 'DESC');
+        return $qb->getQuery();
+    }
 }

@@ -2,23 +2,56 @@
 {% block profile_body %}
     <div class="content-inner clearfix">
         <h1>Подчиненные эксперты</h1>
-
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="{{ level==1?'active':'' }}"><a
+                        href="{{ path("curator_experts", {'level': 1}) }}">1-го уровня</a></li>
+            <li role="presentation" class="{{ level==2?'active':'' }}"><a
+                        href="{{ path("curator_experts", {'level': 2}) }}">2-го уровня</a></li>
+        </ul>
         <div class="experts-wrapper">
             <ul>
                 {% for expert in pagination %}
                     <li class="expert-item">
+                        {% if level==1 %}
+                            <form action="">
+                                <button type="submit" class="pull-right btn btn-success btn-xs {{ expert.canControlledPreCurator?'active disabled':'' }}" data-toggle="tooltip"
+                                        title="Разрешить вышестоящему куратору руководить этим экспертом"><span
+                                            class="glyphicon glyphicon-ok"></span></button>
+                                <button type="submit" class="pull-right btn btn-danger btn-xs {{ expert.canControlledPreCurator?'':'active disabled' }}" data-toggle="tooltip"
+                                        title="Запретить вышестоящему куратору руководить этим экспертом"><span
+                                            class="glyphicon glyphicon-ban-circle"></span></button>
+                            </form>
+                        {% else %}
+                            {% if expert.canControlledPreCurator %}
+                                <span class="pull-right btn btn-success btn-xs" data-toggle="tooltip"
+                                        title="Вышестоящему куратору разрешено руководить этим экспертом"><span
+                                            class="glyphicon glyphicon-ok"></span></span>
+                            {% else %}
+                                <span class="pull-right btn btn-danger btn-xs {{ expert.canControlledPreCurator?'':'active' }}" data-toggle="tooltip"
+                                        title="Вышестоящему куратору запрещено руководить этим экспертом"><span
+                                            class="glyphicon glyphicon-ban-circle"></span></span>
+                            {% endif %}
+                        {% endif %}
                         <div class="expert-img-wrapper">
                             <img src="{{ expert.avatarImage }}">
                         </div>
                         <div class="expert-name">
                             <a href="{{ path("experts_detail", {"username": expert.username}) }}"><span>{{ expert.fullName }}</span></a>
                             {{ expert.caption }}
+                            <div class="level2">
+                                <div class="expert-img-wrapper">
+                                    <img src="{{ expert.curator.avatarImage }}">
+                                </div>
+                                <div class="expert-name">
+                                    <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName }}</span></a>
+                                </div>
+                            </div>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
+            {{ knp_pagination_render(pagination) }}
         </div>
-        {{ knp_pagination_render(pagination) }}
     </div>
 {% endblock %}
 {% block breadcrumbs %}

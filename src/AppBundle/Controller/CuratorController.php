@@ -28,6 +28,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class CuratorController extends BaseController
 {
     const FLASH_DECISION_INFO = 'flash.curator.decision.info';
+    const KEY_LEVEL = 'level';
 
     /**
      * @Route("/wait_list/{page}", name="curator_wait_list", defaults={"page":1})
@@ -118,20 +119,25 @@ class CuratorController extends BaseController
     }
 
     /**
-     * @Route("/curator/experts/{page}", name="curator_experts", defaults={"page":1})
+     * @Route("/curator/experts/{level}/{page}", name="curator_experts", defaults={"level":1, "page":1})
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function expertsAction(Request $request, $page)
+    public function expertsAction(Request $request, $level, $page)
     {
         $query = $this->getUser()->getExperts();
         $paginator = $this->get('knp_paginator');
+        if ($level == 2) {
+            $query = $this->getEm()->getRepository('AppBundle:User')->level2Query($this->getUser());
+        }
         $pagination = $paginator->paginate(
             $query,
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
-        return $this->render('Curator/experts.html.twig', [self::KEY_PAGINATION => $pagination]);
+
+        return $this->render('Curator/experts.html.twig', [self::KEY_PAGINATION => $pagination,
+                                                           self::KEY_LEVEL      => $level]);
     }
 
     /**

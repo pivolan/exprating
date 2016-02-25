@@ -40,6 +40,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setEmailCanonical('curator@exprating.lo')
             ->setPlainPassword('qwerty')
             ->setEnabled(true)
+            ->setCurator($userAdmin)
             ->setBirthday(new \DateTime('1986-02-08'))
             ->setFullName('Curator Curator')
             ->setCity('Москва')
@@ -97,12 +98,29 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($expert3);
 
+        $expert31 = new User();
+        $expert31->setUsername('expert31')
+            ->setUsernameCanonical('expert31')
+            ->setEmail('expert31@exprating.lo')
+            ->setEmailCanonical('expert31@exprating.lo')
+            ->setPlainPassword('qwerty')
+            ->setCurator($expert3)
+            ->setEnabled(true)
+            ->setBirthday(new \DateTime('1985-02-08'))
+            ->setFullName('expert31 expert31')
+            ->setCity('Москва')
+            ->setCaption('Обычный Эксперт31')
+            ->setAvatarImage('http://placehold.it/203x205')
+            ->addRole(User::ROLE_EXPERT);
+        $manager->persist($expert31);
+
         $categoryAdmin = new User();
         $categoryAdmin->setUsername('category')
             ->setUsernameCanonical('category')
             ->setEmail('category@exprating.lo')
             ->setEmailCanonical('category@exprating.lo')
             ->setPlainPassword('qwerty')
+            ->setCurator($userAdmin)
             ->setEnabled(true)
             ->setBirthday(new \DateTime('1985-02-08'))
             ->setFullName('category admin')
