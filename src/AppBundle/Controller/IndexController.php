@@ -122,7 +122,7 @@ class IndexController extends BaseController
         $productFilter = new ProductFilter();
         $productFilter->setCategory($category)
             ->setStatus($status)
-            ->setUser($this->getUser())
+            ->setCurator($this->getUser())
             ->setFieldName($sortField)
             ->setDirection($sortDirection);
         $validator = $this->get('validator');

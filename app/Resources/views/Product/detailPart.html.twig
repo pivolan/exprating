@@ -2,7 +2,7 @@
         {{ breadcrumbs(product.category)|raw }}
         {% block curator_decision %}
             {% if is_granted('MODERATE', product) %}
-                {{ render(controller('AppBundle:Curator:decision', {'slug': product.slug})) }}
+                {{ render(controller('AppBundle:Curator:decisionEdit', {'slug': product.slug})) }}
             {% endif %}
             {% for flash_message in app.session.flashbag.get('flash.curator.decision.info') %}
                 <span id="flash_info_{{ loop.index }}" class="label label-info">{{ flash_message }}</span>

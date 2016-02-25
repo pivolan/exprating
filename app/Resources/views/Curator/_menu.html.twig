@@ -1,0 +1,14 @@
+<a href="{{ path('curator_profile') }}" class="list-group-item {{ a1_current|default('') }}">
+    Профиль куратора
+</a>
+<a href="{{ path('curator_wait_list') }}" class="list-group-item {{ a2_current|default('') }}">
+    <span class="badge">{{ waitItemsCount }}</span>
+    Ожидающие товары
+</a>
+<a href="{{ path('curator_decisions') }}" class="list-group-item {{ a3_current|default('') }}">
+    Все принятые решения
+</a>
+<a href="{{ path('curator_experts') }}" class="list-group-item {{ a4_current|default('') }}">
+    <span class="badge">{{ app.user.experts.count }}</span>
+    Подчиненные эксперты
+</a>

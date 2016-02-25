@@ -1527,8 +1527,7 @@ textarea.decision.form-control {
 .btn-warning:link, .btn-warning:visited,
 .btn-danger:link, .btn-danger:visited,
 .btn-success:link, .btn-success:visited,
-.btn-primary:link, .btn-primary:visited,
-.btn-default:link, .btn-default:visited
+.btn-primary:link, .btn-primary:visited
 {
   color: #fff;
 }

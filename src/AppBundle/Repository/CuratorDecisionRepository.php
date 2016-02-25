@@ -57,4 +57,17 @@ class CuratorDecisionRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('status', CuratorDecision::STATUS_WAIT);
         return $qb->getQuery();
     }
+
+    public function byCurator(User $curator, Product $product = null)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.curator = :curator')
+            ->setParameter('curator', $curator);
+        if ($product) {
+            $qb->andWhere('a.product = :product')
+                ->setParameter('product', $product);
+        }
+        $qb->orderBy('a.id', 'DESC');
+        return $qb->getQuery();
+    }
 }

@@ -47,7 +47,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                     ->innerJoin('a.curatorDecisions', 'd')
                     ->andWhere('d.curator = :curator')
                     ->andWhere('d.status = :status')
-                    ->setParameter('curator', $productFilter->getUser())
+                    ->setParameter('curator', $productFilter->getCurator())
                     ->setParameter('status', CuratorDecision::STATUS_WAIT);
             }
         }

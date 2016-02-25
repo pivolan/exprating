@@ -1,6 +1,5 @@
-{% extends "layout.html.twig" %}
-{% block body_type %}experts{% endblock %}
-{% block content %}
+{% extends "Profile/curator.html.twig" %}
+{% block profile_body %}
     <div class="content-inner clearfix">
         <h1>Подчиненные эксперты</h1>
 
@@ -21,4 +20,8 @@
         </div>
         {{ knp_pagination_render(pagination) }}
     </div>
+{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    <a href="{{ path("curator_profile") }}">Куратор</a> →
 {% endblock %}

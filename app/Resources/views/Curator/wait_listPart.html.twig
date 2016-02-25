@@ -7,7 +7,7 @@
         <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
             <ul>
                 {% for decision in pagination %}
-                    {{ include("_include/Product/_itemList.twig", {"product":decision.product}) }}
+                    {{ include("_include/Product/_curatorItemList.twig", {"product":decision.product}) }}
                 {% endfor %}
             </ul>
         </div>

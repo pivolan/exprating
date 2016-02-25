@@ -1,0 +1,64 @@
+{% extends 'Profile/curator.html.twig' %}
+{% block profile_body %}
+    <h1>Все принятые решения {% if product %}по товару {{ product.name }}{% endif %}</h1>
+    {{ knp_pagination_render(pagination) }}
+    {% for decision in pagination %}
+        <div class="row well">
+            <div class="col-md-6">
+                <span class="label label-info">#{{ decision.id }}</span>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="{{ path("curator_decisions", {"slug": decision.product.slug}) }}">
+                            <img class="media-object" height="64" src="{{ decision.product.previewImage }}" alt="">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ decision.product.name }}</h4>
+                        {% if decision.status == constant("AppBundle\\Entity\\CuratorDecision::STATUS_WAIT") %}
+                            <div class="label label-info">
+                                <span class="glyphicon glyphicon-question-sign"></span>
+                                <a href="{{ path("product_detail", {"slug": decision.product.slug}) }}">Ожидает</a>
+                            </div>
+                            {{ render(controller('AppBundle:Curator:decisionEdit', {'slug': decision.product.slug})) }}
+                        {% elseif decision.status == constant("AppBundle\\Entity\\CuratorDecision::STATUS_APPROVE") %}
+                            <div class="label label-success">
+                                <span class="glyphicon glyphicon-ok-sign"></span>
+                                <a href="{{ path("product_detail", {"slug": decision.product.slug}) }}">Одобрено</a>
+                            </div>
+                        {% elseif decision.status == constant("AppBundle\\Entity\\CuratorDecision::STATUS_REJECT") %}
+                            <div class="label label-danger">
+                                <span class="glyphicon glyphicon-ban-circle"></span>
+                                <a href="{{ path("product_detail", {"slug": decision.product.slug}) }}">Отвергнуто</a>
+                            </div>
+                        {% endif %}
+                        <p>{{ decision.rejectReason }}</p>
+                        <div><a href="{{ path('product_detail', {'slug': decision.product.slug}) }}"
+                                class="btn btn-default">Посмотреть</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <span class="pull-right label label-default">{{ decision.updatedAt|date }}</span>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="{{ path("experts_detail", {"username": decision.product.expertUser.username}) }}">
+                            <img class="media-object" height="64"
+                                 src="{{ decision.product.expertUser.avatarImage }}" alt="">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ decision.product.expertUser.fullName }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {{ knp_pagination_render(pagination) }}
+{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    <a href="{{ path("curator_profile") }}">Куратор</a> →
+    {% if product %}
+        <a href="{{ path("curator_decisions") }}">Все принятые решения</a> →
+    {% endif %}
+{% endblock %}

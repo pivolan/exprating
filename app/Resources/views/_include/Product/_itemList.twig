@@ -18,8 +18,10 @@
             <span>Комментарии</span>
         </a>
     </div>
-    <a class="btn btn-default btn-sm sticker-where" href="#" role="button">
-        <span class="glyphicon glyphicon-road"></span>
-        Где купить
-    </a>
+    {% block buttons %}
+        <a class="btn btn-default btn-sm sticker-where" href="#" role="button">
+            <span class="glyphicon glyphicon-road"></span>
+            Где купить
+        </a>
+    {% endblock %}
 </li>

@@ -54,7 +54,7 @@ class ProductFilter
     /**
      * @var User
      */
-    protected $user;
+    protected $curator;
 
     /**
      * @var Category
@@ -141,19 +141,19 @@ class ProductFilter
     /**
      * @return User
      */
-    public function getUser()
+    public function getCurator()
     {
-        return $this->user;
+        return $this->curator;
     }
 
     /**
-     * @param User $user
+     * @param User $curator
      *
      * @return $this
      */
-    public function setUser(User $user = null)
+    public function setCurator(User $curator = null)
     {
-        $this->user = $user;
+        $this->curator = $curator;
         return $this;
     }
 

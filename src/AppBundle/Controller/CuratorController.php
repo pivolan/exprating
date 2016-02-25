@@ -14,6 +14,7 @@ use AppBundle\Event\ProductChangeExpertEvent;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Form\DecisionType;
 use AppBundle\Form\ProductChangeExpertType;
+use AppBundle\ProductFilter\ProductFilter;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -56,7 +57,7 @@ class CuratorController extends BaseController
      * @Security("is_granted('MODERATE', product)")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function decisionAction(Request $request, Product $product)
+    public function decisionEditAction(Request $request, Product $product)
     {
         /** @var CuratorDecision $decision */
         $decision = $this->getEm()->getRepository('AppBundle:CuratorDecision')
@@ -131,5 +132,33 @@ class CuratorController extends BaseController
             self::LIMIT_PER_PAGE
         );
         return $this->render('Curator/experts.html.twig', [self::KEY_PAGINATION => $pagination]);
+    }
+
+    /**
+     * @Route("/curator/decisions/{page}/{slug}", name="curator_decisions", defaults={"page": 1, "slug": null})
+     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
+     */
+    public function decisionsAction($page, Product $product = null)
+    {
+        $query = $this->getEm()->getRepository('AppBundle:CuratorDecision')
+            ->byCurator($this->getUser(), $product);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            max($page, 1),
+            self::LIMIT_PER_PAGE
+        );
+        return $this->render('Curator/decisions.html.twig',
+            [self::KEY_PAGINATION => $pagination, self::KEY_PAGE => $page, self::KEY_USER => $this->getUser()
+             , self::KEY_PRODUCT  => $product]);
+    }
+
+    public function _menuAction()
+    {
+        $waitItemsCount = $this->getEm()->getRepository('AppBundle:CuratorDecision')->countNew($this->getUser());
+
+        return $this->render('Curator/_menu.html.twig',
+            ['waitItemsCount' => $waitItemsCount]);
     }
 }
