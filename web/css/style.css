@@ -1522,3 +1522,12 @@ textarea.decision.form-control {
   width:49%;
 
 }
+.btn-info:link, .btn-info:visited,
+.btn-warning:link, .btn-warning:visited,
+.btn-danger:link, .btn-danger:visited,
+.btn-success:link, .btn-success:visited,
+.btn-primary:link, .btn-primary:visited,
+.btn-default:link, .btn-default:visited
+{
+  color: #fff;
+}

@@ -20,7 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class AdminController extends BaseController
 {
     const KEY_USER = 'user';
-    const KEY_PAGE = 'page';
 
     /**
      * @Route("/admin/experts/{page}/{username}", name="admin_experts", defaults={"page": 1, "username": null})

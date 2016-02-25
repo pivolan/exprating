@@ -1,0 +1,24 @@
+{% extends 'Profile/expert.html.twig' %}
+{% block profile_body %}
+    <h1>Список доступных категорий</h1>
+    <div class="list-group">
+        {% for category in user.categories %}
+            <a href="{{ path("expert_categories", {"slug": category.slug}) }}"
+               class="list-group-item {% if app.request.requestUri == path("expert_categories", {"slug": category.slug, "page":page}) %}active{% endif %}">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+    {{ knp_pagination_render(pagination) }}
+
+    <div class="rubric-wrapper">
+        <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
+            <ul>
+                {% for product in pagination %}
+                    {{ include("_include/Product/_itemList.twig") }}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    {{ knp_pagination_render(pagination) }}
+
+{% endblock %}

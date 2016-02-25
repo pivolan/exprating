@@ -14,6 +14,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @Security("is_granted('ROLE_EXPERT')")
+ * Class ExpertController
+ * @package AppBundle\Controller
+ */
 class ExpertController extends BaseController
 {
     /**
@@ -33,7 +38,7 @@ class ExpertController extends BaseController
         );
 
         return $this->render('Expert/publishedItems.html.twig',
-            [self::KEY_PAGINATION => $pagination, self::KEY_USER => $this->getUser()]);
+            [self::KEY_PAGINATION => $pagination, self::KEY_USER => $this->getUser(), self::KEY_PAGE => $page]);
     }
 
     /**
@@ -44,7 +49,7 @@ class ExpertController extends BaseController
      */
     public function notPublishedItemsAction($page, Category $category = null)
     {
-        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertNotPublishedQuery($this->getUser());
+        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertNotPublishedQuery($this->getUser(), $category);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
@@ -53,16 +58,29 @@ class ExpertController extends BaseController
         );
 
         return $this->render('Expert/notPublishedItems.html.twig', [self::KEY_PAGINATION => $pagination,
-                                                                    self::KEY_USER       => $this->getUser()]);
+                                                                    self::KEY_USER       => $this->getUser(),
+                                                                    self::KEY_PAGE       => $page]);
     }
 
 
     /**
-     * @Route("/profile/expert/categories/{page}", name="expert_categories", defaults={"page":1})
+     * @Route("/profile/expert/categories/{page}/{slug}", name="expert_categories",
+     *     defaults={"page":1, "slug": null})
+     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
-    public function categoriesAction()
+    public function categoriesAction($page, Category $category = null)
     {
-        return $this->render('Expert/categories.html.twig');
+        $query = $this->getEm()->getRepository('AppBundle:Product')->findFreeByCategoryQuery($category);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $page,
+            self::LIMIT_PER_PAGE
+        );
+
+        return $this->render('Expert/categories.html.twig', [self::KEY_PAGINATION => $pagination,
+                                                             self::KEY_USER       => $this->getUser(),
+                                                             self::KEY_PAGE       => $page]);
     }
 
     public function _menuAction()

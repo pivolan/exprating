@@ -7,7 +7,7 @@
     <h1>Мои опубликованные обзоры</h1>
     <div class="row">
         {% for category in user.categories %}
-            <a href="{{ path("expert_published_items", {"slug": category.slug}) }}" class="label label-info">{{ category.name }}</a>
+            <a href="{{ path("expert_published_items", {"slug": category.slug}) }}" class="btn btn-info btn-xs {% if app.request.requestUri == path("expert_published_items", {"slug": category.slug, "page":page}) %}active{% endif %}">{{ category.name }}</a>
         {% endfor %}
     </div>
     {{ knp_pagination_render(pagination) }}

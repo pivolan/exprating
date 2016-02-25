@@ -116,7 +116,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
     public function findByExpertPublishedQuery(User $expert, Category $category = null)
     {
         $queryBuilder = $this->qbByExpert($expert);
-        if($category){
+        if ($category) {
             $queryBuilder->andWhere('a.category = :category')->setParameter('category', $category);
         }
         $query = $queryBuilder
@@ -124,11 +124,27 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function findByExpertNotPublishedQuery(User $expert)
+    public function findByExpertNotPublishedQuery(User $expert, Category $category = null)
     {
-        $query = $this->qbByExpert($expert)
-            ->setParameter('isEnabled', false)
+        $queryBuilder = $this->qbByExpert($expert)
+            ->setParameter('isEnabled', false);
+        if ($category) {
+            $queryBuilder->andWhere('a.category = :category')->setParameter('category', $category);
+        }
+        $query = $queryBuilder
             ->getQuery();
+        return $query;
+    }
+
+    public function findFreeByCategoryQuery(Category $category = null)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.expertUser IS NULL');
+        if ($category) {
+            $qb->andWhere('a.category = :category')
+                ->setParameter('category', $category);
+        }
+        $query = $qb->getQuery();
         return $query;
     }
 
