@@ -1,14 +1,14 @@
-{% extends 'layout.html.twig' %}
-{% block content %}
+{% extends 'Profile/category_admin.html.twig' %}
+{% block profile_body %}
     <div class="row">
         <div class="col-md-6">
             {{ treeHtml|raw }}
         </div>
         <div class="col-md-6">
-            {{ form(form) }}
         </div>
     </div>
 {% endblock %}
-{% block javascripts %}
-    {{ parent() }}
+{% block breadcrumbs %}
+{{ parent() }}
+    <a href="{{ path("category_admin_profile") }}">Профиль админа категорий</a> →
 {% endblock %}

@@ -40,15 +40,8 @@ class CategoryAdminController extends BaseController
                 ['decorate' => true, 'representationField' => 'slug', 'html' => true]);
 
 
-        $category = $this->getUser()->getAdminCategories()[0];
-        $form = $this->createForm(RatingSettingsType::class, $category->getRatingSettings());
-        $form->handleRequest($request);
-        if($form->isValid())
-        {
-
-        }
         return $this->render('CategoryAdmin/categories.html.twig',
-            [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(), 'treeHtml' => $treeHtml, self::KEY_FORM => $form->createView()]);
+            [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(), 'treeHtml' => $treeHtml]);
     }
 
     /**
