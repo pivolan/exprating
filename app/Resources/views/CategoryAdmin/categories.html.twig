@@ -2,7 +2,7 @@
 {% block profile_body %}
     <div class="row">
         <div class="col-md-6">
-            {{ treeHtml|raw }}
+            <div class="categories"></div>
         </div>
         <div class="col-md-6">
         </div>
@@ -11,4 +11,7 @@
 {% block breadcrumbs %}
 {{ parent() }}
     <a href="{{ path("category_admin_profile") }}">Профиль админа категорий</a> →
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="js/"></script>
 {% endblock %}
