@@ -5,13 +5,47 @@
             <div class="categories"></div>
         </div>
         <div class="col-md-6">
+            {% if category %}
+                {% form_theme form 'Form/form_rating_settings.html.twig' %}
+                {{ form(form) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
 {% block breadcrumbs %}
-{{ parent() }}
+    {{ parent() }}
     <a href="{{ path("category_admin_profile") }}">Профиль админа категорий</a> →
 {% endblock %}
 {% block javascripts %}
-    <script type="text/javascript" src="js/"></script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jstree.min.js') }}"></script>
+    <script type="text/javascript">
+        $('div.categories').jstree({
+            core: {
+                data: [
+                    {% for category1 in categories %}
+                    {
+                        id: '{{ category1.slug }}',
+                        parent: '{{ category1.parent.slug|default('#') }}',
+                        text: '{{ category1.name|json_encode }}',
+                        a_attr: {
+                            href: '{{ path('category_admin_categories', {'slug': category1.slug}) }}'
+                        },
+                        state: {
+                            selected: {{ category==category1?'true':'false' }}
+                        }
+                    },
+                    {% endfor %}
+                ]
+            }
+        }).bind("select_node.jstree", function (e, data) {
+            $('#jstree').jstree('save_state');
+        }).on("activate_node.jstree", function(e,data){
+            window.location.href = data.node.a_attr.href;
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/themes/default/style.min.css') }}" type="text/css" rel="stylesheet"/>
 {% endblock %}

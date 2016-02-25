@@ -29,19 +29,27 @@ class CategoryAdminController extends BaseController
     const FLASH_CATEGORY_SAVED = 'flash.category_saved';
 
     /**
-     * @Route("/category_admin/categories", name="category_admin_categories")
+     * @Route("/category_admin/categories/{slug}", name="category_admin_categories", defaults={"slug": null})
+     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoriesAction(Request $request)
+    public function categoriesAction(Request $request, Category $category = null)
     {
-        $categoryRepository = $this->getEm()->getRepository('AppBundle:Category');
-        $treeHtml = $categoryRepository
-            ->buildTree($categoryRepository->getByUserQuery($this->getUser())->getArrayResult(),
-                ['decorate' => true, 'representationField' => 'slug', 'html' => true]);
+        $ratingSettings = null;
+        if ($category) {
+            $ratingSettings = $category->getRatingSettings();
+        }
 
-
+        $form = $this->createForm(RatingSettingsType::class, $ratingSettings);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->getEm()->flush();
+            return $this->redirect($request->getUri());
+        }
         return $this->render('CategoryAdmin/categories.html.twig',
-            [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(), 'treeHtml' => $treeHtml]);
+            [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(),
+             self::KEY_CATEGORY   => $category,
+             self::KEY_FORM       => $form->createView()]);
     }
 
     /**

@@ -19,14 +19,14 @@ class RatingSettingsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rating1label', null, ['label'=>''])
-            ->add('rating1weight', null, ['label'=>''])
-            ->add('rating2label', null, ['label'=>''])
-            ->add('rating2weight', null, ['label'=>''])
-            ->add('rating3label', null, ['label'=>''])
-            ->add('rating3weight', null, ['label'=>''])
-            ->add('rating4label', null, ['label'=>''])
-            ->add('rating4weight', null, ['label'=>''])
+            ->add('rating1label', null, ['label'=>'Описание 1-го параметра'])
+            ->add('rating1weight', null, ['label'=>'Вес 1-го параметра'])
+            ->add('rating2label', null, ['label'=>'Описание 2-го параметра'])
+            ->add('rating2weight', null, ['label'=>'Вес 2-го параметра'])
+            ->add('rating3label', null, ['label'=>'Описание 3-го параметра'])
+            ->add('rating3weight', null, ['label'=>'Вес 3-го параметра'])
+            ->add('rating4label', null, ['label'=>'Описание 4-го параметра'])
+            ->add('rating4weight', null, ['label'=>'Вес 4-го параметра'])
             ->add('save', SubmitType::class, ['label'=>'Сохранить'])
         ;
     }
