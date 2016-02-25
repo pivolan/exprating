@@ -345,4 +345,38 @@ class Category
     {
         return $this->ratingSettings;
     }
+
+    /**
+     * Add admin
+     *
+     * @param \AppBundle\Entity\User $admin
+     *
+     * @return Category
+     */
+    public function addAdmin(\AppBundle\Entity\User $admin)
+    {
+        $this->admins[] = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Remove admin
+     *
+     * @param \AppBundle\Entity\User $admin
+     */
+    public function removeAdmin(\AppBundle\Entity\User $admin)
+    {
+        $this->admins->removeElement($admin);
+    }
+
+    /**
+     * Get admins
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdmins()
+    {
+        return $this->admins;
+    }
 }

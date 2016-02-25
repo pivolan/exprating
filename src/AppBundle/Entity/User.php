@@ -56,6 +56,13 @@ class User extends BaseUser
     private $caption;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="can_controlled_pre_curator", options = {"comment": "Может ли вышестоящий куратор управлять этим пользователем", "default": false})
+     */
+    private $canControlledPreCurator = false;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="avatar_image", type="string", unique=true, nullable=true, options={"comment":"Аватар картинка эксперта"})
@@ -394,5 +401,29 @@ class User extends BaseUser
     public function getAdminCategories()
     {
         return $this->adminCategories;
+    }
+
+    /**
+     * Set canControlledPreCurator
+     *
+     * @param string $canControlledPreCurator
+     *
+     * @return User
+     */
+    public function setCanControlledPreCurator($canControlledPreCurator)
+    {
+        $this->canControlledPreCurator = $canControlledPreCurator;
+
+        return $this;
+    }
+
+    /**
+     * Get canControlledPreCurator
+     *
+     * @return string
+     */
+    public function getCanControlledPreCurator()
+    {
+        return $this->canControlledPreCurator;
     }
 }
