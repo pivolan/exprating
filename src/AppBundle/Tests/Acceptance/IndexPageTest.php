@@ -93,7 +93,9 @@ class IndexPageTest extends WebTestCase
         $client->submit($form);
         $crawler = $client->followRedirect();
         //Смотрим в списке ожидающих
-        $link = $crawler->selectLink('Ожидающие обзоры')->link();
+        $link = $crawler->selectLink('Куратор')->link();
+        $crawler = $client->click($link);
+        $link = $crawler->selectLink('Ожидающие товары')->link();
         $crawler = $client->click($link);
         $tovarWait = $crawler->filter('div.rubric-wrapper li a')->first();
         $this->assertContains($tovatTitle, $tovarWait->text());
@@ -105,7 +107,9 @@ class IndexPageTest extends WebTestCase
         $client->submit($approveForm, ['decision[approve]'=>'Одобрить']);
         $client->followRedirect();
         $this->assertContains('Обзор успешно опубликован', $client->getResponse()->getContent());
-        $link = $crawler->selectLink('Ожидающие обзоры')->link();
+        $link = $crawler->selectLink('Куратор')->link();
+        $crawler = $client->click($link);
+        $link = $crawler->selectLink('Ожидающие товары')->link();
         $crawler = $client->click($link);
         //Проверим что в списке ожидающих товара больше нет
         $this->assertNotContains($tovatTitle, $client->getResponse()->getContent());
