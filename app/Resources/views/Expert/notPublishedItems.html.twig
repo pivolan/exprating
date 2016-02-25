@@ -1,0 +1,32 @@
+{% extends '/Profile/expert.html.twig' %}
+{% block breadcrumbs %}
+    <a href="{{ path("homepage") }}">Главная</a> →
+    <a href="{{ path("expert_profile") }}">Профиль</a> →
+{% endblock %}
+{% block profile_body %}
+    <h1>Мои не опубликованные обзоры</h1>
+    <div class="row">
+        {% for category in user.categories %}
+            <a href="{{ path("expert_not_published_items", {"slug": category.slug}) }}" class="label label-info">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+    {{ knp_pagination_render(pagination) }}
+
+    <div class="rubric-wrapper">
+        <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
+            <ul>
+                {% for product in pagination %}
+                    {{ include("_include/Product/_notPublishedItemList.twig") }}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    {{ knp_pagination_render(pagination) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">$(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })</script>
+{% endblock %}

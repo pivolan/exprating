@@ -113,14 +113,21 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
-    public function findByExpertQuery(User $expert)
+    public function findByExpertPublishedQuery(User $expert, Category $category = null)
     {
-        $query = $this->createQueryBuilder('a')
-            ->where('a.isEnabled = :isEnabled')
-            ->andWhere('a.expertUser = :expert')
-            ->orderBy('a.enabledAt', 'DESC')
-            ->setParameter('isEnabled', true)
-            ->setParameter(':expert', $expert)
+        $queryBuilder = $this->qbByExpert($expert);
+        if($category){
+            $queryBuilder->andWhere('a.category = :category')->setParameter('category', $category);
+        }
+        $query = $queryBuilder
+            ->getQuery();
+        return $query;
+    }
+
+    public function findByExpertNotPublishedQuery(User $expert)
+    {
+        $query = $this->qbByExpert($expert)
+            ->setParameter('isEnabled', false)
             ->getQuery();
         return $query;
     }
@@ -210,5 +217,36 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('monthAgoDate', $date);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getCountPublishedByExpert(User $expert)
+    {
+        $result = $this->qbByExpert($expert)
+            ->select('count(a)')->getQuery()->getSingleScalarResult();
+        return $result;
+    }
+
+    public function getCountNotPublishedByExpert(User $expert)
+    {
+        $result = $this->qbByExpert($expert)
+            ->setParameter('isEnabled', false)
+            ->select('count(a)')->getQuery()->getSingleScalarResult();
+        return $result;
+    }
+
+    /**
+     * @param User $expert
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function qbByExpert(User $expert)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.expertUser = :expert')
+            ->orderBy('a.enabledAt', 'DESC')
+            ->setParameter('isEnabled', true)
+            ->setParameter(':expert', $expert);
+
     }
 }

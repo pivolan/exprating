@@ -536,6 +536,12 @@ textarea:hover {
   top: 20px;
   font-size: 1.2em;
 }
+/* line 415, ../sass/style.scss */
+.p-stikers ul li .sticker-additional-info {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+}
 /* line 423, ../sass/style.scss */
 .p-stikers ul li .sticker-icons {
   text-align: left;

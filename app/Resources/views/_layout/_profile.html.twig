@@ -1,0 +1,109 @@
+{% extends 'layout.html.twig' %}
+{% block body_type %}expert{% endblock %}
+{% block content %}
+    <div class="content-inner clearfix">
+        <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
+            {% block breadcrumbs %}
+                <a href="{{ path("homepage") }}">Главная</a> →
+            {% endblock %}
+        </div>
+
+        {% block profile_body %}
+            <h1>{{ user.fullName }}</h1>
+
+            <div class="expert-page-wrapper">
+                <div class="expert-item">
+                    <div class="expert-img-wrapper">
+                        <img src="{{ user.avatarImage }}">
+                    </div>
+                    <div class="expert-name">
+                        {{ user.caption }}
+                    </div>
+                </div>
+
+                <div class="tabs-wrapper">
+                    <div class="tabs-container">
+                        <div class="tabs-container-inner clearfix">
+
+                            <ul class="nav nav-tabs" style="clear: both">
+                                <li class="active"><a href="#profile" data-toggle="tab">Профиль</a></li>
+                                {% block additional_tabs %}
+                                    <li><a href="#comments" data-toggle="tab">Заключения</a></li>
+                                {% endblock %}
+                            </ul>
+
+                            <div class="tabs-content">
+                                <div class="tab-pane fade active in" id="profile">
+                                    <div class="profile-block">
+                                        <div class="profile-title">Информация</div>
+                                        <div class="data-list">
+                                            <div class="item">
+                                                <div class="key">
+                                                    <span class="d_text">Возраст </span>
+                                                    <span class="d_line"></span>
+                                                </div>
+                                                <div class="value">
+                                                    {% transchoice user.age %}
+                                                    %count% год|%count% года|%count% лет
+                                                    {% endtranschoice %}
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="key">
+                                                    <span class="d_text">Город </span>
+                                                    <span class="d_line"></span>
+                                                </div>
+                                                <div class="value">
+                                                    {{ user.city }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {% block additional_panels %}
+                                    <div class="tab-pane fade in" id="comments">
+                                        <ul class="comments">
+                                            {% for product in expertOpinions %}
+                                                <li class="comment-wrapper">
+                                                    <h4>{{ product.name }}</h4>
+
+                                                    <div class="comment-content">
+                                                        <h5>Достоинства</h5>
+
+                                                        <div>{% for advantage in product.advantages %}{{ advantage }} {% endfor %}
+                                                        </div>
+                                                        <h5>Недостатки</h5>
+
+                                                        <div>{% for disadvantage in product.disadvantages %}{{ disadvantage }} {% endfor %}</div>
+                                                        <h5>Комментарии</h5>
+
+                                                        <div>{{ product.expertComment }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="comment-date">{{ product.enabledAt|date('d.m.Y') }}</div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
+{% block sidebar_right %}
+    <div class="sidebar-right">
+        <div class="list-group">
+            {% block sidebar_menu_items %}
+                <a href="{{ path("homepage") }}" class="list-group-item">
+                    <span class="badge">10</span>
+                    Главная
+                </a>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

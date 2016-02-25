@@ -1,0 +1,9 @@
+{% extends '_include/Product/_itemList.twig' %}
+{% block additional %}
+    <div class="sticker-additional-info">
+        <span class="label label-info" data-toggle="tooltip" title="Дата публикации">{{ product.enabledAt|date }}</span>
+        <span class="label label-danger" data-toggle="tooltip" title="Количество просмотров">
+            {{ product.visitsCount }}
+        </span>
+    </div>
+{% endblock %}

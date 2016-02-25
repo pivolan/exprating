@@ -52,17 +52,35 @@
                 Экспертные заключения
             </span>
             </div>
-            {% if is_granted('ROLE_EXPERT_CURATOR') %}
-                <div class="col-md-offset-5 btn-group">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        Куратор <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ path('curator_wait_list') }}">Ожидающие обзоры</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
+            {% if is_granted('ROLE_EXPERT') %}
+                <div class="col-md-offset-5">
+                    <nav class="navbar navbar-default">
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="{{ path("expert_profile") }}">Эксперт</a></li>
+                            </ul>
+                            {% if is_granted("ROLE_EXPERT_CURATOR") %}
+                                <ul class="nav navbar-nav">
+                                    <li><a href="{{ path("curator_profile") }}">Куратор</a></li>
+                                </ul>
+                            {% endif %}
+                            {% if is_granted("ROLE_EXPERT_CATEGORY_ADMIN") %}
+                                <ul class="nav navbar-nav">
+                                    <li><a href="{{ path("category_admin_profile") }}">Админ категорий</a></li>
+                                </ul>
+                            {% endif %}
+                            {% if is_granted("ROLE_MODERATOR") %}
+                                <ul class="nav navbar-nav">
+                                    <li><a href="{{ path("moderator_profile") }}">Модератор</a></li>
+                                </ul>
+                            {% endif %}
+                            {% if is_granted("ROLE_ADMIN") %}
+                                <ul class="nav navbar-nav">
+                                    <li><a href="{{ path("admin_profile") }}">Админ</a></li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </nav>
                 </div>
             {% endif %}
             <div class="socialWrapper">

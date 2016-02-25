@@ -1,0 +1,16 @@
+{% extends '_include/Product/_itemList.twig' %}
+{% block additional %}
+    <div class="sticker-additional-info">
+        <span class="label label-info" data-toggle="tooltip"
+              title="Осталось дней">Осталось: {% transchoice product.daysLeft %}
+            %count% день|%count% дня|%count% дней
+            {% endtranschoice %}</span>
+        <span class="label label-danger">
+            <span class="glyphicon glyphicon-ban-circle" data-toggle="tooltip" title="Отклонен куратором"></span>
+        </span>
+        <span class="label label-default">
+            <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip"
+                  title="Ожидает решения куратора"></span>
+        </span>
+    </div>
+{% endblock %}

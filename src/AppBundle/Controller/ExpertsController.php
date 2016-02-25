@@ -42,7 +42,7 @@ class ExpertsController extends BaseController
             throw new NotFoundHttpException();
         }
 
-        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertQuery($user);
+        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertPublishedQuery($user);
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

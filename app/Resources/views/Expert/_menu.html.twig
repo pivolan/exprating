@@ -1,0 +1,14 @@
+<a href="{{ path('expert_profile') }}" class="list-group-item {{ a1_current|default('') }}">
+    Профиль эксперта
+</a>
+<a href="{{ path('expert_published_items') }}" class="list-group-item {{ a2_current|default('') }}">
+    <span class="badge">{{ publishedItemsCount }}</span>
+    Опубликованные обзоры
+</a>
+<a href="{{ path('expert_not_published_items') }}" class="list-group-item {{ a3_current|default('') }}">
+    <span class="badge">{{ notPublishedItemsCount }}</span>
+    Не опубликованные обзоры
+</a>
+<a href="{{ path('expert_categories') }}" class="list-group-item {{ a4_current|default('') }}">
+    Доступные категории
+</a>

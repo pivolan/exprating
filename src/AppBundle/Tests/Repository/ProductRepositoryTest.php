@@ -233,7 +233,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         }
         $em->flush();
         /** @var Product[] $products */
-        $products = $em->getRepository('AppBundle:Product')->findByExpertQuery($expert)->getResult();
+        $products = $em->getRepository('AppBundle:Product')->findByExpertPublishedQuery($expert)->getResult();
         $this->assertCount(3, $products);
         foreach ($products as $product) {
             $this->assertTrue($product->getIsEnabled());
