@@ -13,11 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Categories
 {
     /**
-     * @var integer
+     * @var Categories
      *
-     * @ORM\Column(name="parentId", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Categories")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parentId", referencedColumnName="id")
+     * })
      */
-    private $parentId;
+    private $parent;
 
     /**
      * @var string
@@ -56,30 +59,6 @@ class Categories
     public function __construct()
     {
         $this->parameters = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set parentId
-     *
-     * @param integer $parentId
-     *
-     * @return Categories
-     */
-    public function setParentId($parentId)
-    {
-        $this->parentId = $parentId;
-
-        return $this;
-    }
-
-    /**
-     * Get parentId
-     *
-     * @return integer
-     */
-    public function getParentId()
-    {
-        return $this->parentId;
     }
 
     /**
@@ -172,5 +151,29 @@ class Categories
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Exprating\ImportBundle\Entity\Categories $parent
+     *
+     * @return Categories
+     */
+    public function setParent(\Exprating\ImportBundle\Entity\Categories $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Exprating\ImportBundle\Entity\Categories
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

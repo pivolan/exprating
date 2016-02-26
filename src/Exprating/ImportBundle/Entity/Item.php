@@ -36,10 +36,12 @@ class Item
     /**
      * @var Categories
      *
-     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Categories", inversedBy="items")
-     * @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Categories")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
+     * })
      */
-    private $categoryId;
+    private $category;
 
     /**
      * @var string
@@ -242,30 +244,6 @@ class Item
     }
 
     /**
-     * Set categoryId
-     *
-     * @param \Exprating\ImportBundle\Entity\Categories $categoryId
-     *
-     * @return Item
-     */
-    public function setCategoryId(\Exprating\ImportBundle\Entity\Categories $categoryId = null)
-    {
-        $this->categoryId = $categoryId;
-
-        return $this;
-    }
-
-    /**
-     * Get categoryId
-     *
-     * @return \Exprating\ImportBundle\Entity\Categories
-     */
-    public function getCategoryId()
-    {
-        return $this->categoryId;
-    }
-
-    /**
      * Add parameter
      *
      * @param \Exprating\ImportBundle\Entity\Parameters $parameter
@@ -297,5 +275,29 @@ class Item
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \Exprating\ImportBundle\Entity\Categories $category
+     *
+     * @return Item
+     */
+    public function setCategory(\Exprating\ImportBundle\Entity\Categories $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Exprating\ImportBundle\Entity\Categories
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

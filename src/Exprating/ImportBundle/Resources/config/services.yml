@@ -7,3 +7,12 @@ services:
             - [setSlugify, ['@appbundle.slugify']]
         tags:
             -  { name: console.command }
+
+    import.command.alias_category_command:
+        class: Exprating\ImportBundle\Command\AliasCategoryCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setEmImport, ['@doctrine.orm.import_entity_manager']]
+            - [setSlugify, ['@appbundle.slugify']]
+        tags:
+            -  { name: console.command }
