@@ -14,5 +14,18 @@ services:
             - [setEm, ['@doctrine.orm.entity_manager']]
             - [setEmImport, ['@doctrine.orm.import_entity_manager']]
             - [setSlugify, ['@appbundle.slugify']]
+            - [setEvalTextRus, ['@import.exval_text_rus']]
         tags:
             -  { name: console.command }
+
+    import.command.import_item_command:
+        class: Exprating\ImportBundle\Command\ImportItemCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setEmImport, ['@doctrine.orm.import_entity_manager']]
+            - [setSlugify, ['@appbundle.slugify']]
+        tags:
+            -  { name: console.command }
+
+    import.exval_text_rus:
+        class: Exprating\ImportBundle\CompareText\EvalTextRus
