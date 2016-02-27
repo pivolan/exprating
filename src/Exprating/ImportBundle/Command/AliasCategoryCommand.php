@@ -8,7 +8,9 @@ namespace Exprating\ImportBundle\Command;
 
 
 use AppBundle\Entity\Category;
+use Exprating\ImportBundle\CompareText\EvalTextRus;
 use Exprating\ImportBundle\Entity\Categories;
+use Exprating\ImportBundle\Entity\Item;
 use Exprating\ImportBundle\Entity\SiteProductRubrics;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
@@ -37,6 +39,11 @@ class AliasCategoryCommand extends ContainerAwareCommand
     protected $slugify;
 
     /**
+     * @var EvalTextRus
+     */
+    protected $evalTextRus;
+
+    /**
      * @param EntityManager $em
      */
     public function setEm(EntityManager $em)
@@ -60,6 +67,14 @@ class AliasCategoryCommand extends ContainerAwareCommand
         $this->emImport = $emImport;
     }
 
+    /**
+     * @param EvalTextRus $evalTextRus
+     */
+    public function setEvalTextRus(EvalTextRus $evalTextRus)
+    {
+        $this->evalTextRus = $evalTextRus;
+    }
+
     protected function configure()
     {
         $this
@@ -71,46 +86,64 @@ class AliasCategoryCommand extends ContainerAwareCommand
     {
 
         $entityManagerImport = $this->emImport;
-        $repoCategory = $entityManagerImport->getRepository('ExpratingImportBundle:SiteProductRubrics');
+        $repoRubrics = $entityManagerImport->getRepository('ExpratingImportBundle:SiteProductRubrics');
         $repoItem = $entityManagerImport->getRepository('ExpratingImportBundle:Item');
         $appEntityManager = $this->em;
-        $rubrics = $repoCategory->createQueryBuilder('a')->getQuery()->iterate();
-        /** @var Categories[] $categories */
-        $categories = $repoItem->createQueryBuilder('a')->getQuery()->iterate();
-
+        /** @var SiteProductRubrics[] $rubrics */
+        $rubrics = $repoRubrics->findAll();
+        /** @var Item[] $items */
+        $itemsIterator = $repoItem->createQueryBuilder('a')->getQuery()->iterate();
         $matches = [];
-        foreach ($rubrics as $key => $row) {
-            /** @var SiteProductRubrics $rubric */
-            $rubric = $row[0];
-            $path = $rubric->getName() . ' ' . $rubric->getParsersynonyms() . ' ' . $rubric->getParsershortname();
-            while ($rubric = $rubric->getParent()) {
-                $path .= ', ' . $rubric->getName();
+        foreach ($itemsIterator as $key => $row) {
+            /** @var Item $item */
+            $item = $row[0];
+            $itemName = $item->getName();
+            $category = $item->getCategory();
+            $categoryName = $category->getName();
+            $path = $itemName . ' ' . $category->getName();
+            while ($category = $category->getParent()) {
+                $path .= ' ' . $category->getName();
             }
-            foreach ($categories as $category) {
-                $path2 = $category->getName();
-                while ($category = $category->getParent()) {
-                    $path2 .= ' ' . $category->getName();
+            $sumPercent = 0.0;
+            $prevPercent = 0.0;
+            foreach ($rubrics as $rubric) {
+                $rubricId = $rubric->getId();
+                $rubricName = $rubric->getName();
+                $path2 = $rubric->getName() . ' ' . $rubric->getParsersynonyms() . ' ' . $rubric->getParsershortname();
+                while ($rubric = $rubric->getParent()) {
+                    $path2 .= ' ' . $rubric->getName();
                 }
                 $percent = 0;
                 similar_text($path, $path2, $percent);
                 $evalTextPercent = [];
                 evaltextRus(2, $path, $path2, $evalTextPercent);
-                $matches[] = [$path, $path2, 0, $evalTextPercent['sim'], $percent];
+
+                similar_text($itemName, $rubricName, $percentName);
+                similar_text($categoryName, $rubricName, $percentCategoryName);
+
+                //$delta = levenshtein($path, $path2);
+                $sumPercent = (float)$percent + $percentName + $percentCategoryName + $percent;
+                if ($sumPercent > $prevPercent) {
+                    $matches[$item->getId()] = [$item->getId() . ' ' . $path, $rubricId . ' ' . $path2, 0, $evalTextPercent['sim'], $percent];
+                    $prevPercent = $sumPercent;
+                }
             }
             if ($key > 100) {
-                //break;
+                $this->emImport->detach($row[0]);
+                break;
             }
         }
         usort($matches, function ($a, $b) {
-            return $a[3] > $b[3];
+            return $a[3] + $a[4] > $b[3] + $b[4];
         });
         foreach ($matches as $percent => $row) {
-            echo sprintf("%s %s %s: %s -> %s \n", $row[3], $row[4], $row[2], $row[0], $row[1]);
+            echo sprintf("%d %d %s: %s -> %s \n", $row[3], $row[4], $row[2], $row[0], $row[1]);
         }
 
         $appEntityManager->flush();
     }
 }
+
 function preprocessRus($lim_len_symb, $text, &$arrt, &$count_t)
 {
     $text2 = mb_strtolower($text);
@@ -177,5 +210,5 @@ function evaltextRus($limit_symbols = 2, $str1, $str2, &$out, $_delta_lett = 3, 
     $out["count1"] = $count1;
     $out["count2"] = $count2;
     $out["avercount"] = $sumcount;
-    $out["sim"] = $per;
+    return $per;
 }//end func
