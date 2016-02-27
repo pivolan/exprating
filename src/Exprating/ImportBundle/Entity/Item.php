@@ -44,6 +44,13 @@ class Item
     private $category;
 
     /**
+     * @var AliasItem
+     *
+     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasItem", mappedBy="itemIrecommend")
+     */
+    private $aliasItem;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="rating", type="text", nullable=false)
@@ -299,5 +306,21 @@ class Item
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * @return AliasItem
+     */
+    public function getAliasItem()
+    {
+        return $this->aliasItem;
+    }
+
+    /**
+     * @param AliasItem $aliasItem
+     */
+    public function setAliasItem(AliasItem $aliasItem)
+    {
+        $this->aliasItem = $aliasItem;
     }
 }

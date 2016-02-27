@@ -53,6 +53,14 @@ class Categories
      *            inverseJoinColumns={@ORM\JoinColumn(name="parameterId", referencedColumnName="id")})
      */
     private $parameters;
+
+    /**
+     * @var AliasCategory
+     *
+     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasCategory", mappedBy="category")
+     */
+    private $aliasCategory;
+
     /**
      * Constructor
      */
@@ -175,5 +183,21 @@ class Categories
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @return AliasCategory
+     */
+    public function getAliasCategory()
+    {
+        return $this->aliasCategory;
+    }
+
+    /**
+     * @param AliasCategory $aliasCategory
+     */
+    public function setAliasCategory(AliasCategory $aliasCategory)
+    {
+        $this->aliasCategory = $aliasCategory;
     }
 }

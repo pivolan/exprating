@@ -21,7 +21,8 @@ class AliasCategory
     /**
      * @var Categories
      *
-     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Categories")
+     * @ORM\Id
+     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\Categories", inversedBy="aliasCategory")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="category_irecommend_id", referencedColumnName="id")
      * })
@@ -51,6 +52,22 @@ class AliasCategory
     public function getCategoryIrecommend()
     {
         return $this->categoryIrecommend;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategoryExpratingId()
+    {
+        return $this->categoryExpratingId;
+    }
+
+    /**
+     * @param string $categoryExpratingId
+     */
+    public function setCategoryExpratingId($categoryExpratingId)
+    {
+        $this->categoryExpratingId = $categoryExpratingId;
     }
 }
 
