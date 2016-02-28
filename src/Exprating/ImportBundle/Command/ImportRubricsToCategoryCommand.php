@@ -8,6 +8,7 @@ namespace Exprating\ImportBundle\Command;
 
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\PeopleGroup;
 use Exprating\ImportBundle\Entity\SiteProductRubrics;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
@@ -84,7 +85,18 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
                 $slug = $slugify->slugify($rubric->getName());
                 $category->setName($rubric->getName())
                     ->setSlug($slug);
-
+                if ($rubric->getShowchild()) {
+                    $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_CHILD));
+                }
+                if ($rubric->getShowwoman()) {
+                    $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_WOMAN));
+                }
+                if ($rubric->getShowman()) {
+                    $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_MAN));
+                }
+                if ($rubric->getShowall()) {
+                    $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_ALL));
+                }
                 if ($root) {
                     $category->setParent($root)
                         ->setName($rubric->getName())

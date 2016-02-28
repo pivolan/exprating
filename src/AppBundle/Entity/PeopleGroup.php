@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PeopleGroup
 {
-    const SLUG_WOMAN = 'woman';
-    const SLUG_MAN = 'man';
-    const SLUG_CHILD = 'child';
-    const SLUG_ALL = 'all';
+    const SLUG_WOMAN = 'dlya-zhenshchin';
+    const SLUG_MAN = 'dlya-muzhchin';
+    const SLUG_CHILD = 'dlya-detey';
+    const SLUG_ALL = 'dlya-vseh';
 
     /**
      * @var string
@@ -80,4 +80,3 @@ class PeopleGroup
         return $this->slug;
     }
 }
-

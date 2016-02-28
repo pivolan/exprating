@@ -96,6 +96,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
         //Категории с наибольшим совпадением записываем в aliases
 
         $aliases = [];
+        $matches = [];
         foreach ($lastLevelCategoriesImport as $key => $categoryImport) {
             if($categoryImport->getAliasCategory())
             {
