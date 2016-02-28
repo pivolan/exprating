@@ -8,6 +8,7 @@ namespace Exprating\ImportBundle\Command;
 
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
 use Doctrine\DBAL\Driver\PDOException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -25,6 +26,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\SplFileInfo;
 
 class ImportItemCommand extends ContainerAwareCommand
 {
@@ -42,6 +44,11 @@ class ImportItemCommand extends ContainerAwareCommand
      * @var Slugify
      */
     protected $slugify;
+
+    /**
+     * @var string
+     */
+    protected $rootDir;
 
     /**
      * @param EntityManager $em
@@ -67,17 +74,23 @@ class ImportItemCommand extends ContainerAwareCommand
         $this->emImport = $emImport;
     }
 
+    /**
+     * @param string $rootDir
+     */
+    public function setRootDir($rootDir)
+    {
+        $this->rootDir = $rootDir;
+    }
+
     protected function configure()
     {
         $this
             ->setName('import:item')
-            ->setDescription('Greet someone')
-            ->addOption('create-only', 'co');
+            ->setDescription('Greet someone');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $createOnly = $input->getOption('create-only');
         $this->emImport->getConnection()->getConfiguration()->setSQLLogger(null);
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
         //Получаем Итем для импорта
@@ -98,6 +111,41 @@ class ImportItemCommand extends ContainerAwareCommand
                 $product = $this->em->getRepository('AppBundle:Product')->findOneBy(['slug' => $item->getAliasItem()->getItemExpratingSlug()]);
                 if ($product) {
                     $product->setCategory($category);
+                }
+                //Поиск картинки
+                $dir_iterator = new \RecursiveDirectoryIterator($this->rootDir . '/../var/pics');
+                $iterator = new \RecursiveIteratorIterator($dir_iterator, \RecursiveIteratorIterator::SELF_FIRST);
+                /** @var \SplFileInfo $file */
+                if (!$product->getPreviewImage()) {
+                    foreach ($iterator as $file) {
+                        if ($file->isFile() && $product->getId() == $file->getBasename('.' . $file->getExtension())) {
+                            //Генерация пути для картинки
+                            $picsFolder = $this->rootDir . '/../web';
+                            $targetWebFolder = '/pics/products/' . ($product->getId() % 10000) . '/';
+                            $targetFolder = $picsFolder . $targetWebFolder;
+                            $targetFilename = $file->getBasename();
+                            //Копирование картинки
+                            $targetAbsolutePath = $targetFolder . $targetFilename;
+                            $targetFile = new \SplFileInfo($targetAbsolutePath);
+                            if (!$targetFile->getPathInfo()->isDir()) {
+                                mkdir($targetFile->getPath(), 0777, true);
+                            }
+                            copy($file->getRealPath(), $targetFile->getPath().$targetFile->getFilename());
+                            //сохранение картинки
+                            $product->setPreviewImage($targetWebFolder . $targetFilename);
+                            $image = $this->em->getRepository('AppBundle:Image')->find($targetWebFolder . $targetFilename);
+                            if (!$image) {
+                                $image = new Image();
+                                $image->setProduct($product)
+                                    ->setName($targetFilename)
+                                    ->setIsMain(true)
+                                    ->setFilename($targetWebFolder . $targetFilename);
+
+                            }
+                            $product->addImage($image);
+                            $this->em->persist($image);
+                        }
+                    }
                 }
             } else {
                 /**

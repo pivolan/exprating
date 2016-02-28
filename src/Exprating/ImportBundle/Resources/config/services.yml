@@ -24,6 +24,7 @@ services:
             - [setEm, ['@doctrine.orm.entity_manager']]
             - [setEmImport, ['@doctrine.orm.import_entity_manager']]
             - [setSlugify, ['@appbundle.slugify']]
+            - [setRootDir, ['%kernel.root_dir%']]
         tags:
             -  { name: console.command }
 

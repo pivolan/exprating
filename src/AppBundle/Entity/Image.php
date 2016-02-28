@@ -184,14 +184,6 @@ class Image
     }
 
     /**
-     * @return boolean
-     */
-    public function isIsMain()
-    {
-        return $this->isMain;
-    }
-
-    /**
      * @param boolean $isMain
      *
      * @return $this
