@@ -37,5 +37,12 @@ services:
         tags:
             -  { name: console.command }
 
+    import.command.repair_category_command:
+        class: Exprating\ImportBundle\Command\RepairCategoryCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+        tags:
+            -  { name: console.command }
+
     import.exval_text_rus:
         class: Exprating\ImportBundle\CompareText\EvalTextRus

@@ -241,13 +241,13 @@
                             <h3>Изготовитель</h3>
 
                             <div class="logo-wrapper" style="float: left; height: 200px; margin-right: 30px;">
-                                <img src="{{ product.manufacturer.image }}">
+                                <img src="{{ product.manufacturer.image|default('http://placehold.it/150x58') }}">
                             </div>
                             <div>
-                                <h4>{{ product.manufacturer.name }}</h4>
+                                <h4>{{ product.manufacturer.name|default('N/A') }}</h4>
 
                                 <div class="maintainer-text">
-                                    {{ product.manufacturer.description }}
+                                    {{ product.manufacturer.description|default('N/A') }}
                                 </div>
                                 <div><a href="">Отзывы</a> 0 | <a href="">Товары</a> 309</div>
 

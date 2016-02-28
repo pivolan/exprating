@@ -120,29 +120,36 @@ class ImportItemCommand extends ContainerAwareCommand
                 $product = $this->em->getRepository('AppBundle:Product')->findOneBy(['slug' => $item->getAliasItem()->getItemExpratingSlug()]);
                 if ($product) {
                     $product->setCategory($category);
-                }
-                if (!$product->getPreviewImage()) {
-                    if (isset($files[$item->getId()])) {
-                        //сохранение картинки
-                        $product->setPreviewImage($files[$item->getId()]);
-                        $image = $this->em->getRepository('AppBundle:Image')->find($files[$item->getId()]);
-                        if (!$image) {
-                            $image = new Image();
-                            $image->setProduct($product)
-                                ->setName($files[$item->getId()])
-                                ->setIsMain(true)
-                                ->setFilename($files[$item->getId()]);
+                    if (!$product->getPreviewImage()) {
+                        if (isset($files[$item->getId()])) {
+                            //сохранение картинки
+                            $product->setPreviewImage($files[$item->getId()]);
+                            $image = $this->em->getRepository('AppBundle:Image')->find($files[$item->getId()]);
+                            if (!$image) {
+                                $image = new Image();
+                                $image->setProduct($product)
+                                    ->setName($files[$item->getId()])
+                                    ->setIsMain(true)
+                                    ->setFilename($files[$item->getId()]);
 
+                            }
+                            $product->addImage($image);
+                            $this->em->persist($image);
                         }
-                        $product->addImage($image);
-                        $this->em->persist($image);
                     }
+                } else {
+                    $output->writeln('not found: ' . $item->getId() . ' - ' . $item->getName());
                 }
             } else {
                 /**
                  * Если нет, определяем по aliasCategory категорию, остальные параметры импортируем как есть.
                  * slug генерируем по имени, параметры импортируем, создаем если нет. Записываем в aliasItem соответствие
                  */
+                $product = $this->em->getRepository('AppBundle:Product')->findOneBy(['slug' => pathinfo($item->getUrl())['filename']]);
+                if ($product) {
+                    $output->writeln('exists: ' . $product->getSlug() . $item->getId() . $item->getName());
+                    continue;
+                }
                 $product = new Product();
                 $product->setCategory($category)
                     ->setName($item->getName())
@@ -179,6 +186,22 @@ class ImportItemCommand extends ContainerAwareCommand
                     $this->em->persist($productCharacteristic);
                     $this->em->persist($characteristic);
                 }
+                //Импорт картинок
+                if (isset($files[$item->getId()])) {
+                    //сохранение картинки
+                    $product->setPreviewImage($files[$item->getId()]);
+                    $image = $this->em->getRepository('AppBundle:Image')->find($files[$item->getId()]);
+                    if (!$image) {
+                        $image = new Image();
+                        $image->setProduct($product)
+                            ->setName($files[$item->getId()])
+                            ->setIsMain(true)
+                            ->setFilename($files[$item->getId()]);
+
+                    }
+                    $product->addImage($image);
+                    $this->em->persist($image);
+                }
                 $output->writeln($product->getId() . ' ' . $product->getName());
                 $this->em->persist($product);
                 $this->emImport->persist($aliasItem);
@@ -191,5 +214,7 @@ class ImportItemCommand extends ContainerAwareCommand
                 $this->em->clear();
             }
         }
+        $this->emImport->flush();
+        $this->em->flush();
     }
 }
