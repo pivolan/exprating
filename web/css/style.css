@@ -585,6 +585,10 @@ textarea:hover {
 .rubric-filters {
   padding: 10px;
 }
+/* line 457, ../sass/style.scss */
+.category-child {
+  padding: 10px;
+}
 
 /* line 461, ../sass/style.scss */
 span.sign_ruble {
@@ -1487,6 +1491,17 @@ textarea.decision.form-control {
 
 .rubric-filters .btn-primary{
   padding:6px 12px !important;
+}
+
+.rubric-filters li.current a::before {
+  content: "\e013";
+  box-sizing: border-box;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -moz-osx-font-smoothing: grayscale;
+  padding-right: 2px;
 }
 
 .alert-message{

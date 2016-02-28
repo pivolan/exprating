@@ -2,6 +2,13 @@
         {{ breadcrumbs(category)|raw }}
         <h1>{{ category.name }} - рейтинг по мнению экспертов</h1>
 
+        {% block children %}
+        <div class="category-child">
+            {% for category_child in category.children %}
+                <a href="{{ path("product_list", {"slug": category_child.slug}) }}" class="btn btn-info btn-xs">{{ category_child.name }}</a>
+            {% endfor %}
+        </div>
+        {% endblock %}
         {% block rubric_filter %}
             <div class="rubric-filters">
                 <div class="btn-group">
@@ -21,11 +28,11 @@
                 <div class="btn-group">
                     {% if is_granted('ROLE_EXPERT') %}
                         <a href="{{ path('product_list', {'slug':category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')}) }}"
-                           class="btn btn-success">Посмотреть свободные товары</a>
+                           class="btn btn-success {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')?'active':'' }}">Посмотреть свободные товары</a>
                     {% endif %}
                     {% if is_granted('ROLE_EXPERT_CURATOR') %}
                         <a href="{{ path('product_list', {'slug': category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')}) }}"
-                           class="btn btn-success">Смотреть ожидающие подтверждения</a>
+                           class="btn btn-success {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')?'active':'' }}">Смотреть ожидающие подтверждения</a>
                     {% endif %}
                 </div>
             </div>

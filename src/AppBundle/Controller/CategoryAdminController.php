@@ -24,8 +24,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class CategoryAdminController extends BaseController
 {
-    const KEY_CATEGORIES = 'categories';
-
     const FLASH_CATEGORY_SAVED = 'flash.category_saved';
 
     /**

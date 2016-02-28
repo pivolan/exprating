@@ -1,4 +1,4 @@
-$(document).on('click', '.rubric-filters ul.dropdown-menu li a, ul.pagination li a, #mainSiteMenu a', function (event) {
+$(document).on('click', '.rubric-filters ul.dropdown-menu li a, ul.pagination li a, #mainSiteMenu a, .category-child a', function (event) {
     event.preventDefault();
     var $this = this;
     var href = $($this).attr('href');

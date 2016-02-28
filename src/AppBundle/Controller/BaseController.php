@@ -23,6 +23,7 @@ abstract class BaseController extends Controller
     const LIMIT_PER_PAGE = 9;
     const KEY_PAGINATION = 'pagination';
     const KEY_CATEGORY = 'category';
+    const KEY_CATEGORIES = 'categories';
     const KEY_EXPERTS = 'experts';
     const KEY_TREE_HTML = 'treeHtml';
     const KEY_USER = 'user';
