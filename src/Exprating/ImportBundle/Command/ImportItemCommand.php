@@ -96,6 +96,15 @@ class ImportItemCommand extends ContainerAwareCommand
         //Получаем Итем для импорта
         $itemIterate = $this->emImport->getRepository('ExpratingImportBundle:Item')->getAllQuery()->iterate();
 
+        $files = [];
+        $path = $this->rootDir . '/../web/pics/*/*.*';
+        foreach (glob($path) as $key => $filepath) {
+            $file = new \SplFileInfo($filepath);
+            $filename = $file->getBasename('.' . $file->getExtension());
+            if ($file->isFile()) {
+                $files[$filename] = str_replace($this->rootDir . '/../web', '', $file->getPathname());
+            }
+        }
         foreach ($itemIterate as $key => $row) {
             /** @var Item $item */
             $item = $row[0];
@@ -112,39 +121,21 @@ class ImportItemCommand extends ContainerAwareCommand
                 if ($product) {
                     $product->setCategory($category);
                 }
-                //Поиск картинки
-                $dir_iterator = new \RecursiveDirectoryIterator($this->rootDir . '/../var/pics');
-                $iterator = new \RecursiveIteratorIterator($dir_iterator, \RecursiveIteratorIterator::SELF_FIRST);
-                /** @var \SplFileInfo $file */
                 if (!$product->getPreviewImage()) {
-                    foreach ($iterator as $file) {
-                        if ($file->isFile() && $product->getId() == $file->getBasename('.' . $file->getExtension())) {
-                            //Генерация пути для картинки
-                            $picsFolder = $this->rootDir . '/../web';
-                            $targetWebFolder = '/pics/products/' . ($product->getId() % 10000) . '/';
-                            $targetFolder = $picsFolder . $targetWebFolder;
-                            $targetFilename = $file->getBasename();
-                            //Копирование картинки
-                            $targetAbsolutePath = $targetFolder . $targetFilename;
-                            $targetFile = new \SplFileInfo($targetAbsolutePath);
-                            if (!$targetFile->getPathInfo()->isDir()) {
-                                mkdir($targetFile->getPath(), 0777, true);
-                            }
-                            copy($file->getRealPath(), $targetFile->getPath().$targetFile->getFilename());
-                            //сохранение картинки
-                            $product->setPreviewImage($targetWebFolder . $targetFilename);
-                            $image = $this->em->getRepository('AppBundle:Image')->find($targetWebFolder . $targetFilename);
-                            if (!$image) {
-                                $image = new Image();
-                                $image->setProduct($product)
-                                    ->setName($targetFilename)
-                                    ->setIsMain(true)
-                                    ->setFilename($targetWebFolder . $targetFilename);
+                    if (isset($files[$item->getId()])) {
+                        //сохранение картинки
+                        $product->setPreviewImage($files[$item->getId()]);
+                        $image = $this->em->getRepository('AppBundle:Image')->find($files[$item->getId()]);
+                        if (!$image) {
+                            $image = new Image();
+                            $image->setProduct($product)
+                                ->setName($files[$item->getId()])
+                                ->setIsMain(true)
+                                ->setFilename($files[$item->getId()]);
 
-                            }
-                            $product->addImage($image);
-                            $this->em->persist($image);
                         }
+                        $product->addImage($image);
+                        $this->em->persist($image);
                     }
                 }
             } else {
@@ -192,7 +183,7 @@ class ImportItemCommand extends ContainerAwareCommand
                 $this->em->persist($product);
                 $this->emImport->persist($aliasItem);
             }
-
+            $output->writeln($key);
             if ($key % 5000 === 0) {
                 $this->emImport->flush();
                 $this->em->flush();
