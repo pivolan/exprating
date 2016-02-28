@@ -75,7 +75,7 @@
                 <div class="carousel-inner">
                     {% for image in product.images %}
                         <div class="item {{ image.isMain ? 'active':'' }}">
-                            <div class="img-wrapper" style="background-image: url({{ image.filename }});"></div>
+                            <div class="img-wrapper" style="background-image: url({{ image.filename|imagine_filter('product_image') }});"></div>
                         </div>
                     {% endfor %}
                 </div>

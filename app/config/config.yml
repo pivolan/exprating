@@ -195,3 +195,24 @@ assetic:
 
 exprating_search:
     engine: '%search_engine%'
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        product_list_image:
+            quality: 90
+            filters:
+                downscale: { max: [280, 250]}
+                thumbnail: { size: [280, 250], mode: inset }
+                background: { size: [280, 250] color: '#fff' }
+
+        product_image:
+            quality: 90
+            filters:
+                downscale: { max: [270, 270]}
+                thumbnail: { size: [270, 270], mode: inset }
+                background: { size: [270, 270] color: '#fff' }
