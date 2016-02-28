@@ -27,7 +27,7 @@ class ItemRelated
      *
      * @ORM\Column(name="itemId", type="integer")
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Item")
+     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Item", cascade={"ALL"})
      * @ORM\JoinColumn(name="itemId", referencedColumnName="id")
      */
     private $item;

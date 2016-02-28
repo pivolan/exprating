@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Item
  *
  * @ORM\Table(name="item")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Exprating\ImportBundle\Repository\ItemRepository")
  */
 class Item
 {
@@ -36,7 +36,7 @@ class Item
     /**
      * @var Categories
      *
-     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Categories", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Categories", inversedBy="items", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
      * })
@@ -46,7 +46,7 @@ class Item
     /**
      * @var AliasItem
      *
-     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasItem", mappedBy="itemIrecommend")
+     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasItem", mappedBy="itemIrecommend", fetch="EAGER")
      */
     private $aliasItem;
 
@@ -83,7 +83,7 @@ class Item
     /**
      * @var Parameters[]
      *
-     * @ORM\ManyToMany(targetEntity="Exprating\ImportBundle\Entity\Parameters")
+     * @ORM\ManyToMany(targetEntity="Exprating\ImportBundle\Entity\Parameters", fetch="EAGER")
      * @ORM\JoinTable(name="item_parameters", joinColumns={@ORM\JoinColumn(name="itemId", referencedColumnName="id")},
      *            inverseJoinColumns={@ORM\JoinColumn(name="parameterId", referencedColumnName="id")})
      */
@@ -277,7 +277,7 @@ class Item
     /**
      * Get parameters
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|Parameters[]
      */
     public function getParameters()
     {
@@ -322,5 +322,10 @@ class Item
     public function setAliasItem(AliasItem $aliasItem)
     {
         $this->aliasItem = $aliasItem;
+    }
+
+    public function __toString()
+    {
+        return $this->getUrl();
     }
 }

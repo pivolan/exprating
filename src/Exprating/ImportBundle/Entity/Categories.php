@@ -57,7 +57,7 @@ class Categories
     /**
      * @var AliasCategory
      *
-     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasCategory", mappedBy="categoryIrecommend")
+     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasCategory", mappedBy="categoryIrecommend", fetch="EAGER")
      */
     private $aliasCategory;
 

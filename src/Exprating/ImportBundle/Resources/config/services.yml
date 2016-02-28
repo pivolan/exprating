@@ -27,5 +27,14 @@ services:
         tags:
             -  { name: console.command }
 
+    import.command.perfomance_item_command:
+        class: Exprating\ImportBundle\Command\PerfomanceItemCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setEmImport, ['@doctrine.orm.import_entity_manager']]
+            - [setSlugify, ['@appbundle.slugify']]
+        tags:
+            -  { name: console.command }
+
     import.exval_text_rus:
         class: Exprating\ImportBundle\CompareText\EvalTextRus

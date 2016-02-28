@@ -37,7 +37,7 @@ class AliasItem
      * @var Item
      *
      * @ORM\Id
-     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\Item", inversedBy="aliasItem")
+     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\Item", inversedBy="aliasItem", cascade={"ALL"})
      * @ORM\JoinColumn(name="item_irecommend_id", referencedColumnName="id")
      */
     private $itemIrecommend;
