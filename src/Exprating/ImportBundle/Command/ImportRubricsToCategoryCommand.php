@@ -62,7 +62,7 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('import:import')
+            ->setName('import:category')
             ->setDescription('Greet someone');
     }
 

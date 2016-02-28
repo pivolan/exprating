@@ -36,7 +36,7 @@ class Item
     /**
      * @var Categories
      *
-     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Categories")
+     * @ORM\ManyToOne(targetEntity="Exprating\ImportBundle\Entity\Categories", inversedBy="items")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
      * })

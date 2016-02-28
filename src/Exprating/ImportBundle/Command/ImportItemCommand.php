@@ -64,7 +64,7 @@ class ImportItemCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('import:alias')
+            ->setName('import:item')
             ->setDescription('Greet someone');
     }
 

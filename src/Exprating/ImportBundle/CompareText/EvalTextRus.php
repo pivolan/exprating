@@ -25,8 +25,9 @@ final class EvalTextRus
         $count_t = count($arrt);
     }//end func
 
-    function evaltextRus($limit_symbols = 2, $str1, $str2, &$out, $_delta_lett = 3, $_prob75 = 0.702)
+    function evaltextRus($limit_symbols = 2, $str1, $str2, $_delta_lett = 3, $_prob75 = 0.702)
     {
+        $out = [];
         $this->preprocessRus($limit_symbols, $str1, $arr1, $count1);
         $this->preprocessRus($limit_symbols, $str2, $arr2, $count2);
         $eq = 0;

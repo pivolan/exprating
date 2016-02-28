@@ -9,6 +9,7 @@ namespace Exprating\ImportBundle\Command;
 
 use AppBundle\Entity\Category;
 use Exprating\ImportBundle\CompareText\EvalTextRus;
+use Exprating\ImportBundle\Entity\AliasCategory;
 use Exprating\ImportBundle\Entity\Categories;
 use Exprating\ImportBundle\Entity\Item;
 use Exprating\ImportBundle\Entity\SiteProductRubrics;
@@ -85,49 +86,68 @@ class AliasCategoryCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Получим все категории из экспрейтинга, последнего уровня, ставим условие через реп, что нет вложенных категорий
+        $lastLevelCategories = $this->em->getRepository('AppBundle:Category')->getLastLevel();
         //Получим все категории для импорта, последнего уровня, ставим условие что есть хоть один товар, innerJoin, where AliasCategory IS NULL
-        //будем идти по каждой категории импортада
+        $lastLevelCategoriesImport = $this->emImport->getRepository('ExpratingImportBundle:Categories')->getFreeLastLevel();
+        //будем идти по каждой категории импорта
         //проверяем что у нее нет aliasCategory, иначе пропускаем обработку
         //Формируем три переменных: Название категории, полный путь
         //С этими данными лезем по всем категориям из Exprating, сравниваем имена, ставим наибольший вес. Сравниваем пути, вес меньше.
-        //Категории с наибольшим совпадением записываем в alias
+        //Категории с наибольшим совпадением записываем в aliases
 
-        foreach ($itemsIterator as $key => $row) {
-            /** @var Item $item */
-            $item = $row[0];
-            $itemName = $item->getName();
-            $category = $item->getCategory();
-            $categoryName = $category->getName();
-            $path = $itemName . ' ' . $category->getName();
-            while ($category = $category->getParent()) {
-                $path .= ' ' . $category->getName();
+        $aliases = [];
+        foreach ($lastLevelCategoriesImport as $key => $categoryImport) {
+            if($categoryImport->getAliasCategory())
+            {
+                continue;
             }
-            $sumPercent = 0.0;
+            $path1 = $categoryImport->getName();
+            $categoryParentImport = $categoryImport;
+            while ($categoryParentImport = $categoryParentImport->getParent()) {
+                $path1 .= ' ' . $categoryParentImport->getName();
+            }
             $prevPercent = 0.0;
-            foreach ($rubrics as $rubric) {
-                $rubricId = $rubric->getId();
-                $rubricName = $rubric->getName();
-                $path2 = $rubric->getName() . ' ' . $rubric->getParsersynonyms() . ' ' . $rubric->getParsershortname();
-                while ($rubric = $rubric->getParent()) {
-                    $path2 .= ' ' . $rubric->getName();
+            foreach ($lastLevelCategories as $category) {
+                /** @var Category[] $path2Array */
+                $path2Array = $this->em->getRepository('AppBundle:Category')->getPath($category);
+                $path2 = $category->getName();
+                foreach ($path2Array as $categoryParent) {
+                    $path2 .= ' ' . $categoryParent->getName();
                 }
                 $percent = 0;
-                similar_text($path, $path2, $percent);
-                $evalTextPercent = [];
-                $this->evalTextRus->evaltextRus(2, $path, $path2, $evalTextPercent);
+                similar_text($path1, $path2, $percent);
+                $evalTextPercent = $this->evalTextRus->evaltextRus(2, $path1, $path2);
 
-                similar_text($itemName, $rubricName, $percentName);
-                similar_text($categoryName, $rubricName, $percentCategoryName);
+                similar_text($categoryImport->getName(), $category->getName(), $percentCategoryName);
 
-                $sumPercent = (float)$percent + $percentName + $percentCategoryName + $percent;
+                $sumPercent = (float)$percent + $percentCategoryName + $evalTextPercent;
+
                 if ($sumPercent > $prevPercent) {
-                    $matches[$item->getId()] = [$item->getId() . ' ' . $path, $rubricId . ' ' . $path2, 0, $evalTextPercent['sim'], $percent];
+                    $matches[$categoryImport->getId()] = [$path1, $category->getSlug() . ' ' . $path2, 0, $evalTextPercent, $percent];
+                    $peopleGroup = AliasCategory::PEOPLE_GROUP_ALL;
+                    $childText = 'детей детский детское детские дети мальчиков девочек';
+                    $manText = 'мужчин мужская мужское';
+                    $womanText = 'женщин женская девушек девушки';
+                    $childPercent = $this->evalTextRus->evaltextRus(3, $categoryImport->getName(), $childText);
+                    $manPercent = $this->evalTextRus->evaltextRus(3, $categoryImport->getName(), $manText);
+                    $womanPercent = $this->evalTextRus->evaltextRus(3, $categoryImport->getName(), $womanText);
+                    $allPercent = 45;
+                    if($childPercent > $allPercent)
+                    {
+                        $peopleGroup = AliasCategory::PEOPLE_GROUP_CHILD;
+                    }
+                    if($manPercent > $childPercent && $manPercent > $allPercent)
+                    {
+                        $peopleGroup = AliasCategory::PEOPLE_GROUP_MAN;
+                    }
+                    if($womanPercent > $manPercent && $womanPercent > $childPercent && $womanPercent > $allPercent)
+                    {
+                        $peopleGroup = AliasCategory::PEOPLE_GROUP_WOMAN;
+                    }
+
+                    $aliases[$categoryImport->getId()] = [$categoryImport, $category, $peopleGroup];
                     $prevPercent = $sumPercent;
                 }
-            }
-            if ($key > 100) {
-                $this->emImport->detach($row[0]);
-                break;
             }
         }
         usort($matches, function ($a, $b) {
@@ -136,7 +156,13 @@ class AliasCategoryCommand extends ContainerAwareCommand
         foreach ($matches as $percent => $row) {
             echo sprintf("%d %d %s: %s -> %s \n", $row[3], $row[4], $row[2], $row[0], $row[1]);
         }
-
-        $appEntityManager->flush();
+        foreach($aliases as $alias){
+            $aliasCategory = new AliasCategory();
+            $aliasCategory->setCategoryExpratingId($alias[1]->getSlug())
+                ->setCategoryIrecommend($alias[0])
+            ->setPeopleGroup($alias[2]);
+            $this->emImport->persist($aliasCategory);
+        }
+        $this->emImport->flush();
     }
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Categories
  *
  * @ORM\Table(name="categories", indexes={@ORM\Index(name="categories_parentId", columns={"parentId"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Exprating\ImportBundle\Repository\CategoriesRepository")
  */
 class Categories
 {
@@ -57,9 +57,16 @@ class Categories
     /**
      * @var AliasCategory
      *
-     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasCategory", mappedBy="category")
+     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasCategory", mappedBy="categoryIrecommend")
      */
     private $aliasCategory;
+
+    /**
+     * @var Item[]
+     *
+     * @ORM\OneToMany(targetEntity="Exprating\ImportBundle\Entity\Item", mappedBy="category")
+     */
+    private $items;
 
     /**
      * Constructor
@@ -67,6 +74,7 @@ class Categories
     public function __construct()
     {
         $this->parameters = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -199,5 +207,39 @@ class Categories
     public function setAliasCategory(AliasCategory $aliasCategory)
     {
         $this->aliasCategory = $aliasCategory;
+    }
+
+    /**
+     * Add item
+     *
+     * @param \Exprating\ImportBundle\Entity\Item $item
+     *
+     * @return Categories
+     */
+    public function addItem(\Exprating\ImportBundle\Entity\Item $item)
+    {
+        $this->items[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \Exprating\ImportBundle\Entity\Item $item
+     */
+    public function removeItem(\Exprating\ImportBundle\Entity\Item $item)
+    {
+        $this->items->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }
