@@ -101,9 +101,6 @@ class ProductVoter extends Voter
         if ($product->getExpertUser() == null) {
             return false;
         }
-        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
-            return true;
-        }
 
         if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
             return false;
@@ -131,9 +128,6 @@ class ProductVoter extends Voter
     {
         if ($product->getExpertUser() == null) {
             return false;
-        }
-        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
-            return true;
         }
 
         if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
@@ -180,10 +174,6 @@ class ProductVoter extends Voter
 
     private function canExpertise(Product $product, TokenInterface $token)
     {
-        //Админу можно редактировать все
-        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
-            return true;
-        }
         //Если нет прав эксперта значит точно нельзя
         if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT])) {
             return false;
