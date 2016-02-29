@@ -1,0 +1,95 @@
+{% extends 'Profile/admin.html.twig' %}
+{% block profile_body %}
+    <div class="col-md-6">
+        <h1>Категории Exprating</h1>
+        <div id="treeCategory" class="well"></div>
+    </div>
+    <div class="col-md-6">
+        <h1>Категории irecommend</h1>
+        <div id="treeCategoryImport"></div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jstree.min.js') }}"></script>
+    <script type="text/javascript">
+        var selected_by_event = false;
+        $('#treeCategory').jstree({
+            core: {
+                data: [
+                    {% for category in categories %}
+                    {
+                        id: '{{ category.slug }}',
+                        parent: '{{ category.parent.slug|default('#') }}',
+                        text: '{{ category.name|raw }}',
+                        a_attr: {
+                            href: '{{ path('category_admin_categories', {'slug': category.slug}) }}',
+                            data_slug: '{{ category.slug }}',
+                        },
+                    },
+                    {% endfor %}
+                ]
+            }
+        }).on('select_node.jstree', function (node, selected, event) {
+            var selected_nodes = $('#treeCategoryImport').jstree(true).get_selected();
+            if (selected_nodes.length && !selected_by_event) {
+                var category_slug = selected.node.id;
+
+                var alias_category_id = selected_nodes[0];
+                $.ajax('{{ path('admin_import_settings_change') }}', {
+                    method: "POST",
+                    data: {category_slug: category_slug, alias_category_id: alias_category_id},
+                    success: function (data) {
+                        var html = '<div class="message-box alert-success">'+
+                                '<span class="close">X</span>'+
+                                '<p>Изменения успешно сохранены</p>'+
+                        '</div>';
+                        $('div.alert-message').html(html);
+                        setTimeout(function(){
+                            $('div.alert-message').html('');
+                        }, 2000);
+                        var node = $('#treeCategoryImport').jstree(true).get_node(alias_category_id);
+                        node.a_attr.data_relation = category_slug;
+                    }
+                })
+            }
+            selected_by_event = false;
+        });
+        $('#treeCategoryImport').jstree({
+            core: {
+                data: [
+                    {% for category in categoriesImport %}
+                    {% set categoryName = '' %}
+                    {% if category.aliasCategory %}
+                    {% set categoryName = '(' ~ categoryAssociate[category.aliasCategory.categoryExpratingId].name ~ ')' %}
+                    {% endif %}
+                    {
+                        id: '{{ category.id }}',
+                        parent: '{{ category.parent.id|default('#') }}',
+                        text: '{{ category.name|raw }} {{ categoryName }}',
+                        opened: true,
+                        a_attr: {
+                            href: '#',
+                            data_id: '{{ category.id }}',
+                            data_relation: '{{ category.aliasCategory.categoryExpratingId|default(null) }}'
+                        },
+                        state: {
+                            opened: true
+                        }
+                    },
+                    {% endfor %}
+                ]
+            }
+        }).on('select_node.jstree', function (node, selected, event) {
+            var dataRelation = selected.node.a_attr.data_relation;
+            selected_by_event = true;
+            $('#treeCategory').jstree(true).deselect_all();
+            $('#treeCategory').jstree(true).select_node(dataRelation);
+            $('#treeCategory').jstree(true).open_node(dataRelation);
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/themes/default/style.min.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}

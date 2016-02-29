@@ -7,12 +7,15 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserEditType;
+use Exprating\ImportBundle\Entity\AliasCategory;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ADMIN')")
@@ -20,6 +23,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class AdminController extends BaseController
 {
     const KEY_USER = 'user';
+    const KEY_CATEGORIES_IMPORT = 'categoriesImport';
+    const KEY_CATEGORY_ASSOCIATE = 'categoryAssociate';
 
     /**
      * @Route("/admin/experts/{page}/{username}", name="admin_experts", defaults={"page": 1, "username": null})
@@ -55,7 +60,7 @@ class AdminController extends BaseController
         return $this->render('Admin/experts.html.twig', [self::KEY_PAGINATION => $pagination,
                                                          self::KEY_TREE_HTML  => $treeHtml,
                                                          self::KEY_FORM       => $form->createView(),
-                                                         self::KEY_PAGE       =>$page
+                                                         self::KEY_PAGE       => $page
         ]);
     }
 
@@ -89,5 +94,45 @@ class AdminController extends BaseController
     public function userDetailAction(Request $request, User $user)
     {
         return $this->render('Admin/userDetail.html.twig', [self::KEY_USER => $user]);
+    }
+
+    /**
+     * @Route("/admin/import_settings", name="admin_import_settings")
+     */
+    public function importSettingsAction()
+    {
+        /** @var Category[] $categories */
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->findAll();
+        $categoriesImport = $this->get('doctrine.orm.import_entity_manager')
+            ->getRepository('ExpratingImportBundle:Categories')
+            ->findAll();
+        $categoryAssociate = [];
+        foreach ($categories as $category) {
+            $categoryAssociate[$category->getSlug()] = $category;
+        }
+        return $this->render('Admin/importSettings.html.twig',
+            [self::KEY_CATEGORIES         => $categories,
+             self::KEY_CATEGORIES_IMPORT  => $categoriesImport,
+             self::KEY_CATEGORY_ASSOCIATE => $categoryAssociate
+            ]);
+    }
+
+    /**
+     * @Route("/admin/import_settings_change", name="admin_import_settings_change")
+     */
+    public function importSettingsChangeAction(Request $request)
+    {
+        $categorySlug = htmlspecialchars_decode($request->get('category_slug'));
+        $aliasCategoryId = $request->get('alias_category_id');
+        $emImport = $this->get('doctrine.orm.import_entity_manager');
+        /** @var AliasCategory $aliasCategory */
+        $aliasCategory = $emImport->getRepository('ExpratingImportBundle:AliasCategory')->find($aliasCategoryId);
+        $category = $this->getEm()->getRepository('AppBundle:Category')->find($categorySlug);
+        if ($aliasCategory && $category) {
+            $aliasCategory->setCategoryExpratingId($categorySlug);
+            $emImport->flush();
+            return new Response('ok');
+        }
+        return new Response('error', 400);
     }
 }
