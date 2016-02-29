@@ -18,6 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadPeopleGroupData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
 {
+    const DLYA_VSEH = 'dlya_vseh';
     /**
      * @var ContainerInterface
      */
@@ -31,19 +32,20 @@ class LoadPeopleGroupData extends AbstractFixture implements FixtureInterface, C
     public function load(ObjectManager $manager)
     {
         $names = [
-            'Для женщин',
-            'Для мужчин',
-            'Для детей',
-            'Для всех',
+            'dlya-muzhchin'   => 'Для женщин',
+            'dlya-zhenshchin' => 'Для мужчин',
+            'dlya-detey'      => 'Для детей',
+            'dlya-vseh'       => 'Для всех',
         ];
         /** @var Slugify $slugify */
         $slugify = $this->container->get('appbundle.slugify');
-        foreach ($names as $name) {
+        foreach ($names as $slug => $name) {
             $peopleGroup = new PeopleGroup();
             $peopleGroup->setName($name)
-                ->setSlug($slugify->slugify($name));
+                ->setSlug($slug);
             $manager->persist($peopleGroup);
         }
+        $this->setReference(self::DLYA_VSEH, $peopleGroup);
         $manager->flush();
     }
 }

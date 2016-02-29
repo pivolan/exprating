@@ -71,8 +71,7 @@ class Category
     /**
      * @var RatingSettings
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingSettings", inversedBy="category")
-     * @ORM\JoinColumn(name="slug", referencedColumnName="category_id")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingSettings", mappedBy="category")
      */
     private $ratingSettings;
 

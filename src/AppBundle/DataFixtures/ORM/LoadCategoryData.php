@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -64,10 +65,13 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
         $expert = $this->getReference(LoadUserData::REFERENCE_EXPERT_USER);
         /** @var User $categoryAdmin */
         $categoryAdmin = $this->getReference(LoadUserData::REFERENCE_CATEGORY_ADMIN_USER);
+        /** @var PeopleGroup $peopleGroup */
+        $peopleGroup = $this->getReference(LoadPeopleGroupData::DLYA_VSEH);
         foreach ($categories_names as $key => $name) {
             $category = new Category();
             $category->setName($name);
             $category->setSlug($slugify->slugify($name));
+            $category->addPeopleGroup($peopleGroup);
             $manager->persist($category);
             if (isset($categoriesTree[$name])) {
                 foreach ($categoriesTree[$name] as $childName) {
@@ -75,6 +79,7 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
                     $childCategory->setParent($category)
                         ->setName($childName);
                     $childCategory->setSlug($slugify->slugify($childName));
+                    $childCategory->addPeopleGroup($peopleGroup);
                     $manager->persist($childCategory);
                     $categoryAdmin->addAdminCategory($childCategory);
                 }
@@ -97,6 +102,6 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
      */
     public function getDependencies()
     {
-        return [LoadUserData::class];
+        return [LoadUserData::class, LoadPeopleGroupData::class];
     }
 }
