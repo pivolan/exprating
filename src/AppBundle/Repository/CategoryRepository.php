@@ -42,9 +42,14 @@ class CategoryRepository extends NestedTreeRepository
     public function getFirstLevel()
     {
         $qb = $this->createQueryBuilder('a')
+            ->select('a, b, c, d, e, f')
             ->where('a.parent IS NULL')
-            ->leftJoin('a.children', 'children')
-            ->leftJoin('a.peopleGroups', 'people_groups');
+            ->leftJoin('a.peopleGroups', 'b')
+            ->leftJoin('a.ratingSettings', 'c')
+            ->leftJoin('a.children', 'd')
+            ->leftJoin('d.peopleGroups', 'e')
+            ->leftJoin('d.ratingSettings', 'f')
+        ;
         $query = $qb->getQuery();
         return $query->getResult();
     }

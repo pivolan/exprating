@@ -99,7 +99,7 @@ class Category
     private $peopleGroups;
 
     /**
-     * @var @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="category")
+     * @var @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="category", fetch="EXTRA_LAZY")
      */
     private $products;
 
@@ -426,5 +426,39 @@ class Category
     public function getPeopleGroups()
     {
         return $this->peopleGroups;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return Category
+     */
+    public function addProduct(\AppBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \AppBundle\Entity\Product $product
+     */
+    public function removeProduct(\AppBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }
