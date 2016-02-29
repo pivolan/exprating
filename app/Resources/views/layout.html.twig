@@ -106,7 +106,7 @@
     </div>
     <div id="top-menu">
         {% block top_menu %}
-            {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+            {{ include("_include/Menu/_topMenu.html.twig") }}
         {% endblock %}
     </div>
     <nav id="mainSiteMenuMMenuNav"></nav>
