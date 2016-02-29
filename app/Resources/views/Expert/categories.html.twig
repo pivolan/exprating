@@ -1,12 +1,10 @@
 {% extends 'Profile/expert.html.twig' %}
 {% block profile_body %}
-    <h1>Список доступных категорий</h1>
-    <div class="list-group">
-        {% for category in user.categories %}
-            <a href="{{ path("expert_categories", {"slug": category.slug}) }}"
-               class="list-group-item {% if app.request.requestUri == path("expert_categories", {"slug": category.slug, "page":page}) %}active{% endif %}">{{ category.name }}</a>
-        {% endfor %}
+    <div class="col-md-6">
+        <h1>Список доступных категорий</h1>
+        <div id="treeCategory" class="well"></div>
     </div>
+
     {{ knp_pagination_render(pagination) }}
 
     <div class="rubric-wrapper">
@@ -21,4 +19,36 @@
 
     {{ knp_pagination_render(pagination) }}
 
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jstree.min.js') }}"></script>
+    <script type="text/javascript">
+        var selected_by_event = false;
+        $('#treeCategory').jstree({
+            core: {
+                data: [
+                    {% for category in user.categories %}
+                    {
+                        id: '{{ category.slug }}',
+                        parent: '{{ category.parent.slug|default('#') }}',
+                        text: '{{ category.name|raw }}',
+                        a_attr: {
+                            href: '{{ path('expert_categories', {'slug': category.slug}) }}',
+                            data_slug: '{{ category.slug }}',
+                        },
+                    },
+                    {% endfor %}
+                ]
+            }
+        }).bind("select_node.jstree", function (e, data) {
+            $('#jstree').jstree('save_state');
+        }).on("activate_node.jstree", function(e,data){
+            window.location.href = data.node.a_attr.href;
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/themes/default/style.min.css') }}" type="text/css" rel="stylesheet"/>
 {% endblock %}

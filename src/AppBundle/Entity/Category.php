@@ -71,7 +71,8 @@ class Category
     /**
      * @var RatingSettings
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingSettings", mappedBy="category")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingSettings", inversedBy="category")
+     * @ORM\JoinColumn(name="slug", referencedColumnName="category_id")
      */
     private $ratingSettings;
 
@@ -99,6 +100,11 @@ class Category
     private $peopleGroups;
 
     /**
+     * @var @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="category")
+     */
+    private $products;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -106,6 +112,7 @@ class Category
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->characteristics = new \Doctrine\Common\Collections\ArrayCollection();
         $this->peopleGroups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getRoot()

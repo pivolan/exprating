@@ -8,6 +8,7 @@ namespace AppBundle\Menu;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\PeopleGroup;
 use AppBundle\ProductFilter\ProductFilter;
+use AppBundle\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManager;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Knp\Menu\FactoryInterface;
@@ -27,10 +28,10 @@ class Builder implements ContainerAwareInterface
             ->setChildrenAttribute('class', 'sf-menu sf-js-enabled sf-arrows');
         /** @var EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
-        /** @var NestedTreeRepository $entityRepository */
+        /** @var CategoryRepository $entityRepository */
         $entityRepository = $em->getRepository('AppBundle:Category');
         /** @var Category[] $categories */
-        $categories = $entityRepository->getRootNodes();
+        $categories = $entityRepository->getFirstLevel();
         $woman = $menu->addChild('Для женщин', ['uri'=>'#'])->setLinkAttribute('class', 'sf-with-ul');
         $man = $menu->addChild('Для мужчин', ['uri'=>'#'])->setLinkAttribute('class', 'sf-with-ul');
         $child = $menu->addChild('Для детей', ['uri'=>'#'])->setLinkAttribute('class', 'sf-with-ul');

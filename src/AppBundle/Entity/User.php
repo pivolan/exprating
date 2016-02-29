@@ -100,7 +100,7 @@ class User extends BaseUser
 
     /**
      * @var Category[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="admins")
      * @ORM\JoinTable(name="user_admin_category", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *            inverseJoinColumns={@ORM\JoinColumn(name="admin_category_id", referencedColumnName="slug")})
      */

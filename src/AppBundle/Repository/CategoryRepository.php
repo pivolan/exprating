@@ -9,6 +9,8 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Query;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 class CategoryRepository extends NestedTreeRepository
@@ -33,8 +35,17 @@ class CategoryRepository extends NestedTreeRepository
             ->leftJoin('a.children', 'children')
             ->groupBy('a.slug')
             ->having('count(children.slug) = :counter')
-            ->setParameter('counter', 0)
-        ;
+            ->setParameter('counter', 0);
         return $qb->getQuery()->getResult();
+    }
+
+    public function getFirstLevel()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.parent IS NULL')
+            ->leftJoin('a.children', 'children')
+            ->leftJoin('a.peopleGroups', 'people_groups');
+        $query = $qb->getQuery();
+        return $query->getResult();
     }
 }
