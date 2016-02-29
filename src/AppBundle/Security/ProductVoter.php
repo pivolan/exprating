@@ -47,7 +47,8 @@ class ProductVoter extends Voter
         if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH, self::RESERVE,
                                    self::MODERATE,
                                    self::CHANGE_EXPERT,
-        ])) {
+        ])
+        ) {
             return false;
         }
 
@@ -152,9 +153,16 @@ class ProductVoter extends Voter
 
     private function canView(Product $product, TokenInterface $token)
     {
+        //Если товар опубликован, смотреть можно всем
+        if ($product->getIsEnabled()) {
+            return true;
+        }
         // if they can edit, they can view
         if ($this->canExpertise($product, $token)) {
             return true;
+        }
+        if ($product->getExpertUser() == null) {
+            return false;
         }
 
         /** @var User $user */
