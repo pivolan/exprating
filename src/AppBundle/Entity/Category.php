@@ -112,7 +112,6 @@ class Category
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->characteristics = new \Doctrine\Common\Collections\ArrayCollection();
         $this->peopleGroups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getRoot()
