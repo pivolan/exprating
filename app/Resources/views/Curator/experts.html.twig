@@ -1,6 +1,10 @@
-{% extends "Profile/curator.html.twig" %}
+{% extends "Profile/user.html.twig" %}
+{% block title %}Подчиненные эксперты{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+     → <a href="{{ path("curator_experts") }}">Подчиненные эксперты</a>
+{% endblock %}
 {% block profile_body %}
-    <div class="content-inner clearfix">
         <h1>Подчиненные эксперты</h1>
         <ul class="nav nav-tabs">
             <li role="presentation" class="{{ level==1?'active':'' }}"><a
@@ -52,9 +56,4 @@
             </ul>
             {{ knp_pagination_render(pagination) }}
         </div>
-    </div>
-{% endblock %}
-{% block breadcrumbs %}
-    {{ parent() }}
-    <a href="{{ path("curator_profile") }}">Куратор</a> →
 {% endblock %}

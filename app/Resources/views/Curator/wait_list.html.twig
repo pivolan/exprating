@@ -1,6 +1,11 @@
-{% extends 'Profile/curator.html.twig' %}
+{% extends 'Profile/user.html.twig' %}
+{% block title %}Экспертные мнения ожидающие одобрения{% endblock %}
 {% block body_type %}rubric{% endblock %}
-{% block content %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("curator_wait_list") }}">Экспертные мнения ожидающие одобрения</a>
+{% endblock %}
+{% block profile_body %}
     {{ include("Curator/wait_listPart.html.twig") }}
 {% endblock %}
 {% block javascripts %}

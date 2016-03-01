@@ -1,4 +1,12 @@
-{% extends 'Profile/curator.html.twig' %}
+{% extends 'Profile/user.html.twig' %}
+{% block title %}Все принятые решения{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("curator_decisions") }}">Все принятые решения</a>
+    {% if product %}
+        → <a href="{{ path("curator_decisions", {"slug": product.slug}) }}">Все принятые решения по товару {{ product.name }}</a>
+    {% endif %}
+{% endblock %}
 {% block profile_body %}
     <h1>Все принятые решения {% if product %}по товару {{ product.name }}{% endif %}</h1>
     {{ knp_pagination_render(pagination) }}
@@ -54,11 +62,4 @@
         </div>
     {% endfor %}
     {{ knp_pagination_render(pagination) }}
-{% endblock %}
-{% block breadcrumbs %}
-    {{ parent() }}
-    <a href="{{ path("curator_profile") }}">Куратор</a> →
-    {% if product %}
-        <a href="{{ path("curator_decisions") }}">Все принятые решения</a> →
-    {% endif %}
 {% endblock %}
