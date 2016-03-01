@@ -1,4 +1,9 @@
-{% extends "Profile/moderator.html.twig" %}
+{% extends "Profile/user.html.twig" %}
+{% block title %}Комментарии{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("moderator_comments") }}">Комментарии</a>
+{% endblock %}
 {% block profile_body %}
     {{ knp_pagination_render(pagination) }}
     <div class="row">
@@ -22,9 +27,4 @@
         {% endfor %}
     </div>
     {{ knp_pagination_render(pagination) }}
-{% endblock %}
-
-{% block breadcrumbs %}
-{{ parent() }}
-    <a href="{{ path("moderator_profile") }}">Профиль модератора</a> →
 {% endblock %}
