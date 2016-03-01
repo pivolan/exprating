@@ -2,7 +2,7 @@
     $('#{{ treeId }}').jstree({
         core: {
             data: [
-                {{ include('_include/Category/_jsTree.json.twig', {'categories': user.categories, 'category': category}) }}
+                {{ include('_include/Category/_jsTree.json.twig', {'categories': categories, 'category': category}) }}
             ]
         }
     }).bind("select_node.jstree", function (e, data) {
@@ -19,7 +19,7 @@
     History.Adapter.bind(window, 'statechange', function () {
         var State = History.getState();
         History.log(State.data, State.title, State.url);
-        $('div.history_products').load(State.url);
+        $('div.history_category').load(State.url);
     });
 
 </script>

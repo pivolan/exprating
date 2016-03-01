@@ -1,51 +1,34 @@
-{% extends 'Profile/category_admin.html.twig' %}
+{% extends 'Profile/user.html.twig' %}
+{% block title %}Доступные категории{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("category_admin_categories") }}">Доступные категории</a>
+{% endblock %}
 {% block profile_body %}
     <div class="row">
-        <div class="col-md-6">
-            <div class="categories"></div>
+        <div class="col-md-5">
+            <h1>Категории</h1>
+            <div id="treeCategory" class="categories well"></div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7 history_category">
             {% if category %}
-                {% form_theme form 'Form/form_rating_settings.html.twig' %}
-                {{ form(form) }}
+                {{ include("CategoryAdmin/categoriesPart.html.twig") }}
             {% endif %}
         </div>
     </div>
 {% endblock %}
-{% block breadcrumbs %}
-    {{ parent() }}
-    <a href="{{ path("category_admin_profile") }}">Профиль админа категорий</a> →
-{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/jstree.min.js') }}"></script>
+    {{ include("_include/Category/_jsTree.html.twig", {'treeId': 'treeCategory'}) }}
+    <script src="http://malsup.github.com/jquery.form.js"></script>
     <script type="text/javascript">
-        $('div.categories').jstree({
-            core: {
-                data: [
-                    {% for category1 in categories %}
-                    {
-                        id: '{{ category1.slug }}',
-                        parent: '{{ category1.parent.slug|default('#') }}',
-                        text: '{{ category1.name|json_encode }}',
-                        a_attr: {
-                            href: '{{ path('category_admin_categories', {'slug': category1.slug}) }}'
-                        },
-                        state: {
-                            selected: {{ category==category1?'true':'false' }}
-                        }
-                    },
-                    {% endfor %}
-                ]
-            }
-        }).bind("select_node.jstree", function (e, data) {
-            $('#jstree').jstree('save_state');
-        }).on("activate_node.jstree", function(e,data){
-            window.location.href = data.node.a_attr.href;
+        $(document).on('submit', 'form[name="rating_settings"]', function (event) {
+            event.preventDefault();
+            $(this).ajaxSubmit({
+                success: function (response) {
+                    $('div.history_category').html(response);
+                }
+            });
         });
     </script>
-{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('css/themes/default/style.min.css') }}" type="text/css" rel="stylesheet"/>
 {% endblock %}

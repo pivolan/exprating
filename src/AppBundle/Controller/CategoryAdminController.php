@@ -42,38 +42,16 @@ class CategoryAdminController extends BaseController
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->getEm()->flush();
+            $this->addFlash(self::FLASH_CATEGORY_SAVED, 'Категория успешно сохранена.');
             return $this->redirect($request->getUri());
         }
-        return $this->render('CategoryAdmin/categories.html.twig',
+        $template = 'CategoryAdmin/categories.html.twig';
+        if($request->isXmlHttpRequest()){
+            $template = 'CategoryAdmin/categoriesPart.html.twig';
+        }
+        return $this->render($template,
             [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(),
              self::KEY_CATEGORY   => $category,
              self::KEY_FORM       => $form->createView()]);
-    }
-
-    /**
-     * @param Request  $request
-     * @param Category $category
-     *
-     * @Route("/category_admin/category/{slug}")
-     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
-     * @Security("is_granted('EDIT', category)")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function categoryEditAction(Request $request, Category $category)
-    {
-        $form = $this->createForm(RatingSettingsType::class, $category->getRatingSettings());
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            //$this->get('event_dispatcher')->dispatch(CategoryEvents::CATEGORY_UPDATE);
-            $this->getEm()->flush();
-            $this->addFlash(self::FLASH_CATEGORY_SAVED, 'Категория успешно сохранена.');
-        }
-
-        $template = 'CategoryAdmin/edit.html.twig';
-        if ($request->isXmlHttpRequest()) {
-            $template = 'CategoryAdmin/editPart.html.twig';
-        }
-        return $this->render($template, [self::KEY_CATEGORY => $category, self::KEY_FORM => $form->createView()]);
     }
 }
