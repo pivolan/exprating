@@ -7,6 +7,7 @@
 namespace AppBundle\ProductFilter;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AcmeAssert;
@@ -28,6 +29,11 @@ class ProductFilter
 
     const STATUS_WAIT = 'wait';
     const STATUS_FREE = 'free';
+
+    const PEOPLE_GROUP_WOMAN = PeopleGroup::SLUG_WOMAN;
+    const PEOPLE_GROUP_MAN = PeopleGroup::SLUG_MAN;
+    const PEOPLE_GROUP_CHILD = PeopleGroup::SLUG_CHILD;
+    const PEOPLE_GROUP_ALL = PeopleGroup::SLUG_ALL;
 
     /**
      * @var string
@@ -58,9 +64,20 @@ class ProductFilter
 
     /**
      * @var Category
-     * @Assert\NotBlank()
      */
     protected $category;
+
+
+    /**
+     * @var string
+     *
+     * @Assert\Choice(choices = {ProductFilter::PEOPLE_GROUP_WOMAN,
+     *     ProductFilter::PEOPLE_GROUP_MAN,
+     *     ProductFilter::PEOPLE_GROUP_CHILD,
+     *     ProductFilter::PEOPLE_GROUP_ALL
+     *     }, message = "Выберите верный фильтр")
+     */
+    protected $peopleGroup = self::PEOPLE_GROUP_ALL;
 
     /**
      * @return mixed
@@ -156,5 +173,25 @@ class ProductFilter
         $this->curator = $curator;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getPeopleGroup()
+    {
+        return $this->peopleGroup;
+    }
+
+    /**
+     * @param string $peopleGroup
+     *
+     * @return $this
+     */
+    public function setPeopleGroup($peopleGroup)
+    {
+        $this->peopleGroup = $peopleGroup;
+        return $this;
+    }
+
 
 } 

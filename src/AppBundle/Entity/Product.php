@@ -242,6 +242,7 @@ class Product
         $this->productShopPrices = new ArrayCollection();
         $this->productCharacteristics = new ArrayCollection();
         $this->curatorDecisions = new ArrayCollection();
+        $this->peopleGroups = new ArrayCollection();
     }
 
     /**

@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\CuratorDecision;
+use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\ProductFilter\ProductFilter;
@@ -50,6 +51,10 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('curator', $productFilter->getCurator())
                     ->setParameter('status', CuratorDecision::STATUS_WAIT);
             }
+        }
+        if ($productFilter->getPeopleGroup() != ProductFilter::PEOPLE_GROUP_ALL) {
+            $qb->innerJoin('a.peopleGroups', 'e', 'WITH', "e.slug = :people_group")
+                ->setParameter('people_group', $productFilter->getPeopleGroup());
         }
         $qb->orderBy('a.' . $productFilter->getFieldName(), $productFilter->getDirection());
         return $qb->getQuery();

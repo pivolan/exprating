@@ -114,17 +114,22 @@ class IndexController extends BaseController
     }
 
     /**
+     * @Route("/rubric/{peopleGroup}/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list_pg",
+     *     requirements = {"peopleGroup": "(dlya-zhenshchin)|(dlya-muzhchin)|(dlya-detey)"},
+     *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
+     *
      * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list",
-     * defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
+     *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
-    public function listAction(Request $request, Category $category, $page, $sortField, $sortDirection, $status)
+    public function listAction(Request $request, $peopleGroup = ProductFilter::PEOPLE_GROUP_ALL, Category $category, $page, $sortField, $sortDirection, $status)
     {
         $productFilter = new ProductFilter();
         $productFilter->setCategory($category)
             ->setStatus($status)
             ->setCurator($this->getUser())
             ->setFieldName($sortField)
+            ->setPeopleGroup($peopleGroup)
             ->setDirection($sortDirection);
         $validator = $this->get('validator');
         $errors = $validator->validate($productFilter);

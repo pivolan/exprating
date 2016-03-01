@@ -27,11 +27,11 @@
 
                 <div class="btn-group">
                     {% if is_granted('ROLE_EXPERT') %}
-                        <a href="{{ path('product_list', {'slug':category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')}) }}"
+                        <a href="{{ path('product_list', {'slug':category.slug, 'status': productFilter.status == 'free'?null:'free'}) }}"
                            class="btn btn-success {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')?'active':'' }}">Посмотреть свободные товары</a>
                     {% endif %}
                     {% if is_granted('ROLE_EXPERT_CURATOR') %}
-                        <a href="{{ path('product_list', {'slug': category.slug, 'status': constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')}) }}"
+                        <a href="{{ path('product_list', {'slug': category.slug, 'status': productFilter.status == 'wait'?null:'wait'}) }}"
                            class="btn btn-success {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')?'active':'' }}">Смотреть ожидающие подтверждения</a>
                     {% endif %}
                 </div>

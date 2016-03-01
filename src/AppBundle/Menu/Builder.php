@@ -32,21 +32,24 @@ class Builder implements ContainerAwareInterface
         $entityRepository = $em->getRepository('AppBundle:Category');
         /** @var Category[] $categories */
         $categories = $entityRepository->getFirstLevel();
-        $woman = $menu->addChild('Для женщин', ['uri'=>'#'])->setLinkAttribute('class', 'sf-with-ul');
-        $man = $menu->addChild('Для мужчин', ['uri'=>'#'])->setLinkAttribute('class', 'sf-with-ul');
-        $child = $menu->addChild('Для детей', ['uri'=>'#'])->setLinkAttribute('class', 'sf-with-ul');
+        $woman = $menu->addChild('Для женщин', ['uri' => '#'])->setLinkAttribute('class', 'sf-with-ul');
+        $man = $menu->addChild('Для мужчин', ['uri' => '#'])->setLinkAttribute('class', 'sf-with-ul');
+        $child = $menu->addChild('Для детей', ['uri' => '#'])->setLinkAttribute('class', 'sf-with-ul');
         foreach ($categories as $category) {
             if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_WOMAN))) {
-                $woman->addChild($category->getName(), ['route'           => 'product_list',
-                                                        'routeParameters' => ['slug' => $category->getSlug()]]);
+                $woman->addChild($category->getName(), ['route'           => 'product_list_pg',
+                                                        'routeParameters' => ['slug'        => $category->getSlug(),
+                                                                              'peopleGroup' => ProductFilter::PEOPLE_GROUP_WOMAN]]);
             }
             if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_MAN))) {
-                $man->addChild($category->getName(), ['route'           => 'product_list',
-                                                      'routeParameters' => ['slug' => $category->getSlug()]]);
+                $man->addChild($category->getName(), ['route'           => 'product_list_pg',
+                                                      'routeParameters' => ['slug'        => $category->getSlug(),
+                                                                            'peopleGroup' => ProductFilter::PEOPLE_GROUP_MAN]]);
             }
             if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_CHILD))) {
-                $child->addChild($category->getName(), ['route'           => 'product_list',
-                                                        'routeParameters' => ['slug' => $category->getSlug()]]);
+                $child->addChild($category->getName(), ['route'           => 'product_list_pg',
+                                                        'routeParameters' => ['slug'        => $category->getSlug(),
+                                                                              'peopleGroup' => ProductFilter::PEOPLE_GROUP_CHILD]]);
             }
             if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_ALL))) {
                 $menu->addChild($category->getName(), ['route'           => 'product_list',
@@ -57,22 +60,22 @@ class Builder implements ContainerAwareInterface
                     $woman[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
                     $woman[$category->getName()]->addChild(
                         $childCategory->getName(),
-                        ['route'           => 'product_list',
-                         'routeParameters' => ['slug' => $childCategory->getSlug()]]);
+                        ['route'           => 'product_list_pg',
+                         'routeParameters' => ['slug' => $childCategory->getSlug(), 'peopleGroup' => ProductFilter::PEOPLE_GROUP_WOMAN]]);
                 }
                 if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_MAN))) {
                     $man[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
                     $man[$category->getName()]->addChild(
                         $childCategory->getName(),
-                        ['route'           => 'product_list',
-                         'routeParameters' => ['slug' => $childCategory->getSlug()]]);
+                        ['route'           => 'product_list_pg',
+                         'routeParameters' => ['slug' => $childCategory->getSlug(), 'peopleGroup' => ProductFilter::PEOPLE_GROUP_MAN]]);
                 }
                 if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_CHILD))) {
                     $child[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
                     $child[$category->getName()]->addChild(
                         $childCategory->getName(),
-                        ['route'           => 'product_list',
-                         'routeParameters' => ['slug' => $childCategory->getSlug()]]);
+                        ['route'           => 'product_list_pg',
+                         'routeParameters' => ['slug' => $childCategory->getSlug(), 'peopleGroup' => ProductFilter::PEOPLE_GROUP_CHILD]]);
                 }
                 if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_ALL))) {
                     $menu[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
