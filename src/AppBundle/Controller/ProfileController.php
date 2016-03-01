@@ -16,45 +16,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class ProfileController extends BaseController
 {
     /**
-     * @Route("/profile/expert", name="expert_profile")
+     * @Route("/profile/{username}", name="profile")
+     * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
      */
-    public function expertAction()
+    public function expertAction(User $user)
     {
-        return $this->render('Profile/expert.html.twig', [self::KEY_USER =>$this->getUser()]);
-    }
-
-    /**
-     * @Route("/profile/curator", name="curator_profile")
-     */
-    public function curatorAction()
-    {
-        return $this->render('Profile/curator.html.twig', [self::KEY_USER =>$this->getUser()]);
-
-    }
-
-    /**
-     * @Route("/profile/category_admin", name="category_admin_profile")
-     */
-    public function adminCategoryAction()
-    {
-        return $this->render('Profile/category_admin.html.twig', [self::KEY_USER =>$this->getUser()]);
-
-    }
-
-    /**
-     * @Route("/profile/moderator", name="moderator_profile")
-     */
-    public function moderatorAction()
-    {
-        return $this->render('Profile/moderator.html.twig', [self::KEY_USER =>$this->getUser()]);
-
-    }
-
-    /**
-     * @Route("/profile/admin", name="admin_profile")
-     */
-    public function adminAction()
-    {
-        return $this->render('Profile/admin.html.twig', [self::KEY_USER =>$this->getUser()]);
+        return $this->render('Profile/user.html.twig', [self::KEY_USER =>$user]);
     }
 }

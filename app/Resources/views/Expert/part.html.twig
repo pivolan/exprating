@@ -1,0 +1,13 @@
+<h1>{{ category.name|default('') }}</h1>
+{{ knp_pagination_render(pagination) }}
+
+<div class="rubric-wrapper">
+    <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
+        <ul>
+            {% for product in pagination %}
+                {{ include("_include/Product/_itemList.twig") }}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{{ knp_pagination_render(pagination) }}

@@ -1,0 +1,19 @@
+{% extends '_layout/_profile.html.twig' %}
+{% block title %}Профиль эксперта {{ user.username }}{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    <a href="{{ path("profile", {"username": app.user.username}) }}">Профиль</a>
+{% endblock %}
+{% block sidebar_menu_items %}
+    {{ render(controller('AppBundle:Expert:_menu')) }}
+{% endblock %}
+{% block additional_tabs %}{% endblock %}
+{% block additional_panels %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/themes/default/style.min.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jstree.min.js') }}"></script>
+{% endblock %}

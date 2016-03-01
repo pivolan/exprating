@@ -1,0 +1,63 @@
+<div class="col-md-offset-9">
+    <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+            Личный кабинет <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li class="{% if path('profile', {'username': app.user.username}) in app.request.uri %}active{% endif %}"><a href="{{ path('profile', {'username': app.user.username}) }}">
+                    Профиль
+                </a></li>
+            <li class="{% if path('expert_published_items') in app.request.uri %}active{% endif %}" ><a href="{{ path('expert_published_items') }}">
+                    Опубликованные обзоры
+                </a></li>
+            <li class="{% if path('expert_not_published_items') in app.request.uri %}active{% endif %}"><a href="{{ path('expert_not_published_items') }}">
+                    Не опубликованные обзоры
+                </a></li>
+            <li class="{% if path('expert_categories') in app.request.uri %}active{% endif %}"><a href="{{ path('expert_categories') }}">
+                    Доступные категории
+                </a></li>
+
+            {% if is_granted("ROLE_EXPERT_CURATOR") %}
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ path('curator_wait_list') }}">
+                        Ожидающие товары
+                    </a></li>
+                <li><a href="{{ path('curator_decisions') }}">
+                        Все принятые решения
+                    </a></li>
+                <li><a href="{{ path('curator_experts') }}">
+                        Подчиненные эксперты
+                    </a></li>
+            {% endif %}
+            {% if is_granted("ROLE_EXPERT_CATEGORY_ADMIN") %}
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ path('category_admin_categories') }}">
+                        Доступные категории
+                    </a></li>
+            {% endif %}
+            {% if is_granted("ROLE_MODERATOR") %}
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ path('moderator_comments') }}">
+                        Новые комментарии
+                    </a></li>
+                <li><a href="{{ path('moderator_feedbacks') }}">
+                        Новые отзывы
+                    </a></li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ path('admin_experts') }}">
+                        Список пользователей
+                    </a>
+                </li>
+                <li><a href="{{ path('admin_import_settings') }}">
+                        Настройки импорта
+                    </a>
+                </li>
+            {% endif %}
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path("fos_user_security_logout") }}">Выйти</a></li>
+        </ul>
+    </div>
+</div>

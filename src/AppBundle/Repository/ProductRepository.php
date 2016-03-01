@@ -136,14 +136,18 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function findFreeByCategoryQuery(Category $category = null)
+    /**
+     * @param Category[] $categories
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function findFreeByCategoriesQuery(array $categories)
     {
         $qb = $this->createQueryBuilder('a')
-            ->where('a.expertUser IS NULL');
-        if ($category) {
-            $qb->andWhere('a.category = :category')
-                ->setParameter('category', $category);
-        }
+            ->where('a.expertUser IS NULL')
+            ->andWhere('a.category IN (:category)')
+            ->setParameter('category', $categories);
+
         $query = $qb->getQuery();
         return $query;
     }

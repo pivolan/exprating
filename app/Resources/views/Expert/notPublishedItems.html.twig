@@ -1,32 +1,27 @@
-{% extends '/Profile/expert.html.twig' %}
+{% extends 'Profile/user.html.twig' %}
+{% block title %}Мои не опубликованные обзоры{% endblock %}
 {% block breadcrumbs %}
-    <a href="{{ path("homepage") }}">Главная</a> →
-    <a href="{{ path("expert_profile") }}">Профиль</a> →
+    {{ parent() }}
+    → <a href="{{ path("expert_not_published_items") }}">Мои не опубликованные обзоры</a>
+    {% if category %}
+        → <a href="{{ path("expert_not_published_items", {"slug": category.slug}) }}">{{ category.name }}</a>
+    {% endif %}
 {% endblock %}
 {% block profile_body %}
     <h1>Мои не опубликованные обзоры</h1>
-    <div class="row">
-        {% for category in user.categories %}
-            <a href="{{ path("expert_not_published_items", {"slug": category.slug}) }}" class="btn btn-info btn-xs {% if app.request.requestUri == path("expert_not_published_items", {"slug": category.slug, "page":page}) %}active{% endif %}">{{ category.name }}</a>
-        {% endfor %}
-    </div>
-    {{ knp_pagination_render(pagination) }}
 
-    <div class="rubric-wrapper">
-        <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
-            <ul>
-                {% for product in pagination %}
-                    {{ include("_include/Product/_notPublishedItemList.twig") }}
-                {% endfor %}
-            </ul>
-        </div>
+    <div class="col-md-4">
+        <div id="treeCategory"></div>
     </div>
-
-    {{ knp_pagination_render(pagination) }}
+    <div class="col-md-8 history_products">
+        {{ include("Expert/part.html.twig") }}
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">$(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })</script>
+        })
+    </script>
+    {{ include("_include/Category/_jsTree.html.twig", {'categories': user.categories, 'category': category, 'treeId': 'treeCategory'}) }}
 {% endblock %}

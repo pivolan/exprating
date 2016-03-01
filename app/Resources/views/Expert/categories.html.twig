@@ -1,54 +1,22 @@
-{% extends 'Profile/expert.html.twig' %}
+{% extends 'Profile/user.html.twig' %}
+{% block title %}Доступные категории{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("expert_categories") }}">Список доступных категорий</a>
+    {% if category %}
+        → <a href="{{ path("expert_categories", {"slug": category.slug}) }}">{{ category.name }}</a>
+    {% endif %}
+{% endblock %}
 {% block profile_body %}
-    <div class="col-md-6">
-        <h1>Список доступных категорий</h1>
-        <div id="treeCategory" class="well"></div>
+    <h1>Список доступных категорий</h1>
+    <div class="col-md-4">
+        <div id="treeCategory"></div>
     </div>
-
-    {{ knp_pagination_render(pagination) }}
-
-    <div class="rubric-wrapper">
-        <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
-            <ul>
-                {% for product in pagination %}
-                    {{ include("_include/Product/_itemList.twig") }}
-                {% endfor %}
-            </ul>
-        </div>
+    <div class="col-md-8 history_products">
+        {{ include("Expert/part.html.twig") }}
     </div>
-
-    {{ knp_pagination_render(pagination) }}
-
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/jstree.min.js') }}"></script>
-    <script type="text/javascript">
-        var selected_by_event = false;
-        $('#treeCategory').jstree({
-            core: {
-                data: [
-                    {% for category in user.categories %}
-                    {
-                        id: '{{ category.slug }}',
-                        parent: '{{ category.parent.slug|default('#') }}',
-                        text: '{{ category.name|raw }}',
-                        a_attr: {
-                            href: '{{ path('expert_categories', {'slug': category.slug}) }}',
-                            data_slug: '{{ category.slug }}',
-                        },
-                    },
-                    {% endfor %}
-                ]
-            }
-        }).bind("select_node.jstree", function (e, data) {
-            $('#jstree').jstree('save_state');
-        }).on("activate_node.jstree", function(e,data){
-            window.location.href = data.node.a_attr.href;
-        });
-    </script>
-{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('css/themes/default/style.min.css') }}" type="text/css" rel="stylesheet"/>
+    {{ include("_include/Category/_jsTree.html.twig", {'categories': user.categories, 'category': category, 'treeId': 'treeCategory'}) }}
 {% endblock %}

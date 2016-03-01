@@ -53,23 +53,7 @@
             </span>
             </div>
             {% if is_granted('ROLE_EXPERT') %}
-                <div class="col-md-offset-5">
-                    <div class="btn-group-sm">
-                        <a href="{{ path("expert_profile") }}" class="btn btn-success">Эксперт</a>
-                        {% if is_granted("ROLE_EXPERT_CURATOR") %}
-                            <a href="{{ path("curator_profile") }}" class="btn btn-success">Куратор</a>
-                        {% endif %}
-                        {% if is_granted("ROLE_EXPERT_CATEGORY_ADMIN") %}
-                            <a href="{{ path("category_admin_profile") }}" class="btn btn-success">Админ категорий</a>
-                        {% endif %}
-                        {% if is_granted("ROLE_MODERATOR") %}
-                            <a href="{{ path("moderator_profile") }}" class="btn btn-success">Модератор</a>
-                        {% endif %}
-                        {% if is_granted("ROLE_ADMIN") %}
-                            <a href="{{ path("admin_profile") }}" class="btn btn-success">Админ</a>
-                        {% endif %}
-                    </div>
-                </div>
+                {{ include("_include/Menu/_profileMenu.html.twig") }}
             {% endif %}
             <div class="socialWrapper">
                 <script type="text/javascript">(function (w, doc) {

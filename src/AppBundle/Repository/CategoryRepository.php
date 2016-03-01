@@ -48,9 +48,36 @@ class CategoryRepository extends NestedTreeRepository
             ->leftJoin('a.ratingSettings', 'c')
             ->leftJoin('a.children', 'd')
             ->leftJoin('d.peopleGroups', 'e')
-            ->leftJoin('d.ratingSettings', 'f')
-        ;
+            ->leftJoin('d.ratingSettings', 'f');
         $query = $qb->getQuery();
         return $query->getResult();
+    }
+
+    public function getProductsRecursiveQueryBuilder(Category $category)
+    {
+        $categories = $this->getChildrenIds($category);
+        $qb = $this->_em->getRepository('AppBundle:Product')
+            ->createQueryBuilder('b')
+            ->where('b.category IN (:categories)')
+            ->setParameter('categories', $categories);
+        return $qb;
+    }
+
+    public function getProductsRecursiveQuery(Category $category)
+    {
+        $qb = $this->getProductsRecursiveQueryBuilder($category);
+        return $qb->getQuery();
+    }
+
+    public function getChildrenIds(Category $category)
+    {
+        $qb = $this->getChildrenQueryBuilder($category, false, null, 'ASC', true)
+            ->select('node.slug');
+        $result = $qb->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
+        $ids = [];
+        foreach ($result as $row) {
+            $ids[] = $row['slug'];
+        }
+        return $ids;
     }
 }

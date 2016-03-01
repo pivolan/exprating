@@ -25,9 +25,8 @@ class ExpertController extends BaseController
      * @Route("/profile/expert/published_items/{page}/{slug}", name="expert_published_items",
      *     defaults={"page":1, "slug": null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
-     *
      */
-    public function publishedItemsAction($page, Category $category = null)
+    public function publishedItemsAction(Request $request, $page, Category $category = null)
     {
         $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertPublishedQuery($this->getUser(), $category);
         $paginator = $this->get('knp_paginator');
@@ -37,8 +36,15 @@ class ExpertController extends BaseController
             self::LIMIT_PER_PAGE
         );
 
-        return $this->render('Expert/publishedItems.html.twig',
-            [self::KEY_PAGINATION => $pagination, self::KEY_USER => $this->getUser(), self::KEY_PAGE => $page]);
+        $template = 'Expert/publishedItems.html.twig';
+        if ($request->isXmlHttpRequest()) {
+            $template = 'Expert/part.html.twig';
+        }
+        return $this->render($template,
+            [self::KEY_PAGINATION => $pagination,
+             self::KEY_USER       => $this->getUser(),
+             self::KEY_PAGE       => $page,
+             self::KEY_CATEGORY   => $category,]);
     }
 
     /**
@@ -47,7 +53,7 @@ class ExpertController extends BaseController
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      *
      */
-    public function notPublishedItemsAction($page, Category $category = null)
+    public function notPublishedItemsAction(Request $request, $page, Category $category = null)
     {
         $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertNotPublishedQuery($this->getUser(), $category);
         $paginator = $this->get('knp_paginator');
@@ -57,9 +63,14 @@ class ExpertController extends BaseController
             self::LIMIT_PER_PAGE
         );
 
-        return $this->render('Expert/notPublishedItems.html.twig', [self::KEY_PAGINATION => $pagination,
-                                                                    self::KEY_USER       => $this->getUser(),
-                                                                    self::KEY_PAGE       => $page]);
+        $template = 'Expert/notPublishedItems.html.twig';
+        if ($request->isXmlHttpRequest()) {
+            $template = 'Expert/part.html.twig';
+        }
+        return $this->render($template, [self::KEY_PAGINATION => $pagination,
+                                         self::KEY_USER       => $this->getUser(),
+                                         self::KEY_PAGE       => $page,
+                                         self::KEY_CATEGORY   => $category,]);
     }
 
 
@@ -68,9 +79,12 @@ class ExpertController extends BaseController
      *     defaults={"page":1, "slug": null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
-    public function categoriesAction($page, Category $category = null)
+    public function categoriesAction(Request $request, $page, Category $category = null)
     {
-        $query = $this->getEm()->getRepository('AppBundle:Product')->findFreeByCategoryQuery($category);
+        $query = [];
+        if ($category) {
+            $query = $this->getEm()->getRepository('AppBundle:Category')->getProductsRecursiveQuery($category);
+        }
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
@@ -78,20 +92,14 @@ class ExpertController extends BaseController
             self::LIMIT_PER_PAGE
         );
 
-        return $this->render('Expert/categories.html.twig', [self::KEY_PAGINATION => $pagination,
-                                                             self::KEY_USER       => $this->getUser(),
-                                                             self::KEY_PAGE       => $page]);
-    }
 
-    public function _menuAction()
-    {
-        $publishedCount = $this->getEm()->getRepository('AppBundle:Product')->getCountPublishedByExpert($this->getUser());
-        $notPublishedCount = $this->getEm()->getRepository('AppBundle:Product')
-            ->getCountNotPublishedByExpert($this->getUser());
-
-        return $this->render('Expert/_menu.html.twig',
-            ['publishedItemsCount'    => $publishedCount,
-             'notPublishedItemsCount' => $notPublishedCount
-            ]);
+        $template = 'Expert/categories.html.twig';
+        if ($request->isXmlHttpRequest()) {
+            $template = 'Expert/part.html.twig';
+        }
+        return $this->render($template, [self::KEY_PAGINATION => $pagination,
+                                         self::KEY_USER       => $this->getUser(),
+                                         self::KEY_PAGE       => $page,
+                                         self::KEY_CATEGORY   => $category,]);
     }
 }
