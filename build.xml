@@ -36,7 +36,7 @@
             description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
 
     <target name="quick-build"
-            depends="prepare,lint,phpunit-no-coverage"
+            depends="prepare,phpunit-no-coverage"
             description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
 
     <target name="static-analysis"
@@ -251,7 +251,7 @@
             <arg path="${basedir}/phpunit.xml.dist"/>
             <arg value="--no-coverage"/>
             <arg value="--testsuite"/>
-            <arg value="AppTestSuite"/>
+            <arg path="AppTestSuite"/>
         </exec>
 
         <property name="phpunit.done" value="true"/>
