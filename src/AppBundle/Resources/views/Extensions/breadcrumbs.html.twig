@@ -1,6 +1,3 @@
-<div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
-    <a href="{{ path("homepage") }}">Главная</a>
     {% for category in categories %}
         → <a href="{{ path("product_list", {"slug": category.slug}) }}">{{ category.name }}</a>
     {% endfor %}
-</div>
