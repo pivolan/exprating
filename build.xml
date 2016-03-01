@@ -251,7 +251,7 @@
             <arg path="${basedir}/phpunit.xml.dist"/>
             <arg value="--no-coverage"/>
             <arg value="--testsuite"/>
-            <arg path="AppTestSuite"/>
+            <arg value="AppTestSuite"/>
         </exec>
 
         <property name="phpunit.done" value="true"/>
