@@ -1,4 +1,5 @@
-{% extends 'Profile/admin.html.twig' %}
+{% extends 'Profile/user.html.twig' %}
+{% block title %}Настройки импорта{% endblock %}
 {% block profile_body %}
     <div class="col-md-6">
         <h1>Категории Exprating</h1>
@@ -34,6 +35,8 @@
             var selected_nodes = $('#treeCategoryImport').jstree(true).get_selected();
             if (selected_nodes.length && !selected_by_event) {
                 var category_slug = selected.node.id;
+                var category_text = selected.node.text;
+                console.log(selected.node.text);
 
                 var alias_category_id = selected_nodes[0];
                 $.ajax('{{ path('admin_import_settings_change') }}', {
@@ -50,6 +53,10 @@
                         }, 2000);
                         var node = $('#treeCategoryImport').jstree(true).get_node(alias_category_id);
                         node.a_attr.data_relation = category_slug;
+                        console.log(node.text);
+                        var new_text = node.text.replace(/\(.*\)/g, '') + '(' + category_text + ')';
+                        console.log(new_text);
+                        $('#treeCategoryImport').jstree(true).set_text(node, new_text);
                     }
                 })
             }

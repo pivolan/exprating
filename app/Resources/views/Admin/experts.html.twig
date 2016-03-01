@@ -7,7 +7,7 @@
         <div class="experts-wrapper">
             <ul>
                 {% for expert in pagination %}
-                    <li class="expert-item">
+                    <li class="expert-item {{ user == expert ? "well":'' }}">
                         <div class="expert-img-wrapper">
                             <img src="{{ expert.avatarImage }}">
                         </div>
@@ -21,13 +21,8 @@
         </div>
         {{ knp_pagination_render(pagination) }}
     </div>
-    <div class="col-md-4">
-        <h1>Доступные категории</h1>
-        <div id="tree">
-            {{ treeHtml|raw }}
-        </div>
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-8">
+        <h1>{{ user.username }}</h1>
         {{ form(form) }}
     </div>
 {% endblock %}

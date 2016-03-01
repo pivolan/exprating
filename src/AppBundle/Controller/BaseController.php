@@ -25,7 +25,6 @@ abstract class BaseController extends Controller
     const KEY_CATEGORY = 'category';
     const KEY_CATEGORIES = 'categories';
     const KEY_EXPERTS = 'experts';
-    const KEY_TREE_HTML = 'treeHtml';
     const KEY_USER = 'user';
     const KEY_PAGE = 'page';
 

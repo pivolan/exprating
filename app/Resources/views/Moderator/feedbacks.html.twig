@@ -1,2 +1,7 @@
 {% extends 'Profile/user.html.twig' %}
+{% block title %}Отзывы{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("moderator_feedbacks") }}">Отзывы</a>
+{% endblock %}
 {% block profile_body %}{% endblock %}

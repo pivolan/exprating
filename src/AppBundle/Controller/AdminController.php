@@ -44,8 +44,6 @@ class AdminController extends BaseController
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
-        $treeHtml = $this->getEm()->getRepository('AppBundle:Category')->childrenHierarchy(null, false,
-            ['decorate' => true, 'representationField' => 'slug', 'html' => true]);
         if (!$user) {
             $user = $this->getUser();
         }
@@ -56,11 +54,10 @@ class AdminController extends BaseController
             $this->addFlash(self::FLASH_MESSAGE, 'Изменения успешно сохранены');
         }
 
-
         return $this->render('Admin/experts.html.twig', [self::KEY_PAGINATION => $pagination,
-                                                         self::KEY_TREE_HTML  => $treeHtml,
                                                          self::KEY_FORM       => $form->createView(),
-                                                         self::KEY_PAGE       => $page
+                                                         self::KEY_PAGE       => $page,
+                                                         self::KEY_USER       => $user,
         ]);
     }
 
