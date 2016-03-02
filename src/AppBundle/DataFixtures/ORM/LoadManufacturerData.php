@@ -19,7 +19,9 @@ class LoadManufacturerData extends AbstractFixture implements FixtureInterface
             $shop->setName("Shop $i");
             $shop->setImage('http://placehold.it/150x58');
             $shop->setDescription(
-                'Немецкая группа компаний - один из ведущих мировых производителей в области автомобильных компонентов, потребительских товаров, строительных и упаковочных решений. '
+                'Немецкая группа компаний - один из ведущих мировых производителей в
+                области автомобильных компонентов,
+                 потребительских товаров, строительных и упаковочных решений. '
             );
             $manager->persist($shop);
             $this->addReference(self::REFERENCE_MANUFACTURER.$i, $shop);

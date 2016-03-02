@@ -9,7 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
  * SiteProductRubrics.
  *
  * @ORM\Entity()
- * @ORM\Table(name="site_product_rubrics", indexes={@ORM\Index(name="left_key", columns={"left_key", "right_key", "level", "parent_id"}), @ORM\Index(name="tree_id", columns={"tree_id"}), @ORM\Index(name="level", columns={"level"}), @ORM\Index(name="fkParent", columns={"parent_id"})})
+ * @ORM\Table(name="site_product_rubrics", indexes={@ORM\Index(name="left_key",
+ *     columns={"left_key", "right_key", "level", "parent_id"}),
+ * @ORM\Index(name="tree_id", columns={"tree_id"}),
+ * @ORM\Index(name="level", columns={"level"}),
+ * @ORM\Index(name="fkParent", columns={"parent_id"})}
+ * )
  */
 class SiteProductRubrics
 {

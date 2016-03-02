@@ -49,7 +49,8 @@ class Categories
      * @var Parameters[]
      *
      * @ORM\ManyToMany(targetEntity="Exprating\ImportBundle\Entity\Parameters")
-     * @ORM\JoinTable(name="categories_parameters", joinColumns={@ORM\JoinColumn(name="categoryId", referencedColumnName="id")},
+     * @ORM\JoinTable(name="categories_parameters", joinColumns={@ORM\JoinColumn(name="categoryId",
+     *     referencedColumnName="id")},
      *            inverseJoinColumns={@ORM\JoinColumn(name="parameterId", referencedColumnName="id")})
      */
     private $parameters;
@@ -57,7 +58,8 @@ class Categories
     /**
      * @var AliasCategory
      *
-     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasCategory", mappedBy="categoryIrecommend", fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="Exprating\ImportBundle\Entity\AliasCategory",
+     *     mappedBy="categoryIrecommend", fetch="EAGER")
      */
     private $aliasCategory;
 

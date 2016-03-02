@@ -13,7 +13,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadCategoryData extends AbstractFixture implements FixtureInterface,
+class LoadCategoryData extends AbstractFixture implements
+    FixtureInterface,
     ContainerAwareInterface,
     DependentFixtureInterface
 {
