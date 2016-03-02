@@ -14,6 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class PerfomanceItemCommand
+ * @package Exprating\ImportBundle\Command
+ * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ */
 class PerfomanceItemCommand extends ContainerAwareCommand
 {
     /**

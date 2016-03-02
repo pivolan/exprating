@@ -98,7 +98,7 @@ class AdminController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function userDetailAction(Request $request, User $user)
+    public function userDetailAction(User $user)
     {
         return $this->render('Admin/userDetail.html.twig', [self::KEY_USER => $user]);
     }

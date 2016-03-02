@@ -20,6 +20,12 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class ImportItemCommand
+ * @package Exprating\ImportBundle\Command
+ *
+ * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ */
 class ImportItemCommand extends ContainerAwareCommand
 {
     /**

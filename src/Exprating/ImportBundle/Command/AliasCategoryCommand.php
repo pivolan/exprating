@@ -17,6 +17,12 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class AliasCategoryCommand
+ * @package Exprating\ImportBundle\Command
+ *
+ * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ */
 class AliasCategoryCommand extends ContainerAwareCommand
 {
     /**

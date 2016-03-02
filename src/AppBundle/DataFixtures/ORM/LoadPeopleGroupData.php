@@ -31,8 +31,6 @@ class LoadPeopleGroupData extends AbstractFixture implements FixtureInterface, C
             'dlya-detey'      => 'Для детей',
             'dlya-vseh'       => 'Для всех',
         ];
-        /** @var Slugify $slugify */
-        $slugify = $this->container->get('appbundle.slugify');
         foreach ($names as $slug => $name) {
             $peopleGroup = new PeopleGroup();
             $peopleGroup->setName($name)

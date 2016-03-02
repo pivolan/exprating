@@ -16,6 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class ImportRubricsToCategoryCommand
+ * @package Exprating\ImportBundle\Command
+ *
+ * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ */
 class ImportRubricsToCategoryCommand extends ContainerAwareCommand
 {
     /**

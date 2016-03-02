@@ -29,7 +29,7 @@ class IndexController extends BaseController
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $form = $this->createForm(SearchParamsType::class, null, ['action' => $this->generateUrl('product_search')]);
 

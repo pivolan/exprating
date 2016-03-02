@@ -25,18 +25,12 @@ class AppReservationHandleCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $argument = $input->getArgument('argument');
-
-        if ($input->getOption('option')) {
-            // ...
-        }
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Product[] $products */
         $products = $em->getRepository('AppBundle:Product')->findReserved();
         foreach ($products as $product) {
-            $event = new ProductReservationOverEvent();
-            $event->setProduct($product);
+            $event = new ProductReservationOverEvent($product);
             $this->getContainer()->get('event_dispatcher')->dispatch(ProductEvents::RESERVATION_OVER, $event);
         }
         $em->flush();

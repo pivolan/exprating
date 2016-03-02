@@ -133,7 +133,7 @@ class CuratorController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function expertsAction(Request $request, $level, $page)
+    public function expertsAction($level, $page)
     {
         $query = $this->getUser()->getExperts();
         $paginator = $this->get('knp_paginator');

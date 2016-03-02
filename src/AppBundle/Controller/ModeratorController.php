@@ -33,7 +33,7 @@ class ModeratorController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function commentsAction(Request $request, $page)
+    public function commentsAction($page)
     {
         $query = $this->getEm()->getRepository('AppBundle:Comment')->findDisabledQuery();
         $paginator = $this->get('knp_paginator');
@@ -62,7 +62,7 @@ class ModeratorController extends BaseController
     /**
      * @Route("/moderator/feedbacks/{page}", name="moderator_feedbacks", defaults={"page": 1})
      */
-    public function feedbacksAction($page)
+    public function feedbacksAction()
     {
         return $this->render('Moderator/feedbacks.html.twig');
     }
