@@ -4,7 +4,6 @@ imports:
     - { resource: services.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@CharacteristicBundle/Resources/config/services.yml" }
-    - { resource: "@ExpratingExpertBundle/Resources/config/services.yml" }
     - { resource: "@ExpratingImportBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed

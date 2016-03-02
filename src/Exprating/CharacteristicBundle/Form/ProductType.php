@@ -5,7 +5,7 @@
  * Time: 1:42.
  */
 
-namespace Exprating\ExpertBundle\Form;
+namespace Exprating\CharacteristicBundle\Form;
 
 use AppBundle\Entity\Product;
 use Symfony\Component\Form\AbstractType;

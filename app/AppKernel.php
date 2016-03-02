@@ -28,7 +28,6 @@ class AppKernel extends Kernel
             new \Exprating\CharacteristicBundle\CharacteristicBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Exprating\SearchBundle\ExpratingSearchBundle(),
-            new Exprating\ExpertBundle\ExpratingExpertBundle(),
             new Exprating\ImportBundle\ExpratingImportBundle(),
         ];
 

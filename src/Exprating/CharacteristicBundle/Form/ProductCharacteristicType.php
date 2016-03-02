@@ -5,7 +5,7 @@
  * Time: 1:42.
  */
 
-namespace Exprating\ExpertBundle\Form;
+namespace Exprating\CharacteristicBundle\Form;
 
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;

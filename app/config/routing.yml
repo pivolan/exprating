@@ -1,8 +1,3 @@
-exprating_expert:
-    resource: "@ExpratingExpertBundle/Controller/"
-    type:     annotation
-    prefix:   /expert
-
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
