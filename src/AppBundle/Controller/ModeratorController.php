@@ -45,14 +45,18 @@ class ModeratorController extends BaseController
         );
         $forms = [];
         foreach ($pagination as $comment) {
-            $form = $this->createForm(ModeratorCommentType::class,
+            $form = $this->createForm(
+                ModeratorCommentType::class,
                 $comment,
                 ['action' => $this->generateUrl('moderator_decision', ['id' => $comment->getId()])]
             );
             $forms[] = $form->createView();
         }
 
-        return $this->render('Moderator/messages.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORMS => $forms]);
+        return $this->render(
+            'Moderator/messages.html.twig',
+            [self::KEY_PAGINATION => $pagination, self::KEY_FORMS => $forms]
+        );
     }
 
     /**
@@ -90,9 +94,12 @@ class ModeratorController extends BaseController
         $commentCount = $this->getEm()->getRepository('AppBundle:Comment')->newCount();
         $feedbackCount = $this->getEm()->getRepository('AppBundle:Feedback')->newCount();
 
-        return $this->render('Moderator/_menu.html.twig',
-            ['commentCount' => $commentCount,
-             'feedbackCount' => $feedbackCount,
-            ]);
+        return $this->render(
+            'Moderator/_menu.html.twig',
+            [
+                'commentCount' => $commentCount,
+                'feedbackCount' => $feedbackCount,
+            ]
+        );
     }
 }

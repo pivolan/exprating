@@ -26,7 +26,10 @@ class ExpertController extends BaseController
      */
     public function publishedItemsAction(Request $request, $page, Category $category = null)
     {
-        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertPublishedQuery($this->getUser(), $category);
+        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertPublishedQuery(
+            $this->getUser(),
+            $category
+        );
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
@@ -39,11 +42,15 @@ class ExpertController extends BaseController
             $template = 'Expert/part.html.twig';
         }
 
-        return $this->render($template,
-            [self::KEY_PAGINATION => $pagination,
-             self::KEY_USER => $this->getUser(),
-             self::KEY_PAGE => $page,
-             self::KEY_CATEGORY => $category, ]);
+        return $this->render(
+            $template,
+            [
+                self::KEY_PAGINATION => $pagination,
+                self::KEY_USER       => $this->getUser(),
+                self::KEY_PAGE       => $page,
+                self::KEY_CATEGORY   => $category,
+            ]
+        );
     }
 
     /**
@@ -53,7 +60,10 @@ class ExpertController extends BaseController
      */
     public function notPublishedItemsAction(Request $request, $page, Category $category = null)
     {
-        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertNotPublishedQuery($this->getUser(), $category);
+        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertNotPublishedQuery(
+            $this->getUser(),
+            $category
+        );
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
@@ -66,10 +76,15 @@ class ExpertController extends BaseController
             $template = 'Expert/part.html.twig';
         }
 
-        return $this->render($template, [self::KEY_PAGINATION => $pagination,
-                                         self::KEY_USER => $this->getUser(),
-                                         self::KEY_PAGE => $page,
-                                         self::KEY_CATEGORY => $category, ]);
+        return $this->render(
+            $template,
+            [
+                self::KEY_PAGINATION => $pagination,
+                self::KEY_USER       => $this->getUser(),
+                self::KEY_PAGE       => $page,
+                self::KEY_CATEGORY   => $category,
+            ]
+        );
     }
 
     /**
@@ -95,9 +110,14 @@ class ExpertController extends BaseController
             $template = 'Expert/part.html.twig';
         }
 
-        return $this->render($template, [self::KEY_PAGINATION => $pagination,
-                                         self::KEY_USER => $this->getUser(),
-                                         self::KEY_PAGE => $page,
-                                         self::KEY_CATEGORY => $category, ]);
+        return $this->render(
+            $template,
+            [
+                self::KEY_PAGINATION => $pagination,
+                self::KEY_USER       => $this->getUser(),
+                self::KEY_PAGE       => $page,
+                self::KEY_CATEGORY   => $category,
+            ]
+        );
     }
 }

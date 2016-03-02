@@ -36,11 +36,16 @@ class IndexController extends BaseController
         $productRepository = $this->getEm()->getRepository('AppBundle:Product');
         $products = $productRepository->findNew();
         $popularProducts = $productRepository->findPopular();
+
         // replace this example code with whatever you need
-        return $this->render('Index/index.html.twig', [
-            self::KEY_PRODUCTS => $products,
-            self::KEY_POPULAR_PRODUCTS => $popularProducts,
-            self::KEY_FORM_SEARCH => $form->createView(), ]);
+        return $this->render(
+            'Index/index.html.twig',
+            [
+                self::KEY_PRODUCTS         => $products,
+                self::KEY_POPULAR_PRODUCTS => $popularProducts,
+                self::KEY_FORM_SEARCH      => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -67,7 +72,10 @@ class IndexController extends BaseController
             self::LIMIT_PER_PAGE
         );
 
-        return $this->render('Product/search.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORM_SEARCH => $form->createView()]);
+        return $this->render(
+            'Product/search.html.twig',
+            [self::KEY_PAGINATION => $pagination, self::KEY_FORM_SEARCH => $form->createView()]
+        );
     }
 
     /**
@@ -99,9 +107,13 @@ class IndexController extends BaseController
     public function detailAction(Request $request, Product $product)
     {
         $comment = new Comment();
-        $formComment = $this->createForm(CommentType::class, $comment, [
-            'action' => $this->generateUrl('product_comment_create', ['slug' => $product->getSlug()]),
-        ]);
+        $formComment = $this->createForm(
+            CommentType::class,
+            $comment,
+            [
+                'action' => $this->generateUrl('product_comment_create', ['slug' => $product->getSlug()]),
+            ]
+        );
         $similarProducts = $this->getEm()->getRepository('AppBundle:Product')->findSimilar($product);
 
         $template = 'Product/detail.html.twig';
@@ -109,11 +121,14 @@ class IndexController extends BaseController
             $template = 'Product/detailPart.html.twig';
         }
 
-        return $this->render($template, [
-            self::KEY_PRODUCT => $product,
-            self::KEY_SIMILAR_PRODUCTS => $similarProducts,
-            self::KEY_FORM_COMMENT => $formComment->createView(),
-        ]);
+        return $this->render(
+            $template,
+            [
+                self::KEY_PRODUCT          => $product,
+                self::KEY_SIMILAR_PRODUCTS => $similarProducts,
+                self::KEY_FORM_COMMENT     => $formComment->createView(),
+            ]
+        );
     }
 
     /**
@@ -130,8 +145,8 @@ class IndexController extends BaseController
         $validator = $this->get('validator');
         $errors = $validator->validate($productFilter);
         if (count($errors) > 0) {
-            $this->addFlash(self::FLASH_SORT_ERRORS, (string) $errors);
-            throw new HttpException(403, (string) $errors);
+            $this->addFlash(self::FLASH_SORT_ERRORS, (string)$errors);
+            throw new HttpException(403, (string)$errors);
         }
 
         $query = $this->getEm()->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);
@@ -146,8 +161,13 @@ class IndexController extends BaseController
             $template = 'Product/listPart.html.twig';
         }
 
-        return $this->render($template, [self::KEY_PAGINATION => $pagination,
-                                         self::KEY_CATEGORY => $productFilter->getCategory(),
-                                         self::KEY_SORT_PRODUCT => $productFilter, ]);
+        return $this->render(
+            $template,
+            [
+                self::KEY_PAGINATION   => $pagination,
+                self::KEY_CATEGORY     => $productFilter->getCategory(),
+                self::KEY_SORT_PRODUCT => $productFilter,
+            ]
+        );
     }
 }

@@ -25,6 +25,7 @@ class CategoryAdminController extends BaseController
 
     /**
      * @Route("/category_admin/categories/{slug}", name="category_admin_categories", defaults={"slug": null})
+     *
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -49,9 +50,13 @@ class CategoryAdminController extends BaseController
             $template = 'CategoryAdmin/categoriesPart.html.twig';
         }
 
-        return $this->render($template,
-            [self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(),
-             self::KEY_CATEGORY => $category,
-             self::KEY_FORM => $form->createView(), ]);
+        return $this->render(
+            $template,
+            [
+                self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(),
+                self::KEY_CATEGORY   => $category,
+                self::KEY_FORM       => $form->createView(),
+            ]
+        );
     }
 }

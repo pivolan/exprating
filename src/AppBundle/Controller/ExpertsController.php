@@ -20,9 +20,12 @@ class ExpertsController extends BaseController
     {
         $experts = $this->getEm()->getRepository('AppBundle:User')->findExperts();
 
-        return $this->render('Experts/list.html.twig', [
-            self::KEY_EXPERTS => $experts,
-        ]);
+        return $this->render(
+            'Experts/list.html.twig',
+            [
+                self::KEY_EXPERTS => $experts,
+            ]
+        );
     }
 
     /**
@@ -44,9 +47,12 @@ class ExpertsController extends BaseController
             self::LIMIT_OPINIONS_PER_PAGE
         );
 
-        return $this->render('Experts/detail.html.twig', [
-            self::KEY_EXPERT => $user,
-            self::KEY_EXPERT_OPINIONS => $pagination,
-        ]);
+        return $this->render(
+            'Experts/detail.html.twig',
+            [
+                self::KEY_EXPERT          => $user,
+                self::KEY_EXPERT_OPINIONS => $pagination,
+            ]
+        );
     }
 }

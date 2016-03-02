@@ -57,9 +57,15 @@ class EditController extends BaseController
                 if ($this->isGranted(ProductVoter::PUBLISH, $product)) {
                     $this->get('event_dispatcher')
                         ->dispatch(ProductEvents::PUBLISH_REQUEST, new ProductPublishRequestEvent($product));
-                    $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email');
+                    $this->addFlash(
+                        self::FLASH_EXPERTISE_MESSAGE,
+                        'Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email'
+                    );
                 } else {
-                    throw new HttpException(403, 'Невозможно опубликовать. Обзор уже был опубликован, или ожидает решения куратора.');
+                    throw new HttpException(
+                        403,
+                        'Невозможно опубликовать. Обзор уже был опубликован, или ожидает решения куратора.'
+                    );
                 }
             }
             $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Изменения сохранены');

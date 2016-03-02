@@ -66,8 +66,11 @@ class CuratorController extends BaseController
             ->waitByCuratorByProduct($this->getUser(), $product)->getSingleResult();
         $decision->setProduct($product)->setCurator($this->getUser());
 
-        $form = $this->createForm(DecisionType::class, $decision,
-            ['action' => $this->generateUrl('curator_decision', ['slug' => $product->getSlug()])]);
+        $form = $this->createForm(
+            DecisionType::class,
+            $decision,
+            ['action' => $this->generateUrl('curator_decision', ['slug' => $product->getSlug()])]
+        );
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -102,7 +105,8 @@ class CuratorController extends BaseController
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->get('event_dispatcher')
-                ->dispatch(ProductEvents::CHANGE_EXPERT,
+                ->dispatch(
+                    ProductEvents::CHANGE_EXPERT,
                     new ProductChangeExpertEvent(
                         $product,
                         $product->getExpertUser(),
@@ -142,8 +146,13 @@ class CuratorController extends BaseController
             self::LIMIT_PER_PAGE
         );
 
-        return $this->render('Curator/experts.html.twig', [self::KEY_PAGINATION => $pagination,
-                                                           self::KEY_LEVEL => $level, ]);
+        return $this->render(
+            'Curator/experts.html.twig',
+            [
+                self::KEY_PAGINATION => $pagination,
+                self::KEY_LEVEL      => $level,
+            ]
+        );
     }
 
     /**
@@ -162,15 +171,24 @@ class CuratorController extends BaseController
             self::LIMIT_PER_PAGE
         );
 
-        return $this->render('Curator/decisions.html.twig',
-            [self::KEY_PAGINATION => $pagination, self::KEY_PAGE => $page, self::KEY_USER => $this->getUser(), self::KEY_PRODUCT => $product]);
+        return $this->render(
+            'Curator/decisions.html.twig',
+            [
+                self::KEY_PAGINATION => $pagination,
+                self::KEY_PAGE       => $page,
+                self::KEY_USER       => $this->getUser(),
+                self::KEY_PRODUCT    => $product,
+            ]
+        );
     }
 
     public function _menuAction()
     {
         $waitItemsCount = $this->getEm()->getRepository('AppBundle:CuratorDecision')->countNew($this->getUser());
 
-        return $this->render('Curator/_menu.html.twig',
-            ['waitItemsCount' => $waitItemsCount]);
+        return $this->render(
+            'Curator/_menu.html.twig',
+            ['waitItemsCount' => $waitItemsCount]
+        );
     }
 }
