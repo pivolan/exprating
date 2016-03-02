@@ -28,7 +28,7 @@ class ExpertsControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/experts/pwerijgerijnferjnerkl');
+        $client->request('GET', '/experts/pwerijgerijnferjnerkl');
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 }

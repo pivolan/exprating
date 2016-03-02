@@ -103,7 +103,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
 
         $aliases = [];
         $matches = [];
-        foreach ($lastLevelCategoriesImport as $key => $categoryImport) {
+        foreach ($lastLevelCategoriesImport as $categoryImport) {
             if ($categoryImport->getAliasCategory()) {
                 continue;
             }

@@ -187,7 +187,6 @@ class ProductSubscriber implements EventSubscriberInterface
     {
         $product = $event->getProduct();
         $expert = $product->getExpertUser();
-        $curator = $expert->getCurator();
         $message = \Swift_Message::newInstance()
             ->setSubject('Ваша публикация была опубликована '.$product->getName())
             ->setTo($expert->getEmail())

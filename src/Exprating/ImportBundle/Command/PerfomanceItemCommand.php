@@ -76,7 +76,7 @@ class PerfomanceItemCommand extends ContainerAwareCommand
         foreach ($itemIterate as $row) {
             /** @var Item $item */
             $item = $row[0];
-            echo ++$i." \n";
+            echo ++$i.$item->getName()." \n";
             $this->emImport->clear();
         }
     }
