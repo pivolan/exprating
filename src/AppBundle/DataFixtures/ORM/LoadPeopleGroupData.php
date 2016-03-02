@@ -26,10 +26,10 @@ class LoadPeopleGroupData extends AbstractFixture implements FixtureInterface, C
     public function load(ObjectManager $manager)
     {
         $names = [
-            'dlya-muzhchin' => 'Для женщин',
+            'dlya-muzhchin'   => 'Для женщин',
             'dlya-zhenshchin' => 'Для мужчин',
-            'dlya-detey' => 'Для детей',
-            'dlya-vseh' => 'Для всех',
+            'dlya-detey'      => 'Для детей',
+            'dlya-vseh'       => 'Для всех',
         ];
         /** @var Slugify $slugify */
         $slugify = $this->container->get('appbundle.slugify');

@@ -88,6 +88,7 @@ class Item
      *            inverseJoinColumns={@ORM\JoinColumn(name="parameterId", referencedColumnName="id")})
      */
     private $parameters;
+
     /**
      * Constructor.
      */

@@ -24,9 +24,11 @@ class SearchParamsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'Exprating\SearchBundle\SearchParams\SearchParams',
-            'csrf_protection' => false,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class'      => 'Exprating\SearchBundle\SearchParams\SearchParams',
+                'csrf_protection' => false,
+            ]
+        );
     }
 }

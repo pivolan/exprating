@@ -18,7 +18,14 @@ class SqlEngineTest extends AbstractWebCaseTest
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
         //Создадим массив тестовых названий товаров
-        $names = ['Red boots', 'blue boots', 'light table', 'yellow table', 'Yellow boots', 'Именно там Русское слово с english text'];
+        $names = [
+            'Red boots',
+            'blue boots',
+            'light table',
+            'yellow table',
+            'Yellow boots',
+            'Именно там Русское слово с english text',
+        ];
         foreach ($names as $name) {
             $product = (new Product())->setName($name)->setSlug($name)->setIsEnabled(true);
             $em->persist($product);

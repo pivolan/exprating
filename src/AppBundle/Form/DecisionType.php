@@ -40,9 +40,11 @@ class DecisionType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => CuratorDecision::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => CuratorDecision::class,
+            ]
+        );
     }
 
     public function onPreSubmit(FormEvent $event)

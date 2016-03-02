@@ -36,13 +36,17 @@ class CharacteristicExtension extends \Twig_Extension
         $result = [];
         foreach ($productCharacteristics as $productCharacteristic) {
             $characteristic = $productCharacteristic->getCharacteristic();
-            $result[$characteristic->getGroup()][] = [$characteristic->getLabel(),
-                                                      $productCharacteristic->getValue(),
-                                                      $characteristic->getScale(), ];
+            $result[$characteristic->getGroup()][] = [
+                $characteristic->getLabel(),
+                $productCharacteristic->getValue(),
+                $characteristic->getScale(),
+            ];
         }
 
-        return $this->twig->render('CharacteristicBundle:Extensions:productCharacteristics.html.twig',
-            ['characteristics' => array_reverse($result)]);
+        return $this->twig->render(
+            'CharacteristicBundle:Extensions:productCharacteristics.html.twig',
+            ['characteristics' => array_reverse($result)]
+        );
     }
 
     /**

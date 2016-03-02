@@ -97,7 +97,7 @@ class ModeratorController extends BaseController
         return $this->render(
             'Moderator/_menu.html.twig',
             [
-                'commentCount' => $commentCount,
+                'commentCount'  => $commentCount,
                 'feedbackCount' => $feedbackCount,
             ]
         );

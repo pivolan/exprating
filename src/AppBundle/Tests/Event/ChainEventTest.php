@@ -29,7 +29,9 @@ class ChainEventTest extends AbstractWebCaseTest
         /** @var User $expert */
         $expert = $em->getRepository('AppBundle:User')->findOneBy(['username' => 'expert']);
         $count = $em->getRepository('AppBundle:CuratorDecision')->countNew($curator);
-        $filter = (new ProductFilter())->setCategory($expert->getCategories()[0])->setStatus(ProductFilter::STATUS_FREE);
+        $filter = (new ProductFilter())->setCategory($expert->getCategories()[0])->setStatus(
+            ProductFilter::STATUS_FREE
+        );
         /** @var Product[] $freeProducts */
         $freeProducts = $em->getRepository('AppBundle:Product')->findByFilterQuery($filter)->getResult();
         $product = $freeProducts[0];
@@ -68,7 +70,9 @@ class ChainEventTest extends AbstractWebCaseTest
         /** @var User $expert */
         $expert = $em->getRepository('AppBundle:User')->findOneBy(['username' => 'expert']);
         $count = $em->getRepository('AppBundle:CuratorDecision')->countNew($curator);
-        $filter = (new ProductFilter())->setCategory($expert->getCategories()[0])->setStatus(ProductFilter::STATUS_FREE);
+        $filter = (new ProductFilter())->setCategory($expert->getCategories()[0])->setStatus(
+            ProductFilter::STATUS_FREE
+        );
         /** @var Product[] $freeProducts */
         $freeProducts = $em->getRepository('AppBundle:Product')->findByFilterQuery($filter)->getResult();
         $product = $freeProducts[0];
@@ -94,7 +98,9 @@ class ChainEventTest extends AbstractWebCaseTest
         /** @var User $expert */
         $expert = $em->getRepository('AppBundle:User')->findOneBy(['username' => 'expert']);
         $count = $em->getRepository('AppBundle:CuratorDecision')->countNew($curator);
-        $filter = (new ProductFilter())->setCategory($expert->getCategories()[0])->setStatus(ProductFilter::STATUS_FREE);
+        $filter = (new ProductFilter())->setCategory($expert->getCategories()[0])->setStatus(
+            ProductFilter::STATUS_FREE
+        );
         /** @var Product[] $freeProducts */
         $freeProducts = $em->getRepository('AppBundle:Product')->findByFilterQuery($filter)->getResult();
         $product = $freeProducts[0];
@@ -115,7 +121,10 @@ class ChainEventTest extends AbstractWebCaseTest
         $this->assertTrue($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
         $countNew = $em->getRepository('AppBundle:CuratorDecision')->countNew($curator);
         $this->assertEquals($count + 1, $countNew);
-        $eventDispatcher->dispatch(ProductEvents::REJECT, new ProductRejectEvent($product, $curator, 'Плохое описание товара'));
+        $eventDispatcher->dispatch(
+            ProductEvents::REJECT,
+            new ProductRejectEvent($product, $curator, 'Плохое описание товара')
+        );
         $this->assertEquals($count, $em->getRepository('AppBundle:CuratorDecision')->countNew($curator));
         $this->assertFalse($product->getIsEnabled());
         $this->assertNotNull($product->getReservedAt());

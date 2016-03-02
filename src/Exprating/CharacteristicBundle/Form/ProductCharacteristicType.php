@@ -36,9 +36,11 @@ class ProductCharacteristicType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => ProductCharacteristic::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => ProductCharacteristic::class,
+            ]
+        );
     }
 
     public function onPreSetData(FormEvent $event)
@@ -56,13 +58,26 @@ class ProductCharacteristicType extends AbstractType
         $characteristic = $productCharacteristic->getCharacteristic();
         switch ($characteristic->getType()) {
             case Characteristic::TYPE_DECIMAL:
-                $form->add('value', NumberType::class, ['label' => $characteristic->getLabel().', '.
-                                                                   $characteristic->getScale(),
-                                                        'scale' => 2, ]);
+                $form->add(
+                    'value',
+                    NumberType::class,
+                    [
+                        'label' => $characteristic->getLabel().', '.
+                                   $characteristic->getScale(),
+                        'scale' => 2,
+                    ]
+                );
                 break;
             case Characteristic::TYPE_INT:
-                $form->add('value', NumberType::class, ['label' => $characteristic->getLabel().', '.
-                                                                     $characteristic->getScale(), 'scale' => 0, ]);
+                $form->add(
+                    'value',
+                    NumberType::class,
+                    [
+                        'label' => $characteristic->getLabel().', '.
+                                   $characteristic->getScale(),
+                        'scale' => 0,
+                    ]
+                );
                 break;
             case Characteristic::TYPE_STRING:
                 $form->add('value', TextType::class, ['label' => $characteristic->getLabel()]);

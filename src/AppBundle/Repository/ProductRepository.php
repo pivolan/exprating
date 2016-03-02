@@ -191,8 +191,12 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             switch ($characteristic->getType()) {
                 case Characteristic::TYPE_STRING:
                     if ($characteristic->getValue()) {
-                        $qb->innerJoin('a.productCharacteristics', $alias, 'WITH',
-                            "$alias.product=a.id AND $alias.characteristic=:$key1 AND $alias.valueString LIKE :$key2")
+                        $qb->innerJoin(
+                            'a.productCharacteristics',
+                            $alias,
+                            'WITH',
+                            "$alias.product=a.id AND $alias.characteristic=:$key1 AND $alias.valueString LIKE :$key2"
+                        )
                             ->setParameter($key1, $name)
                             ->setParameter($key2, '%'.$characteristic->getValue().'%');
                     }

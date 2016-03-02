@@ -23,7 +23,7 @@ abstract class CommandTestCase extends WebTestCase
      */
     public function runCommand($commandString)
     {
-        $kernel = static::createKernel(array('environment' => 'test', 'debug' => true));
+        $kernel = static::createKernel(['environment' => 'test', 'debug' => true]);
         $application = new Application($kernel);
         $application->setAutoExit(false);
 

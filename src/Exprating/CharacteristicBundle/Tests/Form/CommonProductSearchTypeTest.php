@@ -19,39 +19,46 @@ class CommonProductSearchTypeTest extends AbstractWebCaseTest
     public function testSubmitValidData()
     {
         $formData = [
-            'name' => 'test_name',
-            'priceGTE' => 100.25,
-            'priceLTE' => 200.55,
-            'characteristics' => [[
-                                      'name' => 'test_filter_int',
-                                      'valueGTE' => 100,
-                                      'valueLTE' => 200,
-                                  ],
-                                  [
-                                      'name' => 'test_filter_dec',
-                                      'valueGTE' => 100.25,
-                                      'valueLTE' => 200.36,
-                                  ],
-                                  [
-                                      'name' => 'test_filter_str',
-                                      'value' => 'this is a string',
-                                  ],
+            'name'            => 'test_name',
+            'priceGTE'        => 100.25,
+            'priceLTE'        => 200.55,
+            'characteristics' => [
+                [
+                    'name'     => 'test_filter_int',
+                    'valueGTE' => 100,
+                    'valueLTE' => 200,
+                ],
+                [
+                    'name'     => 'test_filter_dec',
+                    'valueGTE' => 100.25,
+                    'valueLTE' => 200.36,
+                ],
+                [
+                    'name'  => 'test_filter_str',
+                    'value' => 'this is a string',
+                ],
             ],
         ];
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
-        $em->persist((new Characteristic())->setName('test_filter_int')
-            ->setSlug('test_filter_int')
-            ->setType(Characteristic::TYPE_INT)
-            ->setLabel('test_filter_label1'));
-        $em->persist((new Characteristic())->setName('test_filter_dec')
-            ->setSlug('test_filter_dec')
-            ->setType(Characteristic::TYPE_DECIMAL)
-            ->setLabel('test_filter_label2'));
-        $em->persist((new Characteristic())->setName('test_filter_str')
-            ->setSlug('test_filter_str')
-            ->setType(Characteristic::TYPE_STRING)
-            ->setLabel('test_filter_label3'));
+        $em->persist(
+            (new Characteristic())->setName('test_filter_int')
+                ->setSlug('test_filter_int')
+                ->setType(Characteristic::TYPE_INT)
+                ->setLabel('test_filter_label1')
+        );
+        $em->persist(
+            (new Characteristic())->setName('test_filter_dec')
+                ->setSlug('test_filter_dec')
+                ->setType(Characteristic::TYPE_DECIMAL)
+                ->setLabel('test_filter_label2')
+        );
+        $em->persist(
+            (new Characteristic())->setName('test_filter_str')
+                ->setSlug('test_filter_str')
+                ->setType(Characteristic::TYPE_STRING)
+                ->setLabel('test_filter_label3')
+        );
         $em->flush();
 
         $object = new CommonProductSearch();

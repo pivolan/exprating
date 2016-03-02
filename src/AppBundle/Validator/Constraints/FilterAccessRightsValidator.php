@@ -39,10 +39,16 @@ class FilterAccessRightsValidator extends ConstraintValidator
         $this->authorizationChecker;
         $status = $productsFilter->getStatus();
         if ($status == ProductFilter::STATUS_FREE) {
-            return $this->authorizationChecker->isGranted(ProductFilterVoter::VIEW_FREE, $productsFilter->getCategory());
+            return $this->authorizationChecker->isGranted(
+                ProductFilterVoter::VIEW_FREE,
+                $productsFilter->getCategory()
+            );
         }
         if ($status == ProductFilter::STATUS_WAIT) {
-            return $this->authorizationChecker->isGranted(ProductFilterVoter::VIEW_WAIT, $productsFilter->getCategory());
+            return $this->authorizationChecker->isGranted(
+                ProductFilterVoter::VIEW_WAIT,
+                $productsFilter->getCategory()
+            );
         }
         if (is_null($status)) {
             return true;

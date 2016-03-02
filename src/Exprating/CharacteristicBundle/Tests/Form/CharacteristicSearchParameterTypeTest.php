@@ -41,13 +41,18 @@ class CharacteristicSearchParameterTypeTest extends AbstractWebCaseTest
         $object = new CharacteristicSearchParameter();
         $object->setName($name);
 
-        $form = $this->client->getContainer()->get('form.factory')->create(CharacteristicSearchParameterType::class, clone $object);
+        $form = $this->client->getContainer()->get('form.factory')->create(
+            CharacteristicSearchParameterType::class,
+            clone $object
+        );
 
         // submit the data to the form directly
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());
-        $object->setValueGTE($objectData['valueGTE'])->setValueLTE($objectData['valueLTE'])->setValue($objectData['value']);
+        $object->setValueGTE($objectData['valueGTE'])->setValueLTE($objectData['valueLTE'])->setValue(
+            $objectData['value']
+        );
         $this->assertEquals($object, $form->getData());
 
         $view = $form->createView();
@@ -62,17 +67,20 @@ class CharacteristicSearchParameterTypeTest extends AbstractWebCaseTest
     {
         return [
             [
-                [self::FORM_DATA => ['name' => 'test_filter_name_int', 'valueLTE' => 100, 'valueGTE' => 50],
-                 self::OBJECT_DATA => ['valueLTE' => 100, 'valueGTE' => 50, 'value' => null],
-                 self::TYPE => Characteristic::TYPE_INT,
+                [
+                    self::FORM_DATA   => ['name' => 'test_filter_name_int', 'valueLTE' => 100, 'valueGTE' => 50],
+                    self::OBJECT_DATA => ['valueLTE' => 100, 'valueGTE' => 50, 'value' => null],
+                    self::TYPE        => Characteristic::TYPE_INT,
                 ],
-                [self::FORM_DATA => ['name' => 'test_filter_name_str', 'value' => 'olololo'],
-                 self::OBJECT_DATA => ['valueLTE' => null, 'valueGTE' => null, 'value' => 'olololo'],
-                 self::TYPE => Characteristic::TYPE_STRING,
+                [
+                    self::FORM_DATA   => ['name' => 'test_filter_name_str', 'value' => 'olololo'],
+                    self::OBJECT_DATA => ['valueLTE' => null, 'valueGTE' => null, 'value' => 'olololo'],
+                    self::TYPE        => Characteristic::TYPE_STRING,
                 ],
-                [self::FORM_DATA => ['name' => 'test_filter_name_dec', 'valueLTE' => 100.45, 'valueGTE' => 50.89],
-                 self::OBJECT_DATA => ['valueLTE' => 100.45, 'valueGTE' => 50.89, 'value' => null],
-                 self::TYPE => Characteristic::TYPE_DECIMAL,
+                [
+                    self::FORM_DATA   => ['name' => 'test_filter_name_dec', 'valueLTE' => 100.45, 'valueGTE' => 50.89],
+                    self::OBJECT_DATA => ['valueLTE' => 100.45, 'valueGTE' => 50.89, 'value' => null],
+                    self::TYPE        => Characteristic::TYPE_DECIMAL,
                 ],
             ],
         ];

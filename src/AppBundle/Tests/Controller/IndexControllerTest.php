@@ -13,7 +13,10 @@ class IndexControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
-        $this->assertContains('Каталог потребительских товаров: мнение и отзывы экспертов России', $crawler->filter('#container h1')->text());
+        $this->assertContains(
+            'Каталог потребительских товаров: мнение и отзывы экспертов России',
+            $crawler->filter('#container h1')->text()
+        );
     }
 
     public function testDetail()

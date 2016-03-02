@@ -32,9 +32,11 @@ class ModeratorCommentType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Comment::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Comment::class,
+            ]
+        );
     }
 
     public function onPostSubmit(FormEvent $event)

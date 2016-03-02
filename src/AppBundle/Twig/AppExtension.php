@@ -46,7 +46,7 @@ class AppExtension extends \Twig_Extension
         return $this->twig->render(
             'AppBundle:Extensions:breadcrumbs.html.twig',
             [
-                self::KEY_CATEGORIES => $categories,
+                self::KEY_CATEGORIES   => $categories,
                 self::KEY_PEOPLE_GROUP => $peopleGroup,
             ]
         );

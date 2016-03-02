@@ -102,13 +102,21 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $em->persist($categorySecond);
 
         //Создадим основной товар
-        $product = (new Product())->setName('original product')->setIsEnabled(true)->setSlug('originnal_product')->setMinPrice(10)->setCategory($category);
+        $product = (new Product())->setName('original product')->setIsEnabled(true)->setSlug(
+            'originnal_product'
+        )->setMinPrice(10)->setCategory($category);
         $em->persist($product);
         $em->flush();
         //Создадим 1 похожий и 2 не похожих
-        $product1 = (new Product())->setName('first similar')->setIsEnabled(true)->setSlug('first_similar')->setMinPrice(8.2)->setCategory($category);
-        $product2 = (new Product())->setName('first not similar')->setIsEnabled(true)->setSlug('first_not_similar')->setMinPrice(6)->setCategory($category);
-        $product3 = (new Product())->setName('second not similar')->setIsEnabled(true)->setSlug('second_not_similar')->setMinPrice(10)->setCategory($categorySecond);
+        $product1 = (new Product())->setName('first similar')->setIsEnabled(true)->setSlug(
+            'first_similar'
+        )->setMinPrice(8.2)->setCategory($category);
+        $product2 = (new Product())->setName('first not similar')->setIsEnabled(true)->setSlug(
+            'first_not_similar'
+        )->setMinPrice(6)->setCategory($category);
+        $product3 = (new Product())->setName('second not similar')->setIsEnabled(true)->setSlug(
+            'second_not_similar'
+        )->setMinPrice(10)->setCategory($categorySecond);
         $em->persist($product1);
         $em->persist($product2);
         $em->persist($product3);
@@ -120,9 +128,15 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $this->assertEquals('first_similar', $products[0]->getSlug());
 
         //Создадим еще 4 похожих товара
-        $product4 = (new Product())->setName('4 similar')->setIsEnabled(true)->setSlug('4_similar')->setMinPrice(8.2)->setCategory($category);
-        $product5 = (new Product())->setName('5 similar')->setIsEnabled(true)->setSlug('5_similar')->setMinPrice(11.8)->setCategory($category);
-        $product6 = (new Product())->setName('6 similar')->setIsEnabled(true)->setSlug('6_similar')->setMinPrice(10)->setCategory($category);
+        $product4 = (new Product())->setName('4 similar')->setIsEnabled(true)->setSlug('4_similar')->setMinPrice(
+            8.2
+        )->setCategory($category);
+        $product5 = (new Product())->setName('5 similar')->setIsEnabled(true)->setSlug('5_similar')->setMinPrice(
+            11.8
+        )->setCategory($category);
+        $product6 = (new Product())->setName('6 similar')->setIsEnabled(true)->setSlug('6_similar')->setMinPrice(
+            10
+        )->setCategory($category);
         $em->persist($product4);
         $em->persist($product5);
         $em->persist($product6);
@@ -281,7 +295,10 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $commonCriteria = new CommonProductSearch();
         $commonCriteria->addCharacteristics($criteria);
 
-        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery(
+            $commonCriteria,
+            $category
+        )->getResult();
         $this->assertContains($product, $products);
 
         //Проверяем что размер больше 20 и меньше 30
@@ -293,7 +310,10 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $commonCriteria = new CommonProductSearch();
         $commonCriteria->addCharacteristics($criteria);
 
-        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery(
+            $commonCriteria,
+            $category
+        )->getResult();
         $this->assertContains($product, $products);
         //Добавим условие по цене
         $commonCriteria = new CommonProductSearch();
@@ -301,7 +321,10 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             ->setPriceLTE(10000.25)
             ->addCharacteristics($criteria);
 
-        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery(
+            $commonCriteria,
+            $category
+        )->getResult();
         $this->assertContains($product, $products);
         //Не найдем
         $criteria->setValueGTE(26);
@@ -310,7 +333,10 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             ->setPriceLTE(10000.25)
             ->addCharacteristics($criteria);
 
-        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery(
+            $commonCriteria,
+            $category
+        )->getResult();
         $this->assertNotContains($product, $products);
 
         $criteria->setValueGTE(20);
@@ -318,7 +344,10 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $commonCriteria->setPriceGTE(10010)
             ->addCharacteristics($criteria);
 
-        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery(
+            $commonCriteria,
+            $category
+        )->getResult();
         $this->assertNotContains($product, $products);
 
         //Создадим товар с несколькими характеристиками, найдем его по одной характеристике, по 2м, по всем.
@@ -374,7 +403,10 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             ->addCharacteristics($criteria2)
             ->addCharacteristics($criteria3);
 
-        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
+        $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery(
+            $commonCriteria,
+            $category
+        )->getResult();
         $this->assertContains($product, $products);
     }
 }

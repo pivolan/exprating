@@ -45,10 +45,17 @@ class ProductVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::EXPERTISE, self::VIEW, self::PUBLISH, self::RESERVE,
-                                   self::MODERATE,
-                                   self::CHANGE_EXPERT,
-        ])
+        if (!in_array(
+            $attribute,
+            [
+                self::EXPERTISE,
+                self::VIEW,
+                self::PUBLISH,
+                self::RESERVE,
+                self::MODERATE,
+                self::CHANGE_EXPERT,
+            ]
+        )
         ) {
             return false;
         }
@@ -209,8 +216,10 @@ class ProductVoter extends Voter
                     return false;
                 }
                 if ($decision->getStatus() == CuratorDecision::STATUS_APPROVE) {
-                    throw new \LogicException('Во время публикации найдена ошибка. Одобренный куратором товар,
-                    не опубликован');
+                    throw new \LogicException(
+                        'Во время публикации найдена ошибка. Одобренный куратором товар,
+                    не опубликован'
+                    );
                 }
             }
 

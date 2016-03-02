@@ -45,9 +45,11 @@ class CharacteristicSearchParameterType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => CharacteristicSearchParameter::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => CharacteristicSearchParameter::class,
+            ]
+        );
     }
 
     public function onPreSetData(FormEvent $event)

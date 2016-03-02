@@ -25,8 +25,7 @@ class RatingSettingsType extends AbstractType
             ->add('rating3weight', null, ['label' => 'Вес 3-го параметра'])
             ->add('rating4label', null, ['label' => 'Описание 4-го параметра'])
             ->add('rating4weight', null, ['label' => 'Вес 4-го параметра'])
-            ->add('save', SubmitType::class, ['label' => 'Сохранить'])
-        ;
+            ->add('save', SubmitType::class, ['label' => 'Сохранить']);
     }
 
     /**
@@ -34,8 +33,10 @@ class RatingSettingsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => RatingSettings::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => RatingSettings::class,
+            ]
+        );
     }
 }

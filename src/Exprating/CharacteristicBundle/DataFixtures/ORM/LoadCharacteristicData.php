@@ -2,6 +2,8 @@
 
 namespace Exprating\CharacteristicBundle\DataFixtures\ORM;
 
+use AppBundle\DataFixtures\ORM\LoadCategoryData;
+use AppBundle\DataFixtures\ORM\LoadProductData;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use Cocur\Slugify\Slugify;
@@ -27,19 +29,51 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
 
     public function load(ObjectManager $manager)
     {
-        $keys = ['Тип пылесборника' => ['Основные характеристики', null, Characteristic::TYPE_STRING, 'контейнер'],
-                 'Тип пылесоса' => ['Основные характеристики', null, Characteristic::TYPE_STRING, 'обычный'],
-                 'Тип уборки' => ['Основные характеристики', null, Characteristic::TYPE_STRING, 'сухая'],
-                 'Потребляемая мощность' => ['Основные характеристики', 'Вт', Characteristic::TYPE_INT, 1800],
-                 'Мощность всасывания' => ['Основные характеристики', 'Вт', Characteristic::TYPE_INT, 300],
-                 'Источник питания' => ['Основные характеристики', null, Characteristic::TYPE_STRING, 'сеть'],
-                 'Дополнительные насадки' => ['Насадки', null, Characteristic::TYPE_STRING, 'пол/ковер; для твёрдого пола ProAnimal с мягкой щетиной; для мягкой мебели ProAnimal; щелевая; для мягкой мебели со съемной щеткой '],
-                 'Турбощетка в комплекте' => ['Насадки', null, Characteristic::TYPE_STRING, ' есть'],
-                 'Регулятор мощности (на корпусе)' => ['Дополнительно', null, Characteristic::TYPE_STRING, 'на корпусе'],
-                 'Фильтр тонкой очистки' => ['Дополнительно', null, Characteristic::TYPE_STRING, 'есть'],
-                 'Конструкция трубы' => ['Дополнительно', null, Characteristic::TYPE_STRING, 'телескопическая'],
-                 'Дополнительно' => ['Дополнительно', null, Characteristic::TYPE_STRING, 'автосматывание сетевого шнура, ножной переключатель вкл./выкл. на корпусе, место для хранения насадок'],
-                 'Вес' => ['Габариты', 'кг', Characteristic::TYPE_DECIMAL, 6.7],
+        $keys = [
+            'Тип пылесборника'                => [
+                'Основные характеристики',
+                null,
+                Characteristic::TYPE_STRING,
+                'контейнер',
+            ],
+            'Тип пылесоса'                    => [
+                'Основные характеристики',
+                null,
+                Characteristic::TYPE_STRING,
+                'обычный',
+            ],
+            'Тип уборки'                      => [
+                'Основные характеристики',
+                null,
+                Characteristic::TYPE_STRING,
+                'сухая',
+            ],
+            'Потребляемая мощность'           => ['Основные характеристики', 'Вт', Characteristic::TYPE_INT, 1800],
+            'Мощность всасывания'             => ['Основные характеристики', 'Вт', Characteristic::TYPE_INT, 300],
+            'Источник питания'                => ['Основные характеристики', null, Characteristic::TYPE_STRING, 'сеть'],
+            'Дополнительные насадки'          => [
+                'Насадки',
+                null,
+                Characteristic::TYPE_STRING,
+                'пол/ковер; для твёрдого пола ProAnimal с мягкой щетиной; для мягкой мебели '.
+                'ProAnimal; щелевая; для мягкой мебели со съемной щеткой ',
+            ],
+            'Турбощетка в комплекте'          => ['Насадки', null, Characteristic::TYPE_STRING, ' есть'],
+            'Регулятор мощности (на корпусе)' => ['Дополнительно', null, Characteristic::TYPE_STRING, 'на корпусе'],
+            'Фильтр тонкой очистки'           => ['Дополнительно', null, Characteristic::TYPE_STRING, 'есть'],
+            'Конструкция трубы'               => [
+                'Дополнительно',
+                null,
+                Characteristic::TYPE_STRING,
+                'телескопическая',
+            ],
+            'Дополнительно'                   => [
+                'Дополнительно',
+                null,
+                Characteristic::TYPE_STRING,
+                'автосматывание сетевого шнура, ножной переключатель вкл./выкл. на корпусе, место для хранения насадок',
+            ],
+            'Вес'                             => ['Габариты', 'кг', Characteristic::TYPE_DECIMAL, 6.7],
         ];
         /** @var Slugify $slugify */
         $slugify = $this->container->get('appbundle.slugify');
@@ -95,6 +129,6 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
      */
     public function getDependencies()
     {
-        return ['AppBundle\DataFixtures\ORM\LoadProductData', 'AppBundle\DataFixtures\ORM\LoadCategoryData'];
+        return [LoadProductData::class, LoadCategoryData::class];
     }
 }

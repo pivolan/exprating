@@ -58,14 +58,20 @@ class ProductCharacteristicTest extends \PHPUnit_Framework_TestCase
             $productCharacteristic->setValue(123456.78);
             $this->assertTrue(false, 'No exception throw');
         } catch (CharacteristicTypeException $e) {
-            $this->assertEquals($e->getMessage(), 'Для характеристики товара использован несуществующий тип значения: other');
+            $this->assertEquals(
+                $e->getMessage(),
+                'Для характеристики товара использован несуществующий тип значения: other'
+            );
         }
 
         try {
             $productCharacteristic->getValue();
             $this->assertTrue(false, 'No exception throw');
         } catch (CharacteristicTypeException $e) {
-            $this->assertEquals($e->getMessage(), 'Для характеристики товара использован несуществующий тип значения: other');
+            $this->assertEquals(
+                $e->getMessage(),
+                'Для характеристики товара использован несуществующий тип значения: other'
+            );
         }
     }
 }

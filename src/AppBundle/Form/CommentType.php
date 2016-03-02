@@ -19,8 +19,7 @@ class CommentType extends AbstractType
         $builder
             ->add('fullName', null, ['label' => 'Ваше имя'])
             ->add('message', null, ['label' => 'Отзыв'])
-            ->add('send', SubmitType::class, ['label' => 'Отправить'])
-        ;
+            ->add('send', SubmitType::class, ['label' => 'Отправить']);
     }
 
     /**
@@ -28,8 +27,10 @@ class CommentType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Comment::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Comment::class,
+            ]
+        );
     }
 }

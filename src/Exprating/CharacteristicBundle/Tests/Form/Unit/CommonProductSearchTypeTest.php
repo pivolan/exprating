@@ -17,9 +17,9 @@ class CommonProductSearchTypeTest extends TypeTestCase
     public function testSubmitValidData()
     {
         $formData = [
-            'name' => 'test_name',
-            'priceGTE' => 100.25,
-            'priceLTE' => 200.55,
+            'name'            => 'test_name',
+            'priceGTE'        => 100.25,
+            'priceLTE'        => 200.55,
             'characteristics' => new ArrayCollection(),
         ];
 

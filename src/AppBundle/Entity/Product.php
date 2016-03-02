@@ -709,8 +709,9 @@ class Product
      *
      * @return Product
      */
-    public function addProductCharacteristic(\Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic)
-    {
+    public function addProductCharacteristic(
+        \Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic
+    ) {
         $this->productCharacteristics[] = $productCharacteristic;
 
         return $this;
@@ -721,8 +722,9 @@ class Product
      *
      * @param \Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic
      */
-    public function removeProductCharacteristic(\Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic)
-    {
+    public function removeProductCharacteristic(
+        \Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic
+    ) {
         $this->productCharacteristics->removeElement($productCharacteristic);
     }
 

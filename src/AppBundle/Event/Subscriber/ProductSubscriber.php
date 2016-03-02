@@ -49,19 +49,19 @@ class ProductSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ProductEvents::RESERVATION => [['reserveProduct', 0], ['flush']],
-            ProductEvents::PUBLISH_REQUEST => [
+            ProductEvents::RESERVATION      => [['reserveProduct', 0], ['flush']],
+            ProductEvents::PUBLISH_REQUEST  => [
                 ['publishRequestProduct', 1],
                 ['notifyCurator'],
                 ['flush'],
             ],
-            ProductEvents::APPROVE => [['approveProduct', 1], ['onApproveNotifyExpert'], ['flush']],
-            ProductEvents::REJECT => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
-            ProductEvents::PUBLISH => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
-            ProductEvents::CHANGE_EXPERT => [['changeExpert', 1], ['onChangeExpertNotify'], ['flush']],
+            ProductEvents::APPROVE          => [['approveProduct', 1], ['onApproveNotifyExpert'], ['flush']],
+            ProductEvents::REJECT           => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
+            ProductEvents::PUBLISH          => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
+            ProductEvents::CHANGE_EXPERT    => [['changeExpert', 1], ['onChangeExpertNotify'], ['flush']],
             ProductEvents::RESERVATION_OVER => [['reserveOver', 0], ['onReserveOverNotifyExpert', 1], ['flush']],
-            ProductEvents::COMMENTED => [['flush']],
-            ProductEvents::DECISION => [['curatorDecision', 1]],
+            ProductEvents::COMMENTED        => [['flush']],
+            ProductEvents::DECISION         => [['curatorDecision', 1]],
         ];
     }
 
@@ -73,10 +73,11 @@ class ProductSubscriber implements EventSubscriberInterface
             ->setReservedAt(new \DateTime());
     }
 
-    public function publishRequestProduct(ProductPublishRequestEvent $event,
-                                          $eventName,
-                                          EventDispatcherInterface $dispatcher)
-    {
+    public function publishRequestProduct(
+        ProductPublishRequestEvent $event,
+        $eventName,
+        EventDispatcherInterface $dispatcher
+    ) {
         $product = $event->getProduct();
         $expert = $product->getExpertUser();
 
@@ -111,9 +112,11 @@ class ProductSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function approveProduct(ProductApproveEvent $event, $eventName,
-                                   EventDispatcherInterface $dispatcher)
-    {
+    public function approveProduct(
+        ProductApproveEvent $event,
+        $eventName,
+        EventDispatcherInterface $dispatcher
+    ) {
         $product = $event->getProduct();
 
         foreach ($product->getCuratorDecisions() as $curatorDecision) {
@@ -256,17 +259,29 @@ class ProductSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function curatorDecision(DecisionCreateEvent $event, $eventName,
-                                    EventDispatcherInterface $dispatcher)
-    {
+    public function curatorDecision(
+        DecisionCreateEvent $event,
+        $eventName,
+        EventDispatcherInterface $dispatcher
+    ) {
         /** @var CuratorDecision $decision */
         $decision = $event->getDecision();
         if ($decision->getStatus() == CuratorDecision::STATUS_APPROVE) {
-            $dispatcher->dispatch(ProductEvents::APPROVE, new ProductApproveEvent($decision->getProduct(),
-                $decision->getCurator()));
+            $dispatcher->dispatch(
+                ProductEvents::APPROVE,
+                new ProductApproveEvent(
+                    $decision->getProduct(),
+                    $decision->getCurator()
+                )
+            );
         } elseif ($decision->getStatus() == CuratorDecision::STATUS_REJECT) {
-            $dispatcher->dispatch(ProductEvents::REJECT, new ProductRejectEvent($decision->getProduct(),
-                $decision->getCurator(), $decision->getRejectReason()));
+            $dispatcher->dispatch(
+                ProductEvents::REJECT,
+                new ProductRejectEvent(
+                    $decision->getProduct(),
+                    $decision->getCurator(), $decision->getRejectReason()
+                )
+            );
         } else {
             throw new \LogicException('Invalid status for create decision about product, maybe approve or reject only');
         }

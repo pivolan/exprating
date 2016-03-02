@@ -34,9 +34,11 @@ class ProductChangeExpertType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Product::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Product::class,
+            ]
+        );
     }
 
     public function onPreSetData(FormEvent $event)

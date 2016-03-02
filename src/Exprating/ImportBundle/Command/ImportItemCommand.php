@@ -109,7 +109,9 @@ class ImportItemCommand extends ContainerAwareCommand
             //Проверяем что есть, просто по ID
             if ($item->getAliasItem()) {
                 //Если есть, смотрим по aliasCategory и обновляем категорию
-                $product = $this->em->getRepository('AppBundle:Product')->findOneBy(['slug' => $item->getAliasItem()->getItemExpratingSlug()]);
+                $product = $this->em->getRepository('AppBundle:Product')->findOneBy(
+                    ['slug' => $item->getAliasItem()->getItemExpratingSlug()]
+                );
                 if ($product) {
                     $product->setCategory($category);
                     if (!$product->getPreviewImage()) {
@@ -136,7 +138,9 @@ class ImportItemCommand extends ContainerAwareCommand
                  * Если нет, определяем по aliasCategory категорию, остальные параметры импортируем как есть.
                  * slug генерируем по имени, параметры импортируем, создаем если нет. Записываем в aliasItem соответствие
                  */
-                $product = $this->em->getRepository('AppBundle:Product')->findOneBy(['slug' => pathinfo($item->getUrl())['filename']]);
+                $product = $this->em->getRepository('AppBundle:Product')->findOneBy(
+                    ['slug' => pathinfo($item->getUrl())['filename']]
+                );
                 if ($product) {
                     $output->writeln('exists: '.$product->getSlug().$item->getId().$item->getName());
                     continue;

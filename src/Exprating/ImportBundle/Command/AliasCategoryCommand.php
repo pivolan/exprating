@@ -83,7 +83,9 @@ class AliasCategoryCommand extends ContainerAwareCommand
         //Получим все категории из экспрейтинга, последнего уровня, ставим условие через реп, что нет вложенных категорий
         $lastLevelCategories = $this->em->getRepository('AppBundle:Category')->getLastLevel();
         //Получим все категории для импорта, последнего уровня, ставим условие что есть хоть один товар, innerJoin, where AliasCategory IS NULL
-        $lastLevelCategoriesImport = $this->emImport->getRepository('ExpratingImportBundle:Categories')->getFreeLastLevel();
+        $lastLevelCategoriesImport = $this->emImport->getRepository(
+            'ExpratingImportBundle:Categories'
+        )->getFreeLastLevel();
         //будем идти по каждой категории импорта
         //проверяем что у нее нет aliasCategory, иначе пропускаем обработку
         //Формируем три переменных: Название категории, полный путь
@@ -115,10 +117,16 @@ class AliasCategoryCommand extends ContainerAwareCommand
 
                 similar_text($categoryImport->getName(), $category->getName(), $percentCategoryName);
 
-                $sumPercent = (float) $percent + $percentCategoryName + $evalTextPercent;
+                $sumPercent = (float)$percent + $percentCategoryName + $evalTextPercent;
 
                 if ($sumPercent > $prevPercent) {
-                    $matches[$categoryImport->getId()] = [$path1, $category->getSlug().' '.$path2, 0, $evalTextPercent, $percent];
+                    $matches[$categoryImport->getId()] = [
+                        $path1,
+                        $category->getSlug().' '.$path2,
+                        0,
+                        $evalTextPercent,
+                        $percent,
+                    ];
                     $peopleGroup = AliasCategory::PEOPLE_GROUP_ALL;
                     $childText = 'детей детский детское детские дети мальчиков девочек';
                     $manText = 'мужчин мужская мужское';
@@ -142,9 +150,12 @@ class AliasCategoryCommand extends ContainerAwareCommand
                 }
             }
         }
-        usort($matches, function ($a, $b) {
-            return $a[3] + $a[4] > $b[3] + $b[4];
-        });
+        usort(
+            $matches,
+            function ($a, $b) {
+                return $a[3] + $a[4] > $b[3] + $b[4];
+            }
+        );
         foreach ($matches as $percent => $row) {
             echo sprintf("%d %d %s: %s -> %s \n", $row[3], $row[4], $row[2], $row[0], $row[1]);
         }
@@ -152,7 +163,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
             $aliasCategory = new AliasCategory();
             $aliasCategory->setCategoryExpratingId($alias[1]->getSlug())
                 ->setCategoryIrecommend($alias[0])
-            ->setPeopleGroup($alias[2]);
+                ->setPeopleGroup($alias[2]);
             $this->emImport->persist($aliasCategory);
         }
         $this->emImport->flush();

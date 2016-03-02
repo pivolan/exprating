@@ -17,7 +17,7 @@ class CommentTypeTest extends TypeTestCase
     {
         $formData = [
             'fullName' => 'full name',
-            'message' => 'some message',
+            'message'  => 'some message',
         ];
         $object = new Comment();
 

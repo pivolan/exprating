@@ -196,11 +196,11 @@ class ProductCharacteristic
 
         switch ($this->getCharacteristic()->getType()) {
             case Characteristic::TYPE_STRING:
-                return (string) $this->getValueString();
+                return (string)$this->getValueString();
             case Characteristic::TYPE_INT:
-                return (string) $this->getValueInt();
+                return (string)$this->getValueInt();
             case Characteristic::TYPE_DECIMAL:
-                return (string) $this->getValueDecimal();
+                return (string)$this->getValueDecimal();
             default:
                 throw new CharacteristicTypeException($this->getCharacteristic()->getType());
         }

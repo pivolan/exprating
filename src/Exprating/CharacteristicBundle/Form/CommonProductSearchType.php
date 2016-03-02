@@ -25,10 +25,15 @@ class CommonProductSearchType extends AbstractType
             ->add('name', null, ['label' => 'Название товара'])
             ->add('priceGTE', Type\MoneyType::class, ['label' => 'Цена от', 'required' => false])
             ->add('priceLTE', Type\MoneyType::class, ['label' => 'Цена до', 'required' => false])
-            ->add('characteristics', Type\CollectionType::class, ['entry_type' => CharacteristicSearchParameterType::class,
-                                                                  'label' => false,
-                                                                  'entry_options' => ['label' => false, 'required' => false],
-            ])
+            ->add(
+                'characteristics',
+                Type\CollectionType::class,
+                [
+                    'entry_type'    => CharacteristicSearchParameterType::class,
+                    'label'         => false,
+                    'entry_options' => ['label' => false, 'required' => false],
+                ]
+            )
             ->add('Поиск', Type\SubmitType::class);
     }
 
@@ -37,8 +42,10 @@ class CommonProductSearchType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => CommonProductSearch::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => CommonProductSearch::class,
+            ]
+        );
     }
 }
