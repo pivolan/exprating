@@ -1006,8 +1006,7 @@ class Product
     {
         $entityChangeSet = $event->getEntityChangeSet();
 
-        if (
-            isset($entityChangeSet[self::RATING_1]) ||
+        if (isset($entityChangeSet[self::RATING_1]) ||
             isset($entityChangeSet[self::RATING_2]) ||
             isset($entityChangeSet[self::RATING_3]) ||
             isset($entityChangeSet[self::RATING_4])
