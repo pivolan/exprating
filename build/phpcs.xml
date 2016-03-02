@@ -142,7 +142,6 @@
        Note again that the name of the sniff is the code that
        PHP_CodeSniffer gives it.
     -->
-    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
     <rule ref="Generic.Commenting.Todo"/>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
 
