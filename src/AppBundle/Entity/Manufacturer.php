@@ -31,14 +31,16 @@ class Manufacturer
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255, unique=false, options={"comment":"имя файла картинки изготовителя"})
+     * @ORM\Column(name="image", type="string", length=255, unique=false,
+     *     options={"comment":"имя файла картинки изготовителя"})
      */
     private $image;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", options={"comment":"Описание изготовителя, видно на странице товара"})
+     * @ORM\Column(name="description", type="text",
+     *     options={"comment":"Описание изготовителя, видно на странице товара"})
      */
     private $description;
 

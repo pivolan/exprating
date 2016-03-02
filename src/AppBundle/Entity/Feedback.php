@@ -24,14 +24,16 @@ class Feedback
     /**
      * @var string
      *
-     * @ORM\Column(name="advantages", type="string", length=4000, nullable=true, options={"comment":"Достоинства товара"})
+     * @ORM\Column(name="advantages", type="string", length=4000, nullable=true,
+     *     options={"comment":"Достоинства товара"})
      */
     private $advantages;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="disadvantages", type="string", length=4000, nullable=true, options={"comment":"Недостатки товара"})
+     * @ORM\Column(name="disadvantages", type="string", length=4000, nullable=true,
+     *     options={"comment":"Недостатки товара"})
      */
     private $disadvantages;
 
@@ -59,7 +61,8 @@ class Feedback
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_published", type="boolean", options={"comment": "Опубликован ли фидбэк, или ожидает решения модератора", "default": false})
+     * @ORM\Column(name="is_published", type="boolean",
+     *     options={"comment": "Опубликован ли фидбэк, или ожидает решения модератора", "default": false})
      */
     private $isPublished = false;
 

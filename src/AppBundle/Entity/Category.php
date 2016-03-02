@@ -25,7 +25,8 @@ class Category
     /**
      * @var string
      * @ORM\Id
-     * @ORM\Column(name="slug", type="string", length=255, options={"comment":"уникальное название на латинице. Используется для ссылки"})
+     * @ORM\Column(name="slug", type="string", length=255,
+     *     options={"comment":"уникальное название на латинице. Используется для ссылки"})
      */
     private $slug;
 
@@ -37,7 +38,8 @@ class Category
 
     /**
      * @Gedmo\TreeLevel
-     * @ORM\Column(name="lvl", type="integer", options={"comment":"Уровень вложенности внутри дерева. Формируется автоматически."})
+     * @ORM\Column(name="lvl", type="integer",
+     *     options={"comment":"Уровень вложенности внутри дерева. Формируется автоматически."})
      */
     private $lvl;
 
@@ -78,8 +80,9 @@ class Category
      * @var Characteristic[]
      *
      * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic")
-     * @ORM\JoinTable(name="category_characteristic", joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug")},
-     *            inverseJoinColumns={@ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug")})
+     * @ORM\JoinTable(name="category_characteristic", joinColumns={@ORM\JoinColumn(name="category_id",
+     *     referencedColumnName="slug")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug")})
      */
     private $characteristics;
 
@@ -92,7 +95,8 @@ class Category
     /**
      * @var PeopleGroup[]
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup")
-     * @ORM\JoinTable(name="category_people_group", joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug")},
+     * @ORM\JoinTable(name="category_people_group", joinColumns={@ORM\JoinColumn(name="category_id",
+     *     referencedColumnName="slug")},
      *                    inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug")})
      */
     private $peopleGroups;

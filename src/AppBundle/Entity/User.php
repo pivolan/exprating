@@ -32,42 +32,48 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="full_name", type="string", unique=false, nullable=true, options={"comment":"Полное имя Эксперта"})
+     * @ORM\Column(name="full_name", type="string", unique=false, nullable=true,
+     *     options={"comment":"Полное имя Эксперта"})
      */
     private $fullName;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthday", type="date", nullable=true, options={"comment":"Дата рождения эксперта"})
+     * @ORM\Column(name="birthday", type="date", nullable=true,
+     *     options={"comment":"Дата рождения эксперта"})
      */
     private $birthday;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", nullable=true, options={"comment":"город. Отображается на странице эксперта"})
+     * @ORM\Column(name="city", type="string", nullable=true,
+     *     options={"comment":"город. Отображается на странице эксперта"})
      */
     private $city;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="caption", type="string", nullable=true, unique=false, options={"comment":"Подпись эксперта, показывается в списке экспертов"})
+     * @ORM\Column(name="caption", type="string", nullable=true, unique=false,
+     *     options={"comment":"Подпись эксперта, показывается в списке экспертов"})
      */
     private $caption;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="can_controlled_pre_curator", options = {"comment": "Может ли вышестоящий куратор управлять этим пользователем", "default": false})
+     * @ORM\Column(name="can_controlled_pre_curator",
+     *     options={"comment":"Может ли вышестоящий куратор управлять этим пользователем", "default": false})
      */
     private $canControlledPreCurator = false;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="avatar_image", type="string", unique=true, nullable=true, options={"comment":"Аватар картинка эксперта"})
+     * @ORM\Column(name="avatar_image", type="string", unique=true, nullable=true,
+     *     options={"comment":"Аватар картинка эксперта"})
      */
     private $avatarImage;
 
@@ -103,7 +109,8 @@ class User extends BaseUser
     /**
      * @var Category[]
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="admins")
-     * @ORM\JoinTable(name="user_admin_category", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     * @ORM\JoinTable(name="user_admin_category", joinColumns={
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *                 inverseJoinColumns={@ORM\JoinColumn(name="admin_category_id", referencedColumnName="slug")})
      */
     private $adminCategories;

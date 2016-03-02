@@ -38,14 +38,16 @@ class Comment
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_published", type="boolean", options={"default": false, "comment": "Комментарий опубликован или ожидает решения модератора"})
+     * @ORM\Column(name="is_published", type="boolean",
+     *     options={"default": false, "comment": "Комментарий опубликован или ожидает решения модератора"})
      */
     private $isPublished = false;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="published_at", type="datetime", nullable=true, options={"comment": "Дата публикации комментария"})
+     * @ORM\Column(name="published_at", type="datetime", nullable=true,
+     *     options={"comment": "Дата публикации комментария"})
      */
     private $publishedAt;
 

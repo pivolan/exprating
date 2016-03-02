@@ -80,16 +80,19 @@ class AliasCategoryCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //Получим все категории из экспрейтинга, последнего уровня, ставим условие через реп, что нет вложенных категорий
+        //Получим все категории из экспрейтинга, последнего уровня, ставим условие
+        // через реп, что нет вложенных категорий
         $lastLevelCategories = $this->em->getRepository('AppBundle:Category')->getLastLevel();
-        //Получим все категории для импорта, последнего уровня, ставим условие что есть хоть один товар, innerJoin, where AliasCategory IS NULL
+        //Получим все категории для импорта, последнего уровня, ставим условие что есть хоть
+        // один товар, innerJoin, where AliasCategory IS NULL
         $lastLevelCategoriesImport = $this->emImport->getRepository(
             'ExpratingImportBundle:Categories'
         )->getFreeLastLevel();
         //будем идти по каждой категории импорта
         //проверяем что у нее нет aliasCategory, иначе пропускаем обработку
         //Формируем три переменных: Название категории, полный путь
-        //С этими данными лезем по всем категориям из Exprating, сравниваем имена, ставим наибольший вес. Сравниваем пути, вес меньше.
+        //С этими данными лезем по всем категориям из Exprating, сравниваем имена,
+        // ставим наибольший вес. Сравниваем пути, вес меньше.
         //Категории с наибольшим совпадением записываем в aliases
 
         $aliases = [];

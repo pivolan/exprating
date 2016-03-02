@@ -7,7 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ProductShopPrice.
  *
- * @ORM\Table(name="product_shop_price", uniqueConstraints={@ORM\UniqueConstraint(name="product_shop_unique", columns={"product_id", "shop_id"})})
+ * @ORM\Table(name="product_shop_price", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="product_shop_unique", columns={"product_id", "shop_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductShopPriceRepository")
  */
 class ProductShopPrice
@@ -24,7 +25,8 @@ class ProductShopPrice
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, options={"comment":"Цена товара в этом магазине"})
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2,
+     *     options={"comment":"Цена товара в этом магазине"})
      */
     private $price;
 

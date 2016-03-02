@@ -136,7 +136,8 @@ class ImportItemCommand extends ContainerAwareCommand
             } else {
                 /*
                  * Если нет, определяем по aliasCategory категорию, остальные параметры импортируем как есть.
-                 * slug генерируем по имени, параметры импортируем, создаем если нет. Записываем в aliasItem соответствие
+                 * slug генерируем по имени, параметры импортируем, создаем если нет.
+                 *  Записываем в aliasItem соответствие
                  */
                 $product = $this->em->getRepository('AppBundle:Product')->findOneBy(
                     ['slug' => pathinfo($item->getUrl())['filename']]

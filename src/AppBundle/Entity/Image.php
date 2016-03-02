@@ -15,14 +15,16 @@ class Image
     /**
      * @var string
      * @ORM\Id
-     * @ORM\Column(name="filename", type="string", length=255, options={"comment":"Уникальное имя файла без пути"})
+     * @ORM\Column(name="filename", type="string", length=255,
+     *     options={"comment":"Уникальное имя файла без пути"})
      */
     private $filename;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="alt", type="string", length=255, nullable=true, options={"comment":"Заполнения для тега в картинке"})
+     * @ORM\Column(name="alt", type="string", length=255, nullable=true,
+     *     options={"comment":"Заполнения для тега в картинке"})
      */
     private $alt;
 
@@ -36,7 +38,8 @@ class Image
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_main", type="boolean", options={"default": 0}, options={"comment":"На странице товара эта картинка будет отображаться первой в списке"})
+     * @ORM\Column(name="is_main", type="boolean", options={"default": 0},
+     *     options={"comment":"На странице товара эта картинка будет отображаться первой в списке"})
      */
     private $isMain = false;
 

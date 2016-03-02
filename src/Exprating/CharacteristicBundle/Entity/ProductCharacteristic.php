@@ -12,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ProductCharacteristic.
  *
  * @UniqueEntity(fields={"product", "characteristic"})
- * @ORM\Table(name="product_characteristic", uniqueConstraints={@ORM\uniqueConstraint(name="product_characteristic", columns={"product_id", "characteristic_id"})})
+ * @ORM\Table(name="product_characteristic", uniqueConstraints={@ORM\uniqueConstraint(name="product_characteristic",
+ *     columns={"product_id", "characteristic_id"})})
  * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\ProductCharacteristicRepository")
  */
 class ProductCharacteristic
@@ -29,14 +30,16 @@ class ProductCharacteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="value_string", type="string", length=255, nullable=true, options={"comment":"Значение характеристики товара. Строка"})
+     * @ORM\Column(name="value_string", type="string", length=255, nullable=true,
+     *     options={"comment":"Значение характеристики товара. Строка"})
      */
     private $valueString;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="value_int", type="integer", nullable=true, options={"comment":"Значение характеристики товара. целочисленное"})
+     * @ORM\Column(name="value_int", type="integer", nullable=true,
+     *     options={"comment":"Значение характеристики товара. целочисленное"})
      * @Assert\Type(type="numeric")
      */
     private $valueInt;
@@ -44,7 +47,8 @@ class ProductCharacteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="value_decimal", type="decimal", precision=10, scale=2, nullable=true, options={"comment":"Значение характеристики товара. Цифра 0,00"})
+     * @ORM\Column(name="value_decimal", type="decimal", precision=10, scale=2, nullable=true,
+     *     options={"comment":"Значение характеристики товара. Цифра 0,00"})
      * @Assert\Type(type="numeric")
      */
     private $valueDecimal;

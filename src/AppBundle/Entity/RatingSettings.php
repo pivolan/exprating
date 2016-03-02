@@ -19,7 +19,8 @@ class RatingSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="rating1label", type="string", length=255, options={"comment":"Название оценки №1, заполняется админом категорий"})
+     * @ORM\Column(name="rating1label", type="string", length=255,
+     *     options={"comment":"Название оценки №1, заполняется админом категорий"})
      */
     private $rating1label;
 
@@ -47,7 +48,8 @@ class RatingSettings
     /**
      * @var int
      *
-     * @ORM\Column(name="rating1weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1, используется для подсчета общей оценки товара"})
+     * @ORM\Column(name="rating1weight", type="integer", nullable=true,
+     *     options={"default"=25, "comment":"Вес оценки №1, используется для подсчета общей оценки товара"})
      * @Assert\Range(min=10, max=50)
      */
     private $rating1weight = 25;
@@ -55,7 +57,8 @@ class RatingSettings
     /**
      * @var int
      *
-     * @ORM\Column(name="rating2weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №2"})
+     * @ORM\Column(name="rating2weight", type="integer", nullable=true,
+     *     options={"default"=25, "comment":"Вес оценки №2"})
      * @Assert\Range(min=10, max=50)
      */
     private $rating2weight = 25;
@@ -63,7 +66,8 @@ class RatingSettings
     /**
      * @var int
      *
-     * @ORM\Column(name="rating3weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №3"})
+     * @ORM\Column(name="rating3weight", type="integer", nullable=true,
+     *     options={"default"=25, "comment":"Вес оценки №3"})
      * @Assert\Range(min=10, max=50)
      */
     private $rating3weight = 25;
@@ -71,7 +75,8 @@ class RatingSettings
     /**
      * @var int
      *
-     * @ORM\Column(name="rating4weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №4"})
+     * @ORM\Column(name="rating4weight", type="integer", nullable=true,
+     *     options={"default"=25, "comment":"Вес оценки №4"})
      * @Assert\Range(min=10, max=50)
      */
     private $rating4weight = 25;

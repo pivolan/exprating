@@ -40,14 +40,16 @@ class Characteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="label", type="string", length=255, options={"comment":"Метка характеристики, может быть не уникальна. Для использования на странице товара."})
+     * @ORM\Column(name="label", type="string", length=255,
+     *     options={"comment":"Метка характеристики, может быть не уникальна. Для использования на странице товара."})
      */
     private $label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=false, options={"default"="string", "comment":"Тип значения, используется для поиска по характеристикам."})
+     * @ORM\Column(name="type", type="string", length=255, nullable=false,
+     *     options={"default"="string", "comment":"Тип значения, используется для поиска по характеристикам."})
      * @Assert\Choice(choices = {"string", "integer", "decimal"}, message = "Choose a valid type.")
      */
     private $type;
@@ -63,7 +65,9 @@ class Characteristic
     /**
      * @var string
      *
-     * @ORM\Column(name="head_group", type="string", length=255, nullable=true, options={"comment":"Группа к которой принадлежит характеристика. Используется при отображении характеристик на странице товара."})
+     * @ORM\Column(name="head_group", type="string", length=255, nullable=true,
+     *     options={"comment":
+     *     "Группа к которой принадлежит характеристика. Используется при отображении характеристик на странице товара."})
      */
     private $group;
 

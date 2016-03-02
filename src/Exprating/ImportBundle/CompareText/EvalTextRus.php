@@ -13,17 +13,17 @@ final class EvalTextRus
     public function preprocessRus($lim_len_symb, $text, &$arrt, &$count_t)
     {
         $text2 = mb_strtolower($text);
-        $strm = preg_replace('/[^а-я]/u', ' ', $text2);            ## print "<hr>".$strm."<hr>";  //ok
+        $strm = preg_replace('/[^а-я]/u', ' ', $text2);
         $arrt = [];
         $_wordst = preg_split('/ +/u', $strm);
         foreach ($_wordst as $ws) {
-            $lengws = mb_strlen($ws);                     ##-- print "ws=$ws*  \$lengws=$lengws<br>";  //Ok
+            $lengws = mb_strlen($ws);
             if (($ws != '') && ($lengws > $lim_len_symb)) {
-                $arrt[] = $ws;      //////////print "--------------------ws=$ws*<br>";
-            }#(lengws_res)
+                $arrt[] = $ws;
+            }
         }
         $count_t = count($arrt);
-    }//end func
+    }
 
     public function evaltextRus($str1, $str2, $limit_symbols = 2, $_delta_lett = 3, $_prob75 = 0.702)
     {
@@ -38,7 +38,6 @@ final class EvalTextRus
                 $deltalenws = abs($lengws1 - $lengws2);
                 if (preg_match("/$ws1/u", $ws2) || preg_match("/$ws2/u", $ws1)) {
                     if ($deltalenws <= $_delta_lett) {
-                        ## print "совпадение: $ws1 $ws2    <b>$deltalenws</b><br>";
                         $eq++;
                     }
                 } else {
@@ -54,22 +53,20 @@ final class EvalTextRus
                     } else {
                         $eqdelete = $lengws2;
                     }
-                    for ($j = 1; $j <= $countab1 && $j <= $countab2; $j++) {  ///////////////////////print $ab1[$j]." = ".$ab2[$j]."<br>";
+                    for ($j = 1; $j <= $countab1 && $j <= $countab2; $j++) {
                         if ($ab1[$j] != '' || $ab2[$j] != '') {
                             if ($ab1[$j] == $ab2[$j]) {
                                 $eqlet++;
-                            }  ///  print $ab1[$j]." = ".$ab2[$j]."<br>";
+                            }
                         }
-                    }#for(j=1)
-                    $reseq = $eqlet / $eqdelete;   //$countab1;
+                    }
+                    $reseq = $eqlet / $eqdelete;
                     if ($reseq > $_prob75) {
                         $eq += $reseq;
-                        ##  print "~~~~~~несовпадение-OK:~~~$ws1~~~$ws2~~~\$eqdelete=$eqdelete($lengws1,$lengws2)~~~\$eqlet=$eqlet~~~\$reseq=$reseq<br>";
                     }
-                    ///print "---несовпадение:--$ws1---$ws2---\$eqdelete=$eqdelete ($lengws1, $lengws2)----\$eqlet=$eqlet---\$reseq=$reseq<br>";
-                }//else
+                }
             }
-        }##for(for)
+        }
         $sumcount = ($count2 + $count1) / 2;
         $per = (100 * $eq) / $sumcount;
         $per = sprintf('%5.2f', $per);
@@ -79,5 +76,5 @@ final class EvalTextRus
         $out['avercount'] = $sumcount;
 
         return $per;
-    }//end func
+    }
 }
