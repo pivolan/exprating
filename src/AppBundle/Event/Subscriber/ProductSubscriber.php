@@ -279,7 +279,8 @@ class ProductSubscriber implements EventSubscriberInterface
                 ProductEvents::REJECT,
                 new ProductRejectEvent(
                     $decision->getProduct(),
-                    $decision->getCurator(), $decision->getRejectReason()
+                    $decision->getCurator(),
+                    $decision->getRejectReason()
                 )
             );
         } else {

@@ -14,7 +14,7 @@ use AppBundle\Entity\User;
  */
 class CuratorDecisionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function IsExists(Product $product)
+    public function isExists(Product $product)
     {
         $qb = $this->createQueryBuilder('a')
             ->select('count(a)')

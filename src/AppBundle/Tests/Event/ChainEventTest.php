@@ -35,12 +35,12 @@ class ChainEventTest extends AbstractWebCaseTest
         /** @var Product[] $freeProducts */
         $freeProducts = $em->getRepository('AppBundle:Product')->findByFilterQuery($filter)->getResult();
         $product = $freeProducts[0];
-        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
+        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->isExists($product));
 
         $eventDispatcher = $this->client->getContainer()->get('event_dispatcher');
         $eventDispatcher->dispatch(ProductEvents::RESERVATION, new ProductReservationEvent($product, $expert));
 
-        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
+        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->isExists($product));
         $this->assertEquals($product->getExpertUser(), $expert);
         $this->assertNotNull($product->getReservedAt());
 
@@ -50,7 +50,7 @@ class ChainEventTest extends AbstractWebCaseTest
         $decisions = $em->getRepository('AppBundle:CuratorDecision')->waitByCuratorByProduct($curator, $product)
             ->getResult();
         $this->assertCount(1, $decisions);
-        $this->assertTrue($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
+        $this->assertTrue($em->getRepository('AppBundle:CuratorDecision')->isExists($product));
         $countNew = $em->getRepository('AppBundle:CuratorDecision')->countNew($curator);
         $this->assertEquals($count + 1, $countNew);
         $eventDispatcher->dispatch(ProductEvents::APPROVE, new ProductApproveEvent($product, $curator));
@@ -76,12 +76,12 @@ class ChainEventTest extends AbstractWebCaseTest
         /** @var Product[] $freeProducts */
         $freeProducts = $em->getRepository('AppBundle:Product')->findByFilterQuery($filter)->getResult();
         $product = $freeProducts[0];
-        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
+        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->isExists($product));
 
         $eventDispatcher = $this->client->getContainer()->get('event_dispatcher');
         $eventDispatcher->dispatch(ProductEvents::RESERVATION, new ProductReservationEvent($product, $expert));
 
-        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
+        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->isExists($product));
         $this->assertEquals($product->getExpertUser(), $expert);
         $this->assertNotNull($product->getReservedAt());
 
@@ -104,12 +104,12 @@ class ChainEventTest extends AbstractWebCaseTest
         /** @var Product[] $freeProducts */
         $freeProducts = $em->getRepository('AppBundle:Product')->findByFilterQuery($filter)->getResult();
         $product = $freeProducts[0];
-        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
+        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->isExists($product));
 
         $eventDispatcher = $this->client->getContainer()->get('event_dispatcher');
         $eventDispatcher->dispatch(ProductEvents::RESERVATION, new ProductReservationEvent($product, $expert));
 
-        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
+        $this->assertFalse($em->getRepository('AppBundle:CuratorDecision')->isExists($product));
         $this->assertEquals($product->getExpertUser(), $expert);
         $this->assertNotNull($product->getReservedAt());
 
@@ -118,7 +118,7 @@ class ChainEventTest extends AbstractWebCaseTest
         $decisions = $em->getRepository('AppBundle:CuratorDecision')->waitByCuratorByProduct($curator, $product)
             ->getResult();
         $this->assertCount(1, $decisions);
-        $this->assertTrue($em->getRepository('AppBundle:CuratorDecision')->IsExists($product));
+        $this->assertTrue($em->getRepository('AppBundle:CuratorDecision')->isExists($product));
         $countNew = $em->getRepository('AppBundle:CuratorDecision')->countNew($curator);
         $this->assertEquals($count + 1, $countNew);
         $eventDispatcher->dispatch(
