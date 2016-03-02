@@ -74,7 +74,10 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
             ->getQuery()->getResult();
         $slugify = $this->slugify;
 
-        $recursiveFunction = function ($rubrics, Category $root = null) use (
+        $recursiveFunction = function (
+            $rubrics,
+            Category $root = null
+        ) use (
             &$recursiveFunction,
             $slugify,
             $entityManagerImport,

@@ -7,8 +7,6 @@
 
 namespace AppBundle\Security;
 
-namespace AppBundle\Security;
-
 use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;

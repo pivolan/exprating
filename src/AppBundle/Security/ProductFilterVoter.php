@@ -7,8 +7,6 @@
 
 namespace AppBundle\Security;
 
-namespace AppBundle\Security;
-
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

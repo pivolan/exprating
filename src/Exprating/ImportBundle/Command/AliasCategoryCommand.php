@@ -113,7 +113,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
                 }
                 $percent = 0;
                 similar_text($path1, $path2, $percent);
-                $evalTextPercent = $this->evalTextRus->evaltextRus(2, $path1, $path2);
+                $evalTextPercent = $this->evalTextRus->evaltextRus($path1, $path2);
 
                 similar_text($categoryImport->getName(), $category->getName(), $percentCategoryName);
 
@@ -131,9 +131,9 @@ class AliasCategoryCommand extends ContainerAwareCommand
                     $childText = 'детей детский детское детские дети мальчиков девочек';
                     $manText = 'мужчин мужская мужское';
                     $womanText = 'женщин женская девушек девушки';
-                    $childPercent = $this->evalTextRus->evaltextRus(3, $categoryImport->getName(), $childText);
-                    $manPercent = $this->evalTextRus->evaltextRus(3, $categoryImport->getName(), $manText);
-                    $womanPercent = $this->evalTextRus->evaltextRus(3, $categoryImport->getName(), $womanText);
+                    $childPercent = $this->evalTextRus->evaltextRus($categoryImport->getName(), $childText, 3);
+                    $manPercent = $this->evalTextRus->evaltextRus($categoryImport->getName(), $manText, 3);
+                    $womanPercent = $this->evalTextRus->evaltextRus($categoryImport->getName(), $womanText, 3);
                     $allPercent = 45;
                     if ($childPercent > $allPercent) {
                         $peopleGroup = AliasCategory::PEOPLE_GROUP_CHILD;

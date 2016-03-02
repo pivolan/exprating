@@ -82,8 +82,11 @@ class AllMigrationsTest extends CommandTestCase
     {
         $client = static::createClient();
         $output = $this->runCommand('doctrine:schema:update --dump-sql');
-        $this->assertContains('Nothing to update - your database is already in sync with the current entity metadata.',
-            $output, 'В базе после миграций есть различия со схемой из кода');
+        $this->assertContains(
+            'Nothing to update - your database is already in sync with the current entity metadata.',
+            $output,
+            'В базе после миграций есть различия со схемой из кода'
+        );
     }
 
     protected function clearTables()
@@ -93,8 +96,8 @@ class AllMigrationsTest extends CommandTestCase
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $tables = $em->getConnection()->getSchemaManager()->listTables();
         foreach ($tables as $table) {
-            $em->getConnection()->executeUpdate('DELETE FROM ' . $table->getName());
-            $em->getConnection()->executeQuery('ALTER TABLE ' . $table->getName() . ' AUTO_INCREMENT=1');
+            $em->getConnection()->executeUpdate('DELETE FROM '.$table->getName());
+            $em->getConnection()->executeQuery('ALTER TABLE '.$table->getName().' AUTO_INCREMENT=1');
         }
     }
 
@@ -109,9 +112,9 @@ class AllMigrationsTest extends CommandTestCase
     {
         $query = file_get_contents(
             __DIR__
-            . DIRECTORY_SEPARATOR .
+            .DIRECTORY_SEPARATOR.
             'Files'
-            . DIRECTORY_SEPARATOR .
+            .DIRECTORY_SEPARATOR.
             'database.sql'
         );
         $client = static::createClient();
