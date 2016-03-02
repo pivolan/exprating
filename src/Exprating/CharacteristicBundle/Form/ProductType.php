@@ -25,8 +25,7 @@ class ProductType extends AbstractType
     const SAVE_SUBMIT = 'save';
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

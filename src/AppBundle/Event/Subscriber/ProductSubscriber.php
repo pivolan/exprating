@@ -22,6 +22,11 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Class ProductSubscriber
+ * @package AppBundle\Event\Subscriber
+ * @SupressWarnings(PHPMD.UnusedFormalParameter)
+ */
 class ProductSubscriber implements EventSubscriberInterface
 {
     /**

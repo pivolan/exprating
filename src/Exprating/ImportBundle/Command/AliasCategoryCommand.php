@@ -84,6 +84,9 @@ class AliasCategoryCommand extends ContainerAwareCommand
             ->setDescription('Greet someone');
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Получим все категории из экспрейтинга, последнего уровня, ставим условие

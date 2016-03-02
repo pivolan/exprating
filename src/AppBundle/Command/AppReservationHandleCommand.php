@@ -23,6 +23,9 @@ class AppReservationHandleCommand extends ContainerAwareCommand
             ->addOption('option', null, InputOption::VALUE_NONE, 'Option description');
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var EntityManager $em */

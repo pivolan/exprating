@@ -19,6 +19,11 @@ use AppBundle\Event\ProductReservationOverEvent;
 use AppBundle\ProductFilter\ProductFilter;
 use AppBundle\Tests\AbstractWebCaseTest;
 
+/**
+ * Class ChainEventTest
+ * @package AppBundle\Tests\Event
+ * @SupressWarnings(unused)
+ */
 class ChainEventTest extends AbstractWebCaseTest
 {
     public function testPublish()

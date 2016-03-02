@@ -21,8 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductCharacteristicType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

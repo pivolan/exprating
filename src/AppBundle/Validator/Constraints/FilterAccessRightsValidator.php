@@ -33,25 +33,37 @@ class FilterAccessRightsValidator extends ConstraintValidator
      *
      * @param ProductFilter $productsFilter The value that should be validated
      * @param Constraint    $constraint     The constraint for the validation
+     *
+     * @return null
      */
     public function validate($productsFilter, Constraint $constraint)
     {
         $this->authorizationChecker;
         $status = $productsFilter->getStatus();
         if ($status == ProductFilter::STATUS_FREE) {
-            return $this->authorizationChecker->isGranted(
+            if (!$this->authorizationChecker->isGranted(
                 ProductFilterVoter::VIEW_FREE,
                 $productsFilter->getCategory()
-            );
+            )
+            ) {
+                $this->context->buildViolation($constraint->message)
+                    ->addViolation();
+            }
+            return;
         }
         if ($status == ProductFilter::STATUS_WAIT) {
-            return $this->authorizationChecker->isGranted(
+            if (!$this->authorizationChecker->isGranted(
                 ProductFilterVoter::VIEW_WAIT,
                 $productsFilter->getCategory()
-            );
+            )
+            ) {
+                $this->context->buildViolation($constraint->message)
+                    ->addViolation();
+            }
+            return;
         }
         if (is_null($status)) {
-            return true;
+            return;
         }
         throw new \LogicException('Status is invalid');
     }

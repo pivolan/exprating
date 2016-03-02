@@ -16,8 +16,7 @@ class ModeratorCommentType extends AbstractType
     const REJECT = 'reject';
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,7 +27,7 @@ class ModeratorCommentType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @inheritdoc
      */
     public function configureOptions(OptionsResolver $resolver)
     {

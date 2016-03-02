@@ -67,6 +67,9 @@ class PerfomanceItemCommand extends ContainerAwareCommand
             ->setDescription('Greet someone');
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Получаем Итем для импорта

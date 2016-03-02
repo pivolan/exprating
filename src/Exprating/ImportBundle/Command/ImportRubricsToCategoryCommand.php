@@ -70,6 +70,9 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
             ->setDescription('Greet someone');
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $entityManagerImport = $this->emImport;

@@ -16,6 +16,8 @@ use Symfony\Component\Validator\Constraint;
  */
 class FilterAccessRights extends Constraint
 {
+    public $message = 'Нет доступа';
+
     public function validatedBy()
     {
         return 'filter_access_rights';

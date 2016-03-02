@@ -41,6 +41,9 @@ class RepairCategoryCommand extends ContainerAwareCommand
             ->setDescription('Greet someone');
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var Category[] $categories */

@@ -87,6 +87,9 @@ class ImportItemCommand extends ContainerAwareCommand
             ->setDescription('Greet someone');
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->emImport->getConnection()->getConfiguration()->setSQLLogger(null);
