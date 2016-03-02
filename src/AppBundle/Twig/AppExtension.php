@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManager;
 class AppExtension extends \Twig_Extension
 {
     const KEY_CATEGORIES = 'categories';
+    const KEY_PEOPLE_GROUP = 'peopleGroup';
     /** @var  \Twig_Environment */
     protected $twig;
 
@@ -28,7 +29,7 @@ class AppExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('breadcrumbs', [$this, 'breadcrumbs'])
+            new \Twig_SimpleFunction('breadcrumbs', [$this, 'breadcrumbs']),
         ];
     }
 
@@ -37,11 +38,18 @@ class AppExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function breadcrumbs($category)
+    public function breadcrumbs($category, $peopleGroup)
     {
         /** @var Category[] $categories */
         $categories = $this->entityManager->getRepository('AppBundle:Category')->getPath($category);
-        return $this->twig->render('AppBundle:Extensions:breadcrumbs.html.twig', [self::KEY_CATEGORIES => $categories]);
+
+        return $this->twig->render(
+            'AppBundle:Extensions:breadcrumbs.html.twig',
+            [
+                self::KEY_CATEGORIES   => $categories,
+                self::KEY_PEOPLE_GROUP => $peopleGroup,
+            ]
+        );
     }
 
     /**

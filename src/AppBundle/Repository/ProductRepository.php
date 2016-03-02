@@ -56,7 +56,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             $qb->innerJoin('a.peopleGroups', 'e', 'WITH', "e.slug = :people_group")
                 ->setParameter('people_group', $productFilter->getPeopleGroup());
         }
-        $qb->orderBy('a.' . $productFilter->getFieldName(), $productFilter->getDirection());
+        $qb->orderBy('a.' . $productFilter->getSortField(), $productFilter->getSortDirection());
         return $qb->getQuery();
     }
 

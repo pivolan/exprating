@@ -20,7 +20,7 @@ class Builder implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    public function mainMenu(FactoryInterface $factory, array $options)
+    public function mainMenu(FactoryInterface $factory)
     {
         /** @var ItemInterface|ItemInterface[] $menu */
         $menu = $factory->createItem('root');
@@ -32,57 +32,51 @@ class Builder implements ContainerAwareInterface
         $entityRepository = $em->getRepository('AppBundle:Category');
         /** @var Category[] $categories */
         $categories = $entityRepository->getFirstLevel();
-        $woman = $menu->addChild('Для женщин', ['uri' => '#'])->setLinkAttribute('class', 'sf-with-ul');
-        $man = $menu->addChild('Для мужчин', ['uri' => '#'])->setLinkAttribute('class', 'sf-with-ul');
-        $child = $menu->addChild('Для детей', ['uri' => '#'])->setLinkAttribute('class', 'sf-with-ul');
-        foreach ($categories as $category) {
-            if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_WOMAN))) {
-                $woman->addChild($category->getName(), ['route'           => 'product_list_pg',
-                                                        'routeParameters' => ['slug'        => $category->getSlug(),
-                                                                              'peopleGroup' => ProductFilter::PEOPLE_GROUP_WOMAN]]);
+        $peopleGroups = [
+            PeopleGroup::SLUG_WOMAN => 'Для женщин',
+            PeopleGroup::SLUG_MAN   => 'Для мужчин',
+            PeopleGroup::SLUG_CHILD => 'Для детей',
+            PeopleGroup::SLUG_ALL   => '',
+        ];
+        foreach ($peopleGroups as $peopleGroup => $label) {
+            if (empty($label)) {
+                $menuChild = $menu;
+            } else {
+                $menuChild = $menu->addChild($peopleGroup, ['uri' => '#', 'label' => $label])->setLinkAttribute(
+                    'class',
+                    'sf-with-ul'
+                );
             }
-            if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_MAN))) {
-                $man->addChild($category->getName(), ['route'           => 'product_list_pg',
-                                                      'routeParameters' => ['slug'        => $category->getSlug(),
-                                                                            'peopleGroup' => ProductFilter::PEOPLE_GROUP_MAN]]);
-            }
-            if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_CHILD))) {
-                $child->addChild($category->getName(), ['route'           => 'product_list_pg',
-                                                        'routeParameters' => ['slug'        => $category->getSlug(),
-                                                                              'peopleGroup' => ProductFilter::PEOPLE_GROUP_CHILD]]);
-            }
-            if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_ALL))) {
-                $menu->addChild($category->getName(), ['route'           => 'product_list',
-                                                       'routeParameters' => ['slug' => $category->getSlug()]]);
-            }
-            foreach ($category->getChildren() as $childCategory) {
-                if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_WOMAN))) {
-                    $woman[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
-                    $woman[$category->getName()]->addChild(
-                        $childCategory->getName(),
-                        ['route'           => 'product_list_pg',
-                         'routeParameters' => ['slug' => $childCategory->getSlug(), 'peopleGroup' => ProductFilter::PEOPLE_GROUP_WOMAN]]);
-                }
-                if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_MAN))) {
-                    $man[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
-                    $man[$category->getName()]->addChild(
-                        $childCategory->getName(),
-                        ['route'           => 'product_list_pg',
-                         'routeParameters' => ['slug' => $childCategory->getSlug(), 'peopleGroup' => ProductFilter::PEOPLE_GROUP_MAN]]);
-                }
-                if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_CHILD))) {
-                    $child[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
-                    $child[$category->getName()]->addChild(
-                        $childCategory->getName(),
-                        ['route'           => 'product_list_pg',
-                         'routeParameters' => ['slug' => $childCategory->getSlug(), 'peopleGroup' => ProductFilter::PEOPLE_GROUP_CHILD]]);
-                }
-                if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, PeopleGroup::SLUG_ALL))) {
-                    $menu[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
-                    $menu[$category->getName()]->addChild(
-                        $childCategory->getName(),
-                        ['route'           => 'product_list',
-                         'routeParameters' => ['slug' => $childCategory->getSlug()]]);
+            foreach ($categories as $category) {
+                if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, $peopleGroup))) {
+                    $menuChild->addChild(
+                        $category->getName(),
+                        [
+                            'route'           => 'product_list',
+                            'routeParameters' => [
+                                'slug'        => $category->getSlug(),
+                                'peopleGroup' => $peopleGroup,
+                            ],
+                        ]
+                    );
+                    foreach ($category->getChildren() as $childCategory) {
+                        if ($category->getPeopleGroups()->contains(
+                            $em->getReference(PeopleGroup::class, $peopleGroup)
+                        )
+                        ) {
+                            $menuChild[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
+                            $menuChild[$category->getName()]->addChild(
+                                $childCategory->getName(),
+                                [
+                                    'route'           => 'product_list',
+                                    'routeParameters' => [
+                                        'slug'        => $childCategory->getSlug(),
+                                        'peopleGroup' => $peopleGroup,
+                                    ],
+                                ]
+                            );
+                        }
+                    }
                 }
             }
         }
@@ -90,60 +84,93 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
 
-    public function productFilterMenu(FactoryInterface $factory, array $options)
+    public function productFilterMenu(FactoryInterface $factory)
     {
         /** @var ItemInterface|ItemInterface[] $menu */
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('role', 'menu')
             ->setChildrenAttribute('class', 'dropdown-menu');
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        $slug = $request->get('slug');
-        $page = $request->get('page');
-        $direction = $request->get('sortDirection');
-        $status = $request->get('status');
-        $field = $request->get('sortField');
+        $serializer = $this->container->get('serializer');
+        /** @var ProductFilter $productFilter */
+        $productFilter = $serializer->denormalize($request->attributes->all(), ProductFilter::class, null);
+        $slug = $productFilter->getCategory()->getSlug();
+        $direction = $productFilter->getSortDirection();
+        $status = $productFilter->getStatus();
+        $sortField = $productFilter->getSortField();
+        $peopleGroup = $productFilter->getPeopleGroup();
 
-        $menu->addChild('по цене', ['route'           => 'product_list',
-                                    'routeParameters' => ['slug'          => $slug,
-                                                          'page'          => $page,
-                                                          'sortField'     => ProductFilter::FIELD_MIN_PRICE,
-                                                          'sortDirection' => $direction,
-                                                          'status'        => $status
-                                    ]]);
 
-        $menu->addChild('по дате', ['route'           => 'product_list',
-                                    'routeParameters' => ['slug'          => $slug,
-                                                          'page'          => $page,
-                                                          'sortField'     => ProductFilter::FIELD_ENABLED_AT,
-                                                          'sortDirection' => $direction,
-                                                          'status'        => $status
-                                    ]]);
+        $menu->addChild(
+            'по цене',
+            [
+                'route'           => 'product_list',
+                'routeParameters' => [
+                    'slug'          => $slug,
+                    'sortField'     => ProductFilter::FIELD_MIN_PRICE,
+                    'sortDirection' => $direction,
+                    'status'        => $status,
+                    'peopleGroup'   => $peopleGroup,
+                ],
+            ]
+        );
 
-        $menu->addChild('по рейтингу', ['route'           => 'product_list',
-                                        'routeParameters' => ['slug'          => $slug,
-                                                              'page'          => $page,
-                                                              'sortField'     => ProductFilter::FIELD_RATING,
-                                                              'sortDirection' => $direction,
-                                                              'status'        => $status
-                                        ]]);
+        $menu->addChild(
+            'по дате',
+            [
+                'route'           => 'product_list',
+                'routeParameters' => [
+                    'slug'          => $slug,
+                    'sortField'     => ProductFilter::FIELD_ENABLED_AT,
+                    'sortDirection' => $direction,
+                    'status'        => $status,
+                    'peopleGroup'   => $peopleGroup,
+                ],
+            ]
+        );
+
+        $menu->addChild(
+            'по рейтингу',
+            [
+                'route'           => 'product_list',
+                'routeParameters' => [
+                    'slug'          => $slug,
+                    'sortField'     => ProductFilter::FIELD_RATING,
+                    'sortDirection' => $direction,
+                    'status'        => $status,
+                    'peopleGroup'   => $peopleGroup,
+                ],
+            ]
+        );
         $menu->addChild('divider', ['divider' => true])->setAttribute('class', 'divider');
-        $menu->addChild('по возрастанию', ['route'           => 'product_list',
-                                           'routeParameters' => ['slug'          => $slug,
-                                                                 'page'          => $page,
-                                                                 'sortField'     => $field,
-                                                                 'sortDirection' => ProductFilter::DIRECTION_ASC,
-                                                                 'status'        => $status
-                                           ]]);
+        $menu->addChild(
+            'по возрастанию',
+            [
+                'route'           => 'product_list',
+                'routeParameters' => [
+                    'slug'          => $slug,
+                    'sortField'     => $sortField,
+                    'sortDirection' => ProductFilter::DIRECTION_ASC,
+                    'status'        => $status,
+                    'peopleGroup'   => $peopleGroup,
+                ],
+            ]
+        );
 
-        $menu->addChild('по убыванию', ['route'           => 'product_list',
-                                        'routeParameters' => ['slug'          => $slug,
-                                                              'page'          => $page,
-                                                              'sortField'     => $field,
-                                                              'sortDirection' => ProductFilter::DIRECTION_DESC,
-                                                              'status'        => $status
-                                        ]]);
+        $menu->addChild(
+            'по убыванию',
+            [
+                'route'           => 'product_list',
+                'routeParameters' => [
+                    'slug'          => $slug,
+                    'sortField'     => $sortField,
+                    'sortDirection' => ProductFilter::DIRECTION_DESC,
+                    'status'        => $status,
+                    'peopleGroup'   => $peopleGroup,
+                ],
+            ]
+        );
+
         return $menu;
     }
-
-
 }

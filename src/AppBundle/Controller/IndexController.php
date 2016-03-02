@@ -114,23 +114,16 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/rubric/{peopleGroup}/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list_pg",
-     *     requirements = {"peopleGroup": "(dlya-zhenshchin)|(dlya-muzhchin)|(dlya-detey)"},
-     *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
-     *
-     * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list",
+     * @Route("/rubric/{peopleGroup}/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list",
+     *     requirements = {"peopleGroup": "(dlya-zhenshchin)|(dlya-muzhchin)|(dlya-detey)|(dlya-vseh)"},
      *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
-    public function listAction(Request $request, $peopleGroup = ProductFilter::PEOPLE_GROUP_ALL, Category $category, $page, $sortField, $sortDirection, $status)
+    public function listAction(Request $request)
     {
-        $productFilter = new ProductFilter();
-        $productFilter->setCategory($category)
-            ->setStatus($status)
-            ->setCurator($this->getUser())
-            ->setFieldName($sortField)
-            ->setPeopleGroup($peopleGroup)
-            ->setDirection($sortDirection);
+        /** @var ProductFilter $productFilter */
+        $productFilter = $this->get('serializer')->denormalize($request->attributes->all(), ProductFilter::class);
+        $productFilter->setCurator($this->getUser());
         $validator = $this->get('validator');
         $errors = $validator->validate($productFilter);
         if (count($errors) > 0) {
@@ -142,7 +135,7 @@ class IndexController extends BaseController
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            max($page, 1),
+            max($productFilter->page, 1),
             self::LIMIT_PER_PAGE
         );
         $template = 'Product/list.html.twig';
@@ -150,7 +143,7 @@ class IndexController extends BaseController
             $template = 'Product/listPart.html.twig';
         }
         return $this->render($template, [self::KEY_PAGINATION   => $pagination,
-                                         self::KEY_CATEGORY     => $category,
+                                         self::KEY_CATEGORY     => $productFilter->getCategory(),
                                          self::KEY_SORT_PRODUCT => $productFilter]);
     }
 }

@@ -29,7 +29,7 @@ class IndexControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/rubric/elektronika/2');
+        $crawler = $client->request('GET', '/rubric/dlya-vseh/elektronika/2');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
         $this->assertContains('Электроника', $crawler->filter('.content h1')->text());
         $this->assertContains('rel="next"', $crawler->filter('ul.pagination')->html());

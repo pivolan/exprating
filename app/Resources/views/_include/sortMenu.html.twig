@@ -1,11 +1,11 @@
 <button aria-expanded="false" type="button" class="btn btn-default dropdown-toggle"
         data-toggle="dropdown"><span
-            class="glyphicon glyphicon-sort-by-attributes{{  productFilter.direction=='DESC'?'-alt':'' }}"></span>
-    {% if productFilter.fieldName == 'minPrice' %}
+            class="glyphicon glyphicon-sort-by-attributes{{  productFilter.sortDirection=='DESC'?'-alt':'' }}"></span>
+    {% if productFilter.sortField == 'minPrice' %}
         по цене
-    {% elseif productFilter.fieldName == 'enabledAt' %}
+    {% elseif productFilter.sortField == 'enabledAt' %}
         по дате
-    {% elseif productFilter.fieldName == 'rating' %}
+    {% elseif productFilter.sortField == 'rating' %}
         по рейтингу
     {% endif %}
     <span class="caret"></span></button>

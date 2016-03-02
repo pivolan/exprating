@@ -1,5 +1,4 @@
         {% block form_start_block %}{% endblock %}
-        {{ breadcrumbs(product.category)|raw }}
         {% block curator_decision %}
             {% if is_granted('MODERATE', product) %}
                 {{ render(controller('AppBundle:Curator:decisionEdit', {'slug': product.slug})) }}

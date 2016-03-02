@@ -41,7 +41,7 @@ class ProductFilter
      * @Assert\Choice(choices = {"minPrice", "enabledAt", "rating"}, message = "Выберите верный тип сортировки")
      * @Assert\NotBlank()
      */
-    protected $fieldName = self::FIELD_MIN_PRICE;
+    protected $sortField = self::FIELD_MIN_PRICE;
 
     /**
      * @var string
@@ -55,7 +55,9 @@ class ProductFilter
      * @Assert\Choice(choices = {"ASC", "DESC"}, message = "Выберите верное направление сортировки")
      * @Assert\NotBlank()
      */
-    protected $direction = self::DIRECTION_ASC;
+    protected $sortDirection = self::DIRECTION_ASC;
+
+    public $page;
 
     /**
      * @var User
@@ -82,38 +84,38 @@ class ProductFilter
     /**
      * @return mixed
      */
-    public function getDirection()
+    public function getSortDirection()
     {
-        return $this->direction;
+        return $this->sortDirection;
     }
 
     /**
-     * @param mixed $direction
+     * @param mixed $sortDirection
      *
      * @return $this
      */
-    public function setDirection($direction)
+    public function setSortDirection($sortDirection)
     {
-        $this->direction = $direction;
+        $this->sortDirection = $sortDirection;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getFieldName()
+    public function getSortField()
     {
-        return $this->fieldName;
+        return $this->sortField;
     }
 
     /**
-     * @param string $fieldName
+     * @param string $sortField
      *
      * @return $this
      */
-    public function setFieldName($fieldName)
+    public function setSortField($sortField)
     {
-        $this->fieldName = $fieldName;
+        $this->sortField = $sortField;
         return $this;
     }
 
@@ -192,6 +194,4 @@ class ProductFilter
         $this->peopleGroup = $peopleGroup;
         return $this;
     }
-
-
 } 

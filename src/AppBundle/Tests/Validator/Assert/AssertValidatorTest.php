@@ -62,8 +62,8 @@ class AssertValidatorTest extends \PHPUnit_Framework_TestCase
     {
 
         $productFilter = new ProductFilter();
-        $productFilter->setCategory($data['category'])->setStatus($data['status'])->setDirection($data['direction'])
-            ->setFieldName($data['fieldName']);
+        $productFilter->setCategory($data['category'])->setStatus($data['status'])->setSortDirection($data['direction'])
+            ->setSortField($data['fieldName']);
         $this->assertEquals($count, $this->validator->validate($productFilter)->count());
         foreach ($messages as $message) {
             $this->assertContains($message, (string)$this->validator->validate($productFilter));
