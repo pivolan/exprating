@@ -82,7 +82,8 @@ class AllMigrationsTest extends CommandTestCase
     {
         $client = static::createClient();
         $output = $this->runCommand('doctrine:schema:update --dump-sql');
-        $this->assertContains('Nothing to update - your database is already in sync with the current entity metadata.', $output, 'В базе после миграций есть различия со схемой из кода');
+        $this->assertContains('Nothing to update - your database is already in sync with the current entity metadata.',
+            $output, 'В базе после миграций есть различия со схемой из кода');
     }
 
     protected function clearTables()

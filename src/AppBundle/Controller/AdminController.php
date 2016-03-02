@@ -55,11 +55,15 @@ class AdminController extends BaseController
             $this->addFlash(self::FLASH_MESSAGE, 'Изменения успешно сохранены');
         }
 
-        return $this->render('Admin/experts.html.twig', [self::KEY_PAGINATION => $pagination,
-                                                         self::KEY_FORM => $form->createView(),
-                                                         self::KEY_PAGE => $page,
-                                                         self::KEY_USER => $user,
-        ]);
+        return $this->render(
+            'Admin/experts.html.twig',
+            [
+                self::KEY_PAGINATION => $pagination,
+                self::KEY_FORM       => $form->createView(),
+                self::KEY_PAGE       => $page,
+                self::KEY_USER       => $user,
+            ]
+        );
     }
 
     /**
@@ -114,11 +118,14 @@ class AdminController extends BaseController
             $categoryAssociate[$category->getSlug()] = $category;
         }
 
-        return $this->render('Admin/importSettings.html.twig',
-            [self::KEY_CATEGORIES => $categories,
-             self::KEY_CATEGORIES_IMPORT => $categoriesImport,
-             self::KEY_CATEGORY_ASSOCIATE => $categoryAssociate,
-            ]);
+        return $this->render(
+            'Admin/importSettings.html.twig',
+            [
+                self::KEY_CATEGORIES         => $categories,
+                self::KEY_CATEGORIES_IMPORT  => $categoriesImport,
+                self::KEY_CATEGORY_ASSOCIATE => $categoryAssociate,
+            ]
+        );
     }
 
     /**
