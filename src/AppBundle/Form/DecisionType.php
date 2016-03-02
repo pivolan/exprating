@@ -22,8 +22,7 @@ class DecisionType extends AbstractType
     const REJECT = 'reject';
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

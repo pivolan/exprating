@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class AliasCategoryCommand
  * @package Exprating\ImportBundle\Command
  *
- * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
 class AliasCategoryCommand extends ContainerAwareCommand
 {

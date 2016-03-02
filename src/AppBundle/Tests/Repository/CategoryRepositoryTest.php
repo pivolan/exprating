@@ -23,7 +23,7 @@ class CategoryRepositoryTest extends AbstractWebCaseTest
          * @var Category
          * @var Product
          */
-        list($em, $category, $category1, $category11, $product) = $this->fixture();
+        list($em, $category, $category1, $category11, $product, $product2) = $this->fixture();
 
         $children = $em->getRepository('AppBundle:Category')->getChildren($category, false, null, 'ASC', true);
         $this->assertContains($category11, $children);
@@ -31,6 +31,7 @@ class CategoryRepositoryTest extends AbstractWebCaseTest
         $this->assertContains($category, $children);
         $products = $em->getRepository('AppBundle:Category')->getProductsRecursiveQuery($category)->getResult();
         $this->assertContains($product, $products);
+        $this->assertContains($product2, $products);
     }
 
     public function testChildrenScalar()
@@ -42,7 +43,7 @@ class CategoryRepositoryTest extends AbstractWebCaseTest
          * @var Category
          * @var Product
          */
-        list($em, $category, $category1, $category11, $product) = $this->fixture();
+        list($em, $category, $category1, $category11) = $this->fixture();
         $childrenIds = $em->getRepository('AppBundle:Category')->getChildrenIds($category);
         $this->assertContains($category->getSlug(), $childrenIds);
         $this->assertContains($category1->getSlug(), $childrenIds);
@@ -68,6 +69,6 @@ class CategoryRepositoryTest extends AbstractWebCaseTest
         $em->persist($product2);
         $em->flush();
 
-        return [$em, $category, $category1, $category11, $product];
+        return [$em, $category, $category1, $category11, $product, $product2];
     }
 }

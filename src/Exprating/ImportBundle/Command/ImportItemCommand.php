@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class ImportItemCommand
  * @package Exprating\ImportBundle\Command
  *
- * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
 class ImportItemCommand extends ContainerAwareCommand
 {

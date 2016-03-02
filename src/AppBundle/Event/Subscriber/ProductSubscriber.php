@@ -25,7 +25,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class ProductSubscriber
  * @package AppBundle\Event\Subscriber
- * @SupressWarnings(PHPMD.UnusedFormalParameter)
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  */
 class ProductSubscriber implements EventSubscriberInterface
 {

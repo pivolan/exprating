@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class RepairCategoryCommand
  * @package Exprating\ImportBundle\Command
- * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
 class RepairCategoryCommand extends ContainerAwareCommand
 {

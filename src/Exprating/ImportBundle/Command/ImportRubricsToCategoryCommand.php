@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class ImportRubricsToCategoryCommand
  * @package Exprating\ImportBundle\Command
  *
- * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
 class ImportRubricsToCategoryCommand extends ContainerAwareCommand
 {

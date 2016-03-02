@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class PerfomanceItemCommand
  * @package Exprating\ImportBundle\Command
- * @SupressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
 class PerfomanceItemCommand extends ContainerAwareCommand
 {

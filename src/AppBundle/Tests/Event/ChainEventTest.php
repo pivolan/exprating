@@ -18,17 +18,24 @@ use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Event\ProductReservationOverEvent;
 use AppBundle\ProductFilter\ProductFilter;
 use AppBundle\Tests\AbstractWebCaseTest;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Class ChainEventTest
  * @package AppBundle\Tests\Event
- * @SupressWarnings(unused)
  */
 class ChainEventTest extends AbstractWebCaseTest
 {
     public function testPublish()
     {
-        list($em, $curator, $count, $product, $eventDispatcher) = $this->reserveProduct();
+        /**
+         * @var Product $product
+         * @var EventDispatcher $eventDispatcher
+         * @var EntityManager $em
+         * @var User $curator
+         */
+        list($product, $eventDispatcher, $em, $curator, $count) = $this->reserveProduct();
 
         $eventDispatcher->dispatch(ProductEvents::PUBLISH_REQUEST, new ProductPublishRequestEvent($product));
 
@@ -50,7 +57,11 @@ class ChainEventTest extends AbstractWebCaseTest
 
     public function testReserveOver()
     {
-        list($em, $curator, $count, $product, $eventDispatcher) = $this->reserveProduct();
+        /**
+         * @var Product $product
+         * @var EventDispatcher $eventDispatcher
+         */
+        list($product, $eventDispatcher) = $this->reserveProduct();
 
         $eventDispatcher->dispatch(ProductEvents::RESERVATION_OVER, new ProductReservationOverEvent($product));
         $this->assertNull($product->getExpertUser());
@@ -59,7 +70,13 @@ class ChainEventTest extends AbstractWebCaseTest
 
     public function testReject()
     {
-        list($em, $curator, $count, $product, $eventDispatcher) = $this->reserveProduct();
+        /**
+         * @var Product $product
+         * @var EventDispatcher $eventDispatcher
+         * @var EntityManager $em
+         * @var User $curator
+         */
+        list($product, $eventDispatcher, $em, $curator, $count) = $this->reserveProduct();
 
         $eventDispatcher->dispatch(ProductEvents::PUBLISH_REQUEST, new ProductPublishRequestEvent($product));
         /** @var CuratorDecision[] $decisions */
@@ -107,6 +124,6 @@ class ChainEventTest extends AbstractWebCaseTest
         $this->assertEquals($product->getExpertUser(), $expert);
         $this->assertNotNull($product->getReservedAt());
 
-        return [$em, $curator, $count, $product, $eventDispatcher];
+        return [$product, $eventDispatcher, $em, $curator, $count];
     }
 }

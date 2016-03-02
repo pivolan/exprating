@@ -8,6 +8,11 @@
 
 namespace Exprating\ImportBundle\CompareText;
 
+/**
+ * Class EvalTextRus
+ * @package Exprating\ImportBundle\CompareText
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ */
 final class EvalTextRus
 {
     public function preprocessRus($lim_len_symb, $text, &$arrt, &$count_t)
