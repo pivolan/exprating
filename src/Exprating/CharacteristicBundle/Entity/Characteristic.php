@@ -66,8 +66,8 @@ class Characteristic
      * @var string
      *
      * @ORM\Column(name="head_group", type="string", length=255, nullable=true,
-     *     options={"comment":
-     *     "Группа к которой принадлежит характеристика. Используется при отображении характеристик на странице товара."})
+     * options={"comment":
+     * "Группа к которой принадлежит характеристика. Используется при отображении характеристик на странице товара."})
      */
     private $group;
 
