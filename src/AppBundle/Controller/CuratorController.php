@@ -181,14 +181,4 @@ class CuratorController extends BaseController
             ]
         );
     }
-
-    public function _menuAction()
-    {
-        $waitItemsCount = $this->getEm()->getRepository('AppBundle:CuratorDecision')->countNew($this->getUser());
-
-        return $this->render(
-            'Curator/_menu.html.twig',
-            ['waitItemsCount' => $waitItemsCount]
-        );
-    }
 }

@@ -88,18 +88,4 @@ class ModeratorController extends BaseController
 
         return $this->render('Moderator/decision.html.twig', [self::KEY_FORM => $form, self::KEY_COMMENT => $comment]);
     }
-
-    public function _menuAction()
-    {
-        $commentCount = $this->getEm()->getRepository('AppBundle:Comment')->newCount();
-        $feedbackCount = $this->getEm()->getRepository('AppBundle:Feedback')->newCount();
-
-        return $this->render(
-            'Moderator/_menu.html.twig',
-            [
-                'commentCount'  => $commentCount,
-                'feedbackCount' => $feedbackCount,
-            ]
-        );
-    }
 }
