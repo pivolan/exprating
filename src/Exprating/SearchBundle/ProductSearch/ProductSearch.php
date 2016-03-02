@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 08.02.16
- * Time: 16:34
+ * Time: 16:34.
  */
 
 namespace Exprating\SearchBundle\ProductSearch;
-
 
 use AppBundle\Entity\Product;
 use Exprating\SearchBundle\Engine\EngineInterface as SearchEngineInterface;
@@ -30,4 +30,4 @@ class ProductSearch
     {
         return $this->searchEngine->search($searchParams->getString());
     }
-} 
+}

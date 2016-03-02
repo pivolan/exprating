@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 02.02.16
- * Time: 17:46
+ * Time: 17:46.
  */
 
 namespace AppBundle\Tests\Repository;
-
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
@@ -30,7 +30,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $em->persist($category);
         for ($i = 0; $i < 10; $i++) {
             $product = new Product();
-            $product->setName('test name ' . $i)
+            $product->setName('test name '.$i)
                 ->setSlug("test_name_$i")
                 ->setIsEnabled(true)
                 ->setRating($i)
@@ -38,7 +38,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $em->persist($product);
         }
         $product = new Product();
-        $product->setName('not in category ' . $i)
+        $product->setName('not in category '.$i)
             ->setIsEnabled(true)
             ->setSlug("not_in_category_$i");
         $em->persist($product);
@@ -102,13 +102,13 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $em->persist($categorySecond);
 
         //Создадим основной товар
-        $product = (new Product())->setName('original product')->setIsEnabled(true)->setSlug("originnal_product")->setMinPrice(10)->setCategory($category);
+        $product = (new Product())->setName('original product')->setIsEnabled(true)->setSlug('originnal_product')->setMinPrice(10)->setCategory($category);
         $em->persist($product);
         $em->flush();
         //Создадим 1 похожий и 2 не похожих
-        $product1 = (new Product())->setName('first similar')->setIsEnabled(true)->setSlug("first_similar")->setMinPrice(8.2)->setCategory($category);
-        $product2 = (new Product())->setName('first not similar')->setIsEnabled(true)->setSlug("first_not_similar")->setMinPrice(6)->setCategory($category);
-        $product3 = (new Product())->setName('second not similar')->setIsEnabled(true)->setSlug("second_not_similar")->setMinPrice(10)->setCategory($categorySecond);
+        $product1 = (new Product())->setName('first similar')->setIsEnabled(true)->setSlug('first_similar')->setMinPrice(8.2)->setCategory($category);
+        $product2 = (new Product())->setName('first not similar')->setIsEnabled(true)->setSlug('first_not_similar')->setMinPrice(6)->setCategory($category);
+        $product3 = (new Product())->setName('second not similar')->setIsEnabled(true)->setSlug('second_not_similar')->setMinPrice(10)->setCategory($categorySecond);
         $em->persist($product1);
         $em->persist($product2);
         $em->persist($product3);
@@ -120,9 +120,9 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $this->assertEquals('first_similar', $products[0]->getSlug());
 
         //Создадим еще 4 похожих товара
-        $product4 = (new Product())->setName('4 similar')->setIsEnabled(true)->setSlug("4_similar")->setMinPrice(8.2)->setCategory($category);
-        $product5 = (new Product())->setName('5 similar')->setIsEnabled(true)->setSlug("5_similar")->setMinPrice(11.8)->setCategory($category);
-        $product6 = (new Product())->setName('6 similar')->setIsEnabled(true)->setSlug("6_similar")->setMinPrice(10)->setCategory($category);
+        $product4 = (new Product())->setName('4 similar')->setIsEnabled(true)->setSlug('4_similar')->setMinPrice(8.2)->setCategory($category);
+        $product5 = (new Product())->setName('5 similar')->setIsEnabled(true)->setSlug('5_similar')->setMinPrice(11.8)->setCategory($category);
+        $product6 = (new Product())->setName('6 similar')->setIsEnabled(true)->setSlug('6_similar')->setMinPrice(10)->setCategory($category);
         $em->persist($product4);
         $em->persist($product5);
         $em->persist($product6);
@@ -146,7 +146,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $product = null;
         for ($i = 0; $i < 10; $i++) {
             $product = new Product();
-            $product->setName('test name ' . $i)
+            $product->setName('test name '.$i)
                 ->setIsEnabled(true)
                 ->setEnabledAt((new \DateTime())->modify("+$i day"))
                 ->setSlug("test_name_$i")
@@ -175,7 +175,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $product = null;
         for ($i = 0; $i < 10; $i++) {
             $product = new Product();
-            $product->setName('test name ' . $i)
+            $product->setName('test name '.$i)
                 ->setIsEnabled(true)
                 ->setEnabledAt((new \DateTime())->modify("+$i day"))
                 ->setVisitsCount(1000 - $i)
@@ -219,7 +219,7 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $product = null;
         for ($i = 0; $i < 10; $i++) {
             $product = new Product();
-            $product->setName('test name ' . $i)
+            $product->setName('test name '.$i)
                 ->setIsEnabled(false)
                 ->setSlug("test_name_$i")
                 ->setCategory($category);
@@ -377,4 +377,4 @@ class ProductRepositoryTest extends AbstractWebCaseTest
         $products = $em->getRepository('AppBundle:Product')->findByCharacteristicsQuery($commonCriteria, $category)->getResult();
         $this->assertContains($product, $products);
     }
-} 
+}

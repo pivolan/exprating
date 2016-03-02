@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 08.02.16
- * Time: 21:44
+ * Time: 21:44.
  */
 
 namespace Exprating\SearchBundle\Tests\Engine;
-
 
 use AppBundle\Entity\Product;
 use AppBundle\Tests\AbstractWebCaseTest;
@@ -22,7 +22,7 @@ class SqlEngineTest extends AbstractWebCaseTest
         foreach ($names as $name) {
             $product = (new Product())->setName($name)->setSlug($name)->setIsEnabled(true);
             $em->persist($product);
-            $product2 = (new Product())->setName($name)->setSlug($name . '-2')->setIsEnabled(false);
+            $product2 = (new Product())->setName($name)->setSlug($name.'-2')->setIsEnabled(false);
             $em->persist($product2);
         }
         $em->flush();
@@ -53,4 +53,4 @@ class SqlEngineTest extends AbstractWebCaseTest
         $this->assertEquals('Yellow boots', $products[1]->getName());
         $this->assertEquals('Именно там Русское слово с english text', $products[2]->getName());
     }
-} 
+}

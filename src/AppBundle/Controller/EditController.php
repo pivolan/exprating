@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 15.02.16
- * Time: 19:09
+ * Time: 19:09.
  */
 
 namespace AppBundle\Controller;
@@ -27,10 +28,12 @@ class EditController extends BaseController
     /**
      * @Route("/tovar/{slug}/edit", name="product_edit")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
+     *
      * @param Request $request
      * @param Product $product
      *
      * @Security("is_granted('EXPERTISE', product)")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Product $product)
@@ -60,6 +63,7 @@ class EditController extends BaseController
                 }
             }
             $this->addFlash(self::FLASH_EXPERTISE_MESSAGE, 'Изменения сохранены');
+
             return $this->redirect($request->getRequestUri());
         } elseif ($form->getErrors(true)->count()) {
             $this->addFlash(self::FLASH_EXPERTISE_ERROR_MESSAGE, 'Ошибка заполнения данных');
@@ -68,6 +72,7 @@ class EditController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $template = 'Product/editPart.html.twig';
         }
+
         return $this->render($template, [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]);
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 09.02.16
- * Time: 14:51
+ * Time: 14:51.
  */
 
 namespace Exprating\CharacteristicBundle\Form;
@@ -12,7 +13,6 @@ use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type;
@@ -46,7 +46,7 @@ class CharacteristicSearchParameterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CharacteristicSearchParameter::class
+            'data_class' => CharacteristicSearchParameter::class,
         ]);
     }
 
@@ -63,8 +63,8 @@ class CharacteristicSearchParameterType extends AbstractType
         if ($characteristic->getType() == Characteristic::TYPE_STRING) {
             $form->add('value', null, ['label' => $characteristic->getLabel()]);
         } else {
-            $form->add('valueGTE', null, ['label' => $characteristic->getLabel() . ' от'])
-                ->add('valueLTE', null, ['label' => $characteristic->getLabel() . ' до']);
+            $form->add('valueGTE', null, ['label' => $characteristic->getLabel().' от'])
+                ->add('valueLTE', null, ['label' => $characteristic->getLabel().' до']);
         }
     }
 }

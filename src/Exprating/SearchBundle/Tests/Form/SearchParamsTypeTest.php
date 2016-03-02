@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 11.02.16
- * Time: 10:36
+ * Time: 10:36.
  */
 
 namespace Exprating\SearchBundle\Tests\Form;
-
 
 use Exprating\SearchBundle\Form\SearchParamsType;
 use Exprating\SearchBundle\SearchParams\SearchParams;

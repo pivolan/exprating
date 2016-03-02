@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Date: 01.02.16
- * Time: 11:24
+ * Time: 11:24.
  */
+
 namespace AppBundle\Menu;
 
 use AppBundle\Entity\Category;
@@ -10,7 +12,6 @@ use AppBundle\Entity\PeopleGroup;
 use AppBundle\ProductFilter\ProductFilter;
 use AppBundle\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManager;
-use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -34,9 +35,9 @@ class Builder implements ContainerAwareInterface
         $categories = $entityRepository->getFirstLevel();
         $peopleGroups = [
             PeopleGroup::SLUG_WOMAN => 'Для женщин',
-            PeopleGroup::SLUG_MAN   => 'Для мужчин',
+            PeopleGroup::SLUG_MAN => 'Для мужчин',
             PeopleGroup::SLUG_CHILD => 'Для детей',
-            PeopleGroup::SLUG_ALL   => '',
+            PeopleGroup::SLUG_ALL => '',
         ];
         foreach ($peopleGroups as $peopleGroup => $label) {
             if (empty($label)) {
@@ -52,9 +53,9 @@ class Builder implements ContainerAwareInterface
                     $menuChild->addChild(
                         $category->getName(),
                         [
-                            'route'           => 'product_list',
+                            'route' => 'product_list',
                             'routeParameters' => [
-                                'slug'        => $category->getSlug(),
+                                'slug' => $category->getSlug(),
                                 'peopleGroup' => $peopleGroup,
                             ],
                         ]
@@ -68,9 +69,9 @@ class Builder implements ContainerAwareInterface
                             $menuChild[$category->getName()]->addChild(
                                 $childCategory->getName(),
                                 [
-                                    'route'           => 'product_list',
+                                    'route' => 'product_list',
                                     'routeParameters' => [
-                                        'slug'        => $childCategory->getSlug(),
+                                        'slug' => $childCategory->getSlug(),
                                         'peopleGroup' => $peopleGroup,
                                     ],
                                 ]
@@ -100,17 +101,16 @@ class Builder implements ContainerAwareInterface
         $sortField = $productFilter->getSortField();
         $peopleGroup = $productFilter->getPeopleGroup();
 
-
         $menu->addChild(
             'по цене',
             [
-                'route'           => 'product_list',
+                'route' => 'product_list',
                 'routeParameters' => [
-                    'slug'          => $slug,
-                    'sortField'     => ProductFilter::FIELD_MIN_PRICE,
+                    'slug' => $slug,
+                    'sortField' => ProductFilter::FIELD_MIN_PRICE,
                     'sortDirection' => $direction,
-                    'status'        => $status,
-                    'peopleGroup'   => $peopleGroup,
+                    'status' => $status,
+                    'peopleGroup' => $peopleGroup,
                 ],
             ]
         );
@@ -118,13 +118,13 @@ class Builder implements ContainerAwareInterface
         $menu->addChild(
             'по дате',
             [
-                'route'           => 'product_list',
+                'route' => 'product_list',
                 'routeParameters' => [
-                    'slug'          => $slug,
-                    'sortField'     => ProductFilter::FIELD_ENABLED_AT,
+                    'slug' => $slug,
+                    'sortField' => ProductFilter::FIELD_ENABLED_AT,
                     'sortDirection' => $direction,
-                    'status'        => $status,
-                    'peopleGroup'   => $peopleGroup,
+                    'status' => $status,
+                    'peopleGroup' => $peopleGroup,
                 ],
             ]
         );
@@ -132,13 +132,13 @@ class Builder implements ContainerAwareInterface
         $menu->addChild(
             'по рейтингу',
             [
-                'route'           => 'product_list',
+                'route' => 'product_list',
                 'routeParameters' => [
-                    'slug'          => $slug,
-                    'sortField'     => ProductFilter::FIELD_RATING,
+                    'slug' => $slug,
+                    'sortField' => ProductFilter::FIELD_RATING,
                     'sortDirection' => $direction,
-                    'status'        => $status,
-                    'peopleGroup'   => $peopleGroup,
+                    'status' => $status,
+                    'peopleGroup' => $peopleGroup,
                 ],
             ]
         );
@@ -146,13 +146,13 @@ class Builder implements ContainerAwareInterface
         $menu->addChild(
             'по возрастанию',
             [
-                'route'           => 'product_list',
+                'route' => 'product_list',
                 'routeParameters' => [
-                    'slug'          => $slug,
-                    'sortField'     => $sortField,
+                    'slug' => $slug,
+                    'sortField' => $sortField,
                     'sortDirection' => ProductFilter::DIRECTION_ASC,
-                    'status'        => $status,
-                    'peopleGroup'   => $peopleGroup,
+                    'status' => $status,
+                    'peopleGroup' => $peopleGroup,
                 ],
             ]
         );
@@ -160,13 +160,13 @@ class Builder implements ContainerAwareInterface
         $menu->addChild(
             'по убыванию',
             [
-                'route'           => 'product_list',
+                'route' => 'product_list',
                 'routeParameters' => [
-                    'slug'          => $slug,
-                    'sortField'     => $sortField,
+                    'slug' => $slug,
+                    'sortField' => $sortField,
                     'sortDirection' => ProductFilter::DIRECTION_DESC,
-                    'status'        => $status,
-                    'peopleGroup'   => $peopleGroup,
+                    'status' => $status,
+                    'peopleGroup' => $peopleGroup,
                 ],
             ]
         );

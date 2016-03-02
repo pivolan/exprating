@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 09.02.16
- * Time: 14:51
+ * Time: 14:51.
  */
 
 namespace Exprating\CharacteristicBundle\CharacteristicSearchParam;
@@ -21,13 +22,15 @@ class CommonProductSearch
      */
     protected $name;
     /**
-     * price less than ot equal
+     * price less than ot equal.
+     *
      * @var float
      * @Assert\Type(type="numeric")
      */
     protected $priceLTE;
     /**
-     * price bigger than or equal
+     * price bigger than or equal.
+     *
      * @var float
      * @Assert\Type(type="numeric")
      */
@@ -62,6 +65,7 @@ class CommonProductSearch
     public function addCharacteristics(CharacteristicSearchParameter $characteristic)
     {
         $this->characteristics[] = $characteristic;
+
         return $this;
     }
 
@@ -87,6 +91,7 @@ class CommonProductSearch
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -104,6 +109,7 @@ class CommonProductSearch
     public function setPriceGTE($priceGTE)
     {
         $this->priceGTE = $priceGTE;
+
         return $this;
     }
 
@@ -121,6 +127,7 @@ class CommonProductSearch
     public function setPriceLTE($priceLTE)
     {
         $this->priceLTE = $priceLTE;
+
         return $this;
     }
 }

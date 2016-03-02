@@ -19,5 +19,4 @@ class ModerationControllerControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/cabinet/moderate/product/{slug}');
     }
-
 }

@@ -7,7 +7,8 @@ use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Category
+ * Category.
+ *
  * @Gedmo\Tree(type="nested")
  *
  * @ORM\Table(name="category")
@@ -15,7 +16,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Category
 {
-
     /**
      * @var string
      * @ORM\Column(name="name", type="string", length=255, unique=false, options={"comment":"Название категории"})
@@ -28,7 +28,6 @@ class Category
      * @ORM\Column(name="slug", type="string", length=255, options={"comment":"уникальное название на латинице. Используется для ссылки"})
      */
     private $slug;
-
 
     /**
      * @Gedmo\TreeLeft
@@ -94,7 +93,7 @@ class Category
      * @var PeopleGroup[]
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup")
      * @ORM\JoinTable(name="category_people_group", joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug")},
-     *            inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug")})
+     *                    inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug")})
      */
     private $peopleGroups;
 
@@ -104,7 +103,7 @@ class Category
     private $products;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -121,6 +120,7 @@ class Category
     public function setParent(Category $parent = null)
     {
         $this->parent = $parent;
+
         return $this;
     }
 
@@ -130,7 +130,7 @@ class Category
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -144,7 +144,7 @@ class Category
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -154,7 +154,7 @@ class Category
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -168,7 +168,7 @@ class Category
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -178,9 +178,9 @@ class Category
     }
 
     /**
-     * Set lft
+     * Set lft.
      *
-     * @param integer $lft
+     * @param int $lft
      *
      * @return Category
      */
@@ -192,9 +192,9 @@ class Category
     }
 
     /**
-     * Get lft
+     * Get lft.
      *
-     * @return integer
+     * @return int
      */
     public function getLft()
     {
@@ -202,9 +202,9 @@ class Category
     }
 
     /**
-     * Set lvl
+     * Set lvl.
      *
-     * @param integer $lvl
+     * @param int $lvl
      *
      * @return Category
      */
@@ -216,9 +216,9 @@ class Category
     }
 
     /**
-     * Get lvl
+     * Get lvl.
      *
-     * @return integer
+     * @return int
      */
     public function getLvl()
     {
@@ -226,9 +226,9 @@ class Category
     }
 
     /**
-     * Set rgt
+     * Set rgt.
      *
-     * @param integer $rgt
+     * @param int $rgt
      *
      * @return Category
      */
@@ -240,9 +240,9 @@ class Category
     }
 
     /**
-     * Get rgt
+     * Get rgt.
      *
-     * @return integer
+     * @return int
      */
     public function getRgt()
     {
@@ -250,7 +250,7 @@ class Category
     }
 
     /**
-     * Set root
+     * Set root.
      *
      * @param \AppBundle\Entity\Category $root
      *
@@ -264,7 +264,7 @@ class Category
     }
 
     /**
-     * Add child
+     * Add child.
      *
      * @param \AppBundle\Entity\Category $child
      *
@@ -278,7 +278,7 @@ class Category
     }
 
     /**
-     * Remove child
+     * Remove child.
      *
      * @param \AppBundle\Entity\Category $child
      */
@@ -288,7 +288,7 @@ class Category
     }
 
     /**
-     * Get children
+     * Get children.
      *
      * @return \Doctrine\Common\Collections\Collection|self[]
      */
@@ -303,7 +303,7 @@ class Category
     }
 
     /**
-     * Add characteristic
+     * Add characteristic.
      *
      * @param \Exprating\CharacteristicBundle\Entity\Characteristic $characteristic
      *
@@ -317,7 +317,7 @@ class Category
     }
 
     /**
-     * Remove characteristic
+     * Remove characteristic.
      *
      * @param \Exprating\CharacteristicBundle\Entity\Characteristic $characteristic
      */
@@ -327,7 +327,7 @@ class Category
     }
 
     /**
-     * Get characteristics
+     * Get characteristics.
      *
      * @return \Doctrine\Common\Collections\Collection | Characteristic[]
      */
@@ -337,7 +337,7 @@ class Category
     }
 
     /**
-     * Set ratingSettings
+     * Set ratingSettings.
      *
      * @param \AppBundle\Entity\RatingSettings $ratingSettings
      *
@@ -351,7 +351,7 @@ class Category
     }
 
     /**
-     * Get ratingSettings
+     * Get ratingSettings.
      *
      * @return \AppBundle\Entity\RatingSettings
      */
@@ -361,7 +361,7 @@ class Category
     }
 
     /**
-     * Add admin
+     * Add admin.
      *
      * @param \AppBundle\Entity\User $admin
      *
@@ -375,7 +375,7 @@ class Category
     }
 
     /**
-     * Remove admin
+     * Remove admin.
      *
      * @param \AppBundle\Entity\User $admin
      */
@@ -385,7 +385,7 @@ class Category
     }
 
     /**
-     * Get admins
+     * Get admins.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -395,7 +395,7 @@ class Category
     }
 
     /**
-     * Add peopleGroup
+     * Add peopleGroup.
      *
      * @param \AppBundle\Entity\PeopleGroup $peopleGroup
      *
@@ -409,7 +409,7 @@ class Category
     }
 
     /**
-     * Remove peopleGroup
+     * Remove peopleGroup.
      *
      * @param \AppBundle\Entity\PeopleGroup $peopleGroup
      */
@@ -419,7 +419,7 @@ class Category
     }
 
     /**
-     * Get peopleGroups
+     * Get peopleGroups.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -429,7 +429,7 @@ class Category
     }
 
     /**
-     * Add product
+     * Add product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -443,7 +443,7 @@ class Category
     }
 
     /**
-     * Remove product
+     * Remove product.
      *
      * @param \AppBundle\Entity\Product $product
      */
@@ -453,7 +453,7 @@ class Category
     }
 
     /**
-     * Get products
+     * Get products.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AcmeAssert;
 
 /**
- * ratingSettings
+ * ratingSettings.
  *
  * @ORM\Table(name="rating_settings")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ratingSettingsRepository")
@@ -50,7 +50,7 @@ class RatingSettings
      * @ORM\Column(name="rating1weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №1, используется для подсчета общей оценки товара"})
      * @Assert\Range(min=10, max=50)
      */
-    private $rating1weight=25;
+    private $rating1weight = 25;
 
     /**
      * @var int
@@ -58,7 +58,7 @@ class RatingSettings
      * @ORM\Column(name="rating2weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №2"})
      * @Assert\Range(min=10, max=50)
      */
-    private $rating2weight=25;
+    private $rating2weight = 25;
 
     /**
      * @var int
@@ -66,7 +66,7 @@ class RatingSettings
      * @ORM\Column(name="rating3weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №3"})
      * @Assert\Range(min=10, max=50)
      */
-    private $rating3weight=25;
+    private $rating3weight = 25;
 
     /**
      * @var int
@@ -74,7 +74,7 @@ class RatingSettings
      * @ORM\Column(name="rating4weight", type="integer", nullable=true, options={"default"=25, "comment":"Вес оценки №4"})
      * @Assert\Range(min=10, max=50)
      */
-    private $rating4weight=25;
+    private $rating4weight = 25;
 
     /**
      * @var Category
@@ -86,7 +86,7 @@ class RatingSettings
     private $category;
 
     /**
-     * Set rating1
+     * Set rating1.
      *
      * @param string $rating1
      *
@@ -100,7 +100,7 @@ class RatingSettings
     }
 
     /**
-     * Get rating1
+     * Get rating1.
      *
      * @return string
      */
@@ -110,7 +110,7 @@ class RatingSettings
     }
 
     /**
-     * Set rating2
+     * Set rating2.
      *
      * @param string $rating2
      *
@@ -124,7 +124,7 @@ class RatingSettings
     }
 
     /**
-     * Get rating2
+     * Get rating2.
      *
      * @return string
      */
@@ -134,7 +134,7 @@ class RatingSettings
     }
 
     /**
-     * Set rating3
+     * Set rating3.
      *
      * @param string $rating3
      *
@@ -148,7 +148,7 @@ class RatingSettings
     }
 
     /**
-     * Get rating3
+     * Get rating3.
      *
      * @return string
      */
@@ -158,7 +158,7 @@ class RatingSettings
     }
 
     /**
-     * Set rating4
+     * Set rating4.
      *
      * @param string $rating4
      *
@@ -172,7 +172,7 @@ class RatingSettings
     }
 
     /**
-     * Get rating4
+     * Get rating4.
      *
      * @return string
      */
@@ -182,7 +182,7 @@ class RatingSettings
     }
 
     /**
-     * Set category
+     * Set category.
      *
      * @param \AppBundle\Entity\Category $category
      *
@@ -196,7 +196,7 @@ class RatingSettings
     }
 
     /**
-     * Get category
+     * Get category.
      *
      * @return \AppBundle\Entity\Category
      */
@@ -207,13 +207,13 @@ class RatingSettings
 
     public function __toString()
     {
-        return $this->getCategory()->getName() . ' label';
+        return $this->getCategory()->getName().' label';
     }
 
     /**
-     * Set rating1weight
+     * Set rating1weight.
      *
-     * @param integer $rating1weight
+     * @param int $rating1weight
      *
      * @return RatingSettings
      */
@@ -225,9 +225,9 @@ class RatingSettings
     }
 
     /**
-     * Get rating1weight
+     * Get rating1weight.
      *
-     * @return integer
+     * @return int
      */
     public function getRating1weight()
     {
@@ -235,9 +235,9 @@ class RatingSettings
     }
 
     /**
-     * Set rating2weight
+     * Set rating2weight.
      *
-     * @param integer $rating2weight
+     * @param int $rating2weight
      *
      * @return RatingSettings
      */
@@ -249,9 +249,9 @@ class RatingSettings
     }
 
     /**
-     * Get rating2weight
+     * Get rating2weight.
      *
-     * @return integer
+     * @return int
      */
     public function getRating2weight()
     {
@@ -259,9 +259,9 @@ class RatingSettings
     }
 
     /**
-     * Set rating3weight
+     * Set rating3weight.
      *
-     * @param integer $rating3weight
+     * @param int $rating3weight
      *
      * @return RatingSettings
      */
@@ -273,9 +273,9 @@ class RatingSettings
     }
 
     /**
-     * Get rating3weight
+     * Get rating3weight.
      *
-     * @return integer
+     * @return int
      */
     public function getRating3weight()
     {
@@ -283,9 +283,9 @@ class RatingSettings
     }
 
     /**
-     * Set rating4weight
+     * Set rating4weight.
      *
-     * @param integer $rating4weight
+     * @param int $rating4weight
      *
      * @return RatingSettings
      */
@@ -297,9 +297,9 @@ class RatingSettings
     }
 
     /**
-     * Get rating4weight
+     * Get rating4weight.
      *
-     * @return integer
+     * @return int
      */
     public function getRating4weight()
     {

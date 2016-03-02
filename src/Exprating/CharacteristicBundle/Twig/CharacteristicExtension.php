@@ -1,13 +1,12 @@
 <?php
+
 /**
  * Date: 04.02.16
- * Time: 18:07
+ * Time: 18:07.
  */
 
 namespace Exprating\CharacteristicBundle\Twig;
 
-
-use AppBundle\Entity\Product;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 
 class CharacteristicExtension extends \Twig_Extension
@@ -23,7 +22,7 @@ class CharacteristicExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('productCharacteristics', [$this, 'productCharacteristics'])
+            new \Twig_SimpleFunction('productCharacteristics', [$this, 'productCharacteristics']),
         ];
     }
 
@@ -39,7 +38,7 @@ class CharacteristicExtension extends \Twig_Extension
             $characteristic = $productCharacteristic->getCharacteristic();
             $result[$characteristic->getGroup()][] = [$characteristic->getLabel(),
                                                       $productCharacteristic->getValue(),
-                                                      $characteristic->getScale()];
+                                                      $characteristic->getScale(), ];
         }
 
         return $this->twig->render('CharacteristicBundle:Extensions:productCharacteristics.html.twig',

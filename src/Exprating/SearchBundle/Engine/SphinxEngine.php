@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 08.02.16
- * Time: 16:41
+ * Time: 16:41.
  */
 
 namespace Exprating\SearchBundle\Engine;
-
 
 use AppBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;

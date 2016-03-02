@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 20.02.16
- * Time: 1:36
+ * Time: 1:36.
  */
 
 namespace AppBundle\Controller;
-
 
 use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\Product;
@@ -14,15 +14,14 @@ use AppBundle\Event\ProductChangeExpertEvent;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Form\DecisionType;
 use AppBundle\Form\ProductChangeExpertType;
-use AppBundle\ProductFilter\ProductFilter;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * Class CuratorController
- * @package AppBundle\Controller
+ * Class CuratorController.
+ *
  * @Security("is_granted('ROLE_EXPERT_CURATOR')")
  */
 class CuratorController extends BaseController
@@ -46,6 +45,7 @@ class CuratorController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $template = 'Curator/wait_listPart.html.twig';
         }
+
         return $this->render($template, [self::KEY_PAGINATION => $pagination]);
     }
 
@@ -56,6 +56,7 @@ class CuratorController extends BaseController
      * @Route("/curator/decision/{slug}", name="curator_decision")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      * @Security("is_granted('MODERATE', product)")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function decisionEditAction(Request $request, Product $product)
@@ -76,8 +77,10 @@ class CuratorController extends BaseController
             } else {
                 $this->addFlash(self::FLASH_DECISION_INFO, 'Обзор отклонен');
             }
+
             return $this->redirectToRoute('product_detail', ['slug' => $product->getSlug()]);
         }
+
         return $this->render('Curator/decision_form.html.twig', [self::KEY_FORM => $form->createView()]);
     }
 
@@ -88,6 +91,7 @@ class CuratorController extends BaseController
      * @Route("/change_expert/{slug}", name="curator_product_change_expert")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      * @Security("is_granted('CHANGE_EXPERT', product)")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function changeProductExpertAction(Request $request, Product $product)
@@ -107,6 +111,7 @@ class CuratorController extends BaseController
                     )
                 );
             $this->addFlash(self::FLASH_MESSAGE, 'Изменения сохранены');
+
             return $this->redirect($request->getRequestUri());
         } elseif ($form->getErrors(true)->count()) {
             $this->addFlash(self::FLASH_ERROR_MESSAGE, 'Ошибка заполнения данных');
@@ -115,6 +120,7 @@ class CuratorController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $template = 'Product/editChangeExpertPart.html.twig';
         }
+
         return $this->render($template, [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]);
     }
 
@@ -137,7 +143,7 @@ class CuratorController extends BaseController
         );
 
         return $this->render('Curator/experts.html.twig', [self::KEY_PAGINATION => $pagination,
-                                                           self::KEY_LEVEL      => $level]);
+                                                           self::KEY_LEVEL => $level, ]);
     }
 
     /**
@@ -155,9 +161,9 @@ class CuratorController extends BaseController
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
+
         return $this->render('Curator/decisions.html.twig',
-            [self::KEY_PAGINATION => $pagination, self::KEY_PAGE => $page, self::KEY_USER => $this->getUser()
-             , self::KEY_PRODUCT  => $product]);
+            [self::KEY_PAGINATION => $pagination, self::KEY_PAGE => $page, self::KEY_USER => $this->getUser(), self::KEY_PRODUCT => $product]);
     }
 
     public function _menuAction()

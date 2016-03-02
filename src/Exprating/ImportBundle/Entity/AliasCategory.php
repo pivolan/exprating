@@ -5,7 +5,7 @@ namespace Exprating\ImportBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AliasCategory
+ * AliasCategory.
  *
  * @ORM\Table(name="alias_category")
  * @ORM\Entity(repositoryClass="Exprating\ImportBundle\Repository\AliasCategoryRepository")
@@ -40,9 +40,8 @@ class AliasCategory
      */
     private $peopleGroup = self::PEOPLE_GROUP_ALL;
 
-
     /**
-     * Set categoryIrecommend
+     * Set categoryIrecommend.
      *
      * @param string $categoryIrecommend
      *
@@ -56,7 +55,7 @@ class AliasCategory
     }
 
     /**
-     * Get categoryIrecommend
+     * Get categoryIrecommend.
      *
      * @return string
      */
@@ -79,6 +78,7 @@ class AliasCategory
     public function setCategoryExpratingId($categoryExpratingId)
     {
         $this->categoryExpratingId = $categoryExpratingId;
+
         return $this;
     }
 
@@ -98,6 +98,7 @@ class AliasCategory
     public function setPeopleGroup($peopleGroup)
     {
         $this->peopleGroup = $peopleGroup;
+
         return $this;
     }
 }

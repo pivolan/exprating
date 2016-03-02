@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PeopleGroup
+ * PeopleGroup.
  *
  * @ORM\Table(name="people_group")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PeopleGroupRepository")
@@ -33,7 +33,7 @@ class PeopleGroup
     private $slug;
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -47,7 +47,7 @@ class PeopleGroup
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -57,7 +57,7 @@ class PeopleGroup
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -71,7 +71,7 @@ class PeopleGroup
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */

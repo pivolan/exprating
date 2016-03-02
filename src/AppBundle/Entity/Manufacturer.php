@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Manufacturer
+ * Manufacturer.
  *
  * @ORM\Table(name="manufacturer")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ManufacturerRepository")
@@ -51,7 +51,6 @@ class Manufacturer
 
     /**
      * @var Product[]
-     *
      * @var @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="manufacturer")
      */
     private $products;
@@ -61,9 +60,8 @@ class Manufacturer
         $this->createdAt = new \DateTime();
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -73,7 +71,7 @@ class Manufacturer
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -87,7 +85,7 @@ class Manufacturer
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -97,7 +95,7 @@ class Manufacturer
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -111,7 +109,7 @@ class Manufacturer
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -121,7 +119,7 @@ class Manufacturer
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -135,7 +133,7 @@ class Manufacturer
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -150,7 +148,7 @@ class Manufacturer
     }
 
     /**
-     * Set image
+     * Set image.
      *
      * @param string $image
      *
@@ -164,7 +162,7 @@ class Manufacturer
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return string
      */
@@ -174,7 +172,7 @@ class Manufacturer
     }
 
     /**
-     * Add product
+     * Add product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -188,7 +186,7 @@ class Manufacturer
     }
 
     /**
-     * Remove product
+     * Remove product.
      *
      * @param \AppBundle\Entity\Product $product
      */
@@ -198,7 +196,7 @@ class Manufacturer
     }
 
     /**
-     * Get products
+     * Get products.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

@@ -3,8 +3,6 @@
 namespace Exprating\SearchBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,8 +25,8 @@ class SearchParamsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'      => 'Exprating\SearchBundle\SearchParams\SearchParams',
-            'csrf_protection' => false
+            'data_class' => 'Exprating\SearchBundle\SearchParams\SearchParams',
+            'csrf_protection' => false,
         ]);
     }
 }

@@ -19,5 +19,4 @@ class PermissionsEditControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/cabinet/admin/user-edit/{username}');
     }
-
 }

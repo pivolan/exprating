@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 04.02.16
- * Time: 12:50
+ * Time: 12:50.
  */
 
 namespace Exprating\CharacteristicBundle\Tests\Entity;
-
 
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
@@ -68,4 +68,4 @@ class ProductCharacteristicTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($e->getMessage(), 'Для характеристики товара использован несуществующий тип значения: other');
         }
     }
-} 
+}

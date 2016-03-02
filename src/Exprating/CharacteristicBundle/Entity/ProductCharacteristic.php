@@ -9,7 +9,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * ProductCharacteristic
+ * ProductCharacteristic.
+ *
  * @UniqueEntity(fields={"product", "characteristic"})
  * @ORM\Table(name="product_characteristic", uniqueConstraints={@ORM\uniqueConstraint(name="product_characteristic", columns={"product_id", "characteristic_id"})})
  * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\ProductCharacteristicRepository")
@@ -53,7 +54,6 @@ class ProductCharacteristic
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="productCharacteristics")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     *
      */
     private $product;
 
@@ -62,13 +62,11 @@ class ProductCharacteristic
      *
      * @ORM\ManyToOne(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic", fetch="EAGER")
      * @ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug")
-     *
      */
     private $characteristic;
 
-
     /**
-     * Set value
+     * Set value.
      *
      * @param string $value
      *
@@ -82,7 +80,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Get value
+     * Get value.
      *
      * @return string
      */
@@ -92,9 +90,9 @@ class ProductCharacteristic
     }
 
     /**
-     * Set valueInt
+     * Set valueInt.
      *
-     * @param integer $valueInt
+     * @param int $valueInt
      *
      * @return ProductCharacteristic
      */
@@ -106,7 +104,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Get valueInt
+     * Get valueInt.
      *
      * @return int
      */
@@ -116,7 +114,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Set valueDecimal
+     * Set valueDecimal.
      *
      * @param string $valueDecimal
      *
@@ -130,7 +128,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Get valueDecimal
+     * Get valueDecimal.
      *
      * @return string
      */
@@ -140,7 +138,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Set product
+     * Set product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -154,7 +152,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Get product
+     * Get product.
      *
      * @return \AppBundle\Entity\Product
      */
@@ -164,7 +162,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Set characteristic
+     * Set characteristic.
      *
      * @param \Exprating\CharacteristicBundle\Entity\Characteristic $characteristic
      *
@@ -178,7 +176,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Get characteristic
+     * Get characteristic.
      *
      * @return \Exprating\CharacteristicBundle\Entity\Characteristic
      */
@@ -192,17 +190,17 @@ class ProductCharacteristic
      */
     public function getValue()
     {
-        if(empty($this->getCharacteristic())){
+        if (empty($this->getCharacteristic())) {
             return $this->getValueString();
         }
 
         switch ($this->getCharacteristic()->getType()) {
             case Characteristic::TYPE_STRING:
-                return (string)$this->getValueString();
+                return (string) $this->getValueString();
             case Characteristic::TYPE_INT:
-                return (string)$this->getValueInt();
+                return (string) $this->getValueInt();
             case Characteristic::TYPE_DECIMAL:
-                return (string)$this->getValueDecimal();
+                return (string) $this->getValueDecimal();
             default:
                 throw new CharacteristicTypeException($this->getCharacteristic()->getType());
         }
@@ -213,8 +211,9 @@ class ProductCharacteristic
      */
     public function setValue($value)
     {
-        if(empty($this->getCharacteristic())){
+        if (empty($this->getCharacteristic())) {
             $this->setValueString($value);
+
             return $this;
         }
         switch ($this->getCharacteristic()->getType()) {
@@ -230,11 +229,12 @@ class ProductCharacteristic
             default:
                 throw new CharacteristicTypeException($this->getCharacteristic()->getType());
         }
+
         return $this;
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param string $id
      *
@@ -248,7 +248,7 @@ class ProductCharacteristic
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return string
      */

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 11.02.16
- * Time: 10:40
+ * Time: 10:40.
  */
 
 namespace Exprating\CharacteristicBundle\Tests\Form\Unit;
@@ -16,10 +17,10 @@ class CommonProductSearchTypeTest extends TypeTestCase
     public function testSubmitValidData()
     {
         $formData = [
-            'name'            => 'test_name',
-            'priceGTE'        => 100.25,
-            'priceLTE'        => 200.55,
-            'characteristics' => new ArrayCollection()
+            'name' => 'test_name',
+            'priceGTE' => 100.25,
+            'priceLTE' => 200.55,
+            'characteristics' => new ArrayCollection(),
         ];
 
         $form = $this->factory->create(CommonProductSearchType::class);

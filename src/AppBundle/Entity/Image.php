@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Image
+ * Image.
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
@@ -47,14 +47,12 @@ class Image
      */
     private $createdAt;
 
-
     /**
      * @var User
      *
      * /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="images")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     *
      */
     private $product;
 
@@ -64,7 +62,7 @@ class Image
     }
 
     /**
-     * Set filename
+     * Set filename.
      *
      * @param string $filename
      *
@@ -78,7 +76,7 @@ class Image
     }
 
     /**
-     * Get filename
+     * Get filename.
      *
      * @return string
      */
@@ -88,7 +86,7 @@ class Image
     }
 
     /**
-     * Set alt
+     * Set alt.
      *
      * @param string $alt
      *
@@ -102,7 +100,7 @@ class Image
     }
 
     /**
-     * Get alt
+     * Get alt.
      *
      * @return string
      */
@@ -112,7 +110,7 @@ class Image
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -126,7 +124,7 @@ class Image
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -136,7 +134,7 @@ class Image
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -150,7 +148,7 @@ class Image
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -160,7 +158,7 @@ class Image
     }
 
     /**
-     * Set product
+     * Set product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -174,7 +172,7 @@ class Image
     }
 
     /**
-     * Get product
+     * Get product.
      *
      * @return \AppBundle\Entity\Product
      */
@@ -184,13 +182,14 @@ class Image
     }
 
     /**
-     * @param boolean $isMain
+     * @param bool $isMain
      *
      * @return $this
      */
     public function setIsMain($isMain)
     {
         $this->isMain = $isMain;
+
         return $this;
     }
 
@@ -200,9 +199,9 @@ class Image
     }
 
     /**
-     * Get isMain
+     * Get isMain.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsMain()
     {

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 20.02.16
- * Time: 13:32
+ * Time: 13:32.
  */
 
 namespace AppBundle\Event;
-
 
 use AppBundle\Entity\CuratorDecision;
 use Symfony\Component\EventDispatcher\Event;
@@ -43,6 +43,7 @@ class DecisionCreateEvent extends Event
     public function setDecision(CuratorDecision $decision)
     {
         $this->decision = $decision;
+
         return $this;
     }
 }

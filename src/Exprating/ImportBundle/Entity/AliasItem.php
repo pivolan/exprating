@@ -5,7 +5,7 @@ namespace Exprating\ImportBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AliasItem
+ * AliasItem.
  *
  * @ORM\Table(name="alias_item")
  * @ORM\Entity(repositoryClass="Exprating\ImportBundle\Repository\AliasItemRepository")
@@ -42,11 +42,10 @@ class AliasItem
      */
     private $itemIrecommend;
 
-
     /**
-     * Set itemExpratingId
+     * Set itemExpratingId.
      *
-     * @param integer $itemExpratingId
+     * @param int $itemExpratingId
      *
      * @return AliasItem
      */
@@ -58,7 +57,7 @@ class AliasItem
     }
 
     /**
-     * Get itemExpratingId
+     * Get itemExpratingId.
      *
      * @return int
      */
@@ -68,7 +67,7 @@ class AliasItem
     }
 
     /**
-     * Set itemExpratingName
+     * Set itemExpratingName.
      *
      * @param string $itemExpratingName
      *
@@ -82,7 +81,7 @@ class AliasItem
     }
 
     /**
-     * Get itemExpratingName
+     * Get itemExpratingName.
      *
      * @return string
      */
@@ -92,7 +91,7 @@ class AliasItem
     }
 
     /**
-     * Set itemExpratingSlug
+     * Set itemExpratingSlug.
      *
      * @param string $itemExpratingSlug
      *
@@ -106,7 +105,7 @@ class AliasItem
     }
 
     /**
-     * Get itemExpratingSlug
+     * Get itemExpratingSlug.
      *
      * @return string
      */
@@ -116,7 +115,7 @@ class AliasItem
     }
 
     /**
-     * Set itemIrecommend
+     * Set itemIrecommend.
      *
      * @param string $itemIrecommend
      *
@@ -130,7 +129,7 @@ class AliasItem
     }
 
     /**
-     * Get itemIrecommend
+     * Get itemIrecommend.
      *
      * @return string
      */

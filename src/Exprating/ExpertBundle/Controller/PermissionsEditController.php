@@ -7,11 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * Class PermissionsEditController
- * @package Exprating\ExpertBundle\Controller
+ * Class PermissionsEditController.
  *
  * @Security("has_role('ROLE_ADMIN')")
- *
  */
 class PermissionsEditController extends Controller
 {

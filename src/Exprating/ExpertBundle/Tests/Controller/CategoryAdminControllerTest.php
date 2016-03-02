@@ -19,5 +19,4 @@ class CategoryAdminControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/cabinet/category-admin/edit/{slug}');
     }
-
 }

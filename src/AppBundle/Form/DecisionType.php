@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 20.02.16
- * Time: 13:14
+ * Time: 13:14.
  */
 
 namespace AppBundle\Form;
-
 
 use AppBundle\Entity\CuratorDecision;
 use Symfony\Component\Form\AbstractType;
@@ -41,7 +41,7 @@ class DecisionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CuratorDecision::class
+            'data_class' => CuratorDecision::class,
         ]);
     }
 

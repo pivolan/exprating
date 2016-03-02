@@ -6,9 +6,7 @@ use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductShopPrice;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
 
 class LoadProductData extends AbstractFixture implements DependentFixtureInterface
 {
@@ -20,10 +18,10 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
             $categoryKey = $i % 5;
             $category = $this->getReference("category_$categoryKey");
             $manufacturerKey = $i % 10;
-            $manufacturer = $this->getReference(LoadManufacturerData::REFERENCE_MANUFACTURER . $manufacturerKey);
+            $manufacturer = $this->getReference(LoadManufacturerData::REFERENCE_MANUFACTURER.$manufacturerKey);
             $product = new Product();
             $isEnabled = $i % 3 != 0;
-            $product->setName('title_' . $i)
+            $product->setName('title_'.$i)
                 ->setMinPrice(rand(1.00, 1000.00))
                 ->setRating(rand(1, 99))
                 ->setRating1(rand(1, 99))
@@ -33,10 +31,10 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
                 ->setIsEnabled($isEnabled)
                 ->setVisitsCount(rand(0, 100))
                 ->setEnabledAt(new \DateTime())
-                ->setSlug('product_' . $i)
+                ->setSlug('product_'.$i)
                 ->setCategory($category)
                 ->setManufacturer($manufacturer)
-                ->setExpertUser(($isEnabled || rand(0,1)) ? $user : null)
+                ->setExpertUser(($isEnabled || rand(0, 1)) ? $user : null)
                 ->setExpertComment('У нас такая же модель, только с мешком для сбора пыли. Выбрали мешковой, т.к. в нем мощность немного выше. Пылесосом очень довольны. Все функции выполняет на 5 с плюсом! Работает тихо и качественно.')
                 ->setPreviewImage('http://placehold.it/280x250')
                 ->setDisadvantages([
@@ -64,7 +62,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
             $shopsCount = $i % 5;
             for ($shopIndex = 0; $shopIndex <= $shopsCount; $shopIndex++) {
                 $shopKey = $i % 45 + $shopIndex;
-                $shop = $this->getReference(LoadShopData::REFERENCE_SHOP . $shopKey);
+                $shop = $this->getReference(LoadShopData::REFERENCE_SHOP.$shopKey);
                 $productShopPrice = new ProductShopPrice();
                 $productShopPrice->setPrice($product->getMinPrice() + $shopIndex * (0.02 * $product->getMinPrice()))
                     ->setProduct($product)
@@ -78,7 +76,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
 
     /**
      * This method must return an array of fixtures classes
-     * on which the implementing class depends on
+     * on which the implementing class depends on.
      *
      * @return array
      */

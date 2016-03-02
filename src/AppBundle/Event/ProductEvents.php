@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 16.02.16
- * Time: 22:23
+ * Time: 22:23.
  */
 
 namespace AppBundle\Event;
-
 
 final class ProductEvents
 {
@@ -18,4 +18,4 @@ final class ProductEvents
     const RESERVATION_OVER = 'reserve_over_product';
     const COMMENTED = 'commented_product';
     const DECISION = 'curator_decision';
-} 
+}

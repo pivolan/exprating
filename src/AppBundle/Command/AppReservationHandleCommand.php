@@ -40,7 +40,6 @@ class AppReservationHandleCommand extends ContainerAwareCommand
             $this->getContainer()->get('event_dispatcher')->dispatch(ProductEvents::RESERVATION_OVER, $event);
         }
         $em->flush();
-        $output->writeln('Success fully unreserved ' . count($products) . ' products');
+        $output->writeln('Success fully unreserved '.count($products).' products');
     }
-
 }

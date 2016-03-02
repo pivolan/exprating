@@ -27,21 +27,21 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
 
     public function load(ObjectManager $manager)
     {
-        $categories_names = ["Бытовая электроника",
-                             "Электроника",
-                             "Косметика, парфюмерия",
-                             "Товары для детей",
-                             "Спортинвентарь",
-                             "Мебель интерьер",
+        $categories_names = ['Бытовая электроника',
+                             'Электроника',
+                             'Косметика, парфюмерия',
+                             'Товары для детей',
+                             'Спортинвентарь',
+                             'Мебель интерьер',
         ];
-        $categoriesTree = ["Электроника"           => ['Электроника и фото ',
+        $categoriesTree = ['Электроника' => ['Электроника и фото ',
                                                        'Телефоны и аксессуары ',
-                                                       'Компьютеры'],
-                           "Косметика, парфюмерия" => ['Средства по уходу за кожей и волосами ',
+                                                       'Компьютеры', ],
+                           'Косметика, парфюмерия' => ['Средства по уходу за кожей и волосами ',
                                                        'Декоративная косметика ',
                                                        'Парфюмерия',
-                                                       'Средства гигиены'],
-                           "Мебель интерьер"       => ['Мебель для малышей ',
+                                                       'Средства гигиены', ],
+                           'Мебель интерьер' => ['Мебель для малышей ',
                                                        'Готовые комплекты ',
                                                        'Компьютерные столы, стулья и кресла',
                                                        'Корпусная мебель',
@@ -96,7 +96,7 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface, Cont
 
     /**
      * This method must return an array of fixtures classes
-     * on which the implementing class depends on
+     * on which the implementing class depends on.
      *
      * @return array
      */

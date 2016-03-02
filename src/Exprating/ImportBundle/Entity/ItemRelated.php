@@ -5,7 +5,7 @@ namespace Exprating\ImportBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ItemRelated
+ * ItemRelated.
  *
  * @ORM\Table(name="item_related")
  * @ORM\Entity
@@ -41,9 +41,9 @@ class ItemRelated
     private $relatedItemUrl;
 
     /**
-     * Set relatedItem
+     * Set relatedItem.
      *
-     * @param integer $relatedItem
+     * @param int $relatedItem
      *
      * @return ItemRelated
      */
@@ -55,9 +55,9 @@ class ItemRelated
     }
 
     /**
-     * Get relatedItem
+     * Get relatedItem.
      *
-     * @return integer
+     * @return int
      */
     public function getRelatedItem()
     {
@@ -65,9 +65,9 @@ class ItemRelated
     }
 
     /**
-     * Set item
+     * Set item.
      *
-     * @param integer $item
+     * @param int $item
      *
      * @return ItemRelated
      */
@@ -79,9 +79,9 @@ class ItemRelated
     }
 
     /**
-     * Get item
+     * Get item.
      *
-     * @return integer
+     * @return int
      */
     public function getItem()
     {
@@ -89,7 +89,7 @@ class ItemRelated
     }
 
     /**
-     * Set relatedItemUrl
+     * Set relatedItemUrl.
      *
      * @param string $relatedItemUrl
      *
@@ -103,7 +103,7 @@ class ItemRelated
     }
 
     /**
-     * Get relatedItemUrl
+     * Get relatedItemUrl.
      *
      * @return string
      */

@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ProductShopPrice
+ * ProductShopPrice.
  *
  * @ORM\Table(name="product_shop_price", uniqueConstraints={@ORM\UniqueConstraint(name="product_shop_unique", columns={"product_id", "shop_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductShopPriceRepository")
@@ -45,7 +45,7 @@ class ProductShopPrice
     private $shop;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -55,7 +55,7 @@ class ProductShopPrice
     }
 
     /**
-     * Set price
+     * Set price.
      *
      * @param string $price
      *
@@ -69,7 +69,7 @@ class ProductShopPrice
     }
 
     /**
-     * Get price
+     * Get price.
      *
      * @return string
      */
@@ -79,7 +79,7 @@ class ProductShopPrice
     }
 
     /**
-     * Set product
+     * Set product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -93,7 +93,7 @@ class ProductShopPrice
     }
 
     /**
-     * Get product
+     * Get product.
      *
      * @return \AppBundle\Entity\Product
      */
@@ -103,7 +103,7 @@ class ProductShopPrice
     }
 
     /**
-     * Set shop
+     * Set shop.
      *
      * @param \AppBundle\Entity\Shop $shop
      *
@@ -117,7 +117,7 @@ class ProductShopPrice
     }
 
     /**
-     * Get shop
+     * Get shop.
      *
      * @return \AppBundle\Entity\Shop
      */
@@ -128,6 +128,6 @@ class ProductShopPrice
 
     public function __toString()
     {
-        return $this->getShop()->getName() . '-' . $this->getPrice();
+        return $this->getShop()->getName().'-'.$this->getPrice();
     }
 }

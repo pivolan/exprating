@@ -3,13 +3,9 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\CuratorDecision;
-use AppBundle\Entity\Feedback;
-use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
-use AppBundle\Form\CommentType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -60,7 +56,7 @@ class LoadCuratorDecisionData extends AbstractFixture implements DependentFixtur
 
     /**
      * This method must return an array of fixtures classes
-     * on which the implementing class depends on
+     * on which the implementing class depends on.
      *
      * @return array
      */

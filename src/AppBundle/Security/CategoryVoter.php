@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 15.02.16
- * Time: 17:17
+ * Time: 17:17.
  */
 
 namespace AppBundle\Security;
@@ -9,8 +10,6 @@ namespace AppBundle\Security;
 namespace AppBundle\Security;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\CuratorDecision;
-use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -75,7 +74,6 @@ class CategoryVoter extends Voter
         throw new \LogicException('This code should not be reached!');
     }
 
-
     private function canEdit(Category $category, TokenInterface $token)
     {
         //Админу можно редактировать все
@@ -93,6 +91,7 @@ class CategoryVoter extends Voter
         if ($user->getAdminCategories()->contains($category)) {
             return true;
         }
+
         return false;
     }
 }

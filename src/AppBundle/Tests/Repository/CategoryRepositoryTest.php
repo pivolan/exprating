@@ -1,33 +1,27 @@
 <?php
+
 /**
  * Date: 02.02.16
- * Time: 17:46
+ * Time: 17:46.
  */
 
 namespace AppBundle\Tests\Repository;
 
-
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
-use AppBundle\Entity\User;
-use AppBundle\ProductFilter\ProductFilter;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
-use Exprating\CharacteristicBundle\CharacteristicSearchParam\CharacteristicSearchParameter;
-use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
-use Exprating\CharacteristicBundle\Entity\Characteristic;
-use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 
 class CategoryRepositoryTest extends AbstractWebCaseTest
 {
     public function testChildrenQuery()
     {
         /**
-         * @var EntityManager $em
-         * @var Category $category
-         * @var Category $category1
-         * @var Category $category11
-         * @var Product $product
+         * @var EntityManager
+         * @var Category
+         * @var Category
+         * @var Category
+         * @var Product
          */
         list($em, $category, $category1, $category11, $product) = $this->fixture();
 
@@ -42,11 +36,11 @@ class CategoryRepositoryTest extends AbstractWebCaseTest
     public function testChildrenScalar()
     {
         /**
-         * @var EntityManager $em
-         * @var Category $category
-         * @var Category $category1
-         * @var Category $category11
-         * @var Product $product
+         * @var EntityManager
+         * @var Category
+         * @var Category
+         * @var Category
+         * @var Product
          */
         list($em, $category, $category1, $category11, $product) = $this->fixture();
         $childrenIds = $em->getRepository('AppBundle:Category')->getChildrenIds($category);
@@ -73,6 +67,7 @@ class CategoryRepositoryTest extends AbstractWebCaseTest
         $product2 = (new Product())->setName('product2')->setSlug('product2')->setCategory($category1);
         $em->persist($product2);
         $em->flush();
+
         return [$em, $category, $category1, $category11, $product];
     }
-} 
+}

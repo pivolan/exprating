@@ -6,9 +6,7 @@ use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
 
 class LoadImageData extends AbstractFixture implements DependentFixtureInterface
 {
@@ -19,8 +17,8 @@ class LoadImageData extends AbstractFixture implements DependentFixtureInterface
         foreach ($products as $product) {
             for ($i = 1; $i <= 3; $i++) {
                 $image = new Image();
-                $image->setFilename('http://placehold.it/270x270?' . $product->getSlug() . "-$i.jpg")
-                    ->setName($product->getName() . "-$i")
+                $image->setFilename('http://placehold.it/270x270?'.$product->getSlug()."-$i.jpg")
+                    ->setName($product->getName()."-$i")
                     ->setProduct($product);
                 if ($i == 1) {
                     $image->setIsMain(true);
@@ -34,7 +32,7 @@ class LoadImageData extends AbstractFixture implements DependentFixtureInterface
 
     /**
      * This method must return an array of fixtures classes
-     * on which the implementing class depends on
+     * on which the implementing class depends on.
      *
      * @return array
      */

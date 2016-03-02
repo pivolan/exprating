@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 11.02.16
- * Time: 12:37
+ * Time: 12:37.
  */
 
 namespace AppBundle\Tests\Form;
@@ -38,4 +39,4 @@ class CommentTypeTest extends TypeTestCase
             $this->assertArrayHasKey($key, $children);
         }
     }
-} 
+}

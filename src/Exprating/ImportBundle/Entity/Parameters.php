@@ -5,7 +5,7 @@ namespace Exprating\ImportBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Parameters
+ * Parameters.
  *
  * @ORM\Table(name="parameters")
  * @ORM\Entity
@@ -27,7 +27,7 @@ class Parameters
     private $groupName = '';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -36,7 +36,7 @@ class Parameters
     private $id;
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -50,7 +50,7 @@ class Parameters
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -60,7 +60,7 @@ class Parameters
     }
 
     /**
-     * Set groupName
+     * Set groupName.
      *
      * @param string $groupName
      *
@@ -74,7 +74,7 @@ class Parameters
     }
 
     /**
-     * Get groupName
+     * Get groupName.
      *
      * @return string
      */
@@ -84,9 +84,9 @@ class Parameters
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

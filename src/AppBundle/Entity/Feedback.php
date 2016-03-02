@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Feedback
+ * Feedback.
  *
  * @ORM\Table(name="feedback")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FeedbackRepository")
@@ -79,7 +79,7 @@ class Feedback
     private $product;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -89,7 +89,7 @@ class Feedback
     }
 
     /**
-     * Set advantages
+     * Set advantages.
      *
      * @param string $advantages
      *
@@ -103,7 +103,7 @@ class Feedback
     }
 
     /**
-     * Get advantages
+     * Get advantages.
      *
      * @return string
      */
@@ -113,7 +113,7 @@ class Feedback
     }
 
     /**
-     * Set disadvantages
+     * Set disadvantages.
      *
      * @param string $disadvantages
      *
@@ -127,7 +127,7 @@ class Feedback
     }
 
     /**
-     * Get disadvantages
+     * Get disadvantages.
      *
      * @return string
      */
@@ -137,7 +137,7 @@ class Feedback
     }
 
     /**
-     * Set comment
+     * Set comment.
      *
      * @param string $comment
      *
@@ -151,7 +151,7 @@ class Feedback
     }
 
     /**
-     * Get comment
+     * Get comment.
      *
      * @return string
      */
@@ -161,9 +161,9 @@ class Feedback
     }
 
     /**
-     * Set isLike
+     * Set isLike.
      *
-     * @param boolean $isLike
+     * @param bool $isLike
      *
      * @return Feedback
      */
@@ -175,7 +175,7 @@ class Feedback
     }
 
     /**
-     * Get isLike
+     * Get isLike.
      *
      * @return bool
      */
@@ -185,7 +185,7 @@ class Feedback
     }
 
     /**
-     * Set fullName
+     * Set fullName.
      *
      * @param string $fullName
      *
@@ -199,7 +199,7 @@ class Feedback
     }
 
     /**
-     * Get fullName
+     * Get fullName.
      *
      * @return string
      */
@@ -209,7 +209,7 @@ class Feedback
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -223,7 +223,7 @@ class Feedback
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -233,7 +233,7 @@ class Feedback
     }
 
     /**
-     * Set product
+     * Set product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -247,7 +247,7 @@ class Feedback
     }
 
     /**
-     * Get product
+     * Get product.
      *
      * @return \AppBundle\Entity\Product
      */
@@ -258,7 +258,7 @@ class Feedback
 
     public function __toString()
     {
-        return (string)$this->getId();
+        return (string) $this->getId();
     }
 
     public function __construct()
@@ -267,9 +267,9 @@ class Feedback
     }
 
     /**
-     * Set isPublished
+     * Set isPublished.
      *
-     * @param boolean $isPublished
+     * @param bool $isPublished
      *
      * @return Feedback
      */
@@ -281,9 +281,9 @@ class Feedback
     }
 
     /**
-     * Get isPublished
+     * Get isPublished.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsPublished()
     {

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 08.02.16
- * Time: 16:27
+ * Time: 16:27.
  */
 
 namespace Exprating\SearchBundle\Engine;
-
 
 use AppBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
@@ -37,12 +37,13 @@ class SqlEngine implements EngineInterface
             $processedWord = trim($word);
             if (mb_strlen($processedWord, 'UTF-8') > 2) {
                 $sqlPart[] = "p.name LIKE :word$key";
-                $qb->setParameter("word$key", '%' . $processedWord . '%');
+                $qb->setParameter("word$key", '%'.$processedWord.'%');
             }
         }
         $qb->andWhere(implode(' OR ', $sqlPart))
             ->orderBy('p.id', 'ASC');
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
 }

@@ -1,43 +1,42 @@
 <?php
+
 /**
  * Date: 11.02.16
- * Time: 10:40
+ * Time: 10:40.
  */
 
 namespace Exprating\CharacteristicBundle\Tests\Form;
 
 use AppBundle\Tests\AbstractWebCaseTest;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Exprating\CharacteristicBundle\CharacteristicSearchParam\CharacteristicSearchParameter;
 use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Form\CommonProductSearchType;
-use Symfony\Component\Form\Test\TypeTestCase;
 
 class CommonProductSearchTypeTest extends AbstractWebCaseTest
 {
     public function testSubmitValidData()
     {
         $formData = [
-            'name'            => 'test_name',
-            'priceGTE'        => 100.25,
-            'priceLTE'        => 200.55,
+            'name' => 'test_name',
+            'priceGTE' => 100.25,
+            'priceLTE' => 200.55,
             'characteristics' => [[
-                                      'name'     => 'test_filter_int',
+                                      'name' => 'test_filter_int',
                                       'valueGTE' => 100,
-                                      'valueLTE' => 200
+                                      'valueLTE' => 200,
                                   ],
                                   [
-                                      'name'     => 'test_filter_dec',
+                                      'name' => 'test_filter_dec',
                                       'valueGTE' => 100.25,
-                                      'valueLTE' => 200.36
+                                      'valueLTE' => 200.36,
                                   ],
                                   [
-                                      'name'  => 'test_filter_str',
+                                      'name' => 'test_filter_str',
                                       'value' => 'this is a string',
                                   ],
-            ]
+            ],
         ];
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();

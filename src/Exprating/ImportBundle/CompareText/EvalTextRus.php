@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Date: 27.02.16
  * Time: 11:38
@@ -7,25 +8,24 @@
 
 namespace Exprating\ImportBundle\CompareText;
 
-
 final class EvalTextRus
 {
-    function preprocessRus($lim_len_symb, $text, &$arrt, &$count_t)
+    public function preprocessRus($lim_len_symb, $text, &$arrt, &$count_t)
     {
         $text2 = mb_strtolower($text);
-        $strm = preg_replace('/[^а-я]/u', " ", $text2);            ## print "<hr>".$strm."<hr>";  //ok
+        $strm = preg_replace('/[^а-я]/u', ' ', $text2);            ## print "<hr>".$strm."<hr>";  //ok
         $arrt = [];
-        $_wordst = preg_split("/ +/u", $strm);
+        $_wordst = preg_split('/ +/u', $strm);
         foreach ($_wordst as $ws) {
             $lengws = mb_strlen($ws);                     ##-- print "ws=$ws*  \$lengws=$lengws<br>";  //Ok
-            if (($ws != "") && ($lengws > $lim_len_symb)) {
+            if (($ws != '') && ($lengws > $lim_len_symb)) {
                 $arrt[] = $ws;      //////////print "--------------------ws=$ws*<br>";
             }#(lengws_res)
         }
         $count_t = count($arrt);
     }//end func
 
-    function evaltextRus($limit_symbols = 2, $str1, $str2, $_delta_lett = 3, $_prob75 = 0.702)
+    public function evaltextRus($limit_symbols = 2, $str1, $str2, $_delta_lett = 3, $_prob75 = 0.702)
     {
         $out = [];
         $this->preprocessRus($limit_symbols, $str1, $arr1, $count1);
@@ -44,8 +44,8 @@ final class EvalTextRus
                 } else {
                     $ab1 = [];
                     $ab2 = [];
-                    $ab1 = preg_split("//u", $ws1);
-                    $ab2 = preg_split("//u", $ws2);
+                    $ab1 = preg_split('//u', $ws1);
+                    $ab2 = preg_split('//u', $ws2);
                     $eqlet = 0;
                     $countab1 = count($ab1) - 2;
                     $countab2 = count($ab2) - 2;
@@ -55,7 +55,7 @@ final class EvalTextRus
                         $eqdelete = $lengws2;
                     }
                     for ($j = 1; $j <= $countab1 && $j <= $countab2; $j++) {  ///////////////////////print $ab1[$j]." = ".$ab2[$j]."<br>";
-                        if ($ab1[$j] != "" || $ab2[$j] != "") {
+                        if ($ab1[$j] != '' || $ab2[$j] != '') {
                             if ($ab1[$j] == $ab2[$j]) {
                                 $eqlet++;
                             }  ///  print $ab1[$j]." = ".$ab2[$j]."<br>";
@@ -72,11 +72,12 @@ final class EvalTextRus
         }##for(for)
         $sumcount = ($count2 + $count1) / 2;
         $per = (100 * $eq) / $sumcount;
-        $per = sprintf("%5.2f", $per);
-        $out["limit"] = $limit_symbols;
-        $out["count1"] = $count1;
-        $out["count2"] = $count2;
-        $out["avercount"] = $sumcount;
+        $per = sprintf('%5.2f', $per);
+        $out['limit'] = $limit_symbols;
+        $out['count1'] = $count1;
+        $out['count2'] = $count2;
+        $out['avercount'] = $sumcount;
+
         return $per;
     }//end func
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 19.02.16
- * Time: 23:33
+ * Time: 23:33.
  */
 
 namespace Exprating\FakerBundle\Faker;
-
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
@@ -40,11 +40,12 @@ class FakeEntitiesGenerator
             ->setSuperAdmin(false)
             ->setEnabled(true)
             ->setBirthday(new \DateTime('1987-02-08'))
-            ->setFullName($this->faker->lastName . ' ' . $this->faker->firstName)
+            ->setFullName($this->faker->lastName.' '.$this->faker->firstName)
             ->setCity($this->faker->city)
             ->setCaption($this->faker->title)
             ->setAvatarImage('http://placehold.it/200x200')
             ->addRole(User::ROLE_USER);
+
         return $user;
     }
 
@@ -70,6 +71,7 @@ class FakeEntitiesGenerator
             ->setDisadvantages($this->faker->sentences(5))
             ->setAdvantages($this->faker->sentences(5))
             ->setExpertOpinion($this->faker->paragraphs(6));
+
         return $product;
     }
 
@@ -78,6 +80,7 @@ class FakeEntitiesGenerator
         $category = new Category();
         $category->setName($this->faker->title)
             ->setSlug($this->faker->slug);
+
         return $category;
     }
 }

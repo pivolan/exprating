@@ -3,12 +3,8 @@
 namespace AppBundle\Tests;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\StringInput;
-use Symfony\Component\Console\Output\StreamOutput;
 
 abstract class AbstractWebCaseTest extends WebTestCase
 {
@@ -24,7 +20,6 @@ abstract class AbstractWebCaseTest extends WebTestCase
         $this->client = $client = static::createClient();
         $this->doctrine = $client->getContainer()->get('doctrine');
         $this->doctrine->getConnection()->beginTransaction();
-
     }
 
     public function tearDown()

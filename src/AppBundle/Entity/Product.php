@@ -9,7 +9,7 @@ use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Product
+ * Product.
  *
  * @ORM\Table(name="product",indexes={@ORM\Index(name="is_enabled_idx", columns={"is_enabled"}),
  * @ORM\Index(name="enabled_at_idx", columns={"enabled_at"})})
@@ -160,7 +160,6 @@ class Product
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="products")
      * @ORM\JoinColumn(name="expert_user_id", referencedColumnName="id")
-     *
      */
     private $expertUser;
 
@@ -228,10 +227,9 @@ class Product
      * @var PeopleGroup[]
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup")
      * @ORM\JoinTable(name="product_people_group", joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *            inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug")})
+     *                    inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug")})
      */
     private $peopleGroups;
-
 
     public function __construct()
     {
@@ -246,7 +244,7 @@ class Product
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -256,7 +254,7 @@ class Product
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -270,7 +268,7 @@ class Product
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -280,7 +278,7 @@ class Product
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -294,7 +292,7 @@ class Product
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -304,7 +302,7 @@ class Product
     }
 
     /**
-     * Set previewImage
+     * Set previewImage.
      *
      * @param string $previewImage
      *
@@ -318,7 +316,7 @@ class Product
     }
 
     /**
-     * Get previewImage
+     * Get previewImage.
      *
      * @return string
      */
@@ -328,7 +326,7 @@ class Product
     }
 
     /**
-     * Set minPrice
+     * Set minPrice.
      *
      * @param string $minPrice
      *
@@ -342,7 +340,7 @@ class Product
     }
 
     /**
-     * Get minPrice
+     * Get minPrice.
      *
      * @return float
      */
@@ -352,7 +350,7 @@ class Product
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -366,7 +364,7 @@ class Product
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -391,11 +389,12 @@ class Product
     public function setRating($rating)
     {
         $this->rating = $rating;
+
         return $this;
     }
 
     /**
-     * Set expertUser
+     * Set expertUser.
      *
      * @param \AppBundle\Entity\User $expertUser
      *
@@ -409,7 +408,7 @@ class Product
     }
 
     /**
-     * Get expertUser
+     * Get expertUser.
      *
      * @return \AppBundle\Entity\User
      */
@@ -419,7 +418,7 @@ class Product
     }
 
     /**
-     * Add image
+     * Add image.
      *
      * @param \AppBundle\Entity\Image $image
      *
@@ -433,7 +432,7 @@ class Product
     }
 
     /**
-     * Remove image
+     * Remove image.
      *
      * @param \AppBundle\Entity\Image $image
      */
@@ -443,7 +442,7 @@ class Product
     }
 
     /**
-     * Get images
+     * Get images.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -458,7 +457,7 @@ class Product
     }
 
     /**
-     * Add comment
+     * Add comment.
      *
      * @param \AppBundle\Entity\Comment $comment
      *
@@ -472,7 +471,7 @@ class Product
     }
 
     /**
-     * Remove comment
+     * Remove comment.
      *
      * @param \AppBundle\Entity\Comment $comment
      */
@@ -482,7 +481,7 @@ class Product
     }
 
     /**
-     * Get comments
+     * Get comments.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -492,7 +491,7 @@ class Product
     }
 
     /**
-     * Set category
+     * Set category.
      *
      * @param \AppBundle\Entity\Category $category
      *
@@ -506,7 +505,7 @@ class Product
     }
 
     /**
-     * Get category
+     * Get category.
      *
      * @return \AppBundle\Entity\Category
      */
@@ -516,7 +515,7 @@ class Product
     }
 
     /**
-     * Set advantages
+     * Set advantages.
      *
      * @param array $advantages
      *
@@ -530,7 +529,7 @@ class Product
     }
 
     /**
-     * Get advantages
+     * Get advantages.
      *
      * @return array
      */
@@ -540,7 +539,7 @@ class Product
     }
 
     /**
-     * Set disadvantages
+     * Set disadvantages.
      *
      * @param array $disadvantages
      *
@@ -554,7 +553,7 @@ class Product
     }
 
     /**
-     * Get disadvantages
+     * Get disadvantages.
      *
      * @return array
      */
@@ -564,7 +563,7 @@ class Product
     }
 
     /**
-     * Set manufacturer
+     * Set manufacturer.
      *
      * @param \AppBundle\Entity\Manufacturer $manufacturer
      *
@@ -578,7 +577,7 @@ class Product
     }
 
     /**
-     * Get manufacturer
+     * Get manufacturer.
      *
      * @return \AppBundle\Entity\Manufacturer
      */
@@ -588,7 +587,7 @@ class Product
     }
 
     /**
-     * Add shopsPrice
+     * Add shopsPrice.
      *
      * @param \AppBundle\Entity\ProductShopPrice $shopsPrice
      *
@@ -602,7 +601,7 @@ class Product
     }
 
     /**
-     * Remove shopsPrice
+     * Remove shopsPrice.
      *
      * @param \AppBundle\Entity\ProductShopPrice $shopsPrice
      */
@@ -612,7 +611,7 @@ class Product
     }
 
     /**
-     * Get shopsPrice
+     * Get shopsPrice.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -622,7 +621,7 @@ class Product
     }
 
     /**
-     * Add feedback
+     * Add feedback.
      *
      * @param \AppBundle\Entity\Feedback $feedback
      *
@@ -636,7 +635,7 @@ class Product
     }
 
     /**
-     * Remove feedback
+     * Remove feedback.
      *
      * @param \AppBundle\Entity\Feedback $feedback
      */
@@ -646,7 +645,7 @@ class Product
     }
 
     /**
-     * Get feedbacks
+     * Get feedbacks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -656,7 +655,7 @@ class Product
     }
 
     /**
-     * Add productShopPrice
+     * Add productShopPrice.
      *
      * @param \AppBundle\Entity\ProductShopPrice $productShopPrice
      *
@@ -670,7 +669,7 @@ class Product
     }
 
     /**
-     * Remove productShopPrice
+     * Remove productShopPrice.
      *
      * @param \AppBundle\Entity\ProductShopPrice $productShopPrice
      */
@@ -680,7 +679,7 @@ class Product
     }
 
     /**
-     * Set expertOpinion
+     * Set expertOpinion.
      *
      * @param string $expertOpinion
      *
@@ -694,7 +693,7 @@ class Product
     }
 
     /**
-     * Get expertOpinion
+     * Get expertOpinion.
      *
      * @return string
      */
@@ -704,7 +703,7 @@ class Product
     }
 
     /**
-     * Add productCharacteristic
+     * Add productCharacteristic.
      *
      * @param \Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic
      *
@@ -718,7 +717,7 @@ class Product
     }
 
     /**
-     * Remove productCharacteristic
+     * Remove productCharacteristic.
      *
      * @param \Exprating\CharacteristicBundle\Entity\ProductCharacteristic $productCharacteristic
      */
@@ -728,7 +727,7 @@ class Product
     }
 
     /**
-     * Get productCharacteristics
+     * Get productCharacteristics.
      *
      * @return \Doctrine\Common\Collections\Collection|ProductCharacteristic[]
      */
@@ -738,9 +737,9 @@ class Product
     }
 
     /**
-     * Set rating1
+     * Set rating1.
      *
-     * @param integer $rating1
+     * @param int $rating1
      *
      * @return Product
      */
@@ -752,9 +751,9 @@ class Product
     }
 
     /**
-     * Get rating1
+     * Get rating1.
      *
-     * @return integer
+     * @return int
      */
     public function getRating1()
     {
@@ -762,9 +761,9 @@ class Product
     }
 
     /**
-     * Set rating2
+     * Set rating2.
      *
-     * @param integer $rating2
+     * @param int $rating2
      *
      * @return Product
      */
@@ -776,9 +775,9 @@ class Product
     }
 
     /**
-     * Get rating2
+     * Get rating2.
      *
-     * @return integer
+     * @return int
      */
     public function getRating2()
     {
@@ -786,9 +785,9 @@ class Product
     }
 
     /**
-     * Set rating3
+     * Set rating3.
      *
-     * @param integer $rating3
+     * @param int $rating3
      *
      * @return Product
      */
@@ -800,9 +799,9 @@ class Product
     }
 
     /**
-     * Get rating3
+     * Get rating3.
      *
-     * @return integer
+     * @return int
      */
     public function getRating3()
     {
@@ -810,9 +809,9 @@ class Product
     }
 
     /**
-     * Set rating4
+     * Set rating4.
      *
-     * @param integer $rating4
+     * @param int $rating4
      *
      * @return Product
      */
@@ -824,9 +823,9 @@ class Product
     }
 
     /**
-     * Get rating4
+     * Get rating4.
      *
-     * @return integer
+     * @return int
      */
     public function getRating4()
     {
@@ -834,7 +833,7 @@ class Product
     }
 
     /**
-     * Set isEnabled
+     * Set isEnabled.
      *
      * @param string $isEnabled
      *
@@ -848,7 +847,7 @@ class Product
     }
 
     /**
-     * Get isEnabled
+     * Get isEnabled.
      *
      * @return string
      */
@@ -858,7 +857,7 @@ class Product
     }
 
     /**
-     * Set enabledAt
+     * Set enabledAt.
      *
      * @param \DateTime $enabledAt
      *
@@ -872,7 +871,7 @@ class Product
     }
 
     /**
-     * Get enabledAt
+     * Get enabledAt.
      *
      * @return \DateTime
      */
@@ -882,9 +881,9 @@ class Product
     }
 
     /**
-     * Set visitsCount
+     * Set visitsCount.
      *
-     * @param integer $visitsCount
+     * @param int $visitsCount
      *
      * @return Product
      */
@@ -896,9 +895,9 @@ class Product
     }
 
     /**
-     * Get visitsCount
+     * Get visitsCount.
      *
-     * @return integer
+     * @return int
      */
     public function getVisitsCount()
     {
@@ -906,7 +905,7 @@ class Product
     }
 
     /**
-     * Set expertComment
+     * Set expertComment.
      *
      * @param string $expertComment
      *
@@ -920,7 +919,7 @@ class Product
     }
 
     /**
-     * Get expertComment
+     * Get expertComment.
      *
      * @return string
      */
@@ -930,7 +929,7 @@ class Product
     }
 
     /**
-     * Set reservedAt
+     * Set reservedAt.
      *
      * @param \DateTime $reservedAt
      *
@@ -944,7 +943,7 @@ class Product
     }
 
     /**
-     * Get reservedAt
+     * Get reservedAt.
      *
      * @return \DateTime
      */
@@ -954,7 +953,7 @@ class Product
     }
 
     /**
-     * Add curatorDecision
+     * Add curatorDecision.
      *
      * @param \AppBundle\Entity\CuratorDecision $curatorDecision
      *
@@ -968,7 +967,7 @@ class Product
     }
 
     /**
-     * Remove curatorDecision
+     * Remove curatorDecision.
      *
      * @param \AppBundle\Entity\CuratorDecision $curatorDecision
      */
@@ -978,7 +977,7 @@ class Product
     }
 
     /**
-     * Get curatorDecisions
+     * Get curatorDecisions.
      *
      * @return \Doctrine\Common\Collections\Collection|CuratorDecision[]
      */
@@ -991,8 +990,10 @@ class Product
     {
         if ($this->getReservedAt()) {
             $timeLeft = new \DateTime('+30 days');
+
             return $timeLeft->diff($this->getReservedAt())->days;
         }
+
         return 0;
     }
 
@@ -1009,7 +1010,7 @@ class Product
             isset($entityChangeSet[self::RATING_3]) ||
             isset($entityChangeSet[self::RATING_4])
         ) {
-            /** @var RatingSettings $settings */
+            /* @var RatingSettings $settings */
             $category = $this->getCategory();
             if ($category) {
                 $settings = $category->getRatingSettings();
@@ -1025,7 +1026,7 @@ class Product
     }
 
     /**
-     * Add peopleGroup
+     * Add peopleGroup.
      *
      * @param \AppBundle\Entity\PeopleGroup $peopleGroup
      *
@@ -1039,7 +1040,7 @@ class Product
     }
 
     /**
-     * Remove peopleGroup
+     * Remove peopleGroup.
      *
      * @param \AppBundle\Entity\PeopleGroup $peopleGroup
      */
@@ -1049,7 +1050,7 @@ class Product
     }
 
     /**
-     * Get peopleGroups
+     * Get peopleGroups.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

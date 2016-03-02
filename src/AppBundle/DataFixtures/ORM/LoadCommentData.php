@@ -2,15 +2,10 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Feedback;
-use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
-use AppBundle\Form\CommentType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
 
 class LoadCommentData extends AbstractFixture implements DependentFixtureInterface
 {
@@ -23,7 +18,7 @@ class LoadCommentData extends AbstractFixture implements DependentFixtureInterfa
             for ($i = 1; $i <= $commentsCount; $i++) {
                 $comment = new \AppBundle\Entity\Comment();
                 $comment->setProduct($product)
-                    ->setFullName('Василий Зайцев ' . $key * $i)
+                    ->setFullName('Василий Зайцев '.$key * $i)
                     ->setMessage('Хороший и надежный пылесос, пользуюсь им уже давно и ни разу не подводил');
                 $manager->persist($comment);
             }
@@ -33,7 +28,7 @@ class LoadCommentData extends AbstractFixture implements DependentFixtureInterfa
 
     /**
      * This method must return an array of fixtures classes
-     * on which the implementing class depends on
+     * on which the implementing class depends on.
      *
      * @return array
      */

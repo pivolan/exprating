@@ -3,10 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Tests\Common\Collections\ArrayCollectionTest;
 
 /**
- * Comment
+ * Comment.
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentRepository")
@@ -78,9 +77,8 @@ class Comment
         $this->createdAt = new \DateTime();
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -90,7 +88,7 @@ class Comment
     }
 
     /**
-     * Set fullName
+     * Set fullName.
      *
      * @param string $fullName
      *
@@ -104,7 +102,7 @@ class Comment
     }
 
     /**
-     * Get fullName
+     * Get fullName.
      *
      * @return string
      */
@@ -114,7 +112,7 @@ class Comment
     }
 
     /**
-     * Set message
+     * Set message.
      *
      * @param string $message
      *
@@ -128,7 +126,7 @@ class Comment
     }
 
     /**
-     * Get message
+     * Get message.
      *
      * @return string
      */
@@ -138,7 +136,7 @@ class Comment
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -152,7 +150,7 @@ class Comment
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -177,11 +175,12 @@ class Comment
     public function setUser($user)
     {
         $this->user = $user;
+
         return $this;
     }
 
     /**
-     * Set product
+     * Set product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -195,7 +194,7 @@ class Comment
     }
 
     /**
-     * Get product
+     * Get product.
      *
      * @return \AppBundle\Entity\Product
      */
@@ -205,9 +204,9 @@ class Comment
     }
 
     /**
-     * Set isPublished
+     * Set isPublished.
      *
-     * @param boolean $isPublished
+     * @param bool $isPublished
      *
      * @return Comment
      */
@@ -219,9 +218,9 @@ class Comment
     }
 
     /**
-     * Get isPublished
+     * Get isPublished.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsPublished()
     {
@@ -229,7 +228,7 @@ class Comment
     }
 
     /**
-     * Set publishedAt
+     * Set publishedAt.
      *
      * @param \DateTime $publishedAt
      *
@@ -243,7 +242,7 @@ class Comment
     }
 
     /**
-     * Get publishedAt
+     * Get publishedAt.
      *
      * @return \DateTime
      */

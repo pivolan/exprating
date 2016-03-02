@@ -4,40 +4,38 @@ namespace Exprating\ImportBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * SiteProductRubrics
+ * SiteProductRubrics.
  *
  * @ORM\Entity()
  * @ORM\Table(name="site_product_rubrics", indexes={@ORM\Index(name="left_key", columns={"left_key", "right_key", "level", "parent_id"}), @ORM\Index(name="tree_id", columns={"tree_id"}), @ORM\Index(name="level", columns={"level"}), @ORM\Index(name="fkParent", columns={"parent_id"})})
- *
  */
 class SiteProductRubrics
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="left_key", type="integer", nullable=false)
      */
     private $leftKey;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="right_key", type="integer", nullable=false)
      */
     private $rightKey;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="level", type="integer", nullable=false)
      */
     private $level;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="tree_id", type="integer", nullable=false)
      */
@@ -58,35 +56,35 @@ class SiteProductRubrics
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="childCount", type="integer", nullable=true)
      */
     private $childcount;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="showWoman", type="boolean", nullable=false)
      */
     private $showwoman = '0';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="showMan", type="boolean", nullable=false)
      */
     private $showman = '0';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="showChild", type="boolean", nullable=false)
      */
     private $showchild = '0';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="showAll", type="boolean", nullable=false)
      */
@@ -114,28 +112,28 @@ class SiteProductRubrics
     private $parsersynonyms;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="searchWeightSummer", type="integer", nullable=false)
      */
     private $searchweightsummer = '0';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="searchWeightWinter", type="integer", nullable=false)
      */
     private $searchweightwinter = '0';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="parserLinkingEnabled", type="boolean", nullable=false)
      */
     private $parserlinkingenabled = '1';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -153,22 +151,20 @@ class SiteProductRubrics
      */
     private $parent;
 
-
     /**
      * @ORM\OneToMany(targetEntity="Exprating\ImportBundle\Entity\SiteProductRubrics", mappedBy="parent")
      */
     private $children;
 
-    public  function __construct($children)
+    public function __construct($children)
     {
         $this->children = new ArrayCollection();
     }
 
-
     /**
-     * Set leftKey
+     * Set leftKey.
      *
-     * @param integer $leftKey
+     * @param int $leftKey
      *
      * @return SiteProductRubrics
      */
@@ -180,9 +176,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get leftKey
+     * Get leftKey.
      *
-     * @return integer
+     * @return int
      */
     public function getLeftKey()
     {
@@ -190,9 +186,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set rightKey
+     * Set rightKey.
      *
-     * @param integer $rightKey
+     * @param int $rightKey
      *
      * @return SiteProductRubrics
      */
@@ -204,9 +200,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get rightKey
+     * Get rightKey.
      *
-     * @return integer
+     * @return int
      */
     public function getRightKey()
     {
@@ -214,9 +210,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set level
+     * Set level.
      *
-     * @param integer $level
+     * @param int $level
      *
      * @return SiteProductRubrics
      */
@@ -228,9 +224,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get level
+     * Get level.
      *
-     * @return integer
+     * @return int
      */
     public function getLevel()
     {
@@ -238,9 +234,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set treeId
+     * Set treeId.
      *
-     * @param integer $treeId
+     * @param int $treeId
      *
      * @return SiteProductRubrics
      */
@@ -252,9 +248,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get treeId
+     * Get treeId.
      *
-     * @return integer
+     * @return int
      */
     public function getTreeId()
     {
@@ -262,7 +258,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Set added
+     * Set added.
      *
      * @param \DateTime $added
      *
@@ -276,7 +272,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Get added
+     * Get added.
      *
      * @return \DateTime
      */
@@ -286,7 +282,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -300,7 +296,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -310,9 +306,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set childcount
+     * Set childcount.
      *
-     * @param integer $childcount
+     * @param int $childcount
      *
      * @return SiteProductRubrics
      */
@@ -324,9 +320,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get childcount
+     * Get childcount.
      *
-     * @return integer
+     * @return int
      */
     public function getChildcount()
     {
@@ -334,9 +330,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set showwoman
+     * Set showwoman.
      *
-     * @param boolean $showwoman
+     * @param bool $showwoman
      *
      * @return SiteProductRubrics
      */
@@ -348,9 +344,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get showwoman
+     * Get showwoman.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShowwoman()
     {
@@ -358,9 +354,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set showman
+     * Set showman.
      *
-     * @param boolean $showman
+     * @param bool $showman
      *
      * @return SiteProductRubrics
      */
@@ -372,9 +368,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get showman
+     * Get showman.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShowman()
     {
@@ -382,9 +378,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set showchild
+     * Set showchild.
      *
-     * @param boolean $showchild
+     * @param bool $showchild
      *
      * @return SiteProductRubrics
      */
@@ -396,9 +392,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get showchild
+     * Get showchild.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShowchild()
     {
@@ -406,9 +402,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set showall
+     * Set showall.
      *
-     * @param boolean $showall
+     * @param bool $showall
      *
      * @return SiteProductRubrics
      */
@@ -420,9 +416,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get showall
+     * Get showall.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShowall()
     {
@@ -430,7 +426,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Set parsershortname
+     * Set parsershortname.
      *
      * @param string $parsershortname
      *
@@ -444,7 +440,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Get parsershortname
+     * Get parsershortname.
      *
      * @return string
      */
@@ -454,7 +450,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Set parserattr
+     * Set parserattr.
      *
      * @param string $parserattr
      *
@@ -468,7 +464,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Get parserattr
+     * Get parserattr.
      *
      * @return string
      */
@@ -478,7 +474,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Set parsersynonyms
+     * Set parsersynonyms.
      *
      * @param string $parsersynonyms
      *
@@ -492,7 +488,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Get parsersynonyms
+     * Get parsersynonyms.
      *
      * @return string
      */
@@ -502,9 +498,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set searchweightsummer
+     * Set searchweightsummer.
      *
-     * @param integer $searchweightsummer
+     * @param int $searchweightsummer
      *
      * @return SiteProductRubrics
      */
@@ -516,9 +512,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get searchweightsummer
+     * Get searchweightsummer.
      *
-     * @return integer
+     * @return int
      */
     public function getSearchweightsummer()
     {
@@ -526,9 +522,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set searchweightwinter
+     * Set searchweightwinter.
      *
-     * @param integer $searchweightwinter
+     * @param int $searchweightwinter
      *
      * @return SiteProductRubrics
      */
@@ -540,9 +536,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get searchweightwinter
+     * Get searchweightwinter.
      *
-     * @return integer
+     * @return int
      */
     public function getSearchweightwinter()
     {
@@ -550,9 +546,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Set parserlinkingenabled
+     * Set parserlinkingenabled.
      *
-     * @param boolean $parserlinkingenabled
+     * @param bool $parserlinkingenabled
      *
      * @return SiteProductRubrics
      */
@@ -564,9 +560,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get parserlinkingenabled
+     * Get parserlinkingenabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function getParserlinkingenabled()
     {
@@ -574,9 +570,9 @@ class SiteProductRubrics
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -584,7 +580,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
      * @param SiteProductRubrics $parent
      *
@@ -598,7 +594,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return SiteProductRubrics
      */
@@ -607,10 +603,8 @@ class SiteProductRubrics
         return $this->parent;
     }
 
-
-
     /**
-     * Add child
+     * Add child.
      *
      * @param SiteProductRubrics $child
      *
@@ -624,7 +618,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Remove child
+     * Remove child.
      *
      * @param SiteProductRubrics $child
      */
@@ -634,7 +628,7 @@ class SiteProductRubrics
     }
 
     /**
-     * Get children
+     * Get children.
      *
      * @return \Doctrine\Common\Collections\Collection|SiteProductRubrics[]
      */

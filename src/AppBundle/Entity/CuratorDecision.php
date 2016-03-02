@@ -6,14 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CuratorDecision
+ * CuratorDecision.
  *
  * @ORM\Table(name="curator_decision")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CuratorDecisionRepository")
  */
 class CuratorDecision
 {
-
     const STATUS_WAIT = 'wait';
     const STATUS_APPROVE = 'approve';
     const STATUS_REJECT = 'reject';
@@ -78,9 +77,8 @@ class CuratorDecision
         $this->updatedAt = new \DateTime();
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -90,7 +88,7 @@ class CuratorDecision
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
      *
@@ -104,7 +102,7 @@ class CuratorDecision
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return string
      */
@@ -114,7 +112,7 @@ class CuratorDecision
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
      *
@@ -128,7 +126,7 @@ class CuratorDecision
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -138,7 +136,7 @@ class CuratorDecision
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -152,7 +150,7 @@ class CuratorDecision
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -162,7 +160,7 @@ class CuratorDecision
     }
 
     /**
-     * Set rejectReason
+     * Set rejectReason.
      *
      * @param string $rejectReason
      *
@@ -176,7 +174,7 @@ class CuratorDecision
     }
 
     /**
-     * Get rejectReason
+     * Get rejectReason.
      *
      * @return string
      */
@@ -186,7 +184,7 @@ class CuratorDecision
     }
 
     /**
-     * Set curator
+     * Set curator.
      *
      * @param \AppBundle\Entity\User $curator
      *
@@ -200,7 +198,7 @@ class CuratorDecision
     }
 
     /**
-     * Get curator
+     * Get curator.
      *
      * @return \AppBundle\Entity\User
      */
@@ -210,7 +208,7 @@ class CuratorDecision
     }
 
     /**
-     * Set product
+     * Set product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -224,7 +222,7 @@ class CuratorDecision
     }
 
     /**
-     * Get product
+     * Get product.
      *
      * @return \AppBundle\Entity\Product
      */

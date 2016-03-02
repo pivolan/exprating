@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 19.02.16
- * Time: 18:43
+ * Time: 18:43.
  */
 
 namespace AppBundle\Event\Subscriber;
@@ -20,7 +21,6 @@ use AppBundle\Event\ProductReservationOverEvent;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class ProductSubscriber implements EventSubscriberInterface
 {
@@ -39,7 +39,7 @@ class ProductSubscriber implements EventSubscriberInterface
      */
     protected $twig;
 
-    function __construct(\Swift_Mailer $mailer, EntityManager $em, \Twig_Environment $twig)
+    public function __construct(\Swift_Mailer $mailer, EntityManager $em, \Twig_Environment $twig)
     {
         $this->mailer = $mailer;
         $this->em = $em;
@@ -49,19 +49,19 @@ class ProductSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ProductEvents::RESERVATION      => [['reserveProduct', 0], ['flush']],
-            ProductEvents::PUBLISH_REQUEST  => [
+            ProductEvents::RESERVATION => [['reserveProduct', 0], ['flush']],
+            ProductEvents::PUBLISH_REQUEST => [
                 ['publishRequestProduct', 1],
                 ['notifyCurator'],
-                ['flush']
+                ['flush'],
             ],
-            ProductEvents::APPROVE          => [['approveProduct', 1], ['onApproveNotifyExpert'], ['flush']],
-            ProductEvents::REJECT           => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
-            ProductEvents::PUBLISH          => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
-            ProductEvents::CHANGE_EXPERT    => [['changeExpert', 1], ['onChangeExpertNotify'], ['flush']],
+            ProductEvents::APPROVE => [['approveProduct', 1], ['onApproveNotifyExpert'], ['flush']],
+            ProductEvents::REJECT => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
+            ProductEvents::PUBLISH => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
+            ProductEvents::CHANGE_EXPERT => [['changeExpert', 1], ['onChangeExpertNotify'], ['flush']],
             ProductEvents::RESERVATION_OVER => [['reserveOver', 0], ['onReserveOverNotifyExpert', 1], ['flush']],
-            ProductEvents::COMMENTED        => [['flush']],
-            ProductEvents::DECISION         => [['curatorDecision', 1],],
+            ProductEvents::COMMENTED => [['flush']],
+            ProductEvents::DECISION => [['curatorDecision', 1]],
         ];
     }
 
@@ -100,7 +100,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $expert = $product->getExpertUser();
         $curator = $expert->getCurator();
         $message = \Swift_Message::newInstance()
-            ->setSubject('Новая публикация от Эксперта ' . $expert->getFullName() . ' ' . $product->getName())
+            ->setSubject('Новая публикация от Эксперта '.$expert->getFullName().' '.$product->getName())
             ->setTo($curator->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -131,7 +131,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $expert = $product->getExpertUser();
         $curator = $expert->getCurator();
         $message = \Swift_Message::newInstance()
-            ->setSubject('Ваша публикация была одобрена Куратором ' . $curator->getFullName() . ' - ' . $product->getName())
+            ->setSubject('Ваша публикация была одобрена Куратором '.$curator->getFullName().' - '.$product->getName())
             ->setTo($expert->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -161,7 +161,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $expert = $product->getExpertUser();
         $curator = $expert->getCurator();
         $message = \Swift_Message::newInstance()
-            ->setSubject('Ваша публикация была отвергнута Куратором ' . $curator->getFullName() . ' - ' . $product->getName())
+            ->setSubject('Ваша публикация была отвергнута Куратором '.$curator->getFullName().' - '.$product->getName())
             ->setTo($expert->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -186,7 +186,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $expert = $product->getExpertUser();
         $curator = $expert->getCurator();
         $message = \Swift_Message::newInstance()
-            ->setSubject('Ваша публикация была опубликована ' . $product->getName())
+            ->setSubject('Ваша публикация была опубликована '.$product->getName())
             ->setTo($expert->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -211,7 +211,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $prevExpert = $event->getPreviousExpert();
         $curator = $event->getCurator();
         $message = \Swift_Message::newInstance()
-            ->setSubject('Ваш товар был передан другому эксперту ' . $product->getName())
+            ->setSubject('Ваш товар был передан другому эксперту '.$product->getName())
             ->setTo($prevExpert->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -222,7 +222,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
 
         $message = \Swift_Message::newInstance()
-            ->setSubject('Вам был передан товар на обзор ' . $product->getName())
+            ->setSubject('Вам был передан товар на обзор '.$product->getName())
             ->setTo($nextExpert->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -231,7 +231,6 @@ class ProductSubscriber implements EventSubscriberInterface
                 )
             );
         $this->mailer->send($message);
-
     }
 
     public function reserveOver(ProductReservationOverEvent $event)
@@ -246,7 +245,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $product = $event->getProduct();
         $expert = $product->getExpertUser();
         $message = \Swift_Message::newInstance()
-            ->setSubject('Время резервирования товара ' . $product->getName() . ' закончено')
+            ->setSubject('Время резервирования товара '.$product->getName().' закончено')
             ->setTo($expert->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -277,5 +276,4 @@ class ProductSubscriber implements EventSubscriberInterface
     {
         $this->em->flush();
     }
-
 }

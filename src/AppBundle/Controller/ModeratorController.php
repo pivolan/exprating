@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 23.02.16
- * Time: 23:02
+ * Time: 23:02.
  */
 
 namespace AppBundle\Controller;
-
 
 use AppBundle\Entity\Comment;
 use AppBundle\Event\ProductCommentedEvent;
@@ -27,6 +27,7 @@ class ModeratorController extends BaseController
 
     /**
      * @Route("/moderator/comments/{page}", defaults={"page":1}, name="moderator_comments")
+     *
      * @param Request $request
      * @param         $page
      *
@@ -50,6 +51,7 @@ class ModeratorController extends BaseController
             );
             $forms[] = $form->createView();
         }
+
         return $this->render('Moderator/messages.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORMS => $forms]);
     }
 
@@ -64,6 +66,7 @@ class ModeratorController extends BaseController
     /**
      * @Route("/moderator/decision/{id}", name="moderator_decision")
      * @ParamConverter(name="comment", class="AppBundle\Entity\Comment", options={"mapping":{"id":"id"}})
+     *
      * @param Request $request
      * @param Comment $comment
      *
@@ -78,6 +81,7 @@ class ModeratorController extends BaseController
             $this->get('event_dispatcher')->dispatch(ProductEvents::COMMENTED, $event);
             $this->addFlash(self::FLASH_MESSAGE, $event->getMessage());
         }
+
         return $this->render('Moderator/decision.html.twig', [self::KEY_FORM => $form, self::KEY_COMMENT => $comment]);
     }
 
@@ -87,8 +91,8 @@ class ModeratorController extends BaseController
         $feedbackCount = $this->getEm()->getRepository('AppBundle:Feedback')->newCount();
 
         return $this->render('Moderator/_menu.html.twig',
-            ['commentCount'  => $commentCount,
-             'feedbackCount' => $feedbackCount
+            ['commentCount' => $commentCount,
+             'feedbackCount' => $feedbackCount,
             ]);
     }
 }

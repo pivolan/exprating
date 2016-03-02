@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 04.02.16
- * Time: 12:50
+ * Time: 12:50.
  */
 
 namespace Exprating\CharacteristicBundle\Tests\Entity;
-
 
 use AppBundle\Tests\AbstractWebCaseTest;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
@@ -14,7 +14,6 @@ class CharacteristicTest extends AbstractWebCaseTest
 {
     public function testChoiceType()
     {
-
         $em = $this->doctrine->getManager();
 
         $characteristic = new Characteristic();
@@ -33,4 +32,4 @@ class CharacteristicTest extends AbstractWebCaseTest
         $em->persist($characteristic);
         $em->flush();
     }
-} 
+}

@@ -1,13 +1,12 @@
 <?php
+
 /**
  * Date: 19.02.16
- * Time: 19:24
+ * Time: 19:24.
  */
 
 namespace AppBundle\Tests\Event;
 
-
-use AppBundle\Entity\Category;
 use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
@@ -19,10 +18,6 @@ use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Event\ProductReservationOverEvent;
 use AppBundle\ProductFilter\ProductFilter;
 use AppBundle\Tests\AbstractWebCaseTest;
-use Faker\ORM\Doctrine\EntityPopulator;
-use Faker\ORM\Doctrine\Populator;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Security\Core\Tests\Exception\UsernameNotFoundExceptionTest;
 
 class ChainEventTest extends AbstractWebCaseTest
 {

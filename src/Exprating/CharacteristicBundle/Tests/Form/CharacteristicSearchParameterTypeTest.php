@@ -1,20 +1,17 @@
 <?php
+
 /**
  * Date: 11.02.16
- * Time: 11:14
+ * Time: 11:14.
  */
 
 namespace Exprating\CharacteristicBundle\Tests\Form;
 
 use AppBundle\Tests\AbstractWebCaseTest;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Exprating\CharacteristicBundle\CharacteristicSearchParam\CharacteristicSearchParameter;
-use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Form\CharacteristicSearchParameterType;
-use Exprating\CharacteristicBundle\Form\CommonProductSearchType;
-use Symfony\Component\Form\Test\TypeTestCase;
 
 class CharacteristicSearchParameterTypeTest extends AbstractWebCaseTest
 {
@@ -41,7 +38,6 @@ class CharacteristicSearchParameterTypeTest extends AbstractWebCaseTest
         $em->persist($characteristic);
         $em->flush();
 
-
         $object = new CharacteristicSearchParameter();
         $object->setName($name);
 
@@ -66,20 +62,19 @@ class CharacteristicSearchParameterTypeTest extends AbstractWebCaseTest
     {
         return [
             [
-                [self::FORM_DATA   => ['name' => 'test_filter_name_int', 'valueLTE' => 100, 'valueGTE' => 50],
+                [self::FORM_DATA => ['name' => 'test_filter_name_int', 'valueLTE' => 100, 'valueGTE' => 50],
                  self::OBJECT_DATA => ['valueLTE' => 100, 'valueGTE' => 50, 'value' => null],
-                 self::TYPE        => Characteristic::TYPE_INT
+                 self::TYPE => Characteristic::TYPE_INT,
                 ],
-                [self::FORM_DATA   => ['name' => 'test_filter_name_str', 'value' => 'olololo'],
+                [self::FORM_DATA => ['name' => 'test_filter_name_str', 'value' => 'olololo'],
                  self::OBJECT_DATA => ['valueLTE' => null, 'valueGTE' => null, 'value' => 'olololo'],
-                 self::TYPE        => Characteristic::TYPE_STRING
+                 self::TYPE => Characteristic::TYPE_STRING,
                 ],
-                [self::FORM_DATA   => ['name' => 'test_filter_name_dec', 'valueLTE' => 100.45, 'valueGTE' => 50.89],
+                [self::FORM_DATA => ['name' => 'test_filter_name_dec', 'valueLTE' => 100.45, 'valueGTE' => 50.89],
                  self::OBJECT_DATA => ['valueLTE' => 100.45, 'valueGTE' => 50.89, 'value' => null],
-                 self::TYPE        => Characteristic::TYPE_DECIMAL
+                 self::TYPE => Characteristic::TYPE_DECIMAL,
                 ],
-            ]
+            ],
         ];
     }
-
-} 
+}

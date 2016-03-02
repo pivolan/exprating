@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 16.02.16
- * Time: 22:42
+ * Time: 22:42.
  */
 
 namespace AppBundle\Event;
-
 
 use AppBundle\Entity\Comment;
 use Symfony\Component\EventDispatcher\Event;
@@ -29,7 +29,8 @@ class ProductCommentedEvent extends Event
      */
     public function __construct(Comment $comment)
     {
-        $this->comment = $comment;}
+        $this->comment = $comment;
+    }
 
     /**
      * @return string

@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Shop
+ * Shop.
  *
  * @ORM\Table(name="shop")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ShopRepository")
@@ -35,9 +35,8 @@ class Shop
      */
     private $image;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -47,7 +46,7 @@ class Shop
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -61,7 +60,7 @@ class Shop
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -76,7 +75,7 @@ class Shop
     }
 
     /**
-     * Set image
+     * Set image.
      *
      * @param string $image
      *
@@ -90,7 +89,7 @@ class Shop
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return string
      */

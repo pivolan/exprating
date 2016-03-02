@@ -1,14 +1,14 @@
 <?php
+
 /**
  * Date: 23.02.16
- * Time: 2:08
+ * Time: 2:08.
  */
 
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Product;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;

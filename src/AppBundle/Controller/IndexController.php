@@ -14,7 +14,6 @@ use Exprating\SearchBundle\SearchParams\SearchParams;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -39,13 +38,14 @@ class IndexController extends BaseController
         $popularProducts = $productRepository->findPopular();
         // replace this example code with whatever you need
         return $this->render('Index/index.html.twig', [
-            self::KEY_PRODUCTS         => $products,
+            self::KEY_PRODUCTS => $products,
             self::KEY_POPULAR_PRODUCTS => $popularProducts,
-            self::KEY_FORM_SEARCH      => $form->createView()]);
+            self::KEY_FORM_SEARCH => $form->createView(), ]);
     }
 
     /**
      * @Route("/tovar/search/{page}", name="product_search", defaults={"page"=1})
+     *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -66,6 +66,7 @@ class IndexController extends BaseController
             max($page, 1),
             self::LIMIT_PER_PAGE
         );
+
         return $this->render('Product/search.html.twig', [self::KEY_PAGINATION => $pagination, self::KEY_FORM_SEARCH => $form->createView()]);
     }
 
@@ -86,6 +87,7 @@ class IndexController extends BaseController
             $this->get('event_dispatcher')->dispatch(ProductEvents::COMMENTED, new ProductCommentedEvent($comment));
             $this->addFlash(self::FLASH_COMMENT_MESSAGE, 'Ваш комментарий будет опубликован после модерации');
         }
+
         return $this->redirectToRoute('product_detail', ['slug' => $comment->getProduct()->getSlug()]);
     }
 
@@ -98,7 +100,7 @@ class IndexController extends BaseController
     {
         $comment = new Comment();
         $formComment = $this->createForm(CommentType::class, $comment, [
-            'action' => $this->generateUrl('product_comment_create', ['slug' => $product->getSlug()])
+            'action' => $this->generateUrl('product_comment_create', ['slug' => $product->getSlug()]),
         ]);
         $similarProducts = $this->getEm()->getRepository('AppBundle:Product')->findSimilar($product);
 
@@ -106,10 +108,11 @@ class IndexController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $template = 'Product/detailPart.html.twig';
         }
+
         return $this->render($template, [
-            self::KEY_PRODUCT          => $product,
+            self::KEY_PRODUCT => $product,
             self::KEY_SIMILAR_PRODUCTS => $similarProducts,
-            self::KEY_FORM_COMMENT     => $formComment->createView()
+            self::KEY_FORM_COMMENT => $formComment->createView(),
         ]);
     }
 
@@ -127,8 +130,8 @@ class IndexController extends BaseController
         $validator = $this->get('validator');
         $errors = $validator->validate($productFilter);
         if (count($errors) > 0) {
-            $this->addFlash(self::FLASH_SORT_ERRORS, (string)$errors);
-            throw new HttpException(403, (string)$errors);
+            $this->addFlash(self::FLASH_SORT_ERRORS, (string) $errors);
+            throw new HttpException(403, (string) $errors);
         }
 
         $query = $this->getEm()->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);
@@ -142,8 +145,9 @@ class IndexController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $template = 'Product/listPart.html.twig';
         }
-        return $this->render($template, [self::KEY_PAGINATION   => $pagination,
-                                         self::KEY_CATEGORY     => $productFilter->getCategory(),
-                                         self::KEY_SORT_PRODUCT => $productFilter]);
+
+        return $this->render($template, [self::KEY_PAGINATION => $pagination,
+                                         self::KEY_CATEGORY => $productFilter->getCategory(),
+                                         self::KEY_SORT_PRODUCT => $productFilter, ]);
     }
 }

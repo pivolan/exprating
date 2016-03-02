@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 09.02.16
- * Time: 14:51
+ * Time: 14:51.
  */
 
 namespace Exprating\CharacteristicBundle\CharacteristicSearchParam;
@@ -53,6 +54,7 @@ class CharacteristicSearchParameter
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -70,6 +72,7 @@ class CharacteristicSearchParameter
     public function setValue($value)
     {
         $this->value = $value;
+
         return $this;
     }
 
@@ -89,6 +92,7 @@ class CharacteristicSearchParameter
     public function setValueGTE($valueGTE)
     {
         $this->valueGTE = $valueGTE;
+
         return $this;
     }
 
@@ -106,6 +110,7 @@ class CharacteristicSearchParameter
     public function setValueLTE($valueLTE)
     {
         $this->valueLTE = $valueLTE;
+
         return $this;
     }
 
@@ -123,6 +128,7 @@ class CharacteristicSearchParameter
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
-} 
+}

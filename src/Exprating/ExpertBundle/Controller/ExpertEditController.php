@@ -7,10 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * Class ExpertEditController
- * @package Exprating\ExpertBundle\Controller
- * @Security("has_role('ROLE_CURATOR')")
+ * Class ExpertEditController.
  *
+ * @Security("has_role('ROLE_CURATOR')")
  */
 class ExpertEditController extends Controller
 {
@@ -33,5 +32,4 @@ class ExpertEditController extends Controller
             // ...
         ]);
     }
-
 }

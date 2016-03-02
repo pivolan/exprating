@@ -19,5 +19,4 @@ class ExpertEditControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/cabinet/edit-expert/product/{slug}');
     }
-
 }

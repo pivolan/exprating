@@ -7,8 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * Class CategoryAdminController
- * @package Exprating\ExpertBundle\Controller
+ * Class CategoryAdminController.
+ *
  * @Security("has_role('ROLE_EXPERT_CATEGORY_ADMIN')")
  */
 class CategoryAdminController extends Controller
@@ -32,5 +32,4 @@ class CategoryAdminController extends Controller
             // ...
         ]);
     }
-
 }

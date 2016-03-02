@@ -1,25 +1,20 @@
 <?php
+
 /**
  * Date: 12.02.16
- * Time: 19:26
+ * Time: 19:26.
  */
 
 namespace Exprating\ImportBundle\Command;
-
 
 use AppBundle\Entity\Category;
 use Exprating\ImportBundle\CompareText\EvalTextRus;
 use Exprating\ImportBundle\Entity\AliasCategory;
 use Exprating\ImportBundle\Entity\Categories;
-use Exprating\ImportBundle\Entity\Item;
-use Exprating\ImportBundle\Entity\SiteProductRubrics;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AliasCategoryCommand extends ContainerAwareCommand
@@ -98,14 +93,13 @@ class AliasCategoryCommand extends ContainerAwareCommand
         $aliases = [];
         $matches = [];
         foreach ($lastLevelCategoriesImport as $key => $categoryImport) {
-            if($categoryImport->getAliasCategory())
-            {
+            if ($categoryImport->getAliasCategory()) {
                 continue;
             }
             $path1 = $categoryImport->getName();
             $categoryParentImport = $categoryImport;
             while ($categoryParentImport = $categoryParentImport->getParent()) {
-                $path1 .= ' ' . $categoryParentImport->getName();
+                $path1 .= ' '.$categoryParentImport->getName();
             }
             $prevPercent = 0.0;
             foreach ($lastLevelCategories as $category) {
@@ -113,7 +107,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
                 $path2Array = $this->em->getRepository('AppBundle:Category')->getPath($category);
                 $path2 = $category->getName();
                 foreach ($path2Array as $categoryParent) {
-                    $path2 .= ' ' . $categoryParent->getName();
+                    $path2 .= ' '.$categoryParent->getName();
                 }
                 $percent = 0;
                 similar_text($path1, $path2, $percent);
@@ -121,10 +115,10 @@ class AliasCategoryCommand extends ContainerAwareCommand
 
                 similar_text($categoryImport->getName(), $category->getName(), $percentCategoryName);
 
-                $sumPercent = (float)$percent + $percentCategoryName + $evalTextPercent;
+                $sumPercent = (float) $percent + $percentCategoryName + $evalTextPercent;
 
                 if ($sumPercent > $prevPercent) {
-                    $matches[$categoryImport->getId()] = [$path1, $category->getSlug() . ' ' . $path2, 0, $evalTextPercent, $percent];
+                    $matches[$categoryImport->getId()] = [$path1, $category->getSlug().' '.$path2, 0, $evalTextPercent, $percent];
                     $peopleGroup = AliasCategory::PEOPLE_GROUP_ALL;
                     $childText = 'детей детский детское детские дети мальчиков девочек';
                     $manText = 'мужчин мужская мужское';
@@ -133,16 +127,13 @@ class AliasCategoryCommand extends ContainerAwareCommand
                     $manPercent = $this->evalTextRus->evaltextRus(3, $categoryImport->getName(), $manText);
                     $womanPercent = $this->evalTextRus->evaltextRus(3, $categoryImport->getName(), $womanText);
                     $allPercent = 45;
-                    if($childPercent > $allPercent)
-                    {
+                    if ($childPercent > $allPercent) {
                         $peopleGroup = AliasCategory::PEOPLE_GROUP_CHILD;
                     }
-                    if($manPercent > $childPercent && $manPercent > $allPercent)
-                    {
+                    if ($manPercent > $childPercent && $manPercent > $allPercent) {
                         $peopleGroup = AliasCategory::PEOPLE_GROUP_MAN;
                     }
-                    if($womanPercent > $manPercent && $womanPercent > $childPercent && $womanPercent > $allPercent)
-                    {
+                    if ($womanPercent > $manPercent && $womanPercent > $childPercent && $womanPercent > $allPercent) {
                         $peopleGroup = AliasCategory::PEOPLE_GROUP_WOMAN;
                     }
 
@@ -157,7 +148,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
         foreach ($matches as $percent => $row) {
             echo sprintf("%d %d %s: %s -> %s \n", $row[3], $row[4], $row[2], $row[0], $row[1]);
         }
-        foreach($aliases as $alias){
+        foreach ($aliases as $alias) {
             $aliasCategory = new AliasCategory();
             $aliasCategory->setCategoryExpratingId($alias[1]->getSlug())
                 ->setCategoryIrecommend($alias[0])

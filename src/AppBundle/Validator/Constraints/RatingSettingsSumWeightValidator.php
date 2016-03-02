@@ -1,22 +1,15 @@
 <?php
+
 /**
  * Date: 16.02.16
- * Time: 17:00
+ * Time: 17:00.
  */
 
 namespace AppBundle\Validator\Constraints;
 
 use AppBundle\Entity\RatingSettings;
-use AppBundle\Entity\User;
-use AppBundle\ProductFilter\ProductFilter;
-use AppBundle\Security\ProductFilterVoter;
-use SensioLabs\Security\SecurityChecker;
-use Symfony\Component\Asset\Exception\LogicException;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-
 
 class RatingSettingsSumWeightValidator extends ConstraintValidator
 {

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 22.02.16
- * Time: 21:10
+ * Time: 21:10.
  */
 
 namespace AppBundle\Tests\Validator\Assert;
-
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\RatingSettings;

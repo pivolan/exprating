@@ -3,11 +3,10 @@
 namespace Exprating\CharacteristicBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Characteristic
+ * Characteristic.
  *
  * @ORM\Table(name="characteristic")
  * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\CharacteristicRepository")
@@ -61,7 +60,6 @@ class Characteristic
      */
     private $scale;
 
-
     /**
      * @var string
      *
@@ -69,9 +67,8 @@ class Characteristic
      */
     private $group;
 
-
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -85,7 +82,7 @@ class Characteristic
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -95,7 +92,7 @@ class Characteristic
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -109,7 +106,7 @@ class Characteristic
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -119,7 +116,7 @@ class Characteristic
     }
 
     /**
-     * Set label
+     * Set label.
      *
      * @param string $label
      *
@@ -133,7 +130,7 @@ class Characteristic
     }
 
     /**
-     * Get label
+     * Get label.
      *
      * @return string
      */
@@ -143,7 +140,7 @@ class Characteristic
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
      *
@@ -157,7 +154,7 @@ class Characteristic
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -167,7 +164,7 @@ class Characteristic
     }
 
     /**
-     * Set scale
+     * Set scale.
      *
      * @param string $scale
      *
@@ -181,7 +178,7 @@ class Characteristic
     }
 
     /**
-     * Get scale
+     * Get scale.
      *
      * @return string
      */
@@ -191,7 +188,7 @@ class Characteristic
     }
 
     /**
-     * Set group
+     * Set group.
      *
      * @param string $group
      *
@@ -205,7 +202,7 @@ class Characteristic
     }
 
     /**
-     * Get group
+     * Get group.
      *
      * @return string
      */
@@ -216,6 +213,6 @@ class Characteristic
 
     public function __toString()
     {
-        return $this->getName() . ' (' . $this->getGroup() . ')';
+        return $this->getName().' ('.$this->getGroup().')';
     }
 }

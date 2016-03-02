@@ -1,15 +1,13 @@
 <?php
+
 /**
  * Date: 17.02.16
- * Time: 15:47
+ * Time: 15:47.
  */
 
 namespace AppBundle\Tests\Acceptance;
 
-
-use AppBundle\Tests\AbstractWebCaseTest;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 
 class IndexPageTest extends WebTestCase
 {
@@ -77,7 +75,7 @@ class IndexPageTest extends WebTestCase
         //Зайдем на страницу товара и попробуем опубликовать
         $crawler = $client->click($takeEditlink);
         $form = $crawler->selectButton('Опубликовать')->form();
-        $client->submit($form, ['product[publish]'=>'Опубликовать']);
+        $client->submit($form, ['product[publish]' => 'Опубликовать']);
         $crawler = $client->followRedirect();
         $this->assertContains('Ваш обзор отправлен на премодерацию куратором. О его решении вы будете уведомлены по email', $crawler->filter('span.label')->parents()->text());
         //Проверим что повторно опубликовать обзор нельзя
@@ -104,7 +102,7 @@ class IndexPageTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('button:contains("Одобрить")')->count());
         $approveForm = $crawler->selectButton('Одобрить')->form();
         //Одобряем
-        $client->submit($approveForm, ['decision[approve]'=>'Одобрить']);
+        $client->submit($approveForm, ['decision[approve]' => 'Одобрить']);
         $client->followRedirect();
         $this->assertContains('Обзор успешно опубликован', $client->getResponse()->getContent());
         $link = $crawler->selectLink('Куратор')->link();

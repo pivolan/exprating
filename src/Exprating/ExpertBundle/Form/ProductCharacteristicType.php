@@ -1,23 +1,18 @@
 <?php
+
 /**
  * Date: 11.02.16
- * Time: 1:42
+ * Time: 1:42.
  */
 
 namespace Exprating\ExpertBundle\Form;
 
-
-use AppBundle\Entity\Product;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
-use Exprating\CharacteristicBundle\Tests\Entity\ProductCharacteristicTest;
-use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -42,7 +37,7 @@ class ProductCharacteristicType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'     => ProductCharacteristic::class
+            'data_class' => ProductCharacteristic::class,
         ]);
     }
 
@@ -54,20 +49,20 @@ class ProductCharacteristicType extends AbstractType
         if (!$productCharacteristic) {
             $form->add('value', null, ['label' => 'Значение']);
             $form->add('characteristic', null, ['label' => 'Название характеристики']);
+
             return;
         }
         $form->add('characteristic', null, ['label' => 'Название характеристики', 'disabled' => true]);
         $characteristic = $productCharacteristic->getCharacteristic();
         switch ($characteristic->getType()) {
             case Characteristic::TYPE_DECIMAL:
-                $form->add('value', NumberType::class, ['label' => $characteristic->getLabel() . ', ' .
+                $form->add('value', NumberType::class, ['label' => $characteristic->getLabel().', '.
                                                                    $characteristic->getScale(),
-                                                        'scale' => 2]);
+                                                        'scale' => 2, ]);
                 break;
             case Characteristic::TYPE_INT:
-                $form->add('value', NumberType::class, ['label'   => $characteristic->getLabel() . ', ' .
-                                                                     $characteristic->getScale()
-                                                        , 'scale' => 0]);
+                $form->add('value', NumberType::class, ['label' => $characteristic->getLabel().', '.
+                                                                     $characteristic->getScale(), 'scale' => 0, ]);
                 break;
             case Characteristic::TYPE_STRING:
                 $form->add('value', TextType::class, ['label' => $characteristic->getLabel()]);

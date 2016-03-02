@@ -4,12 +4,11 @@ namespace Exprating\ExpertBundle\Controller;
 
 use AppBundle\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * Class ModerationControllerController
- * @package Exprating\ExpertBundle\Controller
+ * Class ModerationControllerController.
+ *
  * @Security("has_role('ROLE_EXPERT_CURATOR')")
  */
 class ModerationControllerController extends BaseController
@@ -20,7 +19,7 @@ class ModerationControllerController extends BaseController
     public function waitListAction()
     {
         return $this->render('ExpratingExpertBundle:ModerationController:wait_list.html.twig', [
-            self::KEY_PRODUCTS=>$this->getUser()->getProducts()
+            self::KEY_PRODUCTS => $this->getUser()->getProducts(),
         ]);
     }
 

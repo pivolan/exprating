@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\StreamOutput;
 abstract class CommandTestCase extends WebTestCase
 {
     /**
-     * Runs a command and returns it output
+     * Runs a command and returns it output.
      *
      * @param $commandString
      *

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 12.02.16
- * Time: 19:26
+ * Time: 19:26.
  */
 
 namespace Exprating\ImportBundle\Command;
-
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\PeopleGroup;
@@ -13,10 +13,7 @@ use Exprating\ImportBundle\Entity\SiteProductRubrics;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportRubricsToCategoryCommand extends ContainerAwareCommand
@@ -69,7 +66,6 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $entityManagerImport = $this->emImport;
         $repo = $entityManagerImport->getRepository('ExpratingImportBundle:SiteProductRubrics');
         $appEntityManager = $this->em;
@@ -100,7 +96,7 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
                 if ($root) {
                     $category->setParent($root)
                         ->setName($rubric->getName())
-                        ->setSlug($root->getSlug() . '->' . $slug);
+                        ->setSlug($root->getSlug().'->'.$slug);
                 }
                 $appEntityManager->persist($category);
                 if (count($rubric->getChildren())) {
@@ -111,4 +107,4 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
         $recursiveFunction($rubrics, null);
         $appEntityManager->flush();
     }
-} 
+}

@@ -4,7 +4,6 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -34,7 +33,7 @@ class ModeratorCommentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Comment::class
+            'data_class' => Comment::class,
         ]);
     }
 
@@ -49,5 +48,4 @@ class ModeratorCommentType extends AbstractType
             $comment->setIsPublished(false);
         }
     }
-
 }

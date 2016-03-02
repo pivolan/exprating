@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 11.02.16
- * Time: 13:19
+ * Time: 13:19.
  */
 
 namespace Exprating\ExpertBundle\Tests\Form;
@@ -10,15 +11,9 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\RatingSettings;
 use AppBundle\Tests\AbstractWebCaseTest;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
-use Exprating\CharacteristicBundle\CharacteristicSearchParam\CharacteristicSearchParameter;
-use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
-use Exprating\CharacteristicBundle\Form\CommonProductSearchType;
 use Exprating\ExpertBundle\Form\ProductType;
-use Symfony\Component\Form\Test\TypeTestCase;
 
 class ProductTypeTest extends AbstractWebCaseTest
 {
@@ -79,7 +74,6 @@ class ProductTypeTest extends AbstractWebCaseTest
 
         $this->assertTrue($form->isSynchronized());
 
-
         $this->assertEquals($formData['rating1'], $product->getRating1());
         $this->assertEquals($formData['rating2'], $product->getRating2());
         $this->assertEquals($formData['rating3'], $product->getRating3());
@@ -91,7 +85,7 @@ class ProductTypeTest extends AbstractWebCaseTest
         $this->assertEquals($formData['expertComment'], $product->getExpertComment());
 
         $this->assertEquals(4, $product->getProductCharacteristics()->count());
-        foreach($product->getProductCharacteristics() as $productCharacteristic){
+        foreach ($product->getProductCharacteristics() as $productCharacteristic) {
             $this->assertContains($productCharacteristic->getValue(), [1001, 'u', 2.58, 3.58]);
         }
 
@@ -107,35 +101,35 @@ class ProductTypeTest extends AbstractWebCaseTest
     {
         return
             [[
-                 ['categorySlug'       => 'category_slug',
-                  'label1'             => 'label_1',
-                  'label2'             => 'label_2',
-                  'label3'             => 'label_3',
-                  'label4'             => 'label_4',
-                  'product'            => ['name' => 'product_name_test', 'minPrice' => 78.45],
-                  'characteristics'    => [
+                 ['categorySlug' => 'category_slug',
+                  'label1' => 'label_1',
+                  'label2' => 'label_2',
+                  'label3' => 'label_3',
+                  'label4' => 'label_4',
+                  'product' => ['name' => 'product_name_test', 'minPrice' => 78.45],
+                  'characteristics' => [
                       ['value' => 100, 'type' => Characteristic::TYPE_INT, 'label' => 'c_name_label_1', 'scale' => 'kg'],
                       ['value' => 'u', 'type' => Characteristic::TYPE_STRING, 'label' => 'c_name_label_2', 'scale' => null],
                       ['value' => 2.58, 'type' => Characteristic::TYPE_DECIMAL, 'label' => 'c_name_label_3', 'scale' => 'cm'],
                   ],
                   'new_characteristics' => [
-                      ['type' => Characteristic::TYPE_DECIMAL, 'slug' => 'qwerty', 'label' => 'c_name_label_4', 'scale' => 'cm']
+                      ['type' => Characteristic::TYPE_DECIMAL, 'slug' => 'qwerty', 'label' => 'c_name_label_4', 'scale' => 'cm'],
                   ],
-                  'formData'           => ['rating1'                => 11,
-                                           'rating2'                => 22,
-                                           'rating3'                => 33,
-                                           'rating4'                => 44,
-                                           'advantages'             => ['good', 'very good'],
-                                           'disadvantages'          => ['bad', 'very bad'],
-                                           'expertOpinion'          => 'opinion of expert',
-                                           'expertComment'          => 'comment of expert',
+                  'formData' => ['rating1' => 11,
+                                           'rating2' => 22,
+                                           'rating3' => 33,
+                                           'rating4' => 44,
+                                           'advantages' => ['good', 'very good'],
+                                           'disadvantages' => ['bad', 'very bad'],
+                                           'expertOpinion' => 'opinion of expert',
+                                           'expertComment' => 'comment of expert',
                                            'productCharacteristics' => [
                                                ['value' => 1001],
                                                ['value' => 'u'],
                                                ['value' => 2.58],
                                                ['value' => 3.58, 'characteristic' => 'qwerty'],
                                            ],
-                  ]
+                  ],
                  ],
              ]];
     }

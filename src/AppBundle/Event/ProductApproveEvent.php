@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 16.02.16
- * Time: 22:42
+ * Time: 22:42.
  */
 
 namespace AppBundle\Event;
-
 
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
@@ -66,4 +66,4 @@ class ProductApproveEvent extends Event implements ProductEventInterface
     {
         $this->curator = $curator;
     }
-} 
+}

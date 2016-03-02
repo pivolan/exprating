@@ -5,7 +5,7 @@ namespace Exprating\ImportBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Item
+ * Item.
  *
  * @ORM\Table(name="item")
  * @ORM\Entity(repositoryClass="Exprating\ImportBundle\Repository\ItemRepository")
@@ -65,14 +65,14 @@ class Item
     private $votesCount;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="urlCrc32", type="integer", nullable=false)
      */
     private $urlCrc32;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -89,7 +89,7 @@ class Item
      */
     private $parameters;
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -97,7 +97,7 @@ class Item
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -111,7 +111,7 @@ class Item
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -121,7 +121,7 @@ class Item
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
      *
@@ -135,7 +135,7 @@ class Item
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string
      */
@@ -145,7 +145,7 @@ class Item
     }
 
     /**
-     * Set categoryUrl
+     * Set categoryUrl.
      *
      * @param string $categoryUrl
      *
@@ -159,7 +159,7 @@ class Item
     }
 
     /**
-     * Get categoryUrl
+     * Get categoryUrl.
      *
      * @return string
      */
@@ -169,7 +169,7 @@ class Item
     }
 
     /**
-     * Set rating
+     * Set rating.
      *
      * @param string $rating
      *
@@ -183,7 +183,7 @@ class Item
     }
 
     /**
-     * Get rating
+     * Get rating.
      *
      * @return string
      */
@@ -193,7 +193,7 @@ class Item
     }
 
     /**
-     * Set votesCount
+     * Set votesCount.
      *
      * @param string $votesCount
      *
@@ -207,7 +207,7 @@ class Item
     }
 
     /**
-     * Get votesCount
+     * Get votesCount.
      *
      * @return string
      */
@@ -217,9 +217,9 @@ class Item
     }
 
     /**
-     * Set urlCrc32
+     * Set urlCrc32.
      *
-     * @param integer $urlCrc32
+     * @param int $urlCrc32
      *
      * @return Item
      */
@@ -231,9 +231,9 @@ class Item
     }
 
     /**
-     * Get urlCrc32
+     * Get urlCrc32.
      *
-     * @return integer
+     * @return int
      */
     public function getUrlCrc32()
     {
@@ -241,9 +241,9 @@ class Item
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -251,7 +251,7 @@ class Item
     }
 
     /**
-     * Add parameter
+     * Add parameter.
      *
      * @param \Exprating\ImportBundle\Entity\Parameters $parameter
      *
@@ -265,7 +265,7 @@ class Item
     }
 
     /**
-     * Remove parameter
+     * Remove parameter.
      *
      * @param \Exprating\ImportBundle\Entity\Parameters $parameter
      */
@@ -275,7 +275,7 @@ class Item
     }
 
     /**
-     * Get parameters
+     * Get parameters.
      *
      * @return \Doctrine\Common\Collections\Collection|Parameters[]
      */
@@ -285,7 +285,7 @@ class Item
     }
 
     /**
-     * Set category
+     * Set category.
      *
      * @param \Exprating\ImportBundle\Entity\Categories $category
      *
@@ -299,7 +299,7 @@ class Item
     }
 
     /**
-     * Get category
+     * Get category.
      *
      * @return \Exprating\ImportBundle\Entity\Categories
      */

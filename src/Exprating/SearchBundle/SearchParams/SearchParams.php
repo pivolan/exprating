@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Date: 08.02.16
- * Time: 16:36
+ * Time: 16:36.
  */
 
 namespace Exprating\SearchBundle\SearchParams;
 
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 class SearchParams
 {
@@ -33,6 +33,7 @@ class SearchParams
     public function setString($string)
     {
         $this->string = $string;
+
         return $this;
     }
-} 
+}

@@ -1,17 +1,13 @@
 <?php
+
 /**
  * Date: 11.02.16
- * Time: 1:42
+ * Time: 1:42.
  */
 
 namespace Exprating\ExpertBundle\Form;
 
-
 use AppBundle\Entity\Product;
-use Doctrine\DBAL\Types\ArrayType;
-use Exprating\CharacteristicBundle\Tests\Entity\ProductCharacteristicTest;
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -39,27 +35,27 @@ class ProductType extends AbstractType
             ->add('rating2', TextType::class)
             ->add('rating3', TextType::class)
             ->add('rating4', TextType::class)
-            ->add('advantages', CollectionType::class, ['label'         => 'Достоинства',
-                                                        'allow_add'     => true,
-                                                        'allow_delete'  => true,
-                                                        'entry_options' => ['label' => false]])
-            ->add('disadvantages', CollectionType::class, ['label'         => 'Недостатки',
-                                                           'allow_add'     => true,
-                                                           'allow_delete'  => true,
-                                                           'entry_options' => ['label' => false]])
+            ->add('advantages', CollectionType::class, ['label' => 'Достоинства',
+                                                        'allow_add' => true,
+                                                        'allow_delete' => true,
+                                                        'entry_options' => ['label' => false], ])
+            ->add('disadvantages', CollectionType::class, ['label' => 'Недостатки',
+                                                           'allow_add' => true,
+                                                           'allow_delete' => true,
+                                                           'entry_options' => ['label' => false], ])
             ->add('expertOpinion', null, ['label' => 'Заключение'])
             ->add('expertComment', TextareaType::class, ['label' => 'Комментарий'])
             ->add('productCharacteristics', CollectionType::class,
-                ['entry_type'    => ProductCharacteristicType::class,
-                 'entry_options' => ['label'         => false,
-                                     'error_mapping' => ['.' => 'value']],
-                 'allow_add'     => true,
-                 'allow_delete'  => true,
-                 'by_reference'  => false,
-                 'label'         => 'Характеристики'])
-            ->add(self::SAVE_SUBMIT, SubmitType::class, ['label' => "Сохранить"])
+                ['entry_type' => ProductCharacteristicType::class,
+                 'entry_options' => ['label' => false,
+                                     'error_mapping' => ['.' => 'value'], ],
+                 'allow_add' => true,
+                 'allow_delete' => true,
+                 'by_reference' => false,
+                 'label' => 'Характеристики', ])
+            ->add(self::SAVE_SUBMIT, SubmitType::class, ['label' => 'Сохранить'])
             ->add(self::PUBLISH_SUBMIT, SubmitType::class, ['label' => 'Опубликовать'])
-            ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);;
+            ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);
     }
 
     /**
@@ -68,7 +64,7 @@ class ProductType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Product::class
+            'data_class' => Product::class,
         ]);
     }
 

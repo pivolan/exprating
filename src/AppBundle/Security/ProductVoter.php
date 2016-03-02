@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 15.02.16
- * Time: 17:17
+ * Time: 17:17.
  */
 
 namespace AppBundle\Security;
@@ -121,6 +122,7 @@ class ProductVoter extends Voter
                 return true;
             }
         }
+
         return false;
     }
 
@@ -190,6 +192,7 @@ class ProductVoter extends Voter
         if (($product->getExpertUser() == null) && $user->getCategories()->contains($product->getCategory())) {
             return true;
         }
+
         return false;
     }
 
@@ -210,8 +213,10 @@ class ProductVoter extends Voter
                     не опубликован');
                 }
             }
+
             return true;
         }
+
         return false;
     }
 

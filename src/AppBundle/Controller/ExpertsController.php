@@ -2,17 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
-use Exprating\CharacteristicBundle\CharacteristicSearchParam\CommonProductSearch;
-use Exprating\CharacteristicBundle\Form\SearchTypeFabric;
-use JavierEguiluz\Bundle\EasyAdminBundle\Exception\ForbiddenActionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ExpertsController extends BaseController
@@ -27,8 +19,9 @@ class ExpertsController extends BaseController
     public function listAction()
     {
         $experts = $this->getEm()->getRepository('AppBundle:User')->findExperts();
+
         return $this->render('Experts/list.html.twig', [
-            self::KEY_EXPERTS => $experts
+            self::KEY_EXPERTS => $experts,
         ]);
     }
 
@@ -52,8 +45,8 @@ class ExpertsController extends BaseController
         );
 
         return $this->render('Experts/detail.html.twig', [
-            self::KEY_EXPERT          => $user,
-            self::KEY_EXPERT_OPINIONS => $pagination
+            self::KEY_EXPERT => $user,
+            self::KEY_EXPERT_OPINIONS => $pagination,
         ]);
     }
 }

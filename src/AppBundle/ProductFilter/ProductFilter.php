@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Date: 08.02.16
- * Time: 12:58
+ * Time: 12:58.
  */
 
 namespace AppBundle\ProductFilter;
@@ -13,8 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AcmeAssert;
 
 /**
- * Class ProductFilter
- * @package AppBundle\ProductFilter
+ * Class ProductFilter.
+ *
  * @Assert\GroupSequence({"ProductFilter", "After"})
  * @AcmeAssert\FilterAccessRights(groups={"After"})
  */
@@ -69,7 +70,6 @@ class ProductFilter
      */
     protected $category;
 
-
     /**
      * @var string
      *
@@ -97,6 +97,7 @@ class ProductFilter
     public function setSortDirection($sortDirection)
     {
         $this->sortDirection = $sortDirection;
+
         return $this;
     }
 
@@ -116,6 +117,7 @@ class ProductFilter
     public function setSortField($sortField)
     {
         $this->sortField = $sortField;
+
         return $this;
     }
 
@@ -135,6 +137,7 @@ class ProductFilter
     public function setCategory(Category $category)
     {
         $this->category = $category;
+
         return $this;
     }
 
@@ -154,6 +157,7 @@ class ProductFilter
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -173,6 +177,7 @@ class ProductFilter
     public function setCurator(User $curator = null)
     {
         $this->curator = $curator;
+
         return $this;
     }
 
@@ -192,6 +197,7 @@ class ProductFilter
     public function setPeopleGroup($peopleGroup)
     {
         $this->peopleGroup = $peopleGroup;
+
         return $this;
     }
-} 
+}

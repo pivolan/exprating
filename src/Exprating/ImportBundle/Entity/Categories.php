@@ -5,7 +5,7 @@ namespace Exprating\ImportBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Categories
+ * Categories.
  *
  * @ORM\Table(name="categories", indexes={@ORM\Index(name="categories_parentId", columns={"parentId"})})
  * @ORM\Entity(repositoryClass="Exprating\ImportBundle\Repository\CategoriesRepository")
@@ -37,7 +37,7 @@ class Categories
     private $url;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -69,7 +69,7 @@ class Categories
     private $items;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -78,7 +78,7 @@ class Categories
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -92,7 +92,7 @@ class Categories
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -102,7 +102,7 @@ class Categories
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
      *
@@ -116,7 +116,7 @@ class Categories
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string
      */
@@ -126,9 +126,9 @@ class Categories
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -136,7 +136,7 @@ class Categories
     }
 
     /**
-     * Add parameter
+     * Add parameter.
      *
      * @param \Exprating\ImportBundle\Entity\Parameters $parameter
      *
@@ -150,7 +150,7 @@ class Categories
     }
 
     /**
-     * Remove parameter
+     * Remove parameter.
      *
      * @param \Exprating\ImportBundle\Entity\Parameters $parameter
      */
@@ -160,7 +160,7 @@ class Categories
     }
 
     /**
-     * Get parameters
+     * Get parameters.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -170,7 +170,7 @@ class Categories
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
      * @param \Exprating\ImportBundle\Entity\Categories $parent
      *
@@ -184,7 +184,7 @@ class Categories
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return \Exprating\ImportBundle\Entity\Categories
      */
@@ -210,7 +210,7 @@ class Categories
     }
 
     /**
-     * Add item
+     * Add item.
      *
      * @param \Exprating\ImportBundle\Entity\Item $item
      *
@@ -224,7 +224,7 @@ class Categories
     }
 
     /**
-     * Remove item
+     * Remove item.
      *
      * @param \Exprating\ImportBundle\Entity\Item $item
      */
@@ -234,7 +234,7 @@ class Categories
     }
 
     /**
-     * Get items
+     * Get items.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

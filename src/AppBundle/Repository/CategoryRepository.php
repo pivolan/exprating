@@ -1,16 +1,15 @@
 <?php
+
 /**
  * Date: 24.02.16
- * Time: 17:35
+ * Time: 17:35.
  */
 
 namespace AppBundle\Repository;
 
-
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\Query;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 class CategoryRepository extends NestedTreeRepository
@@ -23,6 +22,7 @@ class CategoryRepository extends NestedTreeRepository
             ->where('u.id = :user_id')
             ->setParameter('user_id', $user->getId())
             ->getQuery();
+
         return $query;
     }
 
@@ -36,6 +36,7 @@ class CategoryRepository extends NestedTreeRepository
             ->groupBy('a.slug')
             ->having('count(children.slug) = :counter')
             ->setParameter('counter', 0);
+
         return $qb->getQuery()->getResult();
     }
 
@@ -50,6 +51,7 @@ class CategoryRepository extends NestedTreeRepository
             ->leftJoin('d.peopleGroups', 'e')
             ->leftJoin('d.ratingSettings', 'f');
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
 
@@ -60,12 +62,14 @@ class CategoryRepository extends NestedTreeRepository
             ->createQueryBuilder('b')
             ->where('b.category IN (:categories)')
             ->setParameter('categories', $categories);
+
         return $qb;
     }
 
     public function getProductsRecursiveQuery(Category $category)
     {
         $qb = $this->getProductsRecursiveQueryBuilder($category);
+
         return $qb->getQuery();
     }
 
@@ -78,6 +82,7 @@ class CategoryRepository extends NestedTreeRepository
         foreach ($result as $row) {
             $ids[] = $row['slug'];
         }
+
         return $ids;
     }
 }

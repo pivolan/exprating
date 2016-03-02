@@ -1,5 +1,7 @@
 <?php
+
 // src/AppBundle/Entity/User.php
+
 
 namespace AppBundle\Entity;
 
@@ -102,7 +104,7 @@ class User extends BaseUser
      * @var Category[]
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="admins")
      * @ORM\JoinTable(name="user_admin_category", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *            inverseJoinColumns={@ORM\JoinColumn(name="admin_category_id", referencedColumnName="slug")})
+     *                 inverseJoinColumns={@ORM\JoinColumn(name="admin_category_id", referencedColumnName="slug")})
      */
     private $adminCategories;
 
@@ -127,7 +129,7 @@ class User extends BaseUser
     }
 
     /**
-     * Add product
+     * Add product.
      *
      * @param \AppBundle\Entity\Product $product
      *
@@ -141,7 +143,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove product
+     * Remove product.
      *
      * @param \AppBundle\Entity\Product $product
      */
@@ -151,7 +153,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get products
+     * Get products.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -176,6 +178,7 @@ class User extends BaseUser
     public function setFullName($fullName)
     {
         $this->fullName = $fullName;
+
         return $this;
     }
 
@@ -195,11 +198,12 @@ class User extends BaseUser
     public function setAvatarImage($avatarImage)
     {
         $this->avatarImage = $avatarImage;
+
         return $this;
     }
 
     /**
-     * Set caption
+     * Set caption.
      *
      * @param string $caption
      *
@@ -213,7 +217,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get caption
+     * Get caption.
      *
      * @return string
      */
@@ -223,7 +227,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set birthday
+     * Set birthday.
      *
      * @param \DateTime $birthday
      *
@@ -237,7 +241,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get birthday
+     * Get birthday.
      *
      * @return \DateTime
      */
@@ -250,11 +254,12 @@ class User extends BaseUser
     {
         $date = new \DateTime();
         $diff = $date->diff($this->getBirthday());
+
         return $diff->y;
     }
 
     /**
-     * Set city
+     * Set city.
      *
      * @param string $city
      *
@@ -268,7 +273,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get city
+     * Get city.
      *
      * @return string
      */
@@ -278,7 +283,7 @@ class User extends BaseUser
     }
 
     /**
-     * Add category
+     * Add category.
      *
      * @param \AppBundle\Entity\Category $category
      *
@@ -292,7 +297,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove category
+     * Remove category.
      *
      * @param \AppBundle\Entity\Category $category
      */
@@ -302,7 +307,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get categories
+     * Get categories.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -312,7 +317,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set curator
+     * Set curator.
      *
      * @param \AppBundle\Entity\User $curator
      *
@@ -326,7 +331,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get curator
+     * Get curator.
      *
      * @return \AppBundle\Entity\User
      */
@@ -336,7 +341,7 @@ class User extends BaseUser
     }
 
     /**
-     * Add expert
+     * Add expert.
      *
      * @param \AppBundle\Entity\User $expert
      *
@@ -350,7 +355,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove expert
+     * Remove expert.
      *
      * @param \AppBundle\Entity\User $expert
      */
@@ -360,7 +365,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get experts
+     * Get experts.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -370,7 +375,7 @@ class User extends BaseUser
     }
 
     /**
-     * Add adminCategory
+     * Add adminCategory.
      *
      * @param \AppBundle\Entity\Category $adminCategory
      *
@@ -384,7 +389,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove adminCategory
+     * Remove adminCategory.
      *
      * @param \AppBundle\Entity\Category $adminCategory
      */
@@ -394,7 +399,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get adminCategories
+     * Get adminCategories.
      *
      * @return \Doctrine\Common\Collections\Collection|Category[]
      */
@@ -404,7 +409,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set canControlledPreCurator
+     * Set canControlledPreCurator.
      *
      * @param string $canControlledPreCurator
      *
@@ -418,7 +423,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get canControlledPreCurator
+     * Get canControlledPreCurator.
      *
      * @return string
      */

@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Date: 01.02.16
- * Time: 11:24
+ * Time: 11:24.
  */
+
 namespace Exprating\ExpertBundle\Menu;
 
 use AppBundle\Entity\User;
@@ -29,13 +31,14 @@ class Builder implements ContainerAwareInterface
         if ($user->hasRole(User::ROLE_EXPERT_CATEGORY_ADMIN)) {
             $menu->addChild('Редактирование категорий', ['route' => 'expert_category_admin_list']);
         }
-        if($user->hasRole(User::ROLE_EXPERT_CURATOR)){
+        if ($user->hasRole(User::ROLE_EXPERT_CURATOR)) {
             $menu->addChild('Обзоры на модерации', ['route' => 'expert_curator_product_list_wait']);
             $menu->addChild('Редактирование экспертов', ['route' => 'expert_curator_product_list']);
         }
-        if($user->hasRole(User::ROLE_ADMIN)){
+        if ($user->hasRole(User::ROLE_ADMIN)) {
             $menu->addChild('Назначение прав', ['route' => 'expert_admin_user_list']);
         }
+
         return $menu;
     }
 }

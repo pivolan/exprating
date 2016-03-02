@@ -1,32 +1,24 @@
 <?php
+
 /**
  * Date: 12.02.16
- * Time: 19:26
+ * Time: 19:26.
  */
 
 namespace Exprating\ImportBundle\Command;
 
-
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
-use Doctrine\DBAL\Driver\PDOException;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Exprating\ImportBundle\Entity\AliasItem;
-use Exprating\ImportBundle\Entity\Categories;
 use Exprating\ImportBundle\Entity\Item;
-use Exprating\ImportBundle\Entity\SiteProductRubrics;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\SplFileInfo;
 
 class ImportItemCommand extends ContainerAwareCommand
 {
@@ -97,12 +89,12 @@ class ImportItemCommand extends ContainerAwareCommand
         $itemIterate = $this->emImport->getRepository('ExpratingImportBundle:Item')->getAllQuery()->iterate();
 
         $files = [];
-        $path = $this->rootDir . '/../web/pics/*/*.*';
+        $path = $this->rootDir.'/../web/pics/*/*.*';
         foreach (glob($path) as $key => $filepath) {
             $file = new \SplFileInfo($filepath);
-            $filename = $file->getBasename('.' . $file->getExtension());
+            $filename = $file->getBasename('.'.$file->getExtension());
             if ($file->isFile()) {
-                $files[$filename] = str_replace($this->rootDir . '/../web', '', $file->getPathname());
+                $files[$filename] = str_replace($this->rootDir.'/../web', '', $file->getPathname());
             }
         }
         foreach ($itemIterate as $key => $row) {
@@ -131,23 +123,22 @@ class ImportItemCommand extends ContainerAwareCommand
                                     ->setName($files[$item->getId()])
                                     ->setIsMain(true)
                                     ->setFilename($files[$item->getId()]);
-
                             }
                             $product->addImage($image);
                             $this->em->persist($image);
                         }
                     }
                 } else {
-                    $output->writeln('not found: ' . $item->getId() . ' - ' . $item->getName());
+                    $output->writeln('not found: '.$item->getId().' - '.$item->getName());
                 }
             } else {
-                /**
+                /*
                  * Если нет, определяем по aliasCategory категорию, остальные параметры импортируем как есть.
                  * slug генерируем по имени, параметры импортируем, создаем если нет. Записываем в aliasItem соответствие
                  */
                 $product = $this->em->getRepository('AppBundle:Product')->findOneBy(['slug' => pathinfo($item->getUrl())['filename']]);
                 if ($product) {
-                    $output->writeln('exists: ' . $product->getSlug() . $item->getId() . $item->getName());
+                    $output->writeln('exists: '.$product->getSlug().$item->getId().$item->getName());
                     continue;
                 }
                 $product = new Product();
@@ -197,12 +188,11 @@ class ImportItemCommand extends ContainerAwareCommand
                             ->setName($files[$item->getId()])
                             ->setIsMain(true)
                             ->setFilename($files[$item->getId()]);
-
                     }
                     $product->addImage($image);
                     $this->em->persist($image);
                 }
-                $output->writeln($product->getId() . ' ' . $product->getName());
+                $output->writeln($product->getId().' '.$product->getName());
                 $this->em->persist($product);
                 $this->emImport->persist($aliasItem);
             }

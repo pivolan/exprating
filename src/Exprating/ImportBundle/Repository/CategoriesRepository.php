@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Date: 28.02.16
- * Time: 10:36
+ * Time: 10:36.
  */
 
 namespace Exprating\ImportBundle\Repository;
-
 
 use Exprating\ImportBundle\Entity\Categories;
 
