@@ -1,4 +1,8 @@
         {% block form_start_block %}{% endblock %}
+        <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
+            <a href="{{ path("homepage") }}">Главная</a>
+            {{ breadcrumbs(product.category, productPeopleGroups.0.name|default('dlya-vseh'))|raw }}
+        </div>
         {% block curator_decision %}
             {% if is_granted('MODERATE', product) %}
                 {{ render(controller('AppBundle:Curator:decisionEdit', {'slug': product.slug})) }}

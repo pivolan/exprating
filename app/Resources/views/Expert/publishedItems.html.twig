@@ -1,27 +1,2 @@
-{% extends 'Profile/user.html.twig' %}
+{% extends '_layout/Expert/_items.html.twig' %}
 {% block title %}Мои опубликованные обзоры{% endblock %}
-{% block breadcrumbs %}
-    {{ parent() }}
-    → <a href="{{ path("expert_published_items") }}">Мои опубликованные обзоры</a>
-    {% if category %}
-        → <a href="{{ path("expert_published_items", {"slug": category.slug}) }}">{{ category.name }}</a>
-    {% endif %}
-{% endblock %}
-{% block profile_body %}
-    <h1>Мои опубликованные обзоры</h1>
-
-    <div class="col-md-4">
-        <div id="treeCategory"></div>
-    </div>
-    <div class="col-md-8 history_category">
-        {{ include("Expert/part.html.twig") }}
-    </div>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">$(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
-    {{ include("_include/Category/_jsTree.html.twig", {'categories': user.categories, 'category': category, 'treeId': 'treeCategory'}) }}
-{% endblock %}

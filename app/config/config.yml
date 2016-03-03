@@ -205,6 +205,12 @@ assetic:
             inputs:
                 - 'js/Exp/exp_historical.js'
                 - 'js/curator_wait_list.init.js'
+        layout_expert_items_js:
+            inputs:
+                - 'js/Exp/exp_historical.js'
+                - 'js/external/jstree.min.js'
+                - 'js/Exp/exp_jstree.js'
+                - 'js/layout_expert_items.init.js'
         common_css:
             inputs:
                 - 'css/external/bootstrap332.min.css'

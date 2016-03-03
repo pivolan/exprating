@@ -124,7 +124,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
     {
         $queryBuilder = $this->qbByExpert($expert);
         if ($category) {
-            $queryBuilder->andWhere('a.category = :category')->setParameter('category', $category);
+            $categories = $this->_em->getRepository('AppBundle:Category')->getChildrenIds($category);
+            $queryBuilder->andWhere('a.category IN (:category)')->setParameter('category', $categories);
         }
         $query = $queryBuilder
             ->getQuery();
@@ -137,7 +138,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         $queryBuilder = $this->qbByExpert($expert)
             ->setParameter('isEnabled', false);
         if ($category) {
-            $queryBuilder->andWhere('a.category = :category')->setParameter('category', $category);
+            $categories = $this->_em->getRepository('AppBundle:Category')->getChildrenIds($category);
+            $queryBuilder->andWhere('a.category = :category')->setParameter('category', $categories);
         }
         $query = $queryBuilder
             ->getQuery();
@@ -150,7 +152,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function findFreeByCategoriesQuery(array $categories)
+    public function findFreeByCategoriesQuery($categories)
     {
         $qb = $this->createQueryBuilder('a')
             ->where('a.expertUser IS NULL')

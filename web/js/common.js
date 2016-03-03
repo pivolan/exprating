@@ -48,3 +48,5 @@ $(document).ready(function () {
 });
 //Главный namespace для внутренних функций проекта.
 Exp = {};
+//Namespace для передачи переменных из шаблона в js.
+Bridge = {};
