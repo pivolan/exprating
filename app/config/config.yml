@@ -176,21 +176,22 @@ assetic:
     filters:
         cssrewrite: ~
     assets:
-        mainJS:
+        common_js:
             inputs:
-                - 'js/jquery.min.js'
-                - 'js/jquey-cookie/jquery.cookie.js'
-                - 'js/superfish/superfish.js'
+                - 'js/external/jquery.min.js'
+                - 'js/external/jquery.cookie.js'
+                - 'js/external/superfish.js'
+                - 'js/external/jquery.mmenu.min.all.js'
+                - 'js/external/bootstrap332.min.js'
+                - 'js/external/jquery.history.js'
                 - 'js/common.js'
-                - 'js/jquery.mmenu.min.all.js'
-                - 'js/bootstrap.min.js'
-
-        mainCSS:
+                - 'js/include/social_wrapper.js'
+        common_css:
             inputs:
-                - 'css/bootstrap.min.css'
-                - 'css/superfish.css'
+                - 'css/external/bootstrap332.min.css'
+                - 'css/external/superfish.css'
                 - 'css/style.css'
-                - 'css/jquery.mmenu.all.css'
+                - 'css/external/jquery.mmenu.all.css'
 
 exprating_search:
     engine: '%search_engine%'
