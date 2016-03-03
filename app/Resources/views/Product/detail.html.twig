@@ -11,7 +11,7 @@
     {% javascripts '@product_detail_js' output='bundles/js/*' %}
         <script src="{{ asset(asset_url) }}" type="text/javascript" async="async"></script>
     {% endjavascripts %}
-    {% if is_grandted('ROLE_EXPERT') %}
+    {% if is_granted('ROLE_EXPERT') %}
         {% javascripts '@product_edit_js' output='bundles/js/*'%}
             <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
         {% endjavascripts %}
