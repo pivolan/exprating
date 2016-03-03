@@ -11,24 +11,18 @@
             <div id="treeCategory" class="categories well"></div>
         </div>
         <div class="col-md-7 history_category">
-            {% if category %}
-                {{ include("CategoryAdmin/categoriesPart.html.twig") }}
-            {% endif %}
+            {{ include("CategoryAdmin/categoriesPart.html.twig") }}
         </div>
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {{ include("_include/Category/_jsTree.html.twig", {'treeId': 'treeCategory'}) }}
-    <script src="{{ asset('js/external/jquery.form.min.js') }}"></script>
     <script type="text/javascript">
-        $(document).on('submit', 'form[name="rating_settings"]', function (event) {
-            event.preventDefault();
-            $(this).ajaxSubmit({
-                success: function (response) {
-                    $('div.history_category').html(response);
-                }
-            });
-        });
+        Bridge.js_tree_data = [
+            {{ include("_include/Category/_jsTree.json.twig") }}
+        ];
     </script>
+    {% javascripts '@category_admin_categories_js' output='bundles/js/*'%}
+        <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    {% endjavascripts %}
 {% endblock %}
