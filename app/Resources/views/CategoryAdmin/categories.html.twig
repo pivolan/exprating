@@ -20,7 +20,7 @@
 {% block javascripts %}
     {{ parent() }}
     {{ include("_include/Category/_jsTree.html.twig", {'treeId': 'treeCategory'}) }}
-    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script src="{{ asset('js/external/jquery.form.min.js') }}"></script>
     <script type="text/javascript">
         $(document).on('submit', 'form[name="rating_settings"]', function (event) {
             event.preventDefault();

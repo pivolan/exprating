@@ -17,12 +17,10 @@
           type="image/vnd.microsoft.icon">
 
     {% block stylesheets %}
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <!-- Optional theme -->
-        <link href="{{ asset('/css/superfish.css') }}" type="text/css" rel="stylesheet">
-        <link href="{{ asset('/css/style.css') }}" type="text/css" rel="stylesheet">
-        <link href="{{ asset('/css/jquery.mmenu.all.css') }}" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('css/external/bootstrap332.min.css') }}">
+        <link href="{{ asset('css/external/superfish.css') }}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('css/external/jquery.mmenu.all.css') }}" type="text/css" rel="stylesheet"/>
     {% endblock %}
 
 </head>
@@ -541,14 +539,13 @@
 <!--! end of #container -->
 
 {% block javascripts %}
-    <script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/jquey-cookie/jquery.cookie.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/superfish/superfish.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/common-2.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/jquery.mmenu.min.all.js') }}" type="text/javascript"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <!-- History.js -->
-    <script src="//browserstate.github.io/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
+    <script src="{{ asset('js/external/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/external/jquery.cookie.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/external/superfish.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/external/jquery.mmenu.min.all.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/external/bootstrap332.min.js') }}"></script>
+    <script src="{{ asset('js/external/jquery.history.js') }}"></script>
+    <script src="{{ asset('js/common.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 </body>

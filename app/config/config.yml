@@ -181,7 +181,7 @@ assetic:
                 - 'js/jquery.min.js'
                 - 'js/jquey-cookie/jquery.cookie.js'
                 - 'js/superfish/superfish.js'
-                - 'js/common-2.js'
+                - 'js/common.js'
                 - 'js/jquery.mmenu.min.all.js'
                 - 'js/bootstrap.min.js'
 
