@@ -27,3 +27,5 @@ parameters:
     # database_test_path:     %kernel.root_dir%/app.sqlite
     # Search engine "sql" or "sphinx"
     search_engine: sql
+    #asset_base_url: //exprating.ru/
+    asset_base_url: ~

@@ -18,7 +18,7 @@
 
     {% block stylesheets %}
         {% stylesheets '@common_css' output='bundles/common.css' %}
-            <link rel="stylesheet" href="{{ asset_url }}"/>
+            <link rel="stylesheet" href="{{ asset(asset_url) }}"/>
         {% endstylesheets %}
     {% endblock %}
 
@@ -526,7 +526,7 @@
 
 {% block javascripts %}
     {% javascripts '@common_js' output='bundles/js/common.js' %}
-        <script src="{{ asset_url }}" type="text/javascript"></script>
+        <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
     {% endjavascripts %}
 {% endblock %}
 
