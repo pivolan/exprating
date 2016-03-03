@@ -186,6 +186,25 @@ assetic:
                 - 'js/external/jquery.history.js'
                 - 'js/common.js'
                 - 'js/include/social_wrapper.js'
+        product_list_js:
+            inputs:
+                - 'js/Exp/exp_hide_menu_on_click.js'
+                - 'js/Exp/exp_historical.js'
+                - 'js/product_list.init.js'
+        product_detail_js:
+            inputs:
+                - 'js/external/jquery.form.min.js'
+                - 'js/Exp/exp_form_ajax.js'
+                - 'js/product_detail.init.js'
+        product_edit_js:
+            inputs:
+                - 'js/Exp/exp_historical.js'
+                - 'js/plugins/outer_html.plugin.js'
+                - 'js/product_edit.init.js'
+        curator_wait_list_js:
+            inputs:
+                - 'js/Exp/exp_historical.js'
+                - 'js/curator_wait_list.init.js'
         common_css:
             inputs:
                 - 'css/external/bootstrap332.min.css'

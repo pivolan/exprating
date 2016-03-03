@@ -8,7 +8,12 @@
 {% block sidebar_right %}{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" async="async" src="{{ asset('js/detail.js') }}"></script>
-    <script src="{{ asset('js/external/jquery.form.min.js') }}"></script>
-    <script src="{{ asset('js/edit.js') }}"></script>
+    {% javascripts '@product_detail_js' output='bundles/js/*' %}
+        <script src="{{ asset(asset_url) }}" type="text/javascript" async="async"></script>
+    {% endjavascripts %}
+    {% if is_grandted('ROLE_EXPERT') %}
+        {% javascripts '@product_edit_js' output='bundles/js/*'%}
+            <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+        {% endjavascripts %}
+    {% endif %}
 {% endblock %}

@@ -46,3 +46,5 @@ $(document).ready(function () {
         $(this).parent().hide();
     });
 });
+//Главный namespace для внутренних функций проекта.
+Exp = {};

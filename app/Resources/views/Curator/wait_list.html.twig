@@ -10,5 +10,7 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" async="async" src="{{ asset('js/list.js') }}"></script>
+    {% javascripts '@curator_wait_list_js' output='bundles/js/*' %}
+        <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    {% endjavascripts %}
 {% endblock %}
