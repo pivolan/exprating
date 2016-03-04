@@ -9,6 +9,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Product;
 use AppBundle\Form\ImageType;
+use Exprating\CharacteristicBundle\Form\ProductCharacteristicType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
