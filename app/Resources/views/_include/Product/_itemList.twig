@@ -2,7 +2,7 @@
     <a href="{{ path('product_detail', {'slug':product.slug}) }}">
         <div class="sticker-rating">{{ product.rating }}</div>
         {% block additional %}{% endblock %}
-        <div class="img-wrapper" style="background-image: url({{ product.previewImage|imagine_filter('product_list_filter') }});"></div>
+        <div class="img-wrapper" style="background-image: url({{ product.previewImage|default('/images/default.jpeg')|imagine_filter('product_list_filter') }});"></div>
         <div class="sticker-title">{{ product.name }}</div>
         <div class="sticker-price">от {{ product.minPrice }} <span class="sign_ruble">p<span>уб.</span></span></div>
         <div class="sticker-category">{{ product.category.name }}</div>

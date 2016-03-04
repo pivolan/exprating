@@ -31,7 +31,12 @@ class PreRemoveImageListener
     {
         $entity = $event->getObject();
         if ($entity instanceof Image && $entity->getProduct()) {
-            unlink($this->pathFinder->getWebDir().$entity->getFilename());
+            if ($entity->getIsMain()) {
+                $entity->getProduct()->setPreviewImage(null);
+            }
+            if (is_file($this->pathFinder->getWebDir().$entity->getFilename())) {
+                unlink($this->pathFinder->getWebDir().$entity->getFilename());
+            }
         }
     }
 }

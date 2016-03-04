@@ -53,6 +53,7 @@ $('#fileupload').fileupload({
             var htmlForm = $htmlForm.outerHTML();
             var indexNext = $('div.image-form > div').length - 1;
             $htmlImage.find('button').data('image_id', indexNext);
+            $htmlImage.find('input.image-is-main').val('product_images_' + indexNext + '_isMain');
             $('div.product-images').append($htmlImage);
             var htmlNew = htmlForm.replaceAll('__name__', indexNext).replaceAll('__empty__', '');
             var $htmlNew = $(htmlNew).removeAttr('class').removeAttr('data-type');
@@ -73,4 +74,9 @@ $(document).on('click', '.image-remove', function (event) {
     var imageId = $(this).data('image_id');
     $(this).parent().remove();
     $('.image-form div[data-index="' + imageId + '"]').remove();
+});
+$(document).on('change', 'input.image-is-main[type="radio"]', function (event) {
+    $('.image-form input[name*="isMain"]').val(0);
+    var selector = $(this).val();
+    $('#' + selector).val(1);
 });

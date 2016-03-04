@@ -47,11 +47,14 @@ class ImageType extends AbstractType
         /** @var Image $data */
         $data = $event->getData();
         $form = $event->getForm();
-        if (($data->getProduct() == null) && $form->getParent() && $form->getParent()->getParent()) {
+        if ($form->getParent() && $form->getParent()->getParent()) {
             /** @var Product $product */
             $product = $form->getParent()->getParent()->getData();
             if ($product instanceof Product) {
                 $data->setProduct($product);
+                if ($data->getIsMain()) {
+                    $product->setPreviewImage($data->getFilename());
+                }
             }
             $event->setData($data);
         }

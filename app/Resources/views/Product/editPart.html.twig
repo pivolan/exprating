@@ -98,7 +98,8 @@
 {% block expert_opinion %}
     <h3>{{ form_label(form.expertOpinion) }}</h3>
     <span class="label label-info">Используется разметка markdown</span>
-    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExpertOpinion" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExpertOpinion"
+            aria-expanded="false" aria-controls="collapseExample">
         Просмотр <span class="caret"></span>
     </button>
     <div class="collapse" id="collapseExpertOpinion">
@@ -128,16 +129,18 @@
 {% endblock %}
 {% block form_comment_block %}{% endblock %}
 {% block delete_button %}
-    <a href="" class="btn btn-danger btn-xs image-remove" data-toggle="tooltip" title="Удалить" data-image="{{ loop.index0 }}">
+    <a href="" class="btn btn-danger btn-xs image-remove" data-toggle="tooltip" title="Удалить"
+       data-image="{{ loop.index0 }}">
         <span class="glyphicon glyphicon-remove"></span>
     </a>
 {% endblock %}
 {% block sidebar_left_after_price %}
     <div>
-        <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}" multiple />
+        <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}" multiple/>
         <input type="hidden" name="product_id" value="{{ product.id }}"/>
         <div class="progress">
-            <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+            <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                 aria-valuemax="100" style="width: 0%;">
                 <span class="sr-only">0% Complete</span>
             </div>
         </div>
@@ -165,6 +168,13 @@
                             title="Удалить">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
+                    <input title="Главная картинка"
+                           data-toggle="tooltip"
+                           type="radio" {{ image.isMain?'checked="checked"':'' }}
+                           name="main_image"
+                           value="product_images_{{ loop.index0 }}_isMain"
+                           class="image-is-main"
+                    />
                 </div>
             {% endfor %}
             <div class="col-sm-4 hidden" data-type="prototype">
@@ -189,6 +199,13 @@
                         title="Удалить">
                     <span class="glyphicon glyphicon-trash"></span>
                 </button>
+                <input title="Главная картинка"
+                       data-toggle="tooltip"
+                       type="radio"
+                       name="main_image"
+                       value=""
+                       class="image-is-main"
+                />
             </div>
         </div>
         <div class="image-form">
@@ -199,8 +216,10 @@
                 </div>
             {% endfor %}
             <div class="hidden" data-index="__name__" data-type="prototype">
-                <input id="__empty__product_images___name___filename" name="__empty__product[images][__name__][filename]" class="form-control" value="" type="hidden">
-                <input id="__empty__product_images___name___isMain" name="__empty__product[images][__name__][isMain]" class="form-control" value="" type="hidden">
+                <input id="__empty__product_images___name___filename"
+                       name="__empty__product[images][__name__][filename]" class="form-control" value="" type="hidden">
+                <input id="__empty__product_images___name___isMain" name="__empty__product[images][__name__][isMain]"
+                       class="form-control" value="" type="hidden">
             </div>
         </div>
     </div>

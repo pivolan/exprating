@@ -1573,6 +1573,10 @@ textarea.decision.form-control {
 .row .image-zoom-in {
   left: 20px;
 }
+.row input.image-is-main {
+  position: absolute;
+  top: -5px;
+}
 .row .image-remove, .row .image-zoom-in {
   position: absolute;
   top: 27px;
