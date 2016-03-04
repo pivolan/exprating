@@ -46,19 +46,19 @@ $('#fileupload').fileupload({
     dataType: 'json',
     done: function (e, data) {
         if (data.result.filename) {
-            var $htmlImage = $('div.product-images div:last').clone();
+            var $htmlImage = $('div.product-images div[data-type="prototype"]').clone();
             $htmlImage.find('img').attr('src', data.result.filename);
-            var $htmlForm = $('div.image-form > div:last');
+            $htmlImage.removeClass('hidden').removeAttr('data-type');
+            var $htmlForm = $('div.image-form > div[data-type="prototype"]');
             var htmlForm = $htmlForm.outerHTML();
-            var index = $htmlForm.data('index');
-            var indexNext = index + 1;
+            var indexNext = $('div.image-form > div').length - 1;
             $htmlImage.find('button').data('image_id', indexNext);
             $('div.product-images').append($htmlImage);
-            var htmlNew = htmlForm.replaceAll('_' + index + '_', '_' + indexNext + '_').replaceAll('\[' + index + '\]', '[' + indexNext + ']').replaceAll('data-index="' + index + '"', 'data-index="' + indexNext + '"');
-            var $htmlNew = $(htmlNew);
+            var htmlNew = htmlForm.replaceAll('__name__', indexNext).replaceAll('__empty__', '');
+            var $htmlNew = $(htmlNew).removeAttr('class').removeAttr('data-type');
             $htmlNew.find("input:first").val(data.result.filename);
             $htmlNew.find("input:last").val(0);
-            $htmlForm.after($htmlNew);
+            $('div.image-form').append($htmlNew);
         }
     },
     progressall: function (e, data) {

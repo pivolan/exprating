@@ -167,6 +167,29 @@
                     </button>
                 </div>
             {% endfor %}
+            <div class="col-sm-4 hidden" data-type="prototype">
+                <img src=""
+                     height="80"
+                     width="80"
+                     alt="">
+                <button class="btn btn-info btn-xs image-zoom-in" type="button"
+                        aria-haspopup="true"
+                        aria-expanded="true" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-zoom-in"></span>
+                </button>
+                <ul class="dropdown-menu form-group">
+                    <li>
+                        <img src="" alt="">
+                    </li>
+                </ul>
+                <button class="btn btn-danger btn-xs image-remove"
+                        type="button"
+                        data-image_id="__name__"
+                        data-toggle="tooltip"
+                        title="Удалить">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </div>
         </div>
         <div class="image-form">
             {% for imageFields in form.images %}
@@ -175,6 +198,10 @@
                     {{ form_widget(imageFields.isMain) }}
                 </div>
             {% endfor %}
+            <div class="hidden" data-index="__name__" data-type="prototype">
+                <input id="__empty__product_images___name___filename" name="__empty__product[images][__name__][filename]" class="form-control" value="" type="hidden">
+                <input id="__empty__product_images___name___isMain" name="__empty__product[images][__name__][isMain]" class="form-control" value="" type="hidden">
+            </div>
         </div>
     </div>
 {% endblock %}
