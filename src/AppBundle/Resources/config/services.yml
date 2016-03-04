@@ -45,5 +45,11 @@ services:
         class: AppBundle\PathFinder\ProductImage
         arguments: [ '%kernel.root_dir%' ]
 
+    app.event_listener.pre_remove_image_listener:
+        class: AppBundle\Event\Listener\PreRemoveImageListener
+        arguments: [ '@app.path_finder.product_image' ]
+        tags:
+            - { name: doctrine.event_listener, event: preRemove, connection: default }
+
 imports:
     - { resource: "subscribers.yml" }

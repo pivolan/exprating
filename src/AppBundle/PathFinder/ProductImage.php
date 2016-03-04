@@ -64,4 +64,9 @@ class ProductImage
     {
         $this->productId = $productId;
     }
+
+    public function getWebDir()
+    {
+        return $this->rootDir . '/../web';
+    }
 }
