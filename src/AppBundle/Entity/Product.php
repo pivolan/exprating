@@ -189,7 +189,8 @@ class Product
 
     /**
      * @var Image[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="product",
+     *     cascade={"all"}, orphanRemoval=true)
      */
     private $images;
 

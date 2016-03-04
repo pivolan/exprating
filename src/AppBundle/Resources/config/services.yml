@@ -41,5 +41,9 @@ services:
         tags:
             - { name: security.voter }
 
+    app.path_finder.product_image:
+        class: AppBundle\PathFinder\ProductImage
+        arguments: [ '%kernel.root_dir%' ]
+
 imports:
     - { resource: "subscribers.yml" }

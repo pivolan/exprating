@@ -8,8 +8,10 @@
 namespace Exprating\CharacteristicBundle\Form;
 
 use AppBundle\Entity\Product;
+use AppBundle\Form\ImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,6 +32,7 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('id', HiddenType::class, ['disabled'=>true])
             ->add('rating1', TextType::class)
             ->add('rating2', TextType::class)
             ->add('rating3', TextType::class)
@@ -56,6 +59,16 @@ class ProductType extends AbstractType
             )
             ->add('expertOpinion', null, ['label' => 'Заключение'])
             ->add('expertComment', TextareaType::class, ['label' => 'Комментарий'])
+            ->add(
+                'images',
+                CollectionType::class,
+                [
+                    'entry_type'    => ImageType::class,
+                    'entry_options' => ['label' => false],
+                    'allow_delete'  => true,
+                    'allow_add'     => true,
+                ]
+            )
             ->add(
                 'productCharacteristics',
                 CollectionType::class,

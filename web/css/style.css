@@ -1566,3 +1566,18 @@ textarea.decision.form-control {
 {
   color: #fff;
 }
+
+.row .image-remove {
+  right: 20px;
+}
+.row .image-zoom-in {
+  left: 20px;
+}
+.row .image-remove, .row .image-zoom-in {
+  position: absolute;
+  top: 27px;
+  display: none;
+}
+.row .col-sm-4:hover .image-remove, .row .col-sm-4:hover .image-zoom-in {
+  display: block;
+}

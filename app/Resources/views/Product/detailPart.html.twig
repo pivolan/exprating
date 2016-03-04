@@ -78,7 +78,7 @@
                 <div class="carousel-inner">
                     {% for image in product.images %}
                         <div class="item {{ image.isMain ? 'active':'' }}">
-                            <div class="img-wrapper" style="background-image: url({{ image.filename|imagine_filter('product_image') }});"></div>
+                            <div class="img-wrapper" style="background-image: url({{ image.filename|imagine_filter('product_filter') }});"></div>
                         </div>
                     {% endfor %}
                 </div>
@@ -293,6 +293,7 @@
                 <div class="price-from">
                     Цена от: {{ product.minPrice }} <span class="sign_ruble">p<span>уб.</span></span>
                 </div>
+                {% block sidebar_left_after_price %}{% endblock %}
                 {% block similar_products %}
                     <div class="block similar-tovar-wrapper">
                         <div class="content">

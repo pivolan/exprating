@@ -198,6 +198,9 @@ assetic:
                 - 'js/product_detail.init.js'
         product_edit_js:
             inputs:
+                - 'js/external/jquery.ui.widget.js'
+                - 'js/external/jquery.iframe-transport.js'
+                - 'js/external/jquery.fileupload.js'
                 - 'js/Exp/exp_historical.js'
                 - 'js/plugins/outer_html.plugin.js'
                 - 'js/product_edit.init.js'
@@ -236,16 +239,33 @@ liip_imagine:
 
     filter_sets:
         cache: ~
-        product_list_image:
+        original_filter:
+            quality: 90
+            filters:
+                strip: ~
+
+        product_list_filter:
             quality: 90
             filters:
                 downscale: { max: [280, 250]}
                 thumbnail: { size: [280, 250], mode: inset }
                 background: { size: [280, 250] color: '#fff' }
 
-        product_image:
+        product_filter:
             quality: 90
             filters:
                 downscale: { max: [270, 270]}
                 thumbnail: { size: [270, 270], mode: inset }
                 background: { size: [270, 270] color: '#fff' }
+
+        product_edit_filter:
+            quality: 90
+            filters:
+                downscale: { max: [80, 80]}
+                thumbnail: { size: [80, 80], mode: inset }
+                background: { size: [80, 80] color: '#fff' }
+
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: blueimp

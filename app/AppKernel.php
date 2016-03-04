@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Exprating\SearchBundle\ExpratingSearchBundle(),
             new Exprating\ImportBundle\ExpratingImportBundle(),
+            new Oneup\UploaderBundle\OneupUploaderBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

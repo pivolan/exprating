@@ -33,7 +33,7 @@ class Image
      *
      * @ORM\Column(name="name", type="string", length=255, options={"comment":"Имя картинки"})
      */
-    private $name;
+    private $name = 'image';
 
     /**
      * @var bool

@@ -117,6 +117,57 @@
     <button class="btn btn-success" data-type="add-ch" type="button">Добавить</button>
 {% endblock %}
 {% block form_comment_block %}{% endblock %}
+{% block delete_button %}
+    <a href="" class="btn btn-danger btn-xs image-remove" data-toggle="tooltip" title="Удалить" data-image="{{ loop.index0 }}">
+        <span class="glyphicon glyphicon-remove"></span>
+    </a>
+{% endblock %}
+{% block sidebar_left_after_price %}
+    <div>
+        <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}" multiple />
+        <input type="hidden" name="product_id" value="{{ product.id }}"/>
+        <div class="progress">
+            <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                <span class="sr-only">0% Complete</span>
+            </div>
+        </div>
+        <div class="row product-images">
+            {% for image in product.images %}
+                <div class="col-sm-4">
+                    <img src="{{ image.filename | imagine_filter('product_edit_filter') }}"
+                         height="80"
+                         width="80"
+                         alt="{{ image.alt }}">
+                    <button class="btn btn-info btn-xs image-zoom-in" type="button"
+                            aria-haspopup="true"
+                            aria-expanded="true" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-zoom-in"></span>
+                    </button>
+                    <ul class="dropdown-menu form-group">
+                        <li>
+                            <img src="{{ image.filename | imagine_filter('original_filter') }}" alt="">
+                        </li>
+                    </ul>
+                    <button class="btn btn-danger btn-xs image-remove"
+                            type="button"
+                            data-image_id="{{ loop.index0 }}"
+                            data-toggle="tooltip"
+                            title="Удалить">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="image-form">
+            {% for imageFields in form.images %}
+                <div data-index="{{ loop.index0 }}">
+                    {{ form_widget(imageFields.filename) }}
+                    {{ form_widget(imageFields.isMain) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
 {% block similar_products %}{% endblock %}
 
 {% block form_end_block %}{{ form_end(form) }}{% endblock %}

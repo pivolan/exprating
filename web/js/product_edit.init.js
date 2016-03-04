@@ -28,7 +28,7 @@ $(document).on('submit', 'form[name="product"],form[name="product_change_expert"
     event.preventDefault();
     var buttonId = event.originalEvent.explicitOriginalTarget.id;
     var data = {};
-    if(buttonId == 'product_publish'){
+    if (buttonId == 'product_publish') {
         data = {'product[publish]': 'Сохранить'};
     }
     $(this).ajaxSubmit({
@@ -40,4 +40,37 @@ $(document).on('submit', 'form[name="product"],form[name="product_change_expert"
 });
 $(document).on('click', '.dropdown-menu', function (event) {
     event.stopPropagation();
+});
+
+$('#fileupload').fileupload({
+    dataType: 'json',
+    done: function (e, data) {
+        if (data.result.filename) {
+            var $htmlImage = $('div.product-images div:last').clone();
+            $htmlImage.find('img').attr('src', data.result.filename);
+            var $htmlForm = $('div.image-form > div:last');
+            var htmlForm = $htmlForm.outerHTML();
+            var index = $htmlForm.data('index');
+            var indexNext = index + 1;
+            $htmlImage.find('button').data('image_id', indexNext);
+            $('div.product-images').append($htmlImage);
+            var htmlNew = htmlForm.replaceAll('_' + index + '_', '_' + indexNext + '_').replaceAll('\[' + index + '\]', '[' + indexNext + ']').replaceAll('data-index="' + index + '"', 'data-index="' + indexNext + '"');
+            var $htmlNew = $(htmlNew);
+            $htmlNew.find("input:first").val(data.result.filename);
+            $htmlNew.find("input:last").val(0);
+            $htmlForm.after($htmlNew);
+        }
+    },
+    progressall: function (e, data) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#progress').css(
+            'width',
+            progress + '%'
+        );
+    }
+});
+$(document).on('click', '.image-remove', function (event) {
+    var imageId = $(this).data('image_id');
+    $(this).parent().remove();
+    $('.image-form div[data-index="' + imageId + '"]').remove();
 });
