@@ -23,6 +23,7 @@ class UserEditType extends AbstractType
                 [
                     'label'    => 'Роли',
                     'multiple' => true,
+                    'expanded' => true,
                     'choices'  => [
                         'Простой пользователь' => User::ROLE_USER,
                         'Эксперт'              => User::ROLE_EXPERT,

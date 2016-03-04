@@ -85,4 +85,24 @@ class CategoryRepository extends NestedTreeRepository
 
         return $ids;
     }
+
+    public function getForJsTree(User $user = null, User $admin = null)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.name, a.slug as id, b.slug as parent_id')
+            ->leftJoin('a.parent', 'b');
+        if ($user) {
+            $qb->innerJoin('a.experts', 'e')
+                ->where('e.id = :user')
+                ->setParameter('user', $user);
+        }
+        if ($admin) {
+            $qb->innerJoin('a.admins', 'ad')
+                ->where('ad.id = :admin')
+                ->setParameter('admin', $admin);
+        }
+
+        return $qb->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+    }
 }

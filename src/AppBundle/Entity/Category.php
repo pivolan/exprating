@@ -107,6 +107,13 @@ class Category
     private $products;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="categories")
+     */
+    private $experts;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -114,6 +121,7 @@ class Category
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->characteristics = new \Doctrine\Common\Collections\ArrayCollection();
         $this->peopleGroups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->experts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getRoot()
@@ -303,7 +311,7 @@ class Category
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getSlug();
     }
 
     /**

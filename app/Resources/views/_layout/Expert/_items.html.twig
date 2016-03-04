@@ -21,7 +21,7 @@
     {{ parent() }}
     <script type="text/javascript">
         Bridge.js_tree_data = [
-            {{ include("_include/Category/_jsTree.json.twig", {'categories': user.categories, 'category': category}) }}
+            {{ include("_include/Category/_jsTree.json.twig", {'categories': categories, 'category': category}) }}
         ];
     </script>
     {% javascripts '@layout_expert_items_js' output='bundles/js/*'%}

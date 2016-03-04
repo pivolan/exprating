@@ -1,15 +1,15 @@
 {% set current_category = category %}
 {% for category in categories %}
 {
-    id: '{{ category.slug }}',
-    parent: '{{ category.parent.slug|default('#') }}',
+    id: '{{ category.id }}',
+    parent: '{{ category.parent_id|default('#') }}',
     text: '{{ category.name|raw }}',
     a_attr: {
-        href: '{{ path(app.request.get('_route'), {'slug': category.slug}) }}',
-        data_slug: '{{ category.slug }}',
+        href: '{{ path(app.request.get('_route'), {'slug': category.id}) }}',
+        data_slug: '{{ category.id }}',
     },
     state: {
-        selected: {{ category == current_category?'true':'false' }}
+        selected: {{ category.id == current_category?'true':'false' }}
     }
 },
 {% endfor %}

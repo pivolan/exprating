@@ -41,7 +41,7 @@ class ExpertController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $template = 'Expert/part.html.twig';
         }
-
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($this->getUser());
         return $this->render(
             $template,
             [
@@ -49,6 +49,7 @@ class ExpertController extends BaseController
                 self::KEY_USER       => $this->getUser(),
                 self::KEY_PAGE       => $page,
                 self::KEY_CATEGORY   => $category,
+                self::KEY_CATEGORIES => $categories,
             ]
         );
     }
@@ -75,6 +76,7 @@ class ExpertController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $template = 'Expert/part.html.twig';
         }
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($this->getUser());
 
         return $this->render(
             $template,
@@ -83,6 +85,7 @@ class ExpertController extends BaseController
                 self::KEY_USER       => $this->getUser(),
                 self::KEY_PAGE       => $page,
                 self::KEY_CATEGORY   => $category,
+                self::KEY_CATEGORIES => $categories,
             ]
         );
     }
@@ -110,6 +113,8 @@ class ExpertController extends BaseController
             $template = 'Expert/part.html.twig';
         }
 
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($this->getUser());
+
         return $this->render(
             $template,
             [
@@ -117,6 +122,7 @@ class ExpertController extends BaseController
                 self::KEY_USER       => $this->getUser(),
                 self::KEY_PAGE       => $page,
                 self::KEY_CATEGORY   => $category,
+                self::KEY_CATEGORIES => $categories,
             ]
         );
     }

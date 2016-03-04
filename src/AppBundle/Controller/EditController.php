@@ -13,7 +13,7 @@ use AppBundle\Event\ProductEvents;
 use AppBundle\Event\ProductPublishRequestEvent;
 use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Security\ProductVoter;
-use Exprating\CharacteristicBundle\Form\ProductType;
+use AppBundle\Form\ProductType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

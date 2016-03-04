@@ -49,11 +49,12 @@ class CategoryAdminController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $template = 'CategoryAdmin/categoriesPart.html.twig';
         }
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree(null, $this->getUser());
 
         return $this->render(
             $template,
             [
-                self::KEY_CATEGORIES => $this->getUser()->getAdminCategories(),
+                self::KEY_CATEGORIES => $categories,
                 self::KEY_CATEGORY   => $category,
                 self::KEY_FORM       => $form->createView(),
             ]

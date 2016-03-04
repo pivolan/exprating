@@ -5,7 +5,7 @@
  * Time: 1:42.
  */
 
-namespace Exprating\CharacteristicBundle\Form;
+namespace AppBundle\Form;
 
 use AppBundle\Entity\Product;
 use AppBundle\Form\ImageType;
