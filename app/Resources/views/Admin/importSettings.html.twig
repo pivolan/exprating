@@ -12,6 +12,7 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/external/jstree.min.js') }}"></script>
     <script type="text/javascript">
         var selected_by_event = false;
         $('#treeCategory').jstree({
