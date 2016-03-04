@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Exprating\SearchBundle\ExpratingSearchBundle(),
             new Exprating\ImportBundle\ExpratingImportBundle(),
             new Oneup\UploaderBundle\OneupUploaderBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
