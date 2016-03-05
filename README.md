@@ -37,3 +37,12 @@ vendor/bin/phpunit
 Первая команда обновит все зависимости и почистит кэш. Мы не храним все зависимости в репе.
 Вторая команда обновит структуру базы данных.
 Третья команда обновит данные в базе, точнее загрзуит все заного.
+
+***Включить Sphinx***
+
+indexer --config app/config/Sphinx/sphinx.conf --rotate --all
+
+searchd --config app/config/Sphinx/sphinx.conf
+
+Поставить в конфиге parameters.yml:
+    search_engine: sphinx

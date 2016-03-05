@@ -96,6 +96,7 @@
                                 </form>
                             {% endblock %}
                         </div>
+                        {% block pagination %}{% endblock %}
 
                         <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
                             <div class="index-title">{% block product_list_title %}Новые экспертные заключения{% endblock %}</div>
@@ -233,6 +234,8 @@
                                 {% endblock %}
                             </ul>
                         </div>
+
+                        {{ block('pagination') }}
 
                         {% block products_popular %}
                             <div class="best-products p-stikers" style="margin-bottom: 40px;">

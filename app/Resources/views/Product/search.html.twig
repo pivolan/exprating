@@ -3,6 +3,7 @@
     {{ include("_include/Form/search.html.twig", {'form': formSearch}) }}
 {% endblock %}
 {% block product_list_title %}Найденные экспертные заключения{% endblock %}
+{% block pagination %}{{ knp_pagination_render(pagination) }}{% endblock %}
 {% block products_list %}
     {% for product in pagination %}
         {{ include("_include/Product/_itemList.twig") }}

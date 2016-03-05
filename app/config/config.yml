@@ -279,4 +279,4 @@ sphinxsearch:
     indexes:
         # List of sphinx index names (key) and entity names (value)
         # to use it in searchEx() method
-        expProduct: "AppBundle:Product"
+        expProductIdx: "AppBundle:Product"
