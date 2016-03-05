@@ -10,7 +10,7 @@ use AppBundle\Validator\Constraints as AcmeAssert;
  * ratingSettings.
  *
  * @ORM\Table(name="rating_settings")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ratingSettingsRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RatingSettingsRepository")
  * @Assert\GroupSequence({"RatingSettings", "After"})
  * @AcmeAssert\RatingSettingsSumWeight(groups={"After"})
  */
