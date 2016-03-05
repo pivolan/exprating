@@ -113,7 +113,7 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
                 if ($root) {
                     $category->setParent($root)
                         ->setName($rubric->getName())
-                        ->setSlug($root->getSlug().'->'.$slug);
+                        ->setSlug($slug.'-'.$rubric->getId());
                 }
                 $appEntityManager->persist($category);
                 if (count($rubric->getChildren())) {
