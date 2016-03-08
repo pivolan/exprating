@@ -22,6 +22,7 @@
 /vendor/
 /web/bundles/
 /web/pics/
+/web/assetic/
 /web/uploads/
 /web/media/
 .idea/
