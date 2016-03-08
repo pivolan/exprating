@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b00698b6023d9a4cef7ed454e4e600ad",
-    "content-hash": "e3811021fd1038a57e2c21f0dc0fd06e",
+    "hash": "6d6f0f4756287a6097b4768e367e6a36",
+    "content-hash": "4f6878a582a4ac14c0bfb27c85c732aa",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1371,16 +1371,16 @@
         },
         {
             "name": "iakumai/sphinxsearch-bundle",
-            "version": "0.2.5",
+            "version": "0.2.6",
             "target-dir": "IAkumaI/SphinxsearchBundle",
             "source": {
                 "type": "git",
                 "url": "git@github.com:pivolan/SphinxsearchBundle.git",
-                "reference": "71e1513291bb686b30243e02e8376043c5d7d82b"
+                "reference": "b61bf0065a66492b705592cde6bd8e60ff6797be"
             },
             "require": {
                 "gigablah/sphinxphp": "2.0.*",
-                "php": ">=7.0.2"
+                "php": ">=5.3.3"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1413,7 +1413,7 @@
             "support": {
                 "email": "meru.no.akuma@gmail.com"
             },
-            "time": "2016-01-19 01:05:58"
+            "time": "2016-03-08 07:32:30"
         },
         {
             "name": "imagine/imagine",
