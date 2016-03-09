@@ -52,14 +52,14 @@ class Category
     /**
      * @Gedmo\TreeRoot
      * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="tree_root", referencedColumnName="slug", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="tree_root", referencedColumnName="slug", onDelete="SET NULL")
      */
     private $root;
 
     /**
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="slug", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="slug", onDelete="SET NULL")
      */
     private $parent;
 
