@@ -8,6 +8,7 @@
 namespace AppBundle\Tests\Repository;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\ProductFilter\ProductFilter;
@@ -24,9 +25,13 @@ class ProductRepositoryTest extends AbstractWebCaseTest
     {
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
+        $peopleGrouop = new PeopleGroup();
+        $peopleGrouop->setSlug('test')->setName('test_name');
+        $em->persist($peopleGrouop);
         $category = new Category();
         $category->setSlug('test_category')
-            ->setName('test category');
+            ->setName('test category')
+            ->addPeopleGroup($peopleGrouop);
         $em->persist($category);
         for ($i = 0; $i < 10; $i++) {
             $product = new Product();
@@ -34,7 +39,8 @@ class ProductRepositoryTest extends AbstractWebCaseTest
                 ->setSlug("test_name_$i")
                 ->setIsEnabled(true)
                 ->setRating($i)
-                ->setCategory($category);
+                ->setCategory($category)
+                ->addPeopleGroup($peopleGrouop);
             $em->persist($product);
         }
         $product = new Product();
@@ -89,6 +95,11 @@ class ProductRepositoryTest extends AbstractWebCaseTest
             $this->assertGreaterThanOrEqual($prevProduct->getRating(), $product->getRating());
             $prevProduct = $product;
         }
+        $productFilter->setPeopleGroup($peopleGrouop);
+        $query = $em->getRepository('AppBundle:Product')->findByFilterQuery($productFilter);
+        /** @var Product[] $products */
+        $products = $query->getResult();
+        $this->assertEquals(10, count($products));
     }
 
     public function testFindSimilar()

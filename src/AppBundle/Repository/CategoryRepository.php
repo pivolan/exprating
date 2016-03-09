@@ -79,7 +79,7 @@ class CategoryRepository extends NestedTreeRepository
         $qb = $this->getChildrenQueryBuilder($category, false, null, 'ASC', true)
             ->select('node.slug');
         if($peopleGroup){
-            $qb->innerJoin('node.PeopleGroup', 'pg', 'WITH', 'pg.slug = :peopleGroup')
+            $qb->innerJoin('node.peopleGroups', 'pg', 'WITH', 'pg.slug = :peopleGroup')
                 ->setParameter('peopleGroup', $peopleGroup->getSlug());
         }
         $result = $qb->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);

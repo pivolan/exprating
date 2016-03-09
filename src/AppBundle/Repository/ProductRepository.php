@@ -33,7 +33,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         $category = $productFilter->getCategory();
         $categories = $this->_em->getRepository('AppBundle:Category')->getChildrenIds(
             $category,
-            $productFilter->getPeopleGroup());
+            $productFilter->getPeopleGroup()
+        );
         $isEnabled = ($productFilter->getStatus() == null);
 
         $qb = $this->createQueryBuilder('a')
@@ -53,9 +54,11 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('status', CuratorDecision::STATUS_WAIT);
             }
         }
-        if ($productFilter->getPeopleGroup() != ProductFilter::PEOPLE_GROUP_ALL) {
+        if ($productFilter->getPeopleGroup() &&
+            $productFilter->getPeopleGroup()->getSlug() != ProductFilter::PEOPLE_GROUP_ALL
+        ) {
             $qb->innerJoin('a.peopleGroups', 'e', 'WITH', 'e.slug = :people_group')
-                ->setParameter('people_group', $productFilter->getPeopleGroup());
+                ->setParameter('people_group', $productFilter->getPeopleGroup()->getSlug());
         }
         $qb->orderBy('a.'.$productFilter->getSortField(), $productFilter->getSortDirection());
 

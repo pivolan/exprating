@@ -73,9 +73,9 @@ class ProductFilter
     /**
      * @var PeopleGroup
      *
-     * @Assert\Valid(message = "Выберите верный фильтр")
+     * @Assert\Valid
      */
-    protected $peopleGroup = self::PEOPLE_GROUP_ALL;
+    protected $peopleGroup;
 
     /**
      * @return mixed

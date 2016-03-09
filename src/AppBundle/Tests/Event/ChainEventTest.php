@@ -8,6 +8,7 @@
 namespace AppBundle\Tests\Event;
 
 use AppBundle\Entity\CuratorDecision;
+use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\Event\ProductApproveEvent;
@@ -109,9 +110,10 @@ class ChainEventTest extends AbstractWebCaseTest
         /** @var User $expert */
         $expert = $em->getRepository('AppBundle:User')->findOneBy(['username' => 'expert']);
         $count = $em->getRepository('AppBundle:CuratorDecision')->countNew($curator);
-        $filter = (new ProductFilter())->setCategory($expert->getCategories()[0])->setStatus(
-            ProductFilter::STATUS_FREE
-        );
+        $filter = (new ProductFilter())
+            ->setCategory($expert->getCategories()[0])
+            ->setStatus(ProductFilter::STATUS_FREE)
+            ->setPeopleGroup($em->getRepository('AppBundle:PeopleGroup')->find(PeopleGroup::SLUG_ALL));
         /** @var Product[] $freeProducts */
         $freeProducts = $em->getRepository('AppBundle:Product')->findByFilterQuery($filter)->getResult();
         $product = $freeProducts[0];

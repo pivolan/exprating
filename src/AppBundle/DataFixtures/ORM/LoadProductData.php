@@ -2,6 +2,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductShopPrice;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -14,6 +15,8 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
     {
         srand(1);
         $user = $this->getReference(LoadUserData::REFERENCE_EXPERT_USER);
+        /** @var PeopleGroup $peopleGroup */
+        $peopleGroup = $this->getReference(LoadPeopleGroupData::DLYA_VSEH);
         for ($i = 1; $i <= 150; $i++) {
             $categoryKey = $i % 5;
             $category = $this->getReference("category_$categoryKey");
@@ -33,6 +36,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
                 ->setEnabledAt(new \DateTime())
                 ->setSlug('product_'.$i)
                 ->setCategory($category)
+                ->addPeopleGroup($peopleGroup)
                 ->setManufacturer($manufacturer)
                 ->setExpertUser(($isEnabled || rand(0, 1)) ? $user : null)
                 ->setExpertComment(
@@ -126,6 +130,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
         return [
             LoadUserData::class,
             LoadCategoryData::class,
+            LoadPeopleGroupData::class,
             LoadShopData::class,
             LoadManufacturerData::class,
         ];
