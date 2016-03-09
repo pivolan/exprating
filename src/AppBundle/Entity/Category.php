@@ -81,8 +81,9 @@ class Category
      *
      * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic")
      * @ORM\JoinTable(name="category_characteristic", joinColumns={@ORM\JoinColumn(name="category_id",
-     *     referencedColumnName="slug")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug")})
+     *     referencedColumnName="slug", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug",
+     *     onDelete="CASCADE")})
      */
     private $characteristics;
 
@@ -96,8 +97,9 @@ class Category
      * @var PeopleGroup[]
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup")
      * @ORM\JoinTable(name="category_people_group", joinColumns={@ORM\JoinColumn(name="category_id",
-     *     referencedColumnName="slug")},
-     *                    inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug")})
+     *     referencedColumnName="slug", onDelete="CASCADE")},
+     *                    inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug",
+     * onDelete="CASCADE")})
      */
     private $peopleGroups;
 
