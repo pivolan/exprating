@@ -98,8 +98,14 @@
 {% block expert_opinion %}
     <h3>{{ form_label(form.expertOpinion) }}</h3>
     <span class="label label-info">Используется разметка markdown</span>
-    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExpertOpinion"
-            aria-expanded="false" aria-controls="collapseExample">
+    <button
+            id="opinion_preview"
+            class="btn btn-info"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapseExpertOpinion"
+            aria-expanded="false"
+            aria-controls="collapseExample">
         Просмотр <span class="caret"></span>
     </button>
     <div class="collapse" id="collapseExpertOpinion">

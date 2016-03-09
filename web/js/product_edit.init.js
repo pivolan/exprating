@@ -81,3 +81,10 @@ $(document).on('change', 'input.image-is-main[type="radio"]', function (event) {
     var selector = $(this).val();
     $('#' + selector).val(1);
 });
+$(document).on('click', '#opinion_preview', function () {
+    var $this = $(this);
+    var selector = $this.data('target') + ' > div.well';
+    var converter = new showdown.Converter();
+    var text = $('#product_expertOpinion').val();
+    $(selector).html(converter.makeHtml(text));
+});
