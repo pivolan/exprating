@@ -101,8 +101,10 @@ class User extends BaseUser
      * @var Category[]
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
-     * @ORM\JoinTable(name="user_category", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
-     *            inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug", onDelete="CASCADE")})
+     * @ORM\JoinTable(name="user_category", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id",
+     *     onDelete="CASCADE")},
+     *            inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug",
+     * onDelete="CASCADE")})
      */
     private $categories;
 
@@ -111,7 +113,8 @@ class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="admins")
      * @ORM\JoinTable(name="user_admin_category", joinColumns={
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
-     *                 inverseJoinColumns={@ORM\JoinColumn(name="admin_category_id", referencedColumnName="slug", onDelete="CASCADE")})
+     *                 inverseJoinColumns={@ORM\JoinColumn(name="admin_category_id", referencedColumnName="slug",
+     *      onDelete="CASCADE")})
      */
     private $adminCategories;
 
