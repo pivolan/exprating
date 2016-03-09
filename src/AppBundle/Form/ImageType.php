@@ -6,7 +6,6 @@
 
 namespace AppBundle\Form;
 
-
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
 use Symfony\Component\Form\AbstractType;

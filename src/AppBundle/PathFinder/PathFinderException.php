@@ -6,7 +6,6 @@
 
 namespace AppBundle\PathFinder;
 
-
 class PathFinderException extends \LogicException
 {
 

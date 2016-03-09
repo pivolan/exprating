@@ -33,7 +33,7 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', HiddenType::class, ['disabled'=>true])
+            ->add('id', HiddenType::class, ['disabled' => true])
             ->add('rating1', TextType::class)
             ->add('rating2', TextType::class)
             ->add('rating3', TextType::class)

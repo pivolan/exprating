@@ -6,7 +6,6 @@
 
 namespace Exprating\SearchBundle\Sphinx;
 
-
 final class IndexNames
 {
     const INDEX_PRODUCT = 'expProductIdx';

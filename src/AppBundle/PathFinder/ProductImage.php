@@ -6,7 +6,6 @@
 
 namespace AppBundle\PathFinder;
 
-
 use AppBundle\Entity\Product;
 
 class ProductImage
@@ -67,6 +66,6 @@ class ProductImage
 
     public function getWebDir()
     {
-        return $this->rootDir . '/../web';
+        return $this->rootDir.'/../web';
     }
 }

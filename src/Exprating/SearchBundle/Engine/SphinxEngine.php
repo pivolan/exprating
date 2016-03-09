@@ -46,9 +46,10 @@ class SphinxEngine implements EngineInterface
     {
         $result = $this->sphinxSearch->searchEx($string, IndexNames::INDEX_PRODUCT);
         $entities = [];
-        foreach($result['matches'] as $match){
+        foreach ($result['matches'] as $match) {
             $entities[] = $match['entity'];
         }
+
         return $entities;
     }
 }
