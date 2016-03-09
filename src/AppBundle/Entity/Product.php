@@ -224,7 +224,7 @@ class Product
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="slug")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="slug", onDelete="SET NULL")
      */
     private $category;
 

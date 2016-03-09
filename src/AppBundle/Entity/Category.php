@@ -473,4 +473,38 @@ class Category
     {
         return $this->products;
     }
+
+    /**
+     * Add expert
+     *
+     * @param \AppBundle\Entity\User $expert
+     *
+     * @return Category
+     */
+    public function addExpert(\AppBundle\Entity\User $expert)
+    {
+        $this->experts[] = $expert;
+
+        return $this;
+    }
+
+    /**
+     * Remove expert
+     *
+     * @param \AppBundle\Entity\User $expert
+     */
+    public function removeExpert(\AppBundle\Entity\User $expert)
+    {
+        $this->experts->removeElement($expert);
+    }
+
+    /**
+     * Get experts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExperts()
+    {
+        return $this->experts;
+    }
 }
