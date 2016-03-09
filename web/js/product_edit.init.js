@@ -41,34 +41,35 @@ $(document).on('submit', 'form[name="product"],form[name="product_change_expert"
 $(document).on('click', '.dropdown-menu', function (event) {
     event.stopPropagation();
 });
-
-$('#fileupload').fileupload({
-    dataType: 'json',
-    done: function (e, data) {
-        if (data.result.filename) {
-            var $htmlImage = $('div.product-images div[data-type="prototype"]').clone();
-            $htmlImage.find('img').attr('src', data.result.filename);
-            $htmlImage.removeClass('hidden').removeAttr('data-type');
-            var $htmlForm = $('div.image-form > div[data-type="prototype"]');
-            var htmlForm = $htmlForm.outerHTML();
-            var indexNext = $('div.image-form > div').length - 1;
-            $htmlImage.find('button').data('image_id', indexNext);
-            $htmlImage.find('input.image-is-main').val('product_images_' + indexNext + '_isMain');
-            $('div.product-images').append($htmlImage);
-            var htmlNew = htmlForm.replaceAll('__name__', indexNext).replaceAll('__empty__', '');
-            var $htmlNew = $(htmlNew).removeAttr('class').removeAttr('data-type');
-            $htmlNew.find("input:first").val(data.result.filename);
-            $htmlNew.find("input:last").val(0);
-            $('div.image-form').append($htmlNew);
+$(document).on('click', '#fileupload', function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            if (data.result.filename) {
+                var $htmlImage = $('div.product-images div[data-type="prototype"]').clone();
+                $htmlImage.find('img').attr('src', data.result.filename);
+                $htmlImage.removeClass('hidden').removeAttr('data-type');
+                var $htmlForm = $('div.image-form > div[data-type="prototype"]');
+                var htmlForm = $htmlForm.outerHTML();
+                var indexNext = $('div.image-form > div').length - 1;
+                $htmlImage.find('button').data('image_id', indexNext);
+                $htmlImage.find('input.image-is-main').val('product_images_' + indexNext + '_isMain');
+                $('div.product-images').append($htmlImage);
+                var htmlNew = htmlForm.replaceAll('__name__', indexNext).replaceAll('__empty__', '');
+                var $htmlNew = $(htmlNew).removeAttr('class').removeAttr('data-type');
+                $htmlNew.find("input:first").val(data.result.filename);
+                $htmlNew.find("input:last").val(0);
+                $('div.image-form').append($htmlNew);
+            }
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress').css(
+                'width',
+                progress + '%'
+            );
         }
-    },
-    progressall: function (e, data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#progress').css(
-            'width',
-            progress + '%'
-        );
-    }
+    });
 });
 $(document).on('click', '.image-remove', function (event) {
     var imageId = $(this).data('image_id');
