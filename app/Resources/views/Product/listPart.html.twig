@@ -1,17 +1,17 @@
     <div class="content-inner clearfix">
         <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
             <a href="{{ path("homepage") }}">Главная</a>
-            {% if productFilter.peopleGroup != constant('AppBundle\\ProductFilter\\ProductFilter::PEOPLE_GROUP_ALL') %}
-                → <a href="{{ path("product_list", {"slug": category.slug, 'peopleGroup':productFilter.peopleGroup}) }}">{{ productFilter.peopleGroup }}</a>
+            {% if productFilter.peopleGroup.slug != constant('AppBundle\\ProductFilter\\ProductFilter::PEOPLE_GROUP_ALL') %}
+                → <a href="{{ path("product_list", {"slug": category.slug, 'peopleGroup':productFilter.peopleGroup.slug}) }}">{{ productFilter.peopleGroup.slug }}</a>
             {% endif %}
-            {{ breadcrumbs(category, productFilter.peopleGroup)|raw }}
+            {{ breadcrumbs(category, productFilter.peopleGroup.slug)|raw }}
         </div>
         <h1>{{ category.name }} - рейтинг по мнению экспертов</h1>
 
         {% block children %}
         <div class="category-child">
             {% for category_child in category.children %}
-                <a href="{{ path("product_list", {"slug": category_child.slug, "peopleGroup": productFilter.peopleGroup}) }}" class="btn btn-info btn-xs">{{ category_child.name }}</a>
+                <a href="{{ path("product_list", {"slug": category_child.slug, "peopleGroup": productFilter.peopleGroup.slug}) }}" class="btn btn-info btn-xs">{{ category_child.name }}</a>
             {% endfor %}
         </div>
         {% endblock %}
@@ -33,11 +33,11 @@
 
                 <div class="btn-group">
                     {% if is_granted('ROLE_EXPERT') %}
-                        <a href="{{ path('product_list', {'slug':category.slug, 'peopleGroup': productFilter.peopleGroup, 'status': productFilter.status == 'free'?null:'free'}) }}"
+                        <a href="{{ path('product_list', {'slug':category.slug, 'peopleGroup': productFilter.peopleGroup.slug, 'status': productFilter.status == 'free'?null:'free'}) }}"
                            class="btn btn-success {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')?'active':'' }}">Посмотреть свободные товары</a>
                     {% endif %}
                     {% if is_granted('ROLE_EXPERT_CURATOR') %}
-                        <a href="{{ path('product_list', {'slug': category.slug, 'peopleGroup': productFilter.peopleGroup, 'status': productFilter.status == 'wait'?null:'wait'}) }}"
+                        <a href="{{ path('product_list', {'slug': category.slug, 'peopleGroup': productFilter.peopleGroup.slug, 'status': productFilter.status == 'wait'?null:'wait'}) }}"
                            class="btn btn-success {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')?'active':'' }}">Смотреть ожидающие подтверждения</a>
                     {% endif %}
                 </div>

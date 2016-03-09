@@ -31,13 +31,15 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
     public function findByFilterQuery(ProductFilter $productFilter)
     {
         $category = $productFilter->getCategory();
-
+        $categories = $this->_em->getRepository('AppBundle:Category')->getChildrenIds(
+            $category,
+            $productFilter->getPeopleGroup());
         $isEnabled = ($productFilter->getStatus() == null);
 
         $qb = $this->createQueryBuilder('a')
-            ->where('a.category = :category')
+            ->where('a.category IN (:categories)')
             ->andWhere('a.isEnabled = :is_enabled')
-            ->setParameter('category', $category)
+            ->setParameter('categories', $categories)
             ->setParameter('is_enabled', $isEnabled);
         if (!$isEnabled) {
             if ($productFilter->getStatus() == ProductFilter::STATUS_FREE) {

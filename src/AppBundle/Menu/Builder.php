@@ -99,7 +99,7 @@ class Builder implements ContainerAwareInterface
         $direction = $productFilter->getSortDirection();
         $status = $productFilter->getStatus();
         $sortField = $productFilter->getSortField();
-        $peopleGroup = $productFilter->getPeopleGroup();
+        $peopleGroup = $productFilter->getPeopleGroup()->getSlug();
 
         $menu->addChild(
             'по цене',

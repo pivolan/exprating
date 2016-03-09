@@ -71,13 +71,9 @@ class ProductFilter
     protected $category;
 
     /**
-     * @var string
+     * @var PeopleGroup
      *
-     * @Assert\Choice(choices = {ProductFilter::PEOPLE_GROUP_WOMAN,
-     *     ProductFilter::PEOPLE_GROUP_MAN,
-     *     ProductFilter::PEOPLE_GROUP_CHILD,
-     *     ProductFilter::PEOPLE_GROUP_ALL
-     *     }, message = "Выберите верный фильтр")
+     * @Assert\Valid(message = "Выберите верный фильтр")
      */
     protected $peopleGroup = self::PEOPLE_GROUP_ALL;
 
@@ -182,7 +178,7 @@ class ProductFilter
     }
 
     /**
-     * @return string
+     * @return PeopleGroup
      */
     public function getPeopleGroup()
     {
@@ -190,11 +186,11 @@ class ProductFilter
     }
 
     /**
-     * @param string $peopleGroup
+     * @param PeopleGroup $peopleGroup
      *
      * @return $this
      */
-    public function setPeopleGroup($peopleGroup)
+    public function setPeopleGroup(PeopleGroup $peopleGroup)
     {
         $this->peopleGroup = $peopleGroup;
 

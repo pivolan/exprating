@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PeopleGroup.
@@ -29,6 +30,11 @@ class PeopleGroup
      *
      * @ORM\Column(name="slug", type="string", length=255)
      * @ORM\Id
+     * @Assert\Choice(choices = {PeopleGroup::SLUG_WOMAN,
+     *     PeopleGroup::SLUG_MAN,
+     *     PeopleGroup::SLUG_CHILD,
+     *     PeopleGroup::SLUG_ALL
+     *     }, message = "Выберите верный фильтр")
      */
     private $slug;
 

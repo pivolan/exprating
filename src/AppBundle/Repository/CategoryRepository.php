@@ -8,6 +8,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\User;
 use Doctrine\ORM\AbstractQuery;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
@@ -73,10 +74,14 @@ class CategoryRepository extends NestedTreeRepository
         return $qb->getQuery();
     }
 
-    public function getChildrenIds(Category $category)
+    public function getChildrenIds(Category $category, PeopleGroup $peopleGroup = null)
     {
         $qb = $this->getChildrenQueryBuilder($category, false, null, 'ASC', true)
             ->select('node.slug');
+        if($peopleGroup){
+            $qb->innerJoin('node.PeopleGroup', 'pg', 'WITH', 'pg.slug = :peopleGroup')
+                ->setParameter('peopleGroup', $peopleGroup->getSlug());
+        }
         $result = $qb->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
         $ids = [];
         foreach ($result as $row) {

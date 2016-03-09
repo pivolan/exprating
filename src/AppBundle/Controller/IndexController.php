@@ -136,6 +136,8 @@ class IndexController extends BaseController
      *     requirements = {"peopleGroup": "(dlya-zhenshchin)|(dlya-muzhchin)|(dlya-detey)|(dlya-vseh)"},
      *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
+     * @ParamConverter(name="peopleGroup", class="AppBundle\Entity\PeopleGroup",
+     *     options={"mapping":{"peopleGroup":"slug"}})
      */
     public function listAction(Request $request)
     {
