@@ -56,7 +56,7 @@ class InviteController extends BaseController
     /**
      * @Route("/invite/{hash}", name="invite_activate")
      * @ParamConverter(name="invite", class="AppBundle\Entity\Invite", options={"mapping":{"hash":"hash"}})
-     * Security("is_granted('ACTIVATE_INVITE', invite)")
+     * @Security("is_granted('ACTIVATE_INVITE', invite)")
      */
     public function inviteActivateAction(Request $request, Invite $invite)
     {

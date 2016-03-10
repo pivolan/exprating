@@ -2,6 +2,7 @@
 
 namespace AppBundle\Tests;
 
+use AppBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -18,7 +19,6 @@ abstract class AbstractWebCaseTest extends WebTestCase
 
     public function setUp()
     {
-        // do setup tasks
         parent::setUp();
         $this->client = $client = static::createClient();
         $this->doctrine = $client->getContainer()->get('doctrine');
@@ -28,8 +28,11 @@ abstract class AbstractWebCaseTest extends WebTestCase
 
     public function tearDown()
     {
-        // do setup tasks
-        $this->doctrine->getConnection()->rollback();
+        try {
+            $this->doctrine->getConnection()->rollback();
+        } catch (\Exception $e) {
+
+        }
         parent::tearDown();
     }
 }

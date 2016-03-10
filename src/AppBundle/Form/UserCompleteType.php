@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -23,7 +24,7 @@ class UserCompleteType extends AbstractType
             ->add('username', null)
             ->add('fullName', null)
             ->add('city', null)
-            ->add('birthday', null)
+            ->add('birthday', BirthdayType::class)
             ->add(
                 'plainPassword',
                 RepeatedType::class,

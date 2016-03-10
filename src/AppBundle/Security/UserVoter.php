@@ -108,6 +108,9 @@ class UserVoter extends Voter
 
     private function canComplete(TokenInterface $token)
     {
+        if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT])) {
+            return false;
+        }
         $user = $token->getUser();
 
         return !$user->getIsActivated();

@@ -31,6 +31,7 @@ class FakeEntitiesGenerator
 
     public function user()
     {
+        /** @var User $user */
         $user = new User();
         $user->setUsername($this->faker->userName)
             ->setUsernameCanonical($this->faker->userName)
