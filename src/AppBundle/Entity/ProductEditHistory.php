@@ -94,4 +94,3 @@ class ProductEditHistory
         return $this->diff;
     }
 }
-

@@ -165,4 +165,3 @@ class Seo
         return $this;
     }
 }
-

@@ -1,0 +1,13 @@
+{% extends 'Profile/user.html.twig' %}
+{% block profile_body %}
+    {% for flash in app.session.flashbag.get('flash.request_rights_sended') %}
+        <div>{{ flash }}</div>
+    {% endfor %}
+    {% if is_granted('INVITE_SEND') %}
+        {{ form_widget(form) }}
+    {% else %}
+        <h1>Вам недоступна эта функция</h1>
+        <a href="{{ path('invite_request_rights') }}" class="btn btn-default">Подать заявку</a>
+    {% endif %}
+
+{% endblock %}

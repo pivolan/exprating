@@ -1,0 +1,3 @@
+Добро пожаловать, {{ invite.expert.fullName }}({{ invite.expert.username }})!
+Ваш профиль: {{ url('experts_detail', {'username': invite.expert.username}) }}
+Ваш куратор: {{ url('experts_detail', {'username': invite.curator.username}) }}

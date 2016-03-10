@@ -43,7 +43,6 @@ class FakeEntitiesGenerator
             ->setFullName($this->faker->lastName.' '.$this->faker->firstName)
             ->setCity($this->faker->city)
             ->setCaption($this->faker->title)
-            ->setAvatarImage('http://placehold.it/200x200')
             ->addRole(User::ROLE_USER);
 
         return $user;

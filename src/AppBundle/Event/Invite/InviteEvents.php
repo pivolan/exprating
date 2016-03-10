@@ -12,4 +12,5 @@ final class InviteEvents
     const ACTIVATE = 'activate_invite';
     const REQUEST_RIGHTS = 'request_rights_to_send_invites';
     const APPROVE_RIGHTS = 'approve_rights_by_curator';
+    const COMPLETE_REGISTRATION = 'complete_registration';
 }

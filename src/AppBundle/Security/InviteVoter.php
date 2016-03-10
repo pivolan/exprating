@@ -18,8 +18,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class InviteVoter extends Voter
 {
     const SEND_INVITE = 'SEND_INVITE';
-    const ACTIVATE_INVITE = 'activate_invite';
-    const APPROVE_RIGHTS_TO_SEND_INVITES = 'approve_rights_to_send_invites';
+    const ACTIVATE_INVITE = 'ACTIVATE_INVITE';
+    const APPROVE_RIGHTS_TO_SEND_INVITES = 'APPROVE_RIGHTS_TO_SEND_INVITES';
 
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
@@ -71,29 +71,30 @@ class InviteVoter extends Voter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        // you know $subject is a Post object, thanks to supports
-        /** @var Product $product */
-        $product = $subject;
-
+        /** @var Invite $invite */
+        $invite = $subject;
         switch ($attribute) {
             case self::SEND_INVITE:
-                return $this->canSendInvite($product, $token);
+                return $this->canSendInvite($token);
+            case self::ACTIVATE_INVITE:
+                return $this->canActivateInvite($invite);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    private function canApprove(User $user, TokenInterface $token)
+    private function canSendInvite(TokenInterface $token)
     {
-        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
+        if ($this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
             return true;
         }
 
-        if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
-            return false;
-        }
+        return false;
+    }
 
-        if ($token->getUser() == $user->getCurator()) {
+    private function canActivateInvite(Invite $invite)
+    {
+        if (!$invite->getIsActivated()) {
             return true;
         }
 

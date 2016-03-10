@@ -20,6 +20,7 @@ class InviteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('email', null, ['label' => 'Email'])
             ->add('send', SubmitType::class, ['label' => 'Отправить']);
     }
 

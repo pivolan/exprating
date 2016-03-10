@@ -12,12 +12,26 @@ use Symfony\Component\EventDispatcher\Event;
 
 class InviteSendEvent extends Event implements InviteEventInterface
 {
+    /**
+     * @var Invite
+     */
+    protected $invite;
+
+    /**
+     * InviteSendEvent constructor.
+     *
+     * @param Invite $invite
+     */
+    public function __construct(Invite $invite)
+    {
+        $this->invite = $invite;
+    }
 
     /**
      * @return Invite
      */
     public function getInvite()
     {
-        // TODO: extends Event implement getInvite() method.
+        return $this->invite;
     }
 }

@@ -1,0 +1,4 @@
+Пользователь {{ invite.expert.fullName }}({{ invite.expert.username }}) зарегистрировался по вашей рекомендации на почту {{ invite.expert.email }}.
+Чтобы посмотреть его профиль, пройдите по ссылке:
+
+{{ url('experts_detail', {"username": invite.expert.username}) }}

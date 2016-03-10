@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Invite
@@ -13,13 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Invite
 {
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="hash", type="guid")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
-    private $id;
+    private $hash;
 
     /**
      * @var \DateTime
@@ -51,20 +52,41 @@ class Invite
 
     /**
      * @var string
-     *
+     * @Assert\Email
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="invites")
+     * @ORM\JoinColumn(name="curator_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $curator;
+
+    /**
+     * @var User
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="invites")
+     * @ORM\JoinColumn(name="expert_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $expert;
+
+    public function __construct()
+    {
+        $this->hash = uniqid();
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return string
      */
-    public function getId()
+    public function getHash()
     {
-        return $this->id;
+        return $this->hash;
     }
 
     /**
@@ -162,5 +184,90 @@ class Invite
     {
         return $this->email;
     }
-}
 
+    /**
+     * @return boolean
+     */
+    public function isIsFromFeedback()
+    {
+        return $this->isFromFeedback;
+    }
+
+    /**
+     * @param boolean $isFromFeedback
+     *
+     * @return $this
+     */
+    public function setIsFromFeedback($isFromFeedback)
+    {
+        $this->isFromFeedback = $isFromFeedback;
+
+        return $this;
+    }
+
+    /**
+     * @param string $hash
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    }
+
+    /**
+     * Get isFromFeedback
+     *
+     * @return boolean
+     */
+    public function getIsFromFeedback()
+    {
+        return $this->isFromFeedback;
+    }
+
+    /**
+     * Set curator
+     *
+     * @param \AppBundle\Entity\User $curator
+     *
+     * @return Invite
+     */
+    public function setCurator(\AppBundle\Entity\User $curator = null)
+    {
+        $this->curator = $curator;
+
+        return $this;
+    }
+
+    /**
+     * Get curator
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCurator()
+    {
+        return $this->curator;
+    }
+
+    /**
+     * Set expert
+     *
+     * @param \AppBundle\Entity\User $expert
+     *
+     * @return Invite
+     */
+    public function setExpert(\AppBundle\Entity\User $expert = null)
+    {
+        $this->expert = $expert;
+
+        return $this;
+    }
+
+    /**
+     * Get expert
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getExpert()
+    {
+        return $this->expert;
+    }
+}

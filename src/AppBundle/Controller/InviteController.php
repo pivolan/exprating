@@ -9,10 +9,14 @@ use AppBundle\Event\Invite\InviteApproveRightsEvent;
 use AppBundle\Event\Invite\InviteEvents;
 use AppBundle\Event\Invite\InviteRequestRightsEvent;
 use AppBundle\Event\Invite\InviteSendEvent;
+use AppBundle\Event\User\InviteCompleteRegistrationEvent;
 use AppBundle\Form\InviteType;
+use AppBundle\Form\UserCompleteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class InviteController extends BaseController
@@ -24,11 +28,12 @@ class InviteController extends BaseController
 
     /**
      * @Route("/invite", name="invite")
-     * @Security("is_granted('ROLE_EXPERT_CURATOR', product)")
+     * @Security("is_granted('ROLE_EXPERT')")
      */
     public function inviteAction(Request $request)
     {
         $invite = new Invite();
+        $invite->setCurator($this->getUser());
 
         $form = $this->createForm(InviteType::class, $invite);
 
@@ -48,16 +53,43 @@ class InviteController extends BaseController
     /**
      * @Route("/invite/{hash}", name="invite_activate")
      * @ParamConverter(name="invite", class="AppBundle\Entity\Invite", options={"mapping":{"hash":"hash"}})
+     * @Security("is_granted('ACTIVATE_INVITE', invite)")
      */
-    public function inviteActivateAction(Invite $invite)
+    public function inviteActivateAction(Request $request, Invite $invite)
     {
+        $response = $this->redirectToRoute('invite_complete');
+        $this->get('event_dispatcher')->dispatch(
+            InviteEvents::ACTIVATE,
+            new InviteActivateEvent($invite, $request, $response)
+        );
 
-        $this->get('event_dispatcher')->dispatch(InviteEvents::ACTIVATE, new InviteActivateEvent($invite));
+        return $response;
+    }
+
+    /**
+     * @Route("/invite/complete/registration", name="invite_complete")
+     */
+    public function inviteCompleteRegistrationAction(Request $request)
+    {
+        $form = $this->createForm(
+            UserCompleteType::class,
+            $this->getUser()
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $response = $this->redirectToRoute('experts_detail', ['username' => $this->getUser()->getUsername()]);
+            $event = new InviteCompleteRegistrationEvent($this->getUser());
+            $this->get('event_dispatcher')->dispatch(InviteEvents::COMPLETE_REGISTRATION, $event);
+
+            return $response;
+        }
 
         return $this->render(
-            'Invite/invite_activate.html.twig',
+            'Invite/inviteComplete.html.twig',
             [
-                self::KEY_INVITE => $invite,
+                self::KEY_FORM => $form,
             ]
         );
     }

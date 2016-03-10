@@ -80,6 +80,14 @@ class User extends BaseUser
     /**
      * @var bool
      *
+     * @ORM\Column(name="is_activated", type="boolean", nullable=false, unique=false,
+     * options={"default": true, "comment": "Эксперт активирован: прошел по инвайту, заполнил форму."})
+     */
+    private $isActivated = false;
+
+    /**
+     * @var bool
+     *
      * @ORM\Column(name="can_controlled_pre_curator",
      *     options={"comment":"Может ли вышестоящий куратор управлять этим пользователем", "default": false})
      */
@@ -100,6 +108,20 @@ class User extends BaseUser
      * @ORM\JoinColumn(name="curator_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $curator;
+
+    /**
+     * @var Invite
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Invite", mappedBy="expert")
+     */
+    private $invite;
+
+    /**
+     * @var Invite[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Invite", mappedBy="curator")
+     */
+    private $invites;
 
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="curator")
@@ -494,6 +516,46 @@ class User extends BaseUser
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsActivated()
+    {
+        return $this->isActivated;
+    }
+
+    /**
+     * @param boolean $isActivated
+     *
+     * @return $this
+     */
+    public function setIsActivated($isActivated)
+    {
+        $this->isActivated = $isActivated;
+
+        return $this;
+    }
+
+    /**
+     * @return Invite
+     */
+    public function getInvite()
+    {
+        return $this->invite;
+    }
+
+    /**
+     * @param Invite $invite
+     *
+     * @return $this
+     */
+    public function setInvite(Invite $invite)
+    {
+        $this->invite = $invite;
 
         return $this;
     }
