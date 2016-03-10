@@ -4,7 +4,7 @@
  * Time: 4:01
  */
 
-namespace AppBundle\Event\User;
+namespace AppBundle\Event\Invite;
 
 use AppBundle\Entity\Invite;
 use AppBundle\Entity\User;

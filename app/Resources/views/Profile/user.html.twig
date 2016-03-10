@@ -5,7 +5,6 @@
     <a href="{{ path("profile", {"username": app.user.username}) }}">Профиль</a>
 {% endblock %}
 {% block sidebar_menu_items %}
-    {{ render(controller('AppBundle:Expert:_menu')) }}
 {% endblock %}
 {% block additional_tabs %}{% endblock %}
 {% block additional_panels %}{% endblock %}

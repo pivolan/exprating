@@ -21,6 +21,9 @@ class UserCompleteType extends AbstractType
         $builder
             ->add('email', null, ['disabled' => true])
             ->add('username', null)
+            ->add('fullName', null)
+            ->add('city', null)
+            ->add('birthday', null)
             ->add(
                 'plainPassword',
                 RepeatedType::class,

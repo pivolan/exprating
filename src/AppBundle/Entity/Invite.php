@@ -5,12 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\Validator\Constraints\UniqueUser;
 /**
  * Invite
  *
  * @ORM\Table(name="invite")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InviteRepository")
  * @UniqueEntity(fields={"curator", "email"}, message="Вы уже отправляли приглашение на этот адрес")
+ * @UniqueUser
  */
 class Invite
 {

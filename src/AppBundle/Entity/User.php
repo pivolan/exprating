@@ -300,10 +300,14 @@ class User extends BaseUser
 
     public function getAge()
     {
-        $date = new \DateTime();
-        $diff = $date->diff($this->getBirthday());
+        if ($this->getBirthday()) {
+            $date = new \DateTime();
+            $diff = $date->diff($this->getBirthday());
 
-        return $diff->y;
+            return $diff->y;
+        }
+
+        return null;
     }
 
     /**

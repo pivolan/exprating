@@ -20,6 +20,12 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: 'rating_settings_sum_weight_validator'}
 
+    validator.unique_user_validator:
+        class: AppBundle\Validator\Constraints\UniqueUserValidator
+        arguments: ['@doctrine.orm.default_entity_manager']
+        tags:
+            - { name: validator.constraint_validator, alias: 'unique_user_validator'}
+
     app.product_voter:
         class: AppBundle\Security\ProductVoter
         arguments: ['@security.access.decision_manager']

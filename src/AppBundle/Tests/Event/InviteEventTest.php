@@ -21,7 +21,7 @@ use AppBundle\Event\ProductPublishRequestEvent;
 use AppBundle\Event\ProductRejectEvent;
 use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Event\ProductReservationOverEvent;
-use AppBundle\Event\User\InviteCompleteRegistrationEvent;
+use AppBundle\Event\Invite\InviteCompleteRegistrationEvent;
 use AppBundle\ProductFilter\ProductFilter;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
@@ -61,9 +61,10 @@ class InviteEventTest extends AbstractWebCaseTest
         $this->em->flush();
 
         $container = $this->client->getContainer();
+        $request = new Request();
         $container->get('event_dispatcher')->dispatch(
             InviteEvents::ACTIVATE,
-            new InviteActivateEvent($invite, new Request(), new Response())
+            new InviteActivateEvent($invite, $request, new Response())
         );
         $user = $this->em->getRepository('AppBundle:User')->findOneBy(['email' => 'email@email.com']);
         $this->assertNotNull($user);
@@ -81,22 +82,21 @@ class InviteEventTest extends AbstractWebCaseTest
         $expert->addRole(User::ROLE_EXPERT);
         $this->assertFalse($expert->getIsActivated());
         $invite = new Invite();
+        $curator = $this->em->getRepository('AppBundle:User')->findOneBy(['username' => 'curator']);
         $invite->setEmail($expert->getEmail())
             ->setExpert($expert)
-            ->setCurator($this->em->getRepository('AppBundle:User')->findOneBy(['username' => 'curator']));
+            ->setCurator($curator);
+        $expert->setInvite($invite);
         $this->em->persist($expert);
         $this->em->persist($invite);
         $this->em->flush();
 
         $container = $this->client->getContainer();
-        $request = new Request();
         $container->get('event_dispatcher')->dispatch(
             InviteEvents::COMPLETE_REGISTRATION,
             new InviteCompleteRegistrationEvent($expert)
         );
-        $this->assertEquals($request->getUser(), $expert);
         $this->assertTrue($expert->getIsActivated());
         $this->assertEquals($expert->getCurator(), $invite->getCurator());
-        $this->assertEquals($expert->getCategories(), $expert->getCurator()->getCategories());
     }
 }

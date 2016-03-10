@@ -12,7 +12,7 @@ use AppBundle\Event\Invite\InviteApproveRightsEvent;
 use AppBundle\Event\Invite\InviteEvents;
 use AppBundle\Event\Invite\InviteRequestRightsEvent;
 use AppBundle\Event\Invite\InviteSendEvent;
-use AppBundle\Event\User\InviteCompleteRegistrationEvent;
+use AppBundle\Event\Invite\InviteCompleteRegistrationEvent;
 use Doctrine\DBAL\Types\GuidType;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
@@ -88,7 +88,8 @@ class InviteSubscriber implements EventSubscriberInterface
             ->addRole(User::ROLE_EXPERT);
 
         $invite->setExpert($expert)
-            ->setIsActivated(true);
+            ->setIsActivated(true)
+            ->setActivatedAt(new \DateTime());
         $this->em->persist($expert);
         $dispatcher->dispatch(
             FOSUserEvents::REGISTRATION_COMPLETED,

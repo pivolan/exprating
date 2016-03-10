@@ -18,6 +18,8 @@ class UserVoter extends Voter
 {
     const EXPERT_APPROVE_RIGHTS = 'EXPERT_APPROVE_RIGHTS';
     const INVITE_COMPLETE_REGISTRATION = 'INVITE_COMPLETE_REGISTRATION';
+    const DETAIL_VIEW = 'DETAIL_VIEW';
+
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
 
@@ -45,6 +47,7 @@ class UserVoter extends Voter
             $attribute,
             [
                 self::EXPERT_APPROVE_RIGHTS,
+                self::DETAIL_VIEW,
             ]
         )
         ) {
@@ -79,6 +82,8 @@ class UserVoter extends Voter
                 return $this->canApprove($user, $token);
             case self::INVITE_COMPLETE_REGISTRATION:
                 return $this->canComplete($token);
+            case self::DETAIL_VIEW:
+                return $this->canDetailView($user, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -104,6 +109,33 @@ class UserVoter extends Voter
     private function canComplete(TokenInterface $token)
     {
         $user = $token->getUser();
+
         return !$user->getIsActivated();
+    }
+
+    /**
+     * @param $user
+     * @param $token
+     *
+     * @return bool
+     */
+    private function canDetailView(User $user, TokenInterface $token)
+    {
+        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
+            return true;
+        }
+
+        if ($user == $token->getUser()) {
+            return true;
+        }
+
+        if ($user->getCurator() == $token->getUser()) {
+            return true;
+        }
+
+        if ($user->getCurator()->getCurator() == $token->getUser()) {
+            return true;
+        }
+        return false;
     }
 }

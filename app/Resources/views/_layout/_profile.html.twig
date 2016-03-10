@@ -13,7 +13,7 @@
         <div class="expert-page-wrapper">
             <div class="expert-item">
                 <div class="expert-img-wrapper">
-                    <img src="{{ user.avatarImage }}">
+                    <img src="{{ user.avatarImage|default('http://placehold.it/200x200') }}">
                 </div>
                 <div class="expert-name">
                     {{ user.caption }}

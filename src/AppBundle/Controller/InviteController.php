@@ -9,7 +9,6 @@ use AppBundle\Event\Invite\InviteApproveRightsEvent;
 use AppBundle\Event\Invite\InviteEvents;
 use AppBundle\Event\Invite\InviteRequestRightsEvent;
 use AppBundle\Event\Invite\InviteSendEvent;
-use AppBundle\Event\User\InviteCompleteRegistrationEvent;
 use AppBundle\Form\InviteType;
 use AppBundle\Form\UserCompleteType;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
@@ -85,7 +84,7 @@ class InviteController extends BaseController
 
         if ($form->isValid()) {
             $response = $this->redirectToRoute('experts_detail', ['username' => $this->getUser()->getUsername()]);
-            $event = new InviteCompleteRegistrationEvent($this->getUser());
+            $event = new \AppBundle\Event\Invite\InviteCompleteRegistrationEvent($this->getUser());
             $this->get('event_dispatcher')->dispatch(InviteEvents::COMPLETE_REGISTRATION, $event);
 
             return $response;

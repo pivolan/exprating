@@ -1002,7 +1002,9 @@ span.sign_ruble span {
 }
 
 /* line 834, ../sass/style.scss */
-.level2 .expert-img-wrapper {
+.experts-wrapper ul li .level2 .expert-img-wrapper,
+.expert-page-wrapper .expert-item .level2 .expert-img-wrapper
+{
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -1012,11 +1014,15 @@ span.sign_ruble span {
   margin-right: 10px;
 }
 /* line 843, ../sass/style.scss */
-.level2 .expert-img-wrapper img {
+.experts-wrapper ul li .level2 .expert-img-wrapper img,
+.expert-page-wrapper .expert-item .level2 .expert-img-wrapper img
+{
   width: 30px;
 }
 /* line 848, ../sass/style.scss */
-.level2 .expert-name span {
+.experts-wrapper ul li .level2 .expert-name span,
+.expert-page-wrapper .expert-item .level2 .expert-name span
+{
   display: block;
   font-size: 0.9em;
   padding-top: 3px;

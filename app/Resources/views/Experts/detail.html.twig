@@ -11,19 +11,20 @@
         <div class="expert-page-wrapper">
             <div class="expert-item">
                 <div class="expert-img-wrapper">
-                    <img src="{{ expert.avatarImage }}">
+                    <img src="{{ expert.avatarImage|default('http://placehold.it/200x200') }}">
                 </div>
                 <div class="expert-name">
                     {{ expert.caption }}
-                    <div class="level2">
-                        <div class="expert-img-wrapper">
-                            <img src="{{ expert.curator.avatarImage|default('placehold.it/200x200') }}">
+                    {% if expert.curator %}
+                        <div class="level2">
+                            <div class="expert-img-wrapper">
+                                <img src="{{ expert.curator.avatarImage|default('http://placehold.it/200x200') }}">
+                            </div>
+                            <div class="expert-name">
+                                <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName }}</span></a>
+                            </div>
                         </div>
-                        <div class="expert-name">
-                            <a href="{{ path("experts_detail", {"username": expert.curator.username|default('Admin')}) }}"><span>{{ expert.curator.fullName|default('None') }}</span></a>
-                        </div>
-                    </div>
-
+                    {% endif %}
                 </div>
             </div>
 
@@ -41,27 +42,29 @@
                                 <div class="profile-block">
                                     <div class="profile-title">Информация</div>
                                     <div class="data-list">
-                                        <div class="item">
-                                            <div class="key">
-                                                <span class="d_text">Возраст </span>
-                                                <span class="d_line"></span>
+                                        {% if expert.birthday %}
+                                            <div class="item">
+                                                <div class="key">
+                                                    <span class="d_text">Возраст </span>
+                                                    <span class="d_line"></span>
+                                                </div>
+                                                <div class="value">
+                                                    {% transchoice expert.age %}
+                                                    %count% год|%count% года|%count% лет
+                                                    {% endtranschoice %}
+                                                </div>
                                             </div>
-                                            <div class="value">
-                                                {% transchoice expert.age %}
-                                                %count% год|%count% года|%count% лет
-                                                {% endtranschoice %}
-                                            </div>
-                                        </div>
+                                        {% endif %}
                                         <div class="item">
                                             <div class="key">
                                                 <span class="d_text">Город </span>
                                                 <span class="d_line"></span>
                                             </div>
                                             <div class="value">
-                                                {{ expert.city }}
+                                                {{ expert.city|default('Не указан') }}
                                             </div>
                                         </div>
-                                        {% if is_granted("ROLE_ADMIN") %}
+                                        {% if is_granted("DETAIL_VIEW", expert) %}
                                             <div class="item">
                                                 <div class="key">
                                                     <span class="d_text">Skype </span>
@@ -89,9 +92,7 @@
                                                     {{ expert.email }}
                                                 </div>
                                             </div>
-
                                         {% endif %}
-
                                     </div>
                                 </div>
                             </div>
