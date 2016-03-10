@@ -78,6 +78,7 @@
         <mkdir dir="${basedir}/build/logs"/>
         <mkdir dir="${basedir}/build/pdepend"/>
         <mkdir dir="${basedir}/build/phpdox"/>
+        <delete dir="${basedir}/var/*"/>
         <copy file="${basedir}/app/config/parameters.yml.jenkins" tofile="${basedir}/app/config/parameters.yml" overwrite="true"/>
         <exec executable="composer">
             <arg value="install"/>
