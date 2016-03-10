@@ -2,6 +2,13 @@
         <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
             <a href="{{ path("homepage") }}">Главная</a>
             {{ breadcrumbs(product.category, productPeopleGroups.0.name|default('dlya-vseh'))|raw }}
+            <button class="btn btn-xs btn-info" type="button" data-toggle="tooltip" title="Изменить категорию">
+                <span class="glyphicon glyphicon-edit"></span>
+            </button>
+            <i class="fa fa-female" data-toggle="tooltip" title="Для женщин"></i>
+            <i class="fa fa-male" data-toggle="tooltip" title="Для мужчин"></i>
+            <i class="fa fa-child" data-toggle="tooltip" title="Для детей"></i>
+            <i class="fa fa-group" data-toggle="tooltip" title="Для всех"></i>
         </div>
         {% block curator_decision %}
             {% if is_granted('MODERATE', product) %}

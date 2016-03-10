@@ -21,6 +21,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Http\SecurityEvents;
 
 class InviteSubscriber implements EventSubscriberInterface
 {
@@ -79,11 +81,14 @@ class InviteSubscriber implements EventSubscriberInterface
         $expert->setEmail($invite->getEmail())
             ->setUsername($invite->getEmail())
             ->setPlainPassword(uniqid())
+            ->setEnabled(true)
             ->setIsActivated(false)
             ->setEmailCanonical($invite->getEmail())
             ->setUsernameCanonical($invite->getEmail())
             ->addRole(User::ROLE_EXPERT);
-        $invite->setExpert($expert);
+
+        $invite->setExpert($expert)
+            ->setIsActivated(true);
         $this->em->persist($expert);
         $dispatcher->dispatch(
             FOSUserEvents::REGISTRATION_COMPLETED,

@@ -33,7 +33,8 @@ monolog:
         #    level:  info
 
 swiftmailer:
-    disable_delivery: true
+    delivery_address: 'pivolan@gmail.com'
+    sender_address: 'pivolan@gmail.com'
 
 doctrine:
     orm:

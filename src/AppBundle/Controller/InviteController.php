@@ -12,12 +12,16 @@ use AppBundle\Event\Invite\InviteSendEvent;
 use AppBundle\Event\User\InviteCompleteRegistrationEvent;
 use AppBundle\Form\InviteType;
 use AppBundle\Form\UserCompleteType;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
+use FOS\UserBundle\FOSUserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class InviteController extends BaseController
 {
@@ -53,7 +57,7 @@ class InviteController extends BaseController
     /**
      * @Route("/invite/{hash}", name="invite_activate")
      * @ParamConverter(name="invite", class="AppBundle\Entity\Invite", options={"mapping":{"hash":"hash"}})
-     * @Security("is_granted('ACTIVATE_INVITE', invite)")
+     * Security("is_granted('ACTIVATE_INVITE', invite)")
      */
     public function inviteActivateAction(Request $request, Invite $invite)
     {
@@ -68,6 +72,7 @@ class InviteController extends BaseController
 
     /**
      * @Route("/invite/complete/registration", name="invite_complete")
+     * @Security("is_granted('INVITE_COMPLETE_REGISTRATION')")
      */
     public function inviteCompleteRegistrationAction(Request $request)
     {
@@ -89,7 +94,7 @@ class InviteController extends BaseController
         return $this->render(
             'Invite/inviteComplete.html.twig',
             [
-                self::KEY_FORM => $form,
+                self::KEY_FORM => $form->createView(),
             ]
         );
     }

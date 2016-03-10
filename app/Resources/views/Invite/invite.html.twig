@@ -1,10 +1,22 @@
 {% extends 'Profile/user.html.twig' %}
+{% block title %}Пригласить эксперта{% endblock %}
 {% block profile_body %}
     {% for flash in app.session.flashbag.get('flash.request_rights_sended') %}
-        <div>{{ flash }}</div>
+        <div class="alert alert-success">
+            <ul class="list-unstyled">
+                <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash }}</li>
+            </ul>
+        </div>
     {% endfor %}
-    {% if is_granted('INVITE_SEND') %}
-        {{ form_widget(form) }}
+    {% if is_granted('ROLE_EXPERT_CURATOR') %}
+        {% for flash in app.session.flashbag.get('flash.invite_sended') %}
+            <div class="alert alert-success">
+                <ul class="list-unstyled">
+                    <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash }}</li>
+                </ul>
+            </div>
+        {% endfor %}
+        {{ form(form) }}
     {% else %}
         <h1>Вам недоступна эта функция</h1>
         <a href="{{ path('invite_request_rights') }}" class="btn btn-default">Подать заявку</a>

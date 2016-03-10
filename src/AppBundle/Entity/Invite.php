@@ -4,12 +4,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Invite
  *
  * @ORM\Table(name="invite")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InviteRepository")
+ * @UniqueEntity(fields={"curator", "email"}, message="Вы уже отправляли приглашение на этот адрес")
  */
 class Invite
 {
@@ -46,7 +47,7 @@ class Invite
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="activated_at", type="datetime")
+     * @ORM\Column(name="activated_at", type="datetime", nullable=true)
      */
     private $activatedAt;
 

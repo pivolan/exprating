@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class UserVoter extends Voter
 {
     const EXPERT_APPROVE_RIGHTS = 'EXPERT_APPROVE_RIGHTS';
-
+    const INVITE_COMPLETE_REGISTRATION = 'INVITE_COMPLETE_REGISTRATION';
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
 
@@ -36,6 +36,10 @@ class UserVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
+        if ($attribute == self::INVITE_COMPLETE_REGISTRATION) {
+            return true;
+        }
+
         // if the attribute isn't one we support, return false
         if (!in_array(
             $attribute,
@@ -73,6 +77,8 @@ class UserVoter extends Voter
         switch ($attribute) {
             case self::EXPERT_APPROVE_RIGHTS:
                 return $this->canApprove($user, $token);
+            case self::INVITE_COMPLETE_REGISTRATION:
+                return $this->canComplete($token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -88,11 +94,16 @@ class UserVoter extends Voter
             return false;
         }
 
-        if($token->getUser() == $user->getCurator())
-        {
+        if ($token->getUser() == $user->getCurator()) {
             return true;
         }
 
         return false;
+    }
+
+    private function canComplete(TokenInterface $token)
+    {
+        $user = $token->getUser();
+        return !$user->getIsActivated();
     }
 }
