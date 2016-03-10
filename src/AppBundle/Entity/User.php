@@ -62,6 +62,22 @@ class User extends BaseUser
     private $caption;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="skype", type="string", nullable=true, unique=false,
+     * options={"comment": "Skype аккаунт пользователя"})
+     */
+    private $skype;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", nullable=true, unique=false,
+     * options={"comment": "Номер телефона пользователя"})
+     */
+    private $phone;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="can_controlled_pre_curator",
@@ -440,5 +456,45 @@ class User extends BaseUser
     public function getCanControlledPreCurator()
     {
         return $this->canControlledPreCurator;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSkype()
+    {
+        return $this->skype;
+    }
+
+    /**
+     * @param string $skype
+     *
+     * @return $this
+     */
+    public function setSkype($skype)
+    {
+        $this->skype = $skype;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     *
+     * @return $this
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
     }
 }

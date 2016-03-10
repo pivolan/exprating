@@ -18,7 +18,7 @@
 
     {% block stylesheets %}
         {% stylesheets '@common_css' output='bundles/common.css' %}
-            <link rel="stylesheet" href="{{ asset(asset_url) }}"/>
+        <link rel="stylesheet" href="{{ asset(asset_url) }}"/>
         {% endstylesheets %}
     {% endblock %}
 
@@ -49,6 +49,11 @@
                 Экспертные заключения
             </span>
             </div>
+            {% if not app.user %}
+                <div class="col-md-offset-9">
+                    <a href="{{ path('fos_user_security_login') }}">Логин</a>
+                </div>
+            {% endif %}
             {% if is_granted('ROLE_EXPERT') %}
                 {{ include("_include/Menu/_profileMenu.html.twig") }}
             {% endif %}
@@ -494,7 +499,6 @@
                         {% else %}
                             <li><a href="{{ path('fos_user_security_login') }}">Логин</a></li>
                         {% endif %}
-                        <li><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></li>
                     </ul>
                 </div>
                 <div class="footer-col3">
@@ -529,7 +533,7 @@
 
 {% block javascripts %}
     {% javascripts '@common_js' output='bundles/js/common.js' %}
-        <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
     {% endjavascripts %}
 {% endblock %}
 

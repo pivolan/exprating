@@ -15,6 +15,15 @@
                 </div>
                 <div class="expert-name">
                     {{ expert.caption }}
+                    <div class="level2">
+                        <div class="expert-img-wrapper">
+                            <img src="{{ expert.curator.avatarImage|default('placehold.it/200x200') }}">
+                        </div>
+                        <div class="expert-name">
+                            <a href="{{ path("experts_detail", {"username": expert.curator.username|default('Admin')}) }}"><span>{{ expert.curator.fullName|default('None') }}</span></a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -52,6 +61,36 @@
                                                 {{ expert.city }}
                                             </div>
                                         </div>
+                                        {% if is_granted("ROLE_ADMIN") %}
+                                            <div class="item">
+                                                <div class="key">
+                                                    <span class="d_text">Skype </span>
+                                                    <span class="d_line"></span>
+                                                </div>
+                                                <div class="value">
+                                                    {{ expert.skype|default('не указан') }}
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="key">
+                                                    <span class="d_text">Телефон </span>
+                                                    <span class="d_line"></span>
+                                                </div>
+                                                <div class="value">
+                                                    {{ expert.phone|default('не указан') }}
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="key">
+                                                    <span class="d_text">Email </span>
+                                                    <span class="d_line"></span>
+                                                </div>
+                                                <div class="value">
+                                                    {{ expert.email }}
+                                                </div>
+                                            </div>
+
+                                        {% endif %}
 
                                     </div>
                                 </div>

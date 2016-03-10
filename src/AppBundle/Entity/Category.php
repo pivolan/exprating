@@ -77,6 +77,13 @@ class Category
     private $ratingSettings;
 
     /**
+     * @var Seo
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingSettings", mappedBy="category")
+     */
+    private $seo;
+
+    /**
      * @var Characteristic[]
      *
      * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic")
@@ -508,5 +515,25 @@ class Category
     public function getExperts()
     {
         return $this->experts;
+    }
+
+    /**
+     * @return Seo
+     */
+    public function getSeo()
+    {
+        return $this->seo;
+    }
+
+    /**
+     * @param Seo $seo
+     *
+     * @return $this
+     */
+    public function setSeo(Seo $seo)
+    {
+        $this->seo = $seo;
+
+        return $this;
     }
 }

@@ -27,6 +27,20 @@ services:
         tags:
             - { name: security.voter }
 
+    app.invite_voter:
+        class: AppBundle\Security\InviteVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    app.user_voter:
+        class: AppBundle\Security\UserVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
     app.category_voter:
         class: AppBundle\Security\CategoryVoter
         arguments: ['@security.access.decision_manager']

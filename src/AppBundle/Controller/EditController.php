@@ -9,6 +9,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
+use AppBundle\Event\ProductEditedEvent;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Event\ProductPublishRequestEvent;
 use AppBundle\Event\ProductReservationEvent;
@@ -50,6 +51,7 @@ class EditController extends BaseController
 
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $this->get('event_dispatcher')->dispatch(ProductEvents::EDITED, new ProductEditedEvent($product, $this->getUser()));
             $this->getEm()->flush();
             //Если нажал кнопку опубликовать, тогда запускаем событие публикации
             $isClicked = $form->get(ProductType::PUBLISH_SUBMIT)->isClicked();

@@ -18,4 +18,6 @@ final class ProductEvents
     const RESERVATION_OVER = 'reserve_over_product';
     const COMMENTED = 'commented_product';
     const DECISION = 'curator_decision';
+    const VISIT = 'product_visited';
+    const EDITED = 'product_edited';
 }

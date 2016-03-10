@@ -12,12 +12,14 @@ use AppBundle\Entity\User;
 use AppBundle\Event\DecisionCreateEvent;
 use AppBundle\Event\ProductApproveEvent;
 use AppBundle\Event\ProductChangeExpertEvent;
+use AppBundle\Event\ProductEditedEvent;
 use AppBundle\Event\ProductEventInterface;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Event\ProductPublishRequestEvent;
 use AppBundle\Event\ProductRejectEvent;
 use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Event\ProductReservationOverEvent;
+use AppBundle\Event\ProductVisitEvent;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -67,6 +69,8 @@ class ProductSubscriber implements EventSubscriberInterface
             ProductEvents::RESERVATION_OVER => [['reserveOver', 0], ['onReserveOverNotifyExpert', 1], ['flush']],
             ProductEvents::COMMENTED        => [['flush']],
             ProductEvents::DECISION         => [['curatorDecision', 1]],
+            ProductEvents::VISIT            => [['productVisited', 1], ['flush']],
+            ProductEvents::EDITED           => [['productEdited', 1]],
         ];
     }
 
@@ -261,6 +265,16 @@ class ProductSubscriber implements EventSubscriberInterface
                 )
             );
         $this->mailer->send($message);
+    }
+
+    public function productEdited(ProductEditedEvent $event)
+    {
+
+    }
+
+    public function productVisited(ProductVisitEvent $event)
+    {
+
     }
 
     public function curatorDecision(

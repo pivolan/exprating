@@ -8,6 +8,9 @@
             <li class="{% if path('profile', {'username': app.user.username}) in app.request.uri %}active{% endif %}"><a href="{{ path('profile', {'username': app.user.username}) }}">
                     Профиль
                 </a></li>
+            <li class="{% if path('invite') in app.request.uri %}active{% endif %}"><a href="{{ path('invite') }}">
+                    Пригласить эксперта
+                </a></li>
             <li class="{% if path('expert_published_items') in app.request.uri %}active{% endif %}" ><a href="{{ path('expert_published_items') }}">
                     Опубликованные обзоры
                 </a></li>

@@ -5,6 +5,18 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    invite_subscriber:
+        class: AppBundle\Event\Subscriber\InviteSubscriber
+        arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    user_subscriber:
+        class: AppBundle\Event\Subscriber\UserSubscriber
+        arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig']
+        tags:
+            - { name: kernel.event_subscriber }
+
     app.upload_subscriber:
         class: AppBundle\Event\Subscriber\UploadSubscriber
         arguments: ['@app.path_finder.product_image', '@serializer']
