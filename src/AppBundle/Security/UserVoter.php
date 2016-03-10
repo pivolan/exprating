@@ -19,6 +19,7 @@ class UserVoter extends Voter
     const EXPERT_APPROVE_RIGHTS = 'EXPERT_APPROVE_RIGHTS';
     const INVITE_COMPLETE_REGISTRATION = 'INVITE_COMPLETE_REGISTRATION';
     const DETAIL_VIEW = 'DETAIL_VIEW';
+    const ADD_ROLE_CURATOR = 'ADD_ROLE_CURATOR';
 
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
@@ -48,6 +49,7 @@ class UserVoter extends Voter
             [
                 self::EXPERT_APPROVE_RIGHTS,
                 self::DETAIL_VIEW,
+                self::ADD_ROLE_CURATOR,
             ]
         )
         ) {
@@ -84,6 +86,8 @@ class UserVoter extends Voter
                 return $this->canComplete($token);
             case self::DETAIL_VIEW:
                 return $this->canDetailView($user, $token);
+            case self::ADD_ROLE_CURATOR:
+                return $this->canAddRoleCurator($user, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -139,6 +143,30 @@ class UserVoter extends Voter
         if ($user->getCurator()->getCurator() == $token->getUser()) {
             return true;
         }
+
+        return false;
+    }
+
+    private function canAddRoleCurator(User $user, TokenInterface $token)
+    {
+        if ($user->hasRole(User::ROLE_EXPERT_CURATOR)) {
+            return false;
+        }
+        if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
+            return false;
+        }
+        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
+            return true;
+        }
+
+        if ($user->getCurator() == $token->getUser()) {
+            return true;
+        }
+
+        if ($user->getCurator()->getCurator() == $token->getUser()) {
+            return true;
+        }
+
         return false;
     }
 }

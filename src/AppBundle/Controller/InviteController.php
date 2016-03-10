@@ -115,16 +115,16 @@ class InviteController extends BaseController
 
     /**
      * @Route("/approve/rights/invite/{username}", name="invite_approve_rights")
-     * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
-     * @Security("is_granted('EXPERT_APPROVE_RIGHTS', user)")
+     * @ParamConverter(name="expert", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
+     * @Security("is_granted('ADD_ROLE_CURATOR', expert)")
      */
-    public function approveRightsAction(Request $request, User $user)
+    public function approveRightsAction(Request $request, User $expert)
     {
         $curator = $this->getUser();
-        $event = new InviteApproveRightsEvent($curator, $user);
+        $event = new InviteApproveRightsEvent($expert, $curator);
         $this->get('event_dispatcher')->dispatch(InviteEvents::APPROVE_RIGHTS, $event);
         $this->addFlash(self::FLASH_APPROVED_RIGHTS, 'Вы разрешили пользователю приглашать новых экспертов.');
 
-        return $this->redirectToRoute('experts_detail', ['username' => $user->getUsername()]);
+        return $this->redirectToRoute('experts_detail', ['username' => $expert->getUsername()]);
     }
 }

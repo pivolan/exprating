@@ -65,10 +65,23 @@ class InviteSubscriber implements EventSubscriberInterface
 
     public function approveRights(InviteApproveRightsEvent $event)
     {
+        $expert = $event->getExpert();
+        $expert->addRole(User::ROLE_EXPERT_CURATOR);
     }
 
     public function approveRightsNotify(InviteApproveRightsEvent $event)
     {
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Вам предоставлены права Куратора пользователем '.$event->getCurator()->getUsername())
+            ->setTo($event->getExpert()->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'Email/approveRightsNotify.html.twig',
+                    ['curator' => $event->getCurator(),]
+                )
+            );
+        $this->mailer->send($message);
     }
 
     public function inviteActivate(
@@ -184,10 +197,25 @@ class InviteSubscriber implements EventSubscriberInterface
 
     public function requestRights(InviteRequestRightsEvent $event)
     {
+
     }
 
     public function requestRightsNotify(InviteRequestRightsEvent $event)
     {
+        $expert = $event->getExpert();
+        $curator = $expert->getCurator();
+        $message = \Swift_Message::newInstance()
+            ->setSubject(
+                sprintf('Пользователь %s хочет стать Куратором, чтобы рассылать приглашения', $expert->getUsername())
+            )
+            ->setTo($curator->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'Email/requestRightsNotify.html.twig',
+                    ['expert' => $expert,]
+                )
+            );
+        $this->mailer->send($message);
     }
 
     public function flush($event)

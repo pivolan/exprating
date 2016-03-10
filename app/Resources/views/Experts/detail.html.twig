@@ -27,6 +27,17 @@
                     {% endif %}
                 </div>
             </div>
+            {% if is_granted('ADD_ROLE_CURATOR', expert) %}
+                <div class="btn-group"><a href="{{ path('invite_approve_rights', {'username': expert.username}) }}"
+                                          class="btn btn-info">Сделать куратором</a></div>
+            {% endif %}
+            {% for flash_message in app.session.flashbag.get('flash.approved_rights') %}
+                <div class="alert alert-success">
+                    <ul class="list-unstyled">
+                        <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash_message }}</li>
+                    </ul>
+                </div>
+            {% endfor %}
 
             <div class="tabs-wrapper">
                 <div class="tabs-container">

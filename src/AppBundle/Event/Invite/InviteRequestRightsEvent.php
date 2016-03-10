@@ -6,13 +6,32 @@
 
 namespace AppBundle\Event\Invite;
 
+use AppBundle\Entity\User;
 use AppBundle\Event\User\UserEventInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-class InviteRequestRightsEvent extends Event implements UserEventInterface
+class InviteRequestRightsEvent extends Event
 {
-    public function getEmail()
-    {
+    /**
+     * @var User
+     */
+    protected $expert;
 
+    /**
+     * InviteRequestRightsEvent constructor.
+     *
+     * @param User $expert
+     */
+    public function __construct(User $expert)
+    {
+        $this->expert = $expert;
+    }
+
+    /**
+     * @return User
+     */
+    public function getExpert()
+    {
+        return $this->expert;
     }
 }
