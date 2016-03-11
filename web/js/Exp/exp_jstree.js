@@ -1,7 +1,8 @@
-Exp.jstree = function (selector, data) {
-    $(selector).jstree({
+Exp.jstree = function (selector, data, plugins) {
+    return $(selector).jstree({
         core: {
             data: data
-        }
-    })
+        },
+        plugins: plugins
+    });
 };

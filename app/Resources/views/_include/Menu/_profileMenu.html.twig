@@ -36,7 +36,10 @@
             {% if is_granted("ROLE_EXPERT_CATEGORY_ADMIN") %}
                 <li role="separator" class="divider"></li>
                 <li class="{% if path('category_admin_categories') in app.request.uri %}active{% endif %}"><a href="{{ path('category_admin_categories') }}">
-                        Доступные категории
+                        Доступные категории редактировать
+                    </a></li>
+                <li class="{% if path('category_admin_requests') in app.request.uri %}active{% endif %}"><a href="{{ path('category_admin_requests') }}">
+                        Заявки на регистрацию
                     </a></li>
             {% endif %}
             {% if is_granted("ROLE_MODERATOR") %}

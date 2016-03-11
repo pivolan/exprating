@@ -2,13 +2,18 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\Validator\Constraints\UniqueUser;
 
 /**
  * CreateExpertRequest
  *
  * @ORM\Table(name="create_expert_request")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CreateExpertRequestRepository")
+ * @UniqueEntity(fields={"email"}, message="Вы уже отправляли приглашение на этот адрес")
+ * @UniqueUser
  */
 class CreateExpertRequest
 {
@@ -42,6 +47,38 @@ class CreateExpertRequest
      */
     private $createdAt;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_approved", type="boolean",
+     *     options={"comment": "Одобрено, отправили инвайт", "default": false})
+     */
+    private $isApproved = false;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $curator;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
+     * @ORM\JoinTable(name="create_expert_request_category",
+     *     joinColumns={@ORM\JoinColumn(name="create_expert_request_id", referencedColumnName="id",
+     *      onDelete="CASCADE")},
+     *            inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug",
+     *      onDelete="CASCADE")})
+     */
+    private $categories;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->categories = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -123,5 +160,87 @@ class CreateExpertRequest
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set curator
+     *
+     * @param \AppBundle\Entity\User $curator
+     *
+     * @return CreateExpertRequest
+     */
+    public function setCurator(\AppBundle\Entity\User $curator = null)
+    {
+        $this->curator = $curator;
+
+        return $this;
+    }
+
+    /**
+     * Get curator
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCurator()
+    {
+        return $this->curator;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return CreateExpertRequest
+     */
+    public function addCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Set isApproved
+     *
+     * @param boolean $isApproved
+     *
+     * @return CreateExpertRequest
+     */
+    public function setIsApproved($isApproved)
+    {
+        $this->isApproved = $isApproved;
+
+        return $this;
+    }
+
+    /**
+     * Get isApproved
+     *
+     * @return boolean
+     */
+    public function getIsApproved()
+    {
+        return $this->isApproved;
     }
 }

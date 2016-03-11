@@ -1,0 +1,62 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Выберите категории</h1>
+            <div class="well" id="jstree"></div>
+        </div>
+        <div class="col-md-6">
+            <h1>Заполните форму</h1>
+            <div class="well">
+                {% for flash_message in app.session.flashbag.get('flash.create_expert_request_sended') %}
+                    <div class="alert alert-success">
+                        <ul class="list-unstyled">
+                            <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash_message }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+    <select name="" id="">
+        <option value="sdfg">sdfg</option>
+    </select>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/external/themes/default/style.min.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/external/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/Exp/exp_jstree.js') }}"></script>
+    <script type="text/javascript">
+        Bridge.js_tree_data = [
+            {{ include("_include/Category/_jsTree.json.twig", {"category": null}) }}
+        ];
+    </script>
+
+    <script type="text/javascript">
+        function set_categories(node, selected, event) {
+            console.log(selected);
+            var all = $('#jstree').jstree(true).get_bottom_checked(true);
+            var html = '';
+            for (key in all) {
+                html += '<option value="' + all[key].id + '" selected>' + all[key].text + '</option>';
+            }
+            $('#create_expert_request_categories').html(html);
+        }
+        $('#jstree').jstree({
+            core: {
+                data: Bridge.js_tree_data
+            },
+            checkbox: {
+                kepp_selected_style: false,
+                tie_selection: false
+            },
+            plugins: ["checkbox"]
+        }).on("check_node.jstree", set_categories).on('uncheck_node.jstree')
+        ;
+    </script>
+{% endblock %}

@@ -563,4 +563,38 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * Add invite
+     *
+     * @param \AppBundle\Entity\Invite $invite
+     *
+     * @return User
+     */
+    public function addInvite(\AppBundle\Entity\Invite $invite)
+    {
+        $this->invites[] = $invite;
+
+        return $this;
+    }
+
+    /**
+     * Remove invite
+     *
+     * @param \AppBundle\Entity\Invite $invite
+     */
+    public function removeInvite(\AppBundle\Entity\Invite $invite)
+    {
+        $this->invites->removeElement($invite);
+    }
+
+    /**
+     * Get invites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInvites()
+    {
+        return $this->invites;
+    }
 }

@@ -71,5 +71,10 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preRemove, connection: default }
 
+    app.form.create_expert_request_type:
+        class: AppBundle\Form\CreateExpertRequestType
+        arguments: [ '@doctrine.orm.default_entity_manager' ]
+        tags:
+            - { name: form.type, alias: AppBundle\Form\CreateExpertRequestType }
 imports:
     - { resource: "subscribers.yml" }

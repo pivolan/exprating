@@ -1,0 +1,43 @@
+{% extends 'Profile/user.html.twig' %}
+{% block title %}Запросы на регистрацию новых Экспертов{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("category_admin_requests") }}">Запросы на регистрацию</a>
+{% endblock %}
+{% block profile_body %}
+    <div class="row">
+        {% for flash_message in app.session.flashbag.get('flash.registration_request_approved') %}
+            <div id="flash_info_{{ loop.index }}" class="well alert-success">
+                {{ flash_message }}
+                <script type="text/javascript">setTimeout(function () {
+                        $('#flash_info_{{ loop.index }}').remove()
+                    }, 5000)</script>
+            </div>
+        {% endfor %}
+        {% for flash_message in app.session.flashbag.get('flash.registration_request_rejected') %}
+            <div id="flash_info_{{ loop.index }}" class="well alert-danger">
+                {{ flash_message }}
+                <script type="text/javascript">setTimeout(function () {
+                        $('#flash_info_{{ loop.index }}').remove()
+                    }, 5000)</script>
+            </div>
+        {% endfor %}
+
+
+        <div class="col-md-4">
+            <h1>Заявки</h1>
+            {% for application in requests %}
+                <div class="well">
+                    <span class="badge pull-right"># {{ application.id }}</span>
+                    <h4>
+                        <a class="request_email" href="{{ path("category_admin_requests", {"id": application.id}) }}">{{ application.email }}</a>
+                    </h4>
+                    <div>{{ application.message|slice(0, 100) }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-8 history_requests">
+            {{ include("CategoryAdmin/requestsPart.html.twig") }}
+        </div>
+    </div>
+{% endblock %}

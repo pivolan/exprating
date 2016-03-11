@@ -1,0 +1,12 @@
+<h1>{{ registrationRequest.email|default("Выберите заявку") }}</h1>
+
+{% if registrationRequest %}
+    {% for category in registrationRequest.categories %}
+        <span class="label label-info">{{ category.name }}</span>
+    {% endfor %}
+    <div>#{{ registrationRequest.id }}</div>
+    <div>{{ registrationRequest.email }}</div>
+    <div>{{ registrationRequest.message }}</div>
+    <div>{{ registrationRequest.createdAt|date }}</div>
+    {{ form(form) }}
+{% endif %}

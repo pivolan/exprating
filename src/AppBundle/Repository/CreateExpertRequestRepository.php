@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
+
 /**
  * CreateExpertRequestRepository
  *
@@ -10,4 +12,19 @@ namespace AppBundle\Repository;
  */
 class CreateExpertRequestRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param User $categoryAdmin
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function queryByCurator(User $categoryAdmin)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.curator = :user')
+            ->andWhere('a.isApproved = :false')
+            ->setParameter('user', $categoryAdmin)
+            ->setParameter('false', false);
+
+        return $qb->getQuery();
+    }
 }
