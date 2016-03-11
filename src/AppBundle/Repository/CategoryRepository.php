@@ -78,7 +78,7 @@ class CategoryRepository extends NestedTreeRepository
     {
         $qb = $this->getChildrenQueryBuilder($category, false, null, 'ASC', true)
             ->select('node.slug');
-        if($peopleGroup){
+        if ($peopleGroup) {
             $qb->innerJoin('node.peopleGroups', 'pg', 'WITH', 'pg.slug = :peopleGroup')
                 ->setParameter('peopleGroup', $peopleGroup->getSlug());
         }
@@ -107,7 +107,13 @@ class CategoryRepository extends NestedTreeRepository
                 ->setParameter('admin', $admin);
         }
 
-        return $qb->getQuery()
+        $categories = $qb->getQuery()
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
+        $result = [];
+        foreach ($categories as $category) {
+            $result[$category['id']] = $category;
+        }
+
+        return $result;
     }
 }

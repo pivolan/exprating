@@ -2,7 +2,11 @@
 {% for category in categories %}
 {
     id: '{{ category.id }}',
+    {% if categories[category.parent_id] is defined %}
     parent: '{{ category.parent_id|default('#') }}',
+    {% else %}
+    parent: '#',
+    {% endif %}
     text: '{{ category.name|raw }}',
     a_attr: {
         href: '{{ path(app.request.get('_route'), {'slug': category.id}) }}',

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\CreateExpertRequest;
 use AppBundle\Entity\User;
 
 /**
@@ -26,5 +27,20 @@ class CreateExpertRequestRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('false', false);
 
         return $qb->getQuery();
+    }
+
+    /**
+     * @param $email
+     *
+     * @return CreateExpertRequest
+     */
+    public function getOneByEmail($email)
+    {
+        $result = $this->createQueryBuilder('a')
+            ->where('a.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()->getSingleResult();
+
+        return $result;
     }
 }

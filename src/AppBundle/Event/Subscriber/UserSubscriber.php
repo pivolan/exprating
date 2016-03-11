@@ -6,11 +6,15 @@
 
 namespace AppBundle\Event\Subscriber;
 
+use AppBundle\Entity\Invite;
 use AppBundle\Entity\User;
+use AppBundle\Event\Invite\InviteEvents;
+use AppBundle\Event\Invite\InviteSendEvent;
 use AppBundle\Event\User\ApproveCreateExpertEvent;
 use AppBundle\Event\User\CreateExpertRequestEvent;
 use AppBundle\Event\User\UserEvents;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UserSubscriber implements EventSubscriberInterface
@@ -82,8 +86,20 @@ class UserSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function createExpertApprove(ApproveCreateExpertEvent $event)
-    {
+    public function createExpertApprove(
+        ApproveCreateExpertEvent $event,
+        $eventName,
+        EventDispatcherInterface $dispatcher
+    ) {
+        $createExpertRequest = $event->getCreateExpertRequest();
+        $invite = new Invite();
+        $invite->setIsFromFeedback(true)
+            ->setCurator($createExpertRequest->getCurator())
+            ->setEmail($createExpertRequest->getEmail());
+        $this->em->persist($invite);
+        $createExpertRequest->setIsApproved(true);
+
+        $dispatcher->dispatch(InviteEvents::SEND, new InviteSendEvent($invite));
     }
 
     public function notifyApprove(ApproveCreateExpertEvent $event)

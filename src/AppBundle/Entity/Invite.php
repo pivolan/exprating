@@ -189,14 +189,6 @@ class Invite
     }
 
     /**
-     * @return boolean
-     */
-    public function isIsFromFeedback()
-    {
-        return $this->isFromFeedback;
-    }
-
-    /**
      * @param boolean $isFromFeedback
      *
      * @return $this

@@ -6,6 +6,7 @@
 
 namespace AppBundle\Event\Subscriber;
 
+use AppBundle\Entity\CreateExpertRequest;
 use AppBundle\Entity\User;
 use AppBundle\Event\Invite\InviteActivateEvent;
 use AppBundle\Event\Invite\InviteApproveRightsEvent;
@@ -54,11 +55,16 @@ class InviteSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            InviteEvents::COMPLETE_REGISTRATION => [['inviteComplete', 0], ['inviteCompleteNotify', 0], ['flush']],
-            InviteEvents::ACTIVATE              => [['inviteActivate', 0], ['inviteActivateNotify', 0], ['flush']],
-            InviteEvents::SEND                  => [['inviteSend', 0], ['inviteSendNotify', 0], ['flush']],
-            InviteEvents::APPROVE_RIGHTS        => [['approveRights', 0], ['approveRightsNotify', 0], ['flush']],
-            InviteEvents::REQUEST_RIGHTS        => [['requestRights', 0], ['requestRightsNotify', 0], ['flush']],
+            InviteEvents::COMPLETE_REGISTRATION => [
+                ['inviteComplete', 2],
+                ['inviteCompleteFillCategories', 1],
+                ['inviteCompleteNotify', 1],
+                ['flush'],
+            ],
+            InviteEvents::ACTIVATE              => [['inviteActivate', 2], ['inviteActivateNotify', 2], ['flush'],],
+            InviteEvents::SEND                  => [['inviteSend', 2], ['inviteSendNotify', 2], ['flush'],],
+            InviteEvents::APPROVE_RIGHTS        => [['approveRights', 2], ['approveRightsNotify', 2], ['flush']],
+            InviteEvents::REQUEST_RIGHTS        => [['requestRights', 2], ['requestRightsNotify', 2], ['flush']],
         ];
 
     }
@@ -143,8 +149,26 @@ class InviteSubscriber implements EventSubscriberInterface
         $curator = $invite->getCurator();
         $user->setCurator($curator)
             ->setIsActivated(true);
-        foreach ($curator->getCategories() as $category) {
-            $user->addCategory($category);
+    }
+
+    public function inviteCompleteFillCategories(InviteCompleteRegistrationEvent $event)
+    {
+        $user = $event->getExpert();
+        $invite = $user->getInvite();
+        $curator = $invite->getCurator();
+
+        if ($invite->getIsFromFeedback()) {
+            /** @var CreateExpertRequest $registrationRequest */
+            $registrationRequest = $this->em->getRepository('AppBundle:CreateExpertRequest')->getOneByEmail(
+                $invite->getEmail()
+            );
+            foreach ($registrationRequest->getCategories() as $category) {
+                $user->addCategory($category);
+            }
+        } else {
+            foreach ($curator->getCategories() as $category) {
+                $user->addCategory($category);
+            }
         }
     }
 
