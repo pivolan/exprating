@@ -29,12 +29,33 @@ class ProductEditHistory
     private $createdAt;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="diff", type="text", nullable=true)
+     * @ORM\Column(name="diff", type="array", nullable=true)
      */
     private $diff;
 
+    /**
+     * @var Product
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product")
+     */
+    private $product;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $user;
+
+    /**
+     * ProductEditHistory constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -73,7 +94,7 @@ class ProductEditHistory
     /**
      * Set diff
      *
-     * @param string $diff
+     * @param array $diff
      *
      * @return ProductEditHistory
      */
@@ -87,10 +108,58 @@ class ProductEditHistory
     /**
      * Get diff
      *
-     * @return string
+     * @return array
      */
     public function getDiff()
     {
         return $this->diff;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return ProductEditHistory
+     */
+    public function setProduct(\AppBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \AppBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return ProductEditHistory
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

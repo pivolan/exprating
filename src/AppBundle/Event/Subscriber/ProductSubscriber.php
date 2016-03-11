@@ -8,6 +8,7 @@
 namespace AppBundle\Event\Subscriber;
 
 use AppBundle\Entity\CuratorDecision;
+use AppBundle\Entity\ProductEditHistory;
 use AppBundle\Entity\User;
 use AppBundle\Event\DecisionCreateEvent;
 use AppBundle\Event\ProductApproveEvent;
@@ -269,7 +270,16 @@ class ProductSubscriber implements EventSubscriberInterface
 
     public function productEdited(ProductEditedEvent $event)
     {
-
+        $product = $event->getProduct();
+        $user = $event->getUser();
+        $history = new ProductEditHistory();
+        $history->setProduct($product)
+            ->setUser($user);
+        $uow = $this->em->getUnitOfWork();
+        $uow->computeChangeSets();
+        $changeset = $uow->getEntityChangeSet($product);
+        $history->setDiff($changeset);
+        $this->em->persist($history);
     }
 
     public function productVisited(ProductVisitEvent $event)
