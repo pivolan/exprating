@@ -1,8 +1,8 @@
-<div class="col-md-offset-9">
+<div class="col-md-offset-8">
     <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-            Личный кабинет <span class="caret"></span>
+            <img class="avatar-img" src="{{ app.user.avatar|default('http://placehold.it/20x20') }}" alt="">Личный кабинет ({{ app.user.username }}) <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             <li class="{% if path('profile', {'username': app.user.username}) in app.request.uri %}active{% endif %}"><a href="{{ path('profile', {'username': app.user.username}) }}">

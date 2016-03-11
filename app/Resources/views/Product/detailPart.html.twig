@@ -2,13 +2,7 @@
         <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
             <a href="{{ path("homepage") }}">Главная</a>
             {{ breadcrumbs(product.category, productPeopleGroups.0.name|default('dlya-vseh'))|raw }}
-            <button class="btn btn-xs btn-info" type="button" data-toggle="tooltip" title="Изменить категорию">
-                <span class="glyphicon glyphicon-edit"></span>
-            </button>
-            <i class="fa fa-female" data-toggle="tooltip" title="Для женщин"></i>
-            <i class="fa fa-male" data-toggle="tooltip" title="Для мужчин"></i>
-            <i class="fa fa-child" data-toggle="tooltip" title="Для детей"></i>
-            <i class="fa fa-group" data-toggle="tooltip" title="Для всех"></i>
+            {% block edit_category %}{% endblock %}
         </div>
         {% block curator_decision %}
             {% if is_granted('MODERATE', product) %}
@@ -27,7 +21,7 @@
                     <div class="col-md-4 col-md-offset-4">
                         <div class="btn-group">
                             {% block change_expert_buttons %}
-                                <a href="{{ path('curator_product_change_expert', {'slug': product.slug}) }}" class="btn btn-default">Сменить эксперта</a>
+                                <a href="{{ path('curator_product_change_expert', {'slug': product.slug}) }}" class="btn btn-info">Сменить эксперта</a>
                             {% endblock %}
                         </div>
                     </div>
@@ -41,11 +35,11 @@
                     <div class="btn-group">
                         {% block edit_buttons_label %}
                             {% if app.user == product.expertUser %}
-                                <a class="btn btn-success" href="{{ path("product_edit", {"slug": product}) }}">
+                                <a class="btn btn-info" href="{{ path("product_edit", {"slug": product}) }}">
                                     Редактировать
                                 </a>
                             {% else %}
-                                <a class="btn btn-success" href="{{ path("product_edit", {"slug": product}) }}">Взять на
+                                <a class="btn btn-info" href="{{ path("product_edit", {"slug": product}) }}">Взять на
                                     редактирование</a>
                             {% endif %}
                         {% endblock %}

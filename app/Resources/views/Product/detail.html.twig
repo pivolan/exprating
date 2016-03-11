@@ -1,4 +1,7 @@
 {% extends 'layout.html.twig' %}
+{% block meta %}
+    <meta name="log-visit" content="{{ path("log_visit_product", {"slug": product.slug}) }}">
+{% endblock %}
 {% block body_type %}product{% endblock %}
 {% block content %}
     <div class="content-inner clearfix">
@@ -16,5 +19,4 @@
             <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
         {% endjavascripts %}
     {% endif %}
-    <script type="text/javascript" src="https://cdn.rawgit.com/showdownjs/showdown/1.3.0/dist/showdown.min.js"></script>
 {% endblock %}

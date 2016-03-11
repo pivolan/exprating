@@ -1591,3 +1591,8 @@ textarea.decision.form-control {
 .row .col-sm-4:hover .image-remove, .row .col-sm-4:hover .image-zoom-in {
   display: block;
 }
+.avatar-img {
+  border-radius: 10px;
+  height: 20px;
+  width: 20px;
+}

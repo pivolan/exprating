@@ -1,11 +1,20 @@
 {% extends ':Product:detailPart.html.twig' %}
+{% block edit_category %}
+    <button class="btn btn-xs btn-info" type="button" data-toggle="tooltip" title="Изменить категорию">
+        <span class="glyphicon glyphicon-edit"></span>
+    </button>
+    <i class="fa fa-female" data-toggle="tooltip" title="Для женщин"></i>
+    <i class="fa fa-male" data-toggle="tooltip" title="Для мужчин"></i>
+    <i class="fa fa-child" data-toggle="tooltip" title="Для детей"></i>
+    <i class="fa fa-group" data-toggle="tooltip" title="Для всех"></i>
+{% endblock %}
 {% block form_start_block %}
     {% form_theme form 'Form/form_product_edit.html.twig' %}
 
     {{ form_start(form) }}
 {% endblock %}
 {% block edit_buttons_label %}
-    <a class="btn btn-default" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
+    <a class="btn btn-info" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
     {{ form_widget(form.save) }}
     {% if is_granted('PUBLISH', product) %}
         {{ form_widget(form.publish) }}
@@ -74,7 +83,7 @@
         <button data-type='remove' class='btn btn-error label label-danger' type='button'>
             <span class='glyphicon glyphicon-trash'></span>
         </button>
-    </li>" class="btn btn-success" type="button">Добавить
+    </li>" class="btn btn-info" type="button">Добавить
         </button>
     </li>
 {% endblock %}
@@ -91,7 +100,7 @@
         <button data-type='remove' class='btn btn-error label label-danger' type='button'>
             <span class='glyphicon glyphicon-trash'></span>
         </button>
-    </li>" class="btn btn-success" type="button">Добавить
+    </li>" class="btn btn-info" type="button">Добавить
         </button>
     </li>
 {% endblock %}
@@ -131,7 +140,7 @@
         </div>
     {% endfor %}
 
-    <button class="btn btn-success" data-type="add-ch" type="button">Добавить</button>
+    <button class="btn btn-info" data-type="add-ch" type="button">Добавить</button>
 {% endblock %}
 {% block form_comment_block %}{% endblock %}
 {% block delete_button %}

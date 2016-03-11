@@ -31,6 +31,9 @@
                 <div class="btn-group"><a href="{{ path('invite_approve_rights', {'username': expert.username}) }}"
                                           class="btn btn-info">Сделать куратором</a></div>
             {% endif %}
+            {% if expert.hasRole('ROLE_EXPERT_CURATOR') %}
+                <span class="label label-info">Куратор</span>
+            {% endif %}
             {% for flash_message in app.session.flashbag.get('flash.approved_rights') %}
                 <div class="alert alert-success">
                     <ul class="list-unstyled">

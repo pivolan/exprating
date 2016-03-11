@@ -5,6 +5,7 @@ imports:
     - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@CharacteristicBundle/Resources/config/services.yml" }
     - { resource: "@ExpratingImportBundle/Resources/config/services.yml" }
+    - { resource: "@ExpratingStaticsticBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -194,8 +195,10 @@ assetic:
         product_detail_js:
             inputs:
                 - 'js/external/jquery.form.min.js'
+                - 'js/external/showdown.min.js'
                 - 'js/Exp/exp_form_ajax.js'
                 - 'js/product_detail.init.js'
+                - 'js/plugins/log_visit.js'
         product_edit_js:
             inputs:
                 - 'js/external/jquery.ui.widget.js'

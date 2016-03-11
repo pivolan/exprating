@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new Oneup\UploaderBundle\OneupUploaderBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new IAkumaI\SphinxsearchBundle\SphinxsearchBundle(),
+            new Exprating\StaticsticBundle\ExpratingStaticsticBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

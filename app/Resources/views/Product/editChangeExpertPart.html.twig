@@ -5,7 +5,7 @@
     {{ form_start(form) }}
 {% endblock %}
 {% block change_expert_buttons %}
-    <a class="btn btn-default" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
+    <a class="btn btn-info" href="{{ path("product_detail", {"slug": product}) }}">Просмотр</a>
     {{ form_widget(form.save) }}
 {% endblock %}
 {% block notifications %}
