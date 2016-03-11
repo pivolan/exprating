@@ -261,23 +261,6 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getCountPublishedByExpert(User $expert)
-    {
-        $result = $this->qbByExpert($expert)
-            ->select('count(a)')->getQuery()->getSingleScalarResult();
-
-        return $result;
-    }
-
-    public function getCountNotPublishedByExpert(User $expert)
-    {
-        $result = $this->qbByExpert($expert)
-            ->setParameter('isEnabled', false)
-            ->select('count(a)')->getQuery()->getSingleScalarResult();
-
-        return $result;
-    }
-
     /**
      * @param User $expert
      *

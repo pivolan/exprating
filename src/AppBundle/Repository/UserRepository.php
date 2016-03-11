@@ -2,7 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ShopRepository.
@@ -50,5 +52,23 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('a.id', 'DESC');
 
         return $qb->getQuery();
+    }
+
+    /**
+     * @param Category[] $categories
+     *
+     * @return User
+     */
+    public function getRandomByCategories($categories)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->innerJoin('a.adminCategories', 'b', 'WITH', 'b IN (:categories)')
+            ->setParameter('categories', $categories)
+            ->where('a.roles LIKE :role')
+            ->setParameter('role', '%'.User::ROLE_EXPERT_CATEGORY_ADMIN.'%');
+        $count = $qb->select('count(a.id) as counter')->getQuery()->getSingleScalarResult();
+        $user = $qb->select('a')->setFirstResult(rand(0, $count - 1))->setMaxResults(1)->getQuery()->getSingleResult();
+
+        return $user;
     }
 }

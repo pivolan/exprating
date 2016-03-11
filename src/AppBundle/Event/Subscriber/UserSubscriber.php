@@ -6,6 +6,7 @@
 
 namespace AppBundle\Event\Subscriber;
 
+use AppBundle\Entity\User;
 use AppBundle\Event\User\ApproveCreateExpertEvent;
 use AppBundle\Event\User\CreateExpertRequestEvent;
 use AppBundle\Event\User\UserEvents;
@@ -49,10 +50,36 @@ class UserSubscriber implements EventSubscriberInterface
 
     public function createExpertRequest(CreateExpertRequestEvent $event)
     {
+        $entity = $event->getCreateExpertRequest();
+        $this->em->persist($entity);
+        /** @var User $categoryAdmin */
+        $categoryAdmin = $this->em->getRepository('AppBundle:User')->getRandomByCategories($entity->getCategories());
+        if (!$categoryAdmin) {
+            throw new \LogicException('В базе данных нет ни одного подходящего админа категорий');
+        }
+        $entity->setCurator($categoryAdmin);
     }
 
     public function notifyRequest(CreateExpertRequestEvent $event)
     {
+        $createExpertRequest = $event->getCreateExpertRequest();
+        $curator = $createExpertRequest->getCurator();
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Запрос на регистрацию нового эксперта '.$createExpertRequest->getEmail())
+            ->setTo($curator->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'Email/createExpertRequest.html.twig',
+                    [
+                        'curator'    => $curator,
+                        'email'      => $createExpertRequest->getEmail(),
+                        'message'    => $createExpertRequest->getMessage(),
+                        'categories' => $createExpertRequest->getCategories(),
+                        'id'         => $createExpertRequest->getId(),
+                    ]
+                )
+            );
+        $this->mailer->send($message);
     }
 
     public function createExpertApprove(ApproveCreateExpertEvent $event)

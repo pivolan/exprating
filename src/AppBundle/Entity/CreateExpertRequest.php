@@ -213,7 +213,7 @@ class CreateExpertRequest
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Category[]
      */
     public function getCategories()
     {

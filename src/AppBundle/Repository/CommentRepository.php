@@ -19,14 +19,4 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery();
     }
-
-    public function newCount()
-    {
-        $qb = $this->createQueryBuilder('a')
-            ->select('count(a)')
-            ->where('a.isPublished = :isPublished')
-            ->setParameter('isPublished', false);
-
-        return $qb->getQuery()->getSingleScalarResult();
-    }
 }

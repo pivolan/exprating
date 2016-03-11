@@ -39,8 +39,6 @@ class WantToBecomeExpertController extends BaseController
                 UserEvents::CREATE_EXPERT_REQUEST,
                 new CreateExpertRequestEvent($createExpertRequest)
             );
-            $this->getEm()->persist($createExpertRequest);
-            $this->getEm()->flush();
             $this->addFlash(self::FLASH_CREATE_EXPERT_REQUEST_SENDED, 'Ваш запрос успешно отправлен');
 
             return $this->redirectToRoute('request_create_expert');

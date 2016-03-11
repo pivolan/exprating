@@ -10,7 +10,7 @@ use AppBundle\Entity\User;
 use AppBundle\Event\User\UserEventInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-class InviteApproveRightsEvent extends Event implements UserEventInterface
+class InviteApproveRightsEvent extends Event
 {
     /** @var  User */
     protected $expert;
@@ -28,11 +28,6 @@ class InviteApproveRightsEvent extends Event implements UserEventInterface
     {
         $this->expert = $expert;
         $this->curator = $curator;
-    }
-
-    public function getEmail()
-    {
-        // TODO: extends Event implement getEmail() method.
     }
 
     /**

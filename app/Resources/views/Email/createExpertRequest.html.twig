@@ -1,0 +1,11 @@
+Запрос на регистрацию нового эксперта от {{ email }}.
+Содержание:
+
+{{ message }}
+
+Категории, в которых эксперт хочет участвовать:
+{% for category in categories %}
+    {{ category.name }},
+{% endfor %}
+
+Рассмотреть заявку можно по ссылке: {{ url('category_admin_requests', {"id": id}) }}

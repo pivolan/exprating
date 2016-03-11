@@ -7,11 +7,28 @@
 namespace AppBundle\Event\User;
 
 use Symfony\Component\EventDispatcher\Event;
+use AppBundle\Entity\CreateExpertRequest;
 
-class ApproveCreateExpertEvent extends Event implements UserEventInterface
+class ApproveCreateExpertEvent extends Event
 {
-    public function getEmail()
+    /** @var  CreateExpertRequest */
+    protected $createExpertRequest;
+
+    /**
+     * CreateExpertRequestEvent constructor.
+     *
+     * @param CreateExpertRequest $createExpertRequest
+     */
+    public function __construct(CreateExpertRequest $createExpertRequest)
     {
-        // TODO: extends Event implement getEmail() method.
+        $this->createExpertRequest = $createExpertRequest;
+    }
+
+    /**
+     * @return CreateExpertRequest
+     */
+    public function getCreateExpertRequest()
+    {
+        return $this->createExpertRequest;
     }
 }
