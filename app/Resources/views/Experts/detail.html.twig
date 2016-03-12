@@ -27,6 +27,11 @@
                     {% endif %}
                 </div>
             </div>
+            {% if is_granted('DETAIL_VIEW', expert) %}
+                <div class="alert alert-info">
+                    {{ render(controller('AppBundle:Expert:detailView', {'expert': expert})) }}
+                </div>
+            {% endif %}
             {% if is_granted('ADD_ROLE_CURATOR', expert) %}
                 <div class="btn-group"><a href="{{ path('invite_approve_rights', {'username': expert.username}) }}"
                                           class="btn btn-info">Сделать куратором</a></div>

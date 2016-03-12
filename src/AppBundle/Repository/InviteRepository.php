@@ -10,4 +10,8 @@ namespace AppBundle\Repository;
  */
 class InviteRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findOneByExpert($expert)
+    {
+        return $this->findOneBy(['expert' => $expert]);
+    }
 }

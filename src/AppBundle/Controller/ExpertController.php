@@ -8,10 +8,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_EXPERT')")
@@ -19,6 +21,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class ExpertController extends BaseController
 {
+    const KEY_INVITE = 'invite';
+
     /**
      * @Route("/profile/expert/published_items/{page}/{slug}", name="expert_published_items",
      *     defaults={"page":1, "slug": null})
@@ -42,6 +46,7 @@ class ExpertController extends BaseController
             $template = 'Expert/part.html.twig';
         }
         $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($this->getUser());
+
         return $this->render(
             $template,
             [
@@ -125,5 +130,22 @@ class ExpertController extends BaseController
                 self::KEY_CATEGORIES => $categories,
             ]
         );
+    }
+
+    /**
+     * @param User $expert
+     *
+     * @Security("is_granted('DETAIL_VIEW', expert)")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailViewAction(User $expert)
+    {
+        $invite = $this->getEm()->getRepository('AppBundle:Invite')->findOneByExpert($expert);
+
+        if ($invite) {
+            return $this->render('Expert/detailView.html.twig', [self::KEY_INVITE => $invite]);
+        }else{
+            return new Response();
+        }
     }
 }
