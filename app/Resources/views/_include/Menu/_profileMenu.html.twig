@@ -5,7 +5,7 @@
             <img class="avatar-img" src="{{ app.user.avatar|default('http://placehold.it/20x20') }}" alt="">Личный кабинет ({{ app.user.username }}) <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li class="{% if path('profile', {'username': app.user.username}) in app.request.uri %}active{% endif %}"><a href="{{ path('profile', {'username': app.user.username}) }}">
+            <li class="{% if path('experts_detail', {'username': app.user.username}) in app.request.uri %}active{% endif %}"><a href="{{ path('experts_detail', {'username': app.user.username}) }}">
                     Профиль
                 </a></li>
             <li class="{% if path('invite') in app.request.uri %}active{% endif %}"><a href="{{ path('invite') }}">
