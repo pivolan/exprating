@@ -25,9 +25,10 @@ class EditController extends BaseController
 {
     const FLASH_EXPERTISE_ERROR_MESSAGE = 'flash.expertise.error_message';
     const FLASH_EXPERTISE_MESSAGE = 'flash.expertise.message';
+    const KEY_HISTORY_LOGS = 'historyLogs';
 
     /**
-     * @Route("/tovar/{slug}/edit", name="product_edit")
+     * @Route("/tovar/{slug}/edit/{page}", name="product_edit", defaults={"page":1})
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      *
      * @param Request $request
@@ -37,7 +38,7 @@ class EditController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, Product $product)
+    public function editAction(Request $request, Product $product, $page)
     {
         /** @var User $expert */
         $expert = $this->getUser();
@@ -51,7 +52,10 @@ class EditController extends BaseController
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $this->get('event_dispatcher')->dispatch(ProductEvents::EDITED, new ProductEditedEvent($product, $this->getUser()));
+            $this->get('event_dispatcher')->dispatch(
+                ProductEvents::EDITED,
+                new ProductEditedEvent($product, $this->getUser())
+            );
             $this->getEm()->flush();
             //Если нажал кнопку опубликовать, тогда запускаем событие публикации
             $isClicked = $form->get(ProductType::PUBLISH_SUBMIT)->isClicked();
@@ -81,6 +85,22 @@ class EditController extends BaseController
             $template = 'Product/editPart.html.twig';
         }
 
-        return $this->render($template, [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]);
+        $historyLogsQuery = $this->getEm()->getRepository('AppBundle:ProductEditHistory')->getQueryByProduct($product);
+        $paginator = $this->get('knp_paginator');
+        $historyLogs = $paginator->paginate(
+            $historyLogsQuery,
+            max($page, 1),
+            self::LIMIT_PER_PAGE
+        );
+
+
+        return $this->render(
+            $template,
+            [
+                self::KEY_PRODUCT      => $product,
+                self::KEY_FORM         => $form->createView(),
+                self::KEY_HISTORY_LOGS => $historyLogs,
+            ]
+        );
     }
 }

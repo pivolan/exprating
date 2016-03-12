@@ -36,6 +36,13 @@ class ProductEditHistory
     private $diff;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="text", type="string", length=255, nullable=true)
+     */
+    private $text;
+
+    /**
      * @var Product
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product")
@@ -161,5 +168,29 @@ class ProductEditHistory
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return ProductEditHistory
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
     }
 }

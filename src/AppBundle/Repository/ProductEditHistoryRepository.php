@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Product;
+
 /**
  * ProductEditHistoryRepository
  *
@@ -10,4 +12,18 @@ namespace AppBundle\Repository;
  */
 class ProductEditHistoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param Product $product
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getQueryByProduct(Product $product)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.product = :product')
+            ->setParameter('product', $product)
+            ->orderBy('a.createdAt',  'DESC')
+            ->getQuery();
+        return $query;
+    }
 }

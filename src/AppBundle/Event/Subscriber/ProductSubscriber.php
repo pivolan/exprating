@@ -21,6 +21,7 @@ use AppBundle\Event\ProductRejectEvent;
 use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Event\ProductReservationOverEvent;
 use AppBundle\Event\ProductVisitEvent;
+use AppBundle\Humanize\ProductHistoryDiffHumanize;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -47,11 +48,21 @@ class ProductSubscriber implements EventSubscriberInterface
      */
     protected $twig;
 
-    public function __construct(\Swift_Mailer $mailer, EntityManager $em, \Twig_Environment $twig)
-    {
+    /**
+     * @var ProductHistoryDiffHumanize
+     */
+    protected $humanize;
+
+    public function __construct(
+        \Swift_Mailer $mailer,
+        EntityManager $em,
+        \Twig_Environment $twig,
+        ProductHistoryDiffHumanize $humanize
+    ) {
         $this->mailer = $mailer;
         $this->em = $em;
         $this->twig = $twig;
+        $this->humanize = $humanize;
     }
 
     public static function getSubscribedEvents()
@@ -279,6 +290,7 @@ class ProductSubscriber implements EventSubscriberInterface
         $uow->computeChangeSets();
         $changeset = $uow->getEntityChangeSet($product);
         $history->setDiff($changeset);
+        $history->setText($this->humanize->humanize($history));
         $this->em->persist($history);
     }
 

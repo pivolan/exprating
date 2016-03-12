@@ -1,4 +1,4 @@
-Exp.historical('.edit-menu a', 'div.content-inner.clearfix');
+Exp.historical('.edit-menu a, ul.pagination a', 'div.content-inner.clearfix');
 
 $(document).on('click', 'button[data-type="add"]', function (event) {
     var $this = $(this);
