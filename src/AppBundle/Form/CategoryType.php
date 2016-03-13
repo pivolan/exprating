@@ -35,6 +35,7 @@ class CategoryType extends AbstractType
                     'text_property'        => 'label',
                     'page_limit'           => null,
                     'primary_key'          => 'slug',
+                    'label'                => 'Характеристики',
                     'minimum_input_length' => 0,
                 ]
             )
