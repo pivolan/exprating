@@ -180,6 +180,10 @@ class UserVoter extends Voter
             return true;
         }
 
+        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
+            return true;
+        }
+
         return false;
     }
 }

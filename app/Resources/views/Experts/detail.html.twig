@@ -6,7 +6,9 @@
         <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
             <a href="{{ path("experts_list") }}">Наши эксперты</a> →
         </div>
-        <h1>{{ expert.fullName }}</h1>
+        <h1>{{ expert.fullName }} {% if is_granted('EDIT', expert) %}
+                <a href="{{ path('experts_detail_edit', {'username': expert.username}) }}" class="btn btn-info">Редактировать</a>
+            {% endif %}</h1>
 
         <div class="expert-page-wrapper">
             <div class="expert-item">

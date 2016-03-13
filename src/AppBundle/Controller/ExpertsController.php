@@ -39,7 +39,7 @@ class ExpertsController extends BaseController
     }
 
     /**
-     * @Route("/experts/{username}", name="experts_detail")
+     * @Route("/expert/{username}", name="experts_detail")
      * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
      */
     public function detailAction(User $user)
@@ -67,7 +67,7 @@ class ExpertsController extends BaseController
     }
 
     /**
-     * @Route("/experts/edit/{username}", name="experts_detail_edit")
+     * @Route("/expert/edit/{username}", name="experts_detail_edit")
      *
      * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
      * @Security("is_granted('EDIT', expert)")
