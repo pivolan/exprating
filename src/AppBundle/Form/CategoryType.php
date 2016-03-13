@@ -23,6 +23,7 @@ class CategoryType extends AbstractType
             ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
             ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
+            ->add('characteristics')
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
