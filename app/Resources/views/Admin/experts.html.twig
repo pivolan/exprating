@@ -9,7 +9,7 @@
                 {% for expert in pagination %}
                     <li class="expert-item {{ user == expert ? "well":'' }}">
                         <div class="expert-img-wrapper">
-                            <img src="{{ expert.avatarImage }}">
+                            {{ include("_include/User/_imageList.html.twig", {'expert': expert}) }}
                         </div>
                         <div class="expert-name">
                             <a href="{{ path("admin_experts", {"page":page, "username": expert.username}) }}"><span>{{ expert.fullName }}</span></a>

@@ -37,14 +37,14 @@
                             {% endif %}
                         {% endif %}
                         <div class="expert-img-wrapper">
-                            <img src="{{ expert.avatarImage }}">
+                            {{ include("_include/User/_imageList.html.twig", {'expert': expert}) }}
                         </div>
                         <div class="expert-name">
                             <a href="{{ path("experts_detail", {"username": expert.username}) }}"><span>{{ expert.fullName }}</span></a>
                             {{ expert.caption }}
                             <div class="level2">
                                 <div class="expert-img-wrapper">
-                                    <img src="{{ expert.curator.avatarImage }}">
+                                    {{ include("_include/User/_imageList.html.twig", {'expert': expert.curator}) }}
                                 </div>
                                 <div class="expert-name">
                                     <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName }}</span></a>

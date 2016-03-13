@@ -2,45 +2,41 @@
 {% block body_type %}experts{% endblock %}
 {% block content %}
     <div class="content-inner clearfix">
-        <h1>Наши эксперты</h1>
+        <div class="row">
+            <div class="col-md-7">
+                <h1>Наши эксперты</h1>
+            </div>
+            <div class="col-md-5">
+                <h1>Куратор</h1>
+            </div>
+        </div>
 
         <div class="experts-wrapper">
             <ul>
                 {% for expert in experts %}
                     <li class="expert-item">
-                        <div class="expert-img-wrapper">
-                            <img src="{{ expert.avatarImage }}">
+                        <div class="col-md-7">
+                            <div class="expert-img-wrapper">
+                                {{ include("_include/User/_imageList.html.twig", {'expert': expert}) }}
+                            </div>
+                            <div class="expert-name">
+                                <a href="{{ path("experts_detail", {"username": expert.username}) }}"><span>{{ expert.fullName|default(expert.username) }}</span></a>
+                                {{ expert.caption }}
+                            </div>
                         </div>
-                        <div class="expert-name">
-                            <a href="{{ path("experts_detail", {"username": expert.username}) }}"><span>{{ expert.fullName }}</span></a>
-                            {{ expert.caption }}
+                        <div class="col-md-5">
+                            {% if expert.curator %}
+                                <div class="expert-img-wrapper">
+                                    {{ include("_include/User/_imageList.html.twig", {'expert': expert.curator}) }}
+                                </div>
+                                <div class="expert-name">
+                                    <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName|default(expert.curator.username) }}</span></a>
+                                    {{ expert.curator.caption }}
+                                </div>
+                            {% endif %}
                         </div>
                     </li>
                 {% endfor %}
-                <li class="expert-item">
-                    <div class="expert-img-wrapper">
-                    </div>
-                    <div class="expert-name">
-                    </div>
-                </li>
-                <li class="expert-item">
-                    <div class="expert-img-wrapper">
-                    </div>
-                    <div class="expert-name">
-                    </div>
-                </li>
-                <li class="expert-item">
-                    <div class="expert-img-wrapper">
-                    </div>
-                    <div class="expert-name">
-                    </div>
-                </li>
-                <li class="expert-item">
-                    <div class="expert-img-wrapper">
-                    </div>
-                    <div class="expert-name">
-                    </div>
-                </li>
             </ul>
         </div>
 

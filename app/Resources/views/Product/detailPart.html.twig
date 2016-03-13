@@ -60,7 +60,7 @@
         {% block expert_logo %}
             <div class="expert-wrapper">
                 <div class="expert-img-wrapper">
-                    <img src="{{ product.expertUser.avatarImage|default("http://placehold.it/90x90") }}">
+                    {{ include("_include/User/_imageList.html.twig", {'expert': product.expertUser}) }}
                 </div>
                 <div class="expert-name">
                     Экспертное мнение

@@ -12,7 +12,7 @@
         <div class="expert-page-wrapper">
             <div class="expert-item">
                 <div class="expert-img-wrapper">
-                    <img src="{{ expert.avatarImage|default('http://placehold.it/200x200') }}">
+                    {{ include("_include/User/_imageList.html.twig", {'expert': expert}) }}
                 </div>
                 <div class="expert-name">
                     {{ expert.caption }}

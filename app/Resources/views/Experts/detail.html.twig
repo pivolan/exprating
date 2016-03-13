@@ -11,14 +11,14 @@
         <div class="expert-page-wrapper">
             <div class="expert-item">
                 <div class="expert-img-wrapper">
-                    <img src="{{ expert.avatarImage|default('http://placehold.it/200x200') }}">
+                    {{ include("_include/User/_imageList.html.twig", {'expert': expert}) }}
                 </div>
                 <div class="expert-name">
                     {{ expert.caption }}
                     {% if expert.curator %}
                         <div class="level2">
                             <div class="expert-img-wrapper">
-                                <img src="{{ expert.curator.avatarImage|default('http://placehold.it/200x200') }}">
+                                {{ include("_include/User/_imageList.html.twig", {'expert': expert.curator}) }}
                             </div>
                             <div class="expert-name">
                                 <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName }}</span></a>

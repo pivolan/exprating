@@ -19,6 +19,7 @@ class UserRepository extends NestedTreeRepository
     {
         $qb = $this->queryBuilderByRole(User::ROLE_EXPERT);
         $qb->andWhere('u.enabled = :isEnabled')
+            ->andWhere('u.isActivated = :isEnabled')
             ->setParameter('isEnabled', true);
 
         return $qb->getQuery()->getResult();
