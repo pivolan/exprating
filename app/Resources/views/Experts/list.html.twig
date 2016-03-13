@@ -11,6 +11,7 @@
             </div>
         </div>
 
+        {{ knp_pagination_render(experts) }}
         <div class="experts-wrapper">
             <ul>
                 {% for expert in experts %}
@@ -39,6 +40,8 @@
                 {% endfor %}
             </ul>
         </div>
+        {{ knp_pagination_render(experts) }}
+
 
     </div>
 {% endblock %}

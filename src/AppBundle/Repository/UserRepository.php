@@ -15,14 +15,16 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
  */
 class UserRepository extends NestedTreeRepository
 {
-    public function findExperts()
+    public function findExpertsQuery()
     {
         $qb = $this->queryBuilderByRole(User::ROLE_EXPERT);
         $qb->andWhere('u.enabled = :isEnabled')
             ->andWhere('u.isActivated = :isEnabled')
-            ->setParameter('isEnabled', true);
+            ->setParameter('isEnabled', true)
+            ->orderBy('u.')
+        ;
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery();
     }
 
     /**

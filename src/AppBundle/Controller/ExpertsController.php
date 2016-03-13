@@ -18,11 +18,17 @@ class ExpertsController extends BaseController
     const FLASH_PROFILE_SAVED = 'flash.profile_saved';
 
     /**
-     * @Route("/experts", name="experts_list")
+     * @Route("/experts/{page}", name="experts_list", defaults={"page":1})
      */
-    public function listAction()
+    public function listAction($page)
     {
-        $experts = $this->getEm()->getRepository('AppBundle:User')->findExperts();
+        $query = $this->getEm()->getRepository('AppBundle:User')->findExpertsQuery();
+        $paginator = $this->get('knp_paginator');
+        $experts = $paginator->paginate(
+            $query,
+            max($page, 1),
+            self::LIMIT_OPINIONS_PER_PAGE
+        );
 
         return $this->render(
             'Experts/list.html.twig',

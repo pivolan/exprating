@@ -125,6 +125,13 @@ class User extends BaseUser
     private $phone;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="is_activated", type="boolean", nullable=false, unique=false,
@@ -198,6 +205,7 @@ class User extends BaseUser
         $this->experts = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->adminCategories = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getExpiresAt()
@@ -726,5 +734,24 @@ class User extends BaseUser
     public function getRoot()
     {
         return $this->root;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     *
+     * @return $this
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
     }
 }
