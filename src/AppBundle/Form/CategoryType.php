@@ -3,7 +3,9 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\PeopleGroup;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -20,6 +22,7 @@ class CategoryType extends AbstractType
         $builder
             ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
+            ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
