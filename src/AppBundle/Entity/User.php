@@ -8,8 +8,10 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
+ * @Gedmo\Tree(type="nested")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="fos_user")
  */
@@ -28,6 +30,46 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @Gedmo\TreeLeft
+     * @ORM\Column(name="lft", type="integer", options={"comment":"Поле формируется автоматически для дерева."})
+     */
+    private $lft;
+
+    /**
+     * @Gedmo\TreeLevel
+     * @ORM\Column(name="lvl", type="integer",
+     *     options={"comment":"Уровень вложенности внутри дерева. Формируется автоматически."})
+     */
+    private $lvl;
+
+    /**
+     * @Gedmo\TreeRight
+     * @ORM\Column(name="rgt", type="integer", options={"comment":"Полу формируется автоматически для дерева."})
+     */
+    private $rgt;
+
+    /**
+     * @Gedmo\TreeRoot
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="tree_root", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $root;
+
+    /**
+     * @var User
+     *
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="experts")
+     * @ORM\JoinColumn(name="curator_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $curator;
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="curator")
+     */
+    private $experts;
 
     /**
      * @var string
@@ -102,14 +144,6 @@ class User extends BaseUser
     private $avatarImage;
 
     /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="experts")
-     * @ORM\JoinColumn(name="curator_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    private $curator;
-
-    /**
      * @var Invite
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Invite", mappedBy="expert")
@@ -122,11 +156,6 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Invite", mappedBy="curator")
      */
     private $invites;
-
-    /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="curator")
-     */
-    private $experts;
 
     /**
      * @var Product[]
@@ -596,5 +625,101 @@ class User extends BaseUser
     public function getInvites()
     {
         return $this->invites;
+    }
+
+    /**
+     * Set lft
+     *
+     * @param integer $lft
+     *
+     * @return User
+     */
+    public function setLft($lft)
+    {
+        $this->lft = $lft;
+
+        return $this;
+    }
+
+    /**
+     * Get lft
+     *
+     * @return integer
+     */
+    public function getLft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * Set lvl
+     *
+     * @param integer $lvl
+     *
+     * @return User
+     */
+    public function setLvl($lvl)
+    {
+        $this->lvl = $lvl;
+
+        return $this;
+    }
+
+    /**
+     * Get lvl
+     *
+     * @return integer
+     */
+    public function getLvl()
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * Set rgt
+     *
+     * @param integer $rgt
+     *
+     * @return User
+     */
+    public function setRgt($rgt)
+    {
+        $this->rgt = $rgt;
+
+        return $this;
+    }
+
+    /**
+     * Get rgt
+     *
+     * @return integer
+     */
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * Set root
+     *
+     * @param \AppBundle\Entity\User $root
+     *
+     * @return User
+     */
+    public function setRoot(\AppBundle\Entity\User $root = null)
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * Get root
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getRoot()
+    {
+        return $this->root;
     }
 }
