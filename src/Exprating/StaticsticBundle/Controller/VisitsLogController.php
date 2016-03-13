@@ -27,13 +27,14 @@ class VisitsLogController extends BaseController
             ->setCuratorFirstLevel($product->getExpertUser()->getCurator())
             ->setIp($request->getClientIp())
             ->setUserAgent($request->headers->get('User-Agent'))
-            ->setUrl($request->getUri())
-        ;
+            ->setUrl($request->getUri());
         if ($product->getExpertUser()->getCurator()) {
             $visit->setCuratorSecondLevel($product->getExpertUser()->getCurator()->getCurator());
         }
+        $product->setVisitsCount($product->getVisitsCount() + 1);
         $this->getEm()->persist($visit);
         $this->getEm()->flush();
+
         return new Response();
     }
 }
