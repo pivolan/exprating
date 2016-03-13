@@ -46,6 +46,8 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - 'bootstrap_3_layout.html.twig'
+        - 'TetranzSelect2EntityBundle:Form:fields.html.twig'
+
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -225,6 +227,8 @@ assetic:
                 - 'js/layout_expert_items.init.js'
         category_admin_categories_js:
             inputs:
+                - 'js/external/select2.full.min.js'
+                - '@TetranzSelect2EntityBundle/Resources/public/js/select2entity.js'
                 - 'js/Exp/exp_historical.js'
                 - 'js/external/jstree.min.js'
                 - 'js/external/jquery.form.min.js'
@@ -239,6 +243,7 @@ assetic:
             inputs:
                 - 'css/external/bootstrap332.min.css'
                 - 'css/external/superfish.css'
+                - 'css/external/select2.min.css'
                 - 'css/style.css'
                 - 'css/external/jquery.mmenu.all.css'
 

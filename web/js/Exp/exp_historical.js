@@ -1,4 +1,4 @@
-Exp.historical = function (selectorClick, selectorUpdate) {
+Exp.historical = function (selectorClick, selectorUpdate, callback) {
     $(document).on('click', selectorClick, function (event) {
         event.preventDefault();
         var $this = $(this);
@@ -7,6 +7,6 @@ Exp.historical = function (selectorClick, selectorUpdate) {
     });
     History.Adapter.bind(window, 'statechange', function () {
         var State = History.getState();
-        $(selectorUpdate).load(State.url);
+        $(selectorUpdate).load(State.url, callback);
     });
 };

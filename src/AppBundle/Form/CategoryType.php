@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\PeopleGroup;
+use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 class CategoryType extends AbstractType
 {
@@ -23,7 +25,19 @@ class CategoryType extends AbstractType
             ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
             ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
-            ->add('characteristics')
+            ->add(
+                'characteristics',
+                Select2EntityType::class,
+                [
+                    'multiple'             => true,
+                    'remote_route'         => 'category_admin_category_ajax',
+                    'class'                => Characteristic::class,
+                    'text_property'        => 'label',
+                    'page_limit'           => null,
+                    'primary_key'          => 'slug',
+                    'minimum_input_length' => 0,
+                ]
+            )
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
