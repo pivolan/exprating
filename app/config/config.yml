@@ -207,6 +207,12 @@ assetic:
                 - 'js/Exp/exp_historical.js'
                 - 'js/plugins/outer_html.plugin.js'
                 - 'js/product_edit.init.js'
+        experts_detail_edit_js:
+            inputs:
+                 - 'js/external/jquery.ui.widget.js'
+                 - 'js/external/jquery.iframe-transport.js'
+                 - 'js/external/jquery.fileupload.js'
+                 - 'js/experts_detail_edit.init.js'
         curator_wait_list_js:
             inputs:
                 - 'js/Exp/exp_historical.js'

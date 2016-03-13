@@ -18,7 +18,18 @@
                     {{ expert.caption }}
                 </div>
             </div>
-            <div id="upload" class="clearfix"><input type="file" value="Изменить аватар"/></div>
+            <div id="upload" class="clearfix">
+                <form action="{{ oneup_uploader_endpoint('gallery') }}" method="post">
+                    <input id="fileupload" type="file" name="file" data-url="{{ oneup_uploader_endpoint('gallery') }}"/>
+                    <input type="hidden" name="username" value="{{ expert.username }}"/>
+                </form>
+                <div class="progress">
+                    <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                         aria-valuemax="100" style="width: 0%;">
+                        <span class="sr-only">0% Complete</span>
+                    </div>
+                </div>
+            </div>
 
             <div class="tabs-wrapper">
                 <div class="tabs-container">
@@ -52,4 +63,10 @@
         </div>
 
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@experts_detail_edit_js' output='bundles/js/expert_detail_edit.js' %}
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    {% endjavascripts %}
 {% endblock %}

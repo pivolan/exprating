@@ -19,6 +19,8 @@ use Symfony\Component\Serializer\Serializer;
 
 class UploadSubscriber implements EventSubscriberInterface
 {
+    const KEY_FILENAME = 'filename';
+    const FOLDER_UPLOADS_USER = '/uploads/user/';
     /**
      * @var PathFinder\ProductImage
      */
@@ -34,20 +36,34 @@ class UploadSubscriber implements EventSubscriberInterface
         $this->pathFinder = $pathFinder;
     }
 
-    public function onUpload(PostPersistEvent $event)
+    public function onUploadProductImage(PostPersistEvent $event)
     {
-        $params = $event->getRequest()->request->all();
-        /** @var File $file */
-        $file = $event->getFile();
-        $response = $event->getResponse();
-        $response['filename'] = $file->getFilename();
-        if (isset($params['product_id']) && is_numeric($params['product_id'])) {
-            $this->pathFinder->setProductId($params['product_id']);
-            $file->move($this->pathFinder->findFolder());
-            $response['filename'] = $this->pathFinder->relativeFolder().$file->getFilename();
+        if ($event->getRequest()->get('product_id')) {
+            $params = $event->getRequest()->request->all();
+            /** @var File $file */
+            $file = $event->getFile();
+            $response = $event->getResponse();
+            $response[self::KEY_FILENAME] = $file->getFilename();
+            if (isset($params['product_id']) && is_numeric($params['product_id'])) {
+                $this->pathFinder->setProductId($params['product_id']);
+                $file->move($this->pathFinder->findFolder());
+                $response[self::KEY_FILENAME] = $this->pathFinder->relativeFolder().$file->getFilename();
+            }
         }
+    }
 
-        return $response;
+    public function onUploadUserImage(PostPersistEvent $event)
+    {
+        if ($event->getRequest()->get('username')) {
+            /** @var File $file */
+            $file = $event->getFile();
+            $response = $event->getResponse();
+            $username = $event->getRequest()->get('username');
+            $newFilename = $username.time().'.'.$file->getExtension();
+            $file->move($this->pathFinder->getWebDir().self::FOLDER_UPLOADS_USER, $newFilename);
+            $relativePathImage = self::FOLDER_UPLOADS_USER.$newFilename;
+            $response[self::KEY_FILENAME] = $relativePathImage;
+        }
     }
 
     /**
@@ -71,7 +87,7 @@ class UploadSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            UploadEvents::POST_PERSIST => [['onUpload']],
+            UploadEvents::POST_PERSIST => [['onUploadProductImage'], ['onUploadUserImage'],],
         ];
     }
 }
