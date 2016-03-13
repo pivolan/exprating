@@ -75,16 +75,14 @@ class InviteController extends BaseController
      */
     public function inviteCompleteRegistrationAction(Request $request)
     {
-        $form = $this->createForm(
-            UserCompleteType::class,
-            $this->getUser()
-        );
+        $user = $this->getUser();
+        $form = $this->createForm(UserCompleteType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $response = $this->redirectToRoute('experts_detail', ['username' => $this->getUser()->getUsername()]);
-            $event = new \AppBundle\Event\Invite\InviteCompleteRegistrationEvent($this->getUser());
+            $response = $this->redirectToRoute('experts_detail', ['username' => $user->getUsername()]);
+            $event = new \AppBundle\Event\Invite\InviteCompleteRegistrationEvent($user);
             $this->get('event_dispatcher')->dispatch(InviteEvents::COMPLETE_REGISTRATION, $event);
 
             return $response;

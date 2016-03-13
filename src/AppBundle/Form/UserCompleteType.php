@@ -21,7 +21,7 @@ class UserCompleteType extends AbstractType
     {
         $builder
             ->add('email', null, ['disabled' => true])
-            ->add('username', null)
+            ->add('username', null, ['data' => null])
             ->add('fullName', null)
             ->add('city', null)
             ->add('birthday', BirthdayType::class)

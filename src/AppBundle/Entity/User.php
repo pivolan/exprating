@@ -9,11 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Gedmo\Tree(type="nested")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="fos_user")
+ * @UniqueEntity(fields={"username"}, message="Пользователь с таким Логином уже зарегестрирован")
  */
 class User extends BaseUser
 {
@@ -76,6 +79,8 @@ class User extends BaseUser
      *
      * @ORM\Column(name="full_name", type="string", unique=false, nullable=true,
      *     options={"comment":"Полное имя Эксперта"})
+     *
+     * @Assert\NotBlank
      */
     private $fullName;
 
