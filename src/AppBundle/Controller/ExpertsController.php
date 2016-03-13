@@ -61,7 +61,7 @@ class ExpertsController extends BaseController
     }
 
     /**
-     * @Route("/experts/{username}/edit", name="experts_detail_edit")
+     * @Route("/experts/edit/{username}", name="experts_detail_edit")
      *
      * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
      * @Security("is_granted('EDIT', expert)")
