@@ -1,0 +1,55 @@
+{% extends "::layout.html.twig" %}
+{% block body_type %}expert{% endblock %}
+
+{% block content %}
+    <div class="content-inner clearfix">
+        <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
+            <a href="{{ path("experts_list") }}">Наши эксперты</a> →
+            <a href="{{ path("experts_detail", {'username': expert.username}) }}">Профиль эксперта</a> →
+        </div>
+        <h1>Рдактирование профиля эксперта {{ expert.fullName }}</h1>
+
+        <div class="expert-page-wrapper">
+            <div class="expert-item">
+                <div class="expert-img-wrapper">
+                    <img src="{{ expert.avatarImage|default('http://placehold.it/200x200') }}">
+                </div>
+                <div class="expert-name">
+                    {{ expert.caption }}
+                </div>
+            </div>
+            <div id="upload" class="clearfix"><input type="file" value="Изменить аватар"/></div>
+
+            <div class="tabs-wrapper">
+                <div class="tabs-container">
+                    <div class="tabs-container-inner clearfix">
+
+                        <ul class="nav nav-tabs" style="clear: both">
+                            <li class="active"><a href="#profile" data-toggle="tab">Профиль</a></li>
+                        </ul>
+
+                        <div class="tabs-content">
+                            <div class="tab-pane fade active in" id="profile">
+                                <div class="profile-block">
+                                    <div class="profile-title">Информация</div>
+                                    {% for flash_message in app.session.flashbag.get('flash.profile_saved') %}
+                                        <div id="flash_info_{{ loop.index }}" class="alert alert-success">
+                                            {{ flash_message }}
+                                            <script type="text/javascript">setTimeout(function () {
+                                                    $('#flash_info_{{ loop.index }}').remove()
+                                                }, 5000)</script>
+                                        </div>
+                                    {% endfor %}
+                                    <div class="data-list">
+                                        {{ form(form) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

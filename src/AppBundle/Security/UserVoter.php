@@ -19,6 +19,7 @@ class UserVoter extends Voter
     const EXPERT_APPROVE_RIGHTS = 'EXPERT_APPROVE_RIGHTS';
     const INVITE_COMPLETE_REGISTRATION = 'INVITE_COMPLETE_REGISTRATION';
     const DETAIL_VIEW = 'DETAIL_VIEW';
+    const EDIT = 'EDIT';
     const ADD_ROLE_CURATOR = 'ADD_ROLE_CURATOR';
 
     /** @var  AccessDecisionManagerInterface */
@@ -50,6 +51,7 @@ class UserVoter extends Voter
                 self::EXPERT_APPROVE_RIGHTS,
                 self::DETAIL_VIEW,
                 self::ADD_ROLE_CURATOR,
+                self::EDIT,
             ]
         )
         ) {
@@ -88,6 +90,8 @@ class UserVoter extends Voter
                 return $this->canDetailView($user, $token);
             case self::ADD_ROLE_CURATOR:
                 return $this->canAddRoleCurator($user, $token);
+            case self::EDIT:
+                return $this->canEdit($user, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -164,6 +168,15 @@ class UserVoter extends Voter
         }
 
         if ($user->getCurator()->getCurator() == $token->getUser()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function canEdit(User $user, TokenInterface $token)
+    {
+        if ($user == $token->getUser()) {
             return true;
         }
 
