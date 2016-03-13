@@ -235,6 +235,10 @@ assetic:
                 - 'js/Exp/exp_form_ajax.js'
                 - 'js/Exp/exp_jstree.js'
                 - 'js/category_admin_categories.init.js'
+        admin_experts_js:
+            inputs:
+                - 'js/external/select2.full.min.js'
+                - '@TetranzSelect2EntityBundle/Resources/public/js/select2entity.js'
         category_admin_requests_js:
             inputs:
                 - 'js/Exp/exp_historical.js'

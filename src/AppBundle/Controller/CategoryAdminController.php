@@ -98,21 +98,4 @@ class CategoryAdminController extends BaseController
             ]
         );
     }
-
-    /**
-     * @Route("/category_admin/category", name="category_admin_category_ajax")
-     */
-    public function categoriesAjaxAction(Request $request)
-    {
-        $pageLimit = $request->get('page_limit');
-        $q = $request->get('q');
-        $skip = 0;
-        $categories = $this->getEm()->getRepository('CharacteristicBundle:Characteristic')->getIdNameByQ(
-            $q,
-            $pageLimit,
-            $skip
-        );
-
-        return new JsonResponse($categories);
-    }
 }

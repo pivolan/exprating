@@ -2,12 +2,14 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 class UserEditType extends AbstractType
 {
@@ -34,8 +36,28 @@ class UserEditType extends AbstractType
                     ],
                 ]
             )
-            ->add('categories', null, ['label' => 'Доступные категории'])
-            ->add('adminCategories', null, ['label' => 'Категории админа'])
+            ->add('categories', Select2EntityType::class,
+                [
+                    'multiple'             => true,
+                    'remote_route'         => 'ajax_categories',
+                    'class'                => Category::class,
+                    'text_property'        => 'name',
+                    'page_limit'           => null,
+                    'primary_key'          => 'slug',
+                    'label'                => 'Доступные категории',
+                    'minimum_input_length' => 0,
+                ])
+            ->add('adminCategories', Select2EntityType::class,
+                [
+                    'multiple'             => true,
+                    'remote_route'         => 'ajax_categories',
+                    'class'                => Category::class,
+                    'text_property'        => 'name',
+                    'page_limit'           => null,
+                    'primary_key'          => 'slug',
+                    'label'                => 'Категории админа',
+                    'minimum_input_length' => 0,
+                ])
             ->add('curator', null, ['label' => 'Куратор'])
             ->add('experts', null, ['label' => 'Эксперты'])
             ->add('save', SubmitType::class, ['label' => 'Сохранить']);

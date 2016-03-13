@@ -30,7 +30,7 @@ class CategoryType extends AbstractType
                 Select2EntityType::class,
                 [
                     'multiple'             => true,
-                    'remote_route'         => 'category_admin_category_ajax',
+                    'remote_route'         => 'ajax_characteristics',
                     'class'                => Characteristic::class,
                     'text_property'        => 'label',
                     'page_limit'           => null,

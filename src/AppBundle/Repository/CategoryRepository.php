@@ -116,4 +116,18 @@ class CategoryRepository extends NestedTreeRepository
 
         return $result;
     }
+
+    public function getIdNameByQ($q, $pageLimit, $skip)
+    {
+        $result = $this->createQueryBuilder('a')
+            ->select('a.slug as id, a.name as text')
+            ->where('a.name LIKE :q')
+            ->setParameter('q', '%'.$q.'%')
+            ->setMaxResults($pageLimit)
+            ->setFirstResult($skip)
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        return $result;
+    }
 }
