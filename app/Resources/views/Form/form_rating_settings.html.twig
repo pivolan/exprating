@@ -1,8 +1,12 @@
 {% use "bootstrap_3_layout.html.twig" %}
 {% block form_row -%}
-    <div class="form-group col-md-6 {% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
-        {{- form_label(form) -}}
-        {{- form_widget(form) -}}
-        {{- form_errors(form) -}}
-    </div>
+    {% if compound %}
+        {{ parent() }}
+    {% else %}
+        <div class="form-group col-md-6 {% if not valid %} has-error{% endif %}">
+            {{- form_label(form) -}}
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+    {% endif %}
 {%- endblock form_row %}

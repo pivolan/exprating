@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category.
@@ -73,13 +74,15 @@ class Category
      * @var RatingSettings
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingSettings", mappedBy="category")
+     * @Assert\Valid
      */
     private $ratingSettings;
 
     /**
      * @var Seo
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\RatingSettings", mappedBy="category")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Seo", mappedBy="category", cascade="ALL")
+     * @Assert\Valid
      */
     private $seo;
 

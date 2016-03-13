@@ -23,8 +23,7 @@ class RatingSettingsType extends AbstractType
             ->add('rating3label', null, ['label' => 'Описание 3-го параметра'])
             ->add('rating3weight', null, ['label' => 'Вес 3-го параметра'])
             ->add('rating4label', null, ['label' => 'Описание 4-го параметра'])
-            ->add('rating4weight', null, ['label' => 'Вес 4-го параметра'])
-            ->add('save', SubmitType::class, ['label' => 'Сохранить']);
+            ->add('rating4weight', null, ['label' => 'Вес 4-го параметра']);
     }
 
     /**

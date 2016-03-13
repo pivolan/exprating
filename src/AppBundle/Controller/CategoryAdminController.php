@@ -9,6 +9,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\CreateExpertRequest;
+use AppBundle\Form\CategoryType;
 use AppBundle\Form\CreateExpertRequestApproveType;
 use AppBundle\Form\RatingSettingsType;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,11 +38,8 @@ class CategoryAdminController extends BaseController
     public function categoriesAction(Request $request, Category $category = null)
     {
         $ratingSettings = null;
-        if ($category) {
-            $ratingSettings = $category->getRatingSettings();
-        }
 
-        $form = $this->createForm(RatingSettingsType::class, $ratingSettings);
+        $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->getEm()->flush();
