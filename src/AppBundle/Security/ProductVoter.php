@@ -97,7 +97,7 @@ class ProductVoter extends Voter
             case self::CHANGE_EXPERT:
                 return $this->canChangeExpert($product, $token);
             case self::CATEGORY_CHANGE:
-                return $this->canCategoryChange($product, $token);
+                return $this->canCategoryChange($token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -244,7 +244,7 @@ class ProductVoter extends Voter
                ($user->getCategories()->contains($product->getCategory()));
     }
 
-    private function canCategoryChange(Product $product, TokenInterface $token)
+    private function canCategoryChange(TokenInterface $token)
     {
         return $this->decisionManager->decide($token, [User::ROLE_ADMIN]);
     }
