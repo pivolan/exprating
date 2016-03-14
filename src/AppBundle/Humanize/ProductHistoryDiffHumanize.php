@@ -34,7 +34,8 @@ class ProductHistoryDiffHumanize
             if (isset($value[0], $value[1])) {
                 $oldValueSerialized = print_r($value[0], true);
                 $newValueSerialized = print_r($value[1], true);
-                $delta = levenshtein($oldValueSerialized, $newValueSerialized);
+                similar_text($oldValueSerialized, $newValueSerialized, $percent);
+                $delta = 100 - $percent;
                 if ($delta > $prevDelta) {
                     $prevDelta = $delta;
                     $maxDiffKey = $key;

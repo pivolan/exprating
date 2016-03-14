@@ -56,20 +56,14 @@ class CategoryRepository extends NestedTreeRepository
         return $query->getResult();
     }
 
-    public function getProductsRecursiveQueryBuilder(Category $category)
+    public function getProductsRecursiveQuery(Category $category)
     {
         $categories = $this->getChildrenIds($category);
         $qb = $this->_em->getRepository('AppBundle:Product')
             ->createQueryBuilder('b')
             ->where('b.category IN (:categories)')
+            ->andWhere('b.expertUser IS NULL')
             ->setParameter('categories', $categories);
-
-        return $qb;
-    }
-
-    public function getProductsRecursiveQuery(Category $category)
-    {
-        $qb = $this->getProductsRecursiveQueryBuilder($category);
 
         return $qb->getQuery();
     }
