@@ -22,8 +22,9 @@ class ProductEditHistoryRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->createQueryBuilder('a')
             ->where('a.product = :product')
             ->setParameter('product', $product)
-            ->orderBy('a.createdAt',  'DESC')
+            ->orderBy('a.createdAt', 'DESC')
             ->getQuery();
+
         return $query;
     }
 }

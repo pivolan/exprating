@@ -98,8 +98,8 @@ class EditController extends BaseController
         return $this->render(
             $template,
             [
-                self::KEY_PRODUCT      => $product,
-                self::KEY_FORM         => $form->createView(),
+                self::KEY_PRODUCT => $product,
+                self::KEY_FORM => $form->createView(),
                 self::KEY_HISTORY_LOGS => $historyLogs,
             ]
         );
@@ -121,7 +121,10 @@ class EditController extends BaseController
 
         if ($form->isValid()) {
             $this->getEm()->flush();
-            $this->addFlash(self::FLASH_MESSAGE, 'Изменения сохранены, выбрана категория '.$product->getCategory()->getName());
+            $this->addFlash(
+                self::FLASH_MESSAGE,
+                'Изменения сохранены, выбрана категория '.$product->getCategory()->getName()
+            );
 
             return $this->redirectToRoute('product_choose_category', ['slug' => $product->getSlug()]);
         }
