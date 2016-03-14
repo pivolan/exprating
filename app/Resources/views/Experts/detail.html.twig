@@ -37,7 +37,7 @@
                                           class="btn btn-info">Сделать куратором</a></div>
             {% endif %}
             {% if expert.hasRole('ROLE_EXPERT_CURATOR') %}
-                <span class="label label-info">Куратор</span>
+                <span class="label label-info">Может приглашать экспертов (является куратором)</span>
             {% endif %}
             {% for flash_message in app.session.flashbag.get('flash.approved_rights') %}
                 <div class="alert alert-success">

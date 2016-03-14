@@ -7,6 +7,9 @@
             {{ breadcrumbs(category, productFilter.peopleGroup.slug)|raw }}
         </div>
         <h1>{{ category.name }} - рейтинг по мнению экспертов</h1>
+        {% if is_granted('EDIT', category) %}
+            <a href="{{ path('category_admin_categories', {'slug': category.slug}) }}" class="btn btn-info">Редактировать</a>
+        {% endif %}
 
         {% block children %}
             <div class="category-child">

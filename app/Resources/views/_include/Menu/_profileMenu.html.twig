@@ -33,7 +33,7 @@
                         Все принятые решения
                     </a></li>
                 <li class="{% if path('curator_experts') in app.request.uri %}active{% endif %}"><a href="{{ path('curator_experts') }}">
-                        Подчиненные эксперты
+                        Мои эксперты
                     </a></li>
             {% endif %}
             {% if is_granted("ROLE_EXPERT_CATEGORY_ADMIN") %}

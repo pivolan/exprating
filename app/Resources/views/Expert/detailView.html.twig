@@ -1,7 +1,6 @@
 <div class="alert alert-info">
+    Пришел по приглашению куратора <a href="{{ path('experts_detail', {'username': invite.curator.username}) }}">{{ invite.curator.fullName|default(invite.curator.username) }}</a>
 {% if invite.isFromFeedback %}
-    Пришел по приглашению куратора {{ invite.curator.fullName }}, через обратную связь
-{% else %}
-    Пришел по приглашению куратора {{ invite.curator.fullName }}
+    , через обратную связь
 {% endif %}
 </div>
