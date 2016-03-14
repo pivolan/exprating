@@ -29,34 +29,12 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/external/jstree.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/Exp/exp_jstree.js') }}"></script>
     <script type="text/javascript">
         Bridge.js_tree_data = [
             {{ include("_include/Category/_jsTree.json.twig", {"category": null}) }}
         ];
     </script>
-
-    <script type="text/javascript">
-        function set_categories(node, selected, event) {
-            console.log(selected);
-            var all = $('#jstree').jstree(true).get_bottom_checked(true);
-            var html = '';
-            for (key in all) {
-                html += '<option value="' + all[key].id + '" selected>' + all[key].text + '</option>';
-            }
-            $('#create_expert_request_categories').html(html);
-        }
-        $('#jstree').jstree({
-            core: {
-                data: Bridge.js_tree_data
-            },
-            checkbox: {
-                kepp_selected_style: false,
-                tie_selection: false
-            },
-            plugins: ["checkbox"]
-        }).on("check_node.jstree", set_categories).on('uncheck_node.jstree')
-        ;
-    </script>
+    {% javascripts '@want_to_become_expert_request_js' output='bundles/js/want_to_become_expert_request.js'%}
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    {% endjavascripts %}
 {% endblock %}

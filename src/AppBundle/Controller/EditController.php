@@ -119,9 +119,11 @@ class EditController extends BaseController
         $form = $this->createForm(ProductChooseCategoryType::class, $product);
         $form->handleRequest($request);
 
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree();
+
         return $this->render(
             'Product/chooseCategory.html.twig',
-            [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]
+            [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView(), self::KEY_CATEGORIES => $categories]
         );
     }
 }

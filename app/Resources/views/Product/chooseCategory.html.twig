@@ -4,3 +4,19 @@
         {{ include("Product/chooseCategoryPart.html.twig") }}
     </div>
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/external/themes/default/style.min.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        Bridge.js_tree_data = [
+            {{ include("_include/Category/_jsTree.json.twig", {"category": product.category}) }}
+        ];
+    </script>
+
+    {% javascripts '@product_choose_category_js' output='bundles/js/product_choose_category.js' %}
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
