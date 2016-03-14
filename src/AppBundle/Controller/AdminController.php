@@ -67,43 +67,6 @@ class AdminController extends BaseController
     }
 
     /**
-     * @Route("/admin/expert/{username}/edit", name="admin_expert_edit")
-     *
-     * @param Request $request
-     * @param User    $user
-     *
-     * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function userEditAction(Request $request, User $user)
-    {
-        $form = $this->createForm(UserEditType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $this->getEm()->flush();
-            $this->addFlash(self::FLASH_MESSAGE, 'Изменения успешно сохранены');
-        }
-
-        return $this->render('Admin/userEdit.html.twig', [self::KEY_USER => $user, self::KEY_FORM => $form]);
-    }
-
-    /**
-     * @Route("/admin/expert/{username}", name="admin_expert_detail")
-     *
-     * @param Request $request
-     * @param User    $user
-     *
-     * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function userDetailAction(User $user)
-    {
-        return $this->render('Admin/userDetail.html.twig', [self::KEY_USER => $user]);
-    }
-
-    /**
      * @Route("/admin/import_settings", name="admin_import_settings")
      */
     public function importSettingsAction()

@@ -144,7 +144,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('isEnabled', false);
         if ($category) {
             $categories = $this->_em->getRepository('AppBundle:Category')->getChildrenIds($category);
-            $queryBuilder->andWhere('a.category = :category')->setParameter('category', $categories);
+            $queryBuilder->andWhere('a.category IN (:category)')->setParameter('category', $categories);
         }
         $query = $queryBuilder
             ->getQuery();

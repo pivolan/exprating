@@ -29,7 +29,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('Admin Admin')
             ->setCity('Москва')
             ->setCaption('Главный эксперт всея Руси ')
-            ->setAvatarImage('http://placehold.it/200x200')
             ->addRole(User::ROLE_SUPER_ADMIN)
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($userAdmin);
@@ -47,7 +46,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('Curator Curator')
             ->setCity('Москва')
             ->setCaption('Главный куратор')
-            ->setAvatarImage('http://placehold.it/201x201')
             ->addRole(User::ROLE_EXPERT_CURATOR)
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($curator);
@@ -65,7 +63,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('expert expert')
             ->setCity('Москва')
             ->setCaption('Обычный Эксперт')
-            ->setAvatarImage('http://placehold.it/202x202')
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($expert);
 
@@ -82,7 +79,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('expert2 expert2')
             ->setCity('Москва')
             ->setCaption('Обычный Эксперт2')
-            ->setAvatarImage('http://placehold.it/203x203')
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($expert2);
 
@@ -99,7 +95,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('expert3 expert3')
             ->setCity('Москва')
             ->setCaption('Обычный Эксперт3')
-            ->setAvatarImage('http://placehold.it/203x204')
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($expert3);
 
@@ -116,7 +111,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('expert31 expert31')
             ->setCity('Москва')
             ->setCaption('Обычный Эксперт31')
-            ->setAvatarImage('http://placehold.it/203x205')
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($expert31);
 
@@ -133,7 +127,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setFullName('category admin')
             ->setCity('Москва')
             ->setCaption('Эксперт Админ категорий')
-            ->setAvatarImage('http://placehold.it/204x204')
             ->addRole(User::ROLE_EXPERT_CATEGORY_ADMIN)
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($categoryAdmin);
