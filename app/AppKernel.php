@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new IAkumaI\SphinxsearchBundle\SphinxsearchBundle(),
             new Exprating\StaticsticBundle\ExpratingStaticsticBundle(),
             new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
+            new Glifery\EntityHiddenTypeBundle\GliferyEntityHiddenTypeBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

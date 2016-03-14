@@ -616,7 +616,11 @@ span.sign_ruble span {
   height: 300px;
   margin-bottom: 60px;
 }
-
+.carousel-wrapper {
+  width: 300px;
+  height: 300px;
+  float: left;
+}
 /* Since positioning the image, we need to help out the caption */
 /* line 486, ../sass/style.scss */
 .carousel-caption {

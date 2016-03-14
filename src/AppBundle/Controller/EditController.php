@@ -13,6 +13,7 @@ use AppBundle\Event\ProductEditedEvent;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Event\ProductPublishRequestEvent;
 use AppBundle\Event\ProductReservationEvent;
+use AppBundle\Form\ProductChooseCategoryType;
 use AppBundle\Security\ProductVoter;
 use AppBundle\Form\ProductType;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,6 +102,26 @@ class EditController extends BaseController
                 self::KEY_FORM         => $form->createView(),
                 self::KEY_HISTORY_LOGS => $historyLogs,
             ]
+        );
+    }
+
+    /**
+     * @Route("/tovar/{slug}/choose_category", name="product_choose_category")
+     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
+     * @Security("is_granted('EXPERTISE', product)")
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function chooseCategoryAction(Request $request, Product $product)
+    {
+        $form = $this->createForm(ProductChooseCategoryType::class, $product);
+        $form->handleRequest($request);
+
+        return $this->render(
+            'Product/chooseCategory.html.twig',
+            [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]
         );
     }
 }

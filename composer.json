@@ -18,6 +18,10 @@
         },
         {
             "type": "git",
+            "url": "git@github.com:pivolan/EntityHiddenTypeBundle.git"
+        },
+        {
+            "type": "git",
             "url": "git@github.com:pivolan/select2entity-bundle.git"
         }
     ],
@@ -51,7 +55,8 @@
         "oneup/uploader-bundle": "~1.5",
         "knplabs/knp-markdown-bundle": "~1.3",
         "iakumai/sphinxsearch-bundle": "0.2.6",
-        "tetranz/select2entity-bundle": "^2.3"
+        "tetranz/select2entity-bundle": "^2.3",
+        "glifery/entity-hidden-type-bundle": "^1.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

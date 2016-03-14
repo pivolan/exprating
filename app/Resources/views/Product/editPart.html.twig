@@ -1,12 +1,20 @@
 {% extends ':Product:detailPart.html.twig' %}
 {% block edit_category %}
-    <button class="btn btn-xs btn-info" type="button" data-toggle="tooltip" title="Изменить категорию">
+    <a href="{{ path('product_choose_category', {'slug':product.slug}) }}" class="btn btn-xs btn-info" type="button" data-toggle="tooltip" title="Изменить категорию">
         <span class="glyphicon glyphicon-edit"></span>
-    </button>
-    <i class="fa fa-female" data-toggle="tooltip" title="Для женщин"></i>
-    <i class="fa fa-male" data-toggle="tooltip" title="Для мужчин"></i>
-    <i class="fa fa-child" data-toggle="tooltip" title="Для детей"></i>
-    <i class="fa fa-group" data-toggle="tooltip" title="Для всех"></i>
+    </a>
+    {% for peopleGroup in product.peopleGroups %}
+        {% if peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_WOMAN') %}
+            {% set faClass = 'fa-female' %}
+        {% elseif peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_MAN') %}
+            {% set faClass = 'fa-male' %}
+        {% elseif peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_CHILD') %}
+            {% set faClass = 'fa-child' %}
+        {% else %}
+            {% set faClass = 'fa-group' %}
+        {% endif %}
+        <i class="fa {{ faClass }}" data-toggle="tooltip" title="{{ peopleGroup.name }}"></i>
+    {% endfor %}
 {% endblock %}
 {% block form_start_block %}
     {% form_theme form 'Form/form_product_edit.html.twig' %}

@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="breadcrumbs col-md-8" xmlns="http://www.w3.org/1999/html">
+        <a href="{{ path("homepage") }}">Главная</a>
+        {{ breadcrumbs(product.category, product.peopleGroups.0.slug|default('dlya-vseh'))|raw }}
+    </div>
+</div>
+{{ form_start(form) }}
+<div class="row edit-menu">
+    <div class="col-md-offset-3 btn-group">
+        <a href="{{ path("product_detail", {"slug": product.slug}) }}" class="btn btn-info">Просмотр</a>
+        <a href="{{ path("product_edit", {"slug": product.slug}) }}" class="btn btn-info">Редактировать</a>
+        {{ form_widget(form.save, {'attr':{'class':'btn-info'}}) }}
+    </div>
+</div>
+<h1>{{ product.name }}</h1>
+
+<div class="expert-wrapper">
+    <div class="expert-img-wrapper">
+        {{ include("_include/User/_imageList.html.twig", {'expert': product.expertUser}) }}
+    </div>
+    <div class="expert-name">
+        Экспертное мнение
+        <span>{{ product.expertUser.fullName | default("Пусто") }}</span></div>
+</div>
+<div class="row">
+    <div class="col-md-4 ">
+        <h4>Выбор категории:</h4>
+        <div class="well well-sm" id="categoryTree"></div>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Выбор Группы</h4>
+                {{ form_widget(form.peopleGroups) }}
+            </div>
+            <div class="col-md-6">
+                <h4>Список характеристик</h4>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}
