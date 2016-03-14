@@ -12,14 +12,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class StatusesControllerTest extends WebTestCase
 {
     /**
-     * @param $urls
+     * @param $url
      *
      * @dataProvider getAnonUrls
      */
-    public function testStatus200($urls)
+    public function testStatus200($url)
     {
         $client = static::createClient();
-        $client->request('GET', $urls[0]);
+        $client->request('GET', $url);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
     }
@@ -32,6 +32,7 @@ class StatusesControllerTest extends WebTestCase
             ['/experts'],
             ['/experts/2'],
             ['/expert/admin'],
+            ['/expert/curator'],
             ['/expert/expert'],
             ['/rubric/dlya-vseh/elektronika'],
             ['/rubric/dlya-vseh/elektronika/2'],
@@ -40,6 +41,52 @@ class StatusesControllerTest extends WebTestCase
             ['/tovar/search/3?search_params[string]=titl'],
             ['/want-to-become-an-expert'],
             ['/resetting/request'],
+        ];
+    }
+
+    /**
+     * @param $url
+     *
+     * @dataProvider getAdminUrls
+     */
+    public function testStatus200Admin($url)
+    {
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            $url,
+            [],
+            [],
+            [
+                'PHP_AUTH_USER' => 'admin',
+                'PHP_AUTH_PW'   => 'qwerty',
+            ]
+        );
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+    }
+
+    public function getAdminUrls()
+    {
+        return [
+            ['/rubric/dlya-vseh/elektronika/1/minPrice/ASC/free'],
+            ['/rubric/dlya-vseh/elektronika/1/minPrice/ASC/wait'],
+            ['/expert/edit/admin'],
+            ['/expert/edit/curator'],
+            ['/expert/edit/expert'],
+            ['/invite'],
+            ['/profile/expert/published_items'],
+            ['/profile/expert/not_published_items'],
+            ['/profile/expert/categories'],
+            ['/wait_list'],
+            ['/curator/decisions'],
+            ['/curator/experts'],
+            ['/category_admin/categories'],
+            ['/category_admin/requests'],
+            ['/moderator/comments'],
+            ['/moderator/feedbacks'],
+            ['/admin/experts'],
+            ['/admin/import_settings'],
         ];
     }
 }

@@ -68,7 +68,7 @@
                     {% for category in categoriesImport %}
                     {% set categoryName = '' %}
                     {% if category.aliasCategory %}
-                    {% set categoryName = '(' ~ categoryAssociate[category.aliasCategory.categoryExpratingId].name ~ ')' %}
+                    {% set categoryName = '(' ~ categoryAssociate[category.aliasCategory.categoryExpratingId].name|default(null) ~ ')' %}
                     {% endif %}
                     {
                         id: '{{ category.id }}',

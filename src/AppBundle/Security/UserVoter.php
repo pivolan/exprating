@@ -140,6 +140,10 @@ class UserVoter extends Voter
             return true;
         }
 
+        if (!$user->getCurator()) {
+            return false;
+        }
+
         if ($user->getCurator() == $token->getUser()) {
             return true;
         }
