@@ -9,6 +9,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Product;
 use AppBundle\Form\ImageType;
+use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Exprating\CharacteristicBundle\Form\ProductCharacteristicType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -114,5 +115,18 @@ class ProductType extends AbstractType
             ->add('rating2', TextType::class, ['label' => $category->getRatingSettings()->getRating2Label()])
             ->add('rating3', TextType::class, ['label' => $category->getRatingSettings()->getRating3Label()])
             ->add('rating4', TextType::class, ['label' => $category->getRatingSettings()->getRating4Label()]);
+
+        $characteristics = [];
+        foreach ($product->getProductCharacteristics() as $productCharacteristic) {
+            $characteristics[] = $productCharacteristic->getCharacteristic();
+        }
+        foreach ($category->getCharacteristics() as $characteristic) {
+            if (!in_array($characteristic, $characteristics)) {
+                $productCharacteristic = new ProductCharacteristic();
+                $productCharacteristic->setProduct($product)
+                    ->setCharacteristic($characteristic);
+                $product->addProductCharacteristic($productCharacteristic);
+            }
+        }
     }
 }
