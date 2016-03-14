@@ -1,4 +1,7 @@
 {% extends 'layout.html.twig' %}
+{% block meta_description %}{{ category.seo.metaDescription|default(category.name) }}{% endblock %}
+{% block meta_keywords %}{{ category.seo.metaKeywords|default(category.name) }}{% endblock %}
+{% block title %}{{ category.seo.title|default(category.name) }}{% endblock %}
 {% block body_type %}rubric{% endblock %}
 {% block content %}
     {{ include("Product/listPart.html.twig") }}

@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+{% block title %}{{ product.name }}{% endblock %}
 {% block meta %}
     <meta name="log-visit" content="{{ path("log_visit_product", {"slug": product.slug}) }}">
 {% endblock %}
