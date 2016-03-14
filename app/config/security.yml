@@ -35,4 +35,3 @@ security:
         - { path: ^/register, role: ROLE_SUPER_ADMIN }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/expert/, role: ROLE_EXPERT }

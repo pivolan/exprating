@@ -12,14 +12,14 @@ class ExpertsControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/experts');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
-        $this->assertContains('Admin Admin', $crawler->filter('div.expert-name > a')->text());
+        $this->assertContains('category admin', $crawler->filter('div.expert-name > a')->text());
     }
 
     public function testDetail()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/experts/expert');
+        $crawler = $client->request('GET', '/expert/expert');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
         $this->assertEquals(5, $crawler->filter('li.comment-wrapper')->count());
     }
@@ -28,7 +28,7 @@ class ExpertsControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/experts/pwerijgerijnferjnerkl');
+        $client->request('GET', '/expert/pwerijgerijnferjnerkl');
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 }

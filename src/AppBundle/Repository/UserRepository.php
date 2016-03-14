@@ -21,7 +21,7 @@ class UserRepository extends NestedTreeRepository
         $qb->andWhere('u.enabled = :isEnabled')
             ->andWhere('u.isActivated = :isEnabled')
             ->setParameter('isEnabled', true)
-            ->orderBy('u.createdAt', 'DESC')
+            ->orderBy('u.id', 'DESC')
         ;
 
         return $qb->getQuery();
