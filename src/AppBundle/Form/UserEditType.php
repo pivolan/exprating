@@ -36,7 +36,9 @@ class UserEditType extends AbstractType
                     ],
                 ]
             )
-            ->add('categories', Select2EntityType::class,
+            ->add(
+                'categories',
+                Select2EntityType::class,
                 [
                     'multiple'             => true,
                     'remote_route'         => 'ajax_categories',
@@ -46,8 +48,11 @@ class UserEditType extends AbstractType
                     'primary_key'          => 'slug',
                     'label'                => 'Доступные категории',
                     'minimum_input_length' => 0,
-                ])
-            ->add('adminCategories', Select2EntityType::class,
+                ]
+            )
+            ->add(
+                'adminCategories',
+                Select2EntityType::class,
                 [
                     'multiple'             => true,
                     'remote_route'         => 'ajax_categories',
@@ -57,7 +62,8 @@ class UserEditType extends AbstractType
                     'primary_key'          => 'slug',
                     'label'                => 'Категории админа',
                     'minimum_input_length' => 0,
-                ])
+                ]
+            )
             ->add('curator', null, ['label' => 'Куратор'])
             ->add('experts', null, ['label' => 'Эксперты'])
             ->add('save', SubmitType::class, ['label' => 'Сохранить']);

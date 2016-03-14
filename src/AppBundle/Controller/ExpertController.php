@@ -144,7 +144,7 @@ class ExpertController extends BaseController
 
         if ($invite) {
             return $this->render('Expert/detailView.html.twig', [self::KEY_INVITE => $invite]);
-        }else{
+        } else {
             return new Response();
         }
     }

@@ -48,7 +48,7 @@ class UserSubscriber implements EventSubscriberInterface
     {
         return [
             UserEvents::CREATE_EXPERT_REQUEST => [['createExpertRequest', 1], ['notifyRequest'], ['flush']],
-            UserEvents::CREATE_EXPERT_APPROVE => [['createExpertApprove', 1], ['notifyApprove'], ['flush']],
+            UserEvents::CREATE_EXPERT_APPROVE => [['createExpertApprove', 1], ['flush']],
         ];
     }
 
@@ -102,11 +102,7 @@ class UserSubscriber implements EventSubscriberInterface
         $dispatcher->dispatch(InviteEvents::SEND, new InviteSendEvent($invite));
     }
 
-    public function notifyApprove(ApproveCreateExpertEvent $event)
-    {
-    }
-
-    public function flush($event)
+    public function flush()
     {
         $this->em->flush();
     }

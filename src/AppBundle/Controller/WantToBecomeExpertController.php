@@ -47,7 +47,7 @@ class WantToBecomeExpertController extends BaseController
         return $this->render(
             'WantToBecomeExpert/request.html.twig',
             [
-                self::KEY_FORM => $form->createView(),
+                self::KEY_FORM       => $form->createView(),
                 self::KEY_CATEGORIES => $categories,
             ]
         );
@@ -56,7 +56,8 @@ class WantToBecomeExpertController extends BaseController
     /**
      * @Route("/want-to-become-an-expert/approve/{id}", name="approve_create_expert")
      *
-     * @ParamConverter(name="createExpertRequest", class="AppBundle\Entity\CreateExpertRequest", options={"mapping":{"id":"id"}})
+     * @ParamConverter(name="createExpertRequest", class="AppBundle\Entity\CreateExpertRequest",
+     *     options={"mapping":{"id":"id"}})
      */
     public function approveAction(Request $request, CreateExpertRequest $createExpertRequest)
     {

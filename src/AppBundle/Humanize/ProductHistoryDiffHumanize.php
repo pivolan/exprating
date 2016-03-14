@@ -6,7 +6,6 @@
 
 namespace AppBundle\Humanize;
 
-
 use AppBundle\Entity\ProductEditHistory;
 
 class ProductHistoryDiffHumanize

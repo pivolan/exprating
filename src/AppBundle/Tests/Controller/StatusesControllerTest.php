@@ -6,7 +6,6 @@
 
 namespace AppBundle\Tests\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class StatusesControllerTest extends WebTestCase

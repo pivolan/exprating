@@ -328,7 +328,7 @@ class ProductSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function flush($event)
+    public function flush()
     {
         $this->em->flush();
     }

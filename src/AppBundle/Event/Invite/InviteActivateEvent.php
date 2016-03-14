@@ -6,7 +6,6 @@
 
 namespace AppBundle\Event\Invite;
 
-
 use AppBundle\Entity\Invite;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;

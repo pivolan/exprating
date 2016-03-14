@@ -116,7 +116,7 @@ class InviteController extends BaseController
      * @ParamConverter(name="expert", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
      * @Security("is_granted('ADD_ROLE_CURATOR', expert)")
      */
-    public function approveRightsAction(Request $request, User $expert)
+    public function approveRightsAction(User $expert)
     {
         $curator = $this->getUser();
         $event = new InviteApproveRightsEvent($expert, $curator);

@@ -38,8 +38,6 @@ class CategoryAdminController extends BaseController
      */
     public function categoriesAction(Request $request, Category $category = null)
     {
-        $ratingSettings = null;
-
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
         if ($form->isValid()) {

@@ -6,7 +6,6 @@
 
 namespace AppBundle\Controller;
 
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,6 +28,7 @@ class AjaxFormAutoComplete extends BaseController
 
         return new JsonResponse($characteristics);
     }
+
     /**
      * @Route("/ajax_form/categories", name="ajax_categories")
      */

@@ -64,7 +64,7 @@ class InviteSubscriber implements EventSubscriberInterface
             InviteEvents::ACTIVATE              => [['inviteActivate', 2], ['inviteActivateNotify', 2], ['flush'],],
             InviteEvents::SEND                  => [['inviteSend', 2], ['inviteSendNotify', 2], ['flush'],],
             InviteEvents::APPROVE_RIGHTS        => [['approveRights', 2], ['approveRightsNotify', 2], ['flush']],
-            InviteEvents::REQUEST_RIGHTS        => [['requestRights', 2], ['requestRightsNotify', 2], ['flush']],
+            InviteEvents::REQUEST_RIGHTS        => [['requestRightsNotify', 2], ['flush']],
         ];
 
     }
@@ -219,11 +219,6 @@ class InviteSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function requestRights(InviteRequestRightsEvent $event)
-    {
-
-    }
-
     public function requestRightsNotify(InviteRequestRightsEvent $event)
     {
         $expert = $event->getExpert();
@@ -242,7 +237,7 @@ class InviteSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function flush($event)
+    public function flush()
     {
         $this->em->flush();
     }
