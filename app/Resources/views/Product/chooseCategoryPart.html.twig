@@ -30,11 +30,34 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-6">
-                <h4>Выбор Группы</h4>
+                <h4>Текущая категория</h4>
+                <p class="label label-info">{{ product.category.name }}</p>
+                <h4>Новая категория</h4>
+                <p id="new_category" class="label label-info">{{ product.category.name }}</p>
+                <h4>Выбор Группы для товара</h4>
                 {{ form_widget(form.peopleGroups) }}
+                <h4>Группы для категории</h4>
+                <div id="groups">
+                    {% for peopleGroup in product.category.peopleGroups %}
+                        <div class="checkbox"><label for="category_people_group_{{ loop.index }}"><input id="category_people_group_{{ loop.index }}" disabled type="checkbox" checked/>{{ peopleGroup.name }}</label></div>
+                    {% endfor %}
+                </div>
             </div>
             <div class="col-md-6">
-                <h4>Список характеристик</h4>
+                <h4>Список характеристик товара</h4>
+                <div id="props">
+                    {% for characteristic in product.productCharacteristics %}
+                        <p>{{ characteristic.characteristic.name }}({{ characteristic.characteristic.group }}) = {{ characteristic.value }} {{ characteristic.characteristic.scale }}</p>
+                    {% endfor %}
+                </div>
+
+                <h4>Список характеристик Категории</h4>
+                <div id="props">
+                    {% for characteristic in product.category.characteristics %}
+                        <p>{{ characteristic.name }}({{ characteristic.group }}) {{ characteristic.scale }}</p>
+                    {% endfor %}
+                </div>
+
             </div>
         </div>
     </div>

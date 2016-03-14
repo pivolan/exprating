@@ -108,7 +108,7 @@ class EditController extends BaseController
     /**
      * @Route("/tovar/{slug}/choose_category", name="product_choose_category")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
-     * @Security("is_granted('EXPERTISE', product)")
+     * @Security("is_granted('CATEGORY_CHANGE', product)")
      * @param Request $request
      * @param Product $product
      *
@@ -119,6 +119,12 @@ class EditController extends BaseController
         $form = $this->createForm(ProductChooseCategoryType::class, $product);
         $form->handleRequest($request);
 
+        if ($form->isValid()) {
+            $this->getEm()->flush();
+            $this->addFlash(self::FLASH_MESSAGE, 'Изменения сохранены, выбрана категория '.$product->getCategory()->getName());
+
+            return $this->redirectToRoute('product_choose_category', ['slug' => $product->getSlug()]);
+        }
         $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree();
 
         return $this->render(

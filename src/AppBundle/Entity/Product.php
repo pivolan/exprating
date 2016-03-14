@@ -246,7 +246,7 @@ class Product
 
     /**
      * @var PeopleGroup[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup", cascade="ALL")
      * @ORM\JoinTable(name="product_people_group", joinColumns={@ORM\JoinColumn(name="product_id",
      *     referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug")})

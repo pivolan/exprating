@@ -23,6 +23,7 @@ class ProductVoter extends Voter
     const RESERVE = 'RESERVE';
     const MODERATE = 'MODERATE';
     const CHANGE_EXPERT = 'CHANGE_EXPERT';
+    const CATEGORY_CHANGE = 'CATEGORY_CHANGE';
 
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
@@ -52,6 +53,7 @@ class ProductVoter extends Voter
                 self::RESERVE,
                 self::MODERATE,
                 self::CHANGE_EXPERT,
+                self::CATEGORY_CHANGE,
             ]
         )
         ) {
@@ -94,6 +96,8 @@ class ProductVoter extends Voter
                 return $this->canModerate($product, $token);
             case self::CHANGE_EXPERT:
                 return $this->canChangeExpert($product, $token);
+            case self::CATEGORY_CHANGE:
+                return $this->canCategoryChange($product, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -238,5 +242,10 @@ class ProductVoter extends Voter
                ($this->decisionManager->decide($token, [User::ROLE_EXPERT]))
                &&
                ($user->getCategories()->contains($product->getCategory()));
+    }
+
+    private function canCategoryChange(Product $product, TokenInterface $token)
+    {
+        return $this->decisionManager->decide($token, [User::ROLE_ADMIN]);
     }
 }

@@ -31,16 +31,24 @@
     <!-- Оповещения -->
     <div class="alert-message">
         <!-- Блоков message-box можно добавлять сколько угодно 1 -->
-        {#<div class="message-box alert-danger">
-            <span class="close">X</span>
-            <p>Создан новый обзор на товар <a href="#">Кусачки железные</a>, ожидает вашего одобрения</p>
-        </div>
-
-        <div class="message-box alert-success">
-            <span class="close">X</span>
-            <p>Создан новый обзор на товар <a href="#">Кусачки железные</a>, ожидает вашего одобрения</p>
-        </div>#}
-
+        {% for flash_message in app.session.flashbag.get('flash.message') %}
+            <div id="flash_error_{{ loop.index }}" class="message-box alert-success">
+                <span class="close">X</span>
+                <p>{{ flash_message }}</p>
+                <script type="text/javascript">setTimeout(function () {
+                        $('#flash_error_{{ loop.index }}').remove()
+                    }, 4000)</script>
+            </div>
+        {% endfor %}
+        {% for flash_message in app.session.flashbag.get('flash.error_message') %}
+            <div id="flash_info_{{ loop.index }}" class="message-box alert-danger">
+                <span class="close">X</span>
+                <p>{{ flash_message }}</p>
+                <script type="text/javascript">setTimeout(function () {
+                        $('#flash_info_{{ loop.index }}').remove()
+                    }, 4000)</script>
+            </div>
+        {% endfor %}
     </div>
     <!-- END Оповещения -->
     <div id="header">
