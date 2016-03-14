@@ -1,16 +1,16 @@
 {% set current_category = category %}
 {% for category in categories %}
 {
-    id: '{{ category.id }}',
+    id: '{{ category.id|raw }}',
     {% if categories[category.parent_id] is defined %}
-    parent: '{{ category.parent_id|default('#') }}',
+    parent: '{{ category.parent_id|raw|default('#') }}',
     {% else %}
     parent: '#',
     {% endif %}
-    text: '{{ category.name|raw }}',
+    text: "{{ category.name|e('js') }}",
     a_attr: {
         href: '{{ path(app.request.get('_route'), {'slug': category.id}) }}',
-        data_slug: '{{ category.id }}',
+        data_slug: '{{ category.id|raw }}',
     },
     state: {
         selected: {{ category.id == current_category?'true':'false' }}

@@ -31,12 +31,12 @@ class LoadCategoryData extends AbstractFixture implements
     public function load(ObjectManager $manager)
     {
         $categories_names = [
-            'Бытовая электроника',
-            'Электроника',
-            'Косметика, парфюмерия',
-            'Товары для детей',
-            'Спортинвентарь',
-            'Мебель интерьер',
+            ['Бытовая электроника', LoadPeopleGroupData::DLYA_VSEH],
+            ['Электроника', LoadPeopleGroupData::DLYA_VSEH],
+            ['Косметика, парфюмерия', LoadPeopleGroupData::DLYA_ZHENSHCHIN],
+            ['Товары для детей', LoadPeopleGroupData::DLYA_DETEY],
+            ['Спортинвентарь', LoadPeopleGroupData::DLYA_VSEH],
+            ['Мебель интерьер', LoadPeopleGroupData::DLYA_VSEH],
         ];
         $categoriesTree = [
             'Электроника'           => [
@@ -76,13 +76,13 @@ class LoadCategoryData extends AbstractFixture implements
         $expert = $this->getReference(LoadUserData::REFERENCE_EXPERT_USER);
         /** @var User $categoryAdmin */
         $categoryAdmin = $this->getReference(LoadUserData::REFERENCE_CATEGORY_ADMIN_USER);
-        /** @var PeopleGroup $peopleGroup */
-        $peopleGroup = $this->getReference(LoadPeopleGroupData::DLYA_VSEH);
-        foreach ($categories_names as $key => $name) {
+        foreach ($categories_names as $key => $value) {
+            $name=$value[0];
+            $peopleGroupSlug = $value[1];
             $category = new Category();
             $category->setName($name);
             $category->setSlug($slugify->slugify($name));
-            $category->addPeopleGroup($peopleGroup);
+            $category->addPeopleGroup($this->getReference($peopleGroupSlug));
             $manager->persist($category);
             if (isset($categoriesTree[$name])) {
                 foreach ($categoriesTree[$name] as $childName) {
@@ -90,7 +90,7 @@ class LoadCategoryData extends AbstractFixture implements
                     $childCategory->setParent($category)
                         ->setName($childName);
                     $childCategory->setSlug($slugify->slugify($childName));
-                    $childCategory->addPeopleGroup($peopleGroup);
+                    $childCategory->addPeopleGroup($this->getReference($peopleGroupSlug));
                     $manager->persist($childCategory);
                     $categoryAdmin->addAdminCategory($childCategory);
                 }
