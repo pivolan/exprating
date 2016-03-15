@@ -17,11 +17,12 @@ class CharacteristicRepository extends \Doctrine\ORM\EntityRepository
         $result = $this->createQueryBuilder('a')
             ->select('a.slug as id, a.label as text')
             ->where('a.label LIKE :q')
-            ->setParameter('q', $q.'%')
+            ->setParameter('q', '%'.$q.'%')
             ->setMaxResults($pageLimit)
             ->setFirstResult($skip)
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
         return $result;
     }
 }
