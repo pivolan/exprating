@@ -266,4 +266,9 @@ class Invite
     {
         return $this->expert;
     }
+
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
 }

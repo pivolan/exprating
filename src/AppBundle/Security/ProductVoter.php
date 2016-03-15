@@ -189,6 +189,10 @@ class ProductVoter extends Voter
         if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT])) {
             return false;
         }
+        //Админу можно
+        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
+            return true;
+        }
         /** @var User $user */
         $user = $token->getUser();
 
@@ -236,12 +240,13 @@ class ProductVoter extends Voter
         /** @var User $user */
         $user = $token->getUser();
 
-        //Можно если товар свободен, есть роль эксперта, есть права на категорию
+        //Можно если товар свободен, есть роль эксперта, есть (права на категорию или админ)
         return ($product->getExpertUser() == null)
                &&
                ($this->decisionManager->decide($token, [User::ROLE_EXPERT]))
                &&
-               ($user->getCategories()->contains($product->getCategory()));
+               ($this->decisionManager->decide($token, [User::ROLE_ADMIN]) ||
+                $user->getCategories()->contains($product->getCategory()));
     }
 
     private function canCategoryChange(TokenInterface $token)
