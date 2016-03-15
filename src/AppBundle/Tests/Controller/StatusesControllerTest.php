@@ -90,7 +90,6 @@ class StatusesControllerTest extends WebTestCase
             ['/moderator/feedbacks'],
             ['/admin/experts'],
             ['/admin/experts/1/expert'],
-            ['/admin/import_settings'],
         ];
     }
 }
