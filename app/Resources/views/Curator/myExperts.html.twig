@@ -2,11 +2,17 @@
 {% block title %}Мое эксперты{% endblock %}
 {% block breadcrumbs %}
     {{ parent() }}
-    → <a href="{{ path("curator_my_experts") }}">Мои эксперты</a>
+    {% if is_granted('ROLE_EXPERT_CURATOR') %}
+        → <a href="{{ path("curator_my_experts") }}">Мои эксперты</a>
+    {% endif %}
 {% endblock %}
 {% block profile_body %}
     <div class="col-md-12">
-        <h1>Структура кураторства и страниц</h1>
+        {% if is_granted('ROLE_EXPERT_CURATOR') %}
+            <h1>Структура кураторства и страниц</h1>
+        {% else %}
+            <h1>Мои страницы</h1>
+        {% endif %}
         <div id="experts" class="well well-sm" data-url="{{ path('ajax_expert_tree') }}"></div>
     </div>
 {% endblock %}

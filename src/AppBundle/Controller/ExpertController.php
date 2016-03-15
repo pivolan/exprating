@@ -148,4 +148,13 @@ class ExpertController extends BaseController
             return new Response();
         }
     }
+
+    /**
+     * @Route("/profile/expert/my_pages", name="expert_my_pages")
+     * @return Response
+     */
+    public function myPagesAction()
+    {
+        return $this->render("Curator/myExperts.html.twig");
+    }
 }
