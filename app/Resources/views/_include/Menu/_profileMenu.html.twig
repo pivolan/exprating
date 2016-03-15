@@ -32,7 +32,7 @@
                 <li class="{% if path('curator_decisions') in app.request.uri %}active{% endif %}"><a href="{{ path('curator_decisions') }}">
                         Все принятые решения
                     </a></li>
-                <li class="{% if path('curator_experts') in app.request.uri %}active{% endif %}"><a href="{{ path('curator_experts') }}">
+                <li class="{% if path('curator_my_experts') in app.request.uri %}active{% endif %}"><a href="{{ path('curator_my_experts') }}">
                         Мои эксперты
                     </a></li>
             {% endif %}

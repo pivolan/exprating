@@ -181,4 +181,12 @@ class CuratorController extends BaseController
             ]
         );
     }
+
+    /**
+     * @Route("/curator/my_experts", name="curator_my_experts")
+     */
+    public function myExpertsAction()
+    {
+        return $this->render('Curator/myExperts.html.twig');
+    }
 }

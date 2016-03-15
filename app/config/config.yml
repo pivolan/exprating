@@ -229,6 +229,10 @@ assetic:
             inputs:
                 - 'js/Exp/exp_historical.js'
                 - 'js/curator_wait_list.init.js'
+        curator_my_experts_js:
+            inputs:
+                - 'js/external/jstree.min.js'
+                - 'js/curator_my_experts.js'
         layout_expert_items_js:
             inputs:
                 - 'js/Exp/exp_historical.js'

@@ -45,4 +45,36 @@ class AjaxFormAutoComplete extends BaseController
 
         return new JsonResponse($characteristics);
     }
+
+    /**
+     * @Route("/ajax/expert/tree", name="ajax_expert_tree")
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function expertAjaxTree(Request $request)
+    {
+        return new JsonResponse(
+            [
+                'id'       => $this->getUser()->getId(),
+                'text'     => $this->getUser()->getUsername(),
+                'children' => [
+                    [
+                        'id'       => 'experts',
+                        'text'     => 'Эксперты',
+                        'children' => [
+                            ['id' => 'curator', 'text' => 'Куратор 1', 'children' => true],
+                        ],
+                    ],
+                    [
+                        'id'       => 'pages',
+                        'text'     => 'Страницы',
+                        'children' => [
+                            ['id'=>'slug', 'text'=>'Страница1'],
+                        ],
+                    ],
+                ],
+            ]
+        );
+    }
 }

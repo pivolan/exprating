@@ -1,0 +1,27 @@
+{% extends '_layout/_profile.html.twig' %}
+{% block title %}Мое эксперты{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("curator_my_experts") }}">Мои эксперты</a>
+{% endblock %}
+{% block profile_body %}
+    <div class="row">
+        <div class="col-md-7">
+            <h1>Структура кураторства и страниц</h1>
+        </div>
+        <div class="col-md-5">
+            <h1>Статистика</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <div id="experts" class="well well-sm" data-url="{{ path('ajax_expert_tree') }}"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@curator_my_experts_js' output='bundles/js/curator_my_experts.js' %}
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
