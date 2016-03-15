@@ -280,6 +280,13 @@ liip_imagine:
             filters:
                 strip: ~
 
+        tree_icon_filter:
+            quality: 100
+            filters:
+                downscale: { max: [24, 24]}
+                thumbnail: { size: [24, 24], mode: inset }
+                background: { size: [24, 24] color: '#fff' }
+
         product_list_filter:
             quality: 90
             filters:

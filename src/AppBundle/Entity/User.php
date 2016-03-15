@@ -245,7 +245,7 @@ class User extends BaseUser
     /**
      * Get products.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Product[]|ArrayCollection
      */
     public function getProducts()
     {
@@ -461,7 +461,7 @@ class User extends BaseUser
     /**
      * Get experts.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|User[]
      */
     public function getExperts()
     {

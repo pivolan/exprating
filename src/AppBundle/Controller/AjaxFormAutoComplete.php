@@ -6,6 +6,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -54,27 +55,76 @@ class AjaxFormAutoComplete extends BaseController
      */
     public function expertAjaxTree(Request $request)
     {
-        return new JsonResponse(
-            [
-                'id'       => $this->getUser()->getId(),
-                'text'     => $this->getUser()->getUsername(),
-                'children' => [
-                    [
-                        'id'       => 'experts',
-                        'text'     => 'Эксперты',
-                        'children' => [
-                            ['id' => 'curator', 'text' => 'Куратор 1', 'children' => true],
-                        ],
-                    ],
-                    [
-                        'id'       => 'pages',
-                        'text'     => 'Страницы',
-                        'children' => [
-                            ['id'=>'slug', 'text'=>'Страница1'],
-                        ],
+        $userId = $request->get('id');
+        if ($userId == '#') {
+            $user = $this->getUser();
+        } else {
+            $user = $this->getEm()->getRepository('AppBundle:User')->find($userId);
+        }
+        if (!$user) {
+            $this->createNotFoundException();
+        }
+
+        $liipCacheManager = $this->get('liip_imagine.cache.manager');
+        $treeIconFilter = 'tree_icon_filter';
+        $userIcon = $liipCacheManager->getBrowserPath(
+            $user->getAvatarImage() ?: '/images/default_user.png',
+            $treeIconFilter
+        );
+
+        $result = [
+            'id'       => $user->getId(),
+            'text'     => $user->getUsername(),
+            'state'    => ['opened' => true],
+            'icon'     => $userIcon,
+            'children' => [
+                [
+                    'id'       => $user->getId().'pages',
+                    'text'     => 'Страницы',
+                    'state'    => ['opened' => true],
+                    'icon'     => 'glyphicon glyphicon-book',
+                    'children' => [
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
+
+        foreach ($user->getProducts() as $product) {
+            $result['children'][0]['children'][] = [
+                'id'     => $product->getSlug(),
+                'text'   => $product->getName(),
+                'icon'   => $liipCacheManager->getBrowserPath($product->getPreviewImage(), $treeIconFilter),
+                'a_attr' => [
+                    'data-href' => $this->generateUrl('product_edit', ['slug' => $product->getSlug()]),
+                    'target'    => '_blank',
+                ],
+            ];
+        }
+
+        foreach ($user->getExperts() as $expert) {
+            $expertText = sprintf(
+                '%s (страниц: %d, экспертов: %d, доходных страниц: %d, доходных экспертов: %d)',
+                $expert->getFullName() ?: $expert->getUsername(),
+                $expert->getProducts()->count(),
+                $expert->getExperts()->count(),
+                0,
+                0
+            );
+            $result['children'][] = [
+                'id'       => $expert->getId(),
+                'text'     => $expertText,
+                'icon'     => $liipCacheManager->getBrowserPath(
+                    $expert->getAvatarImage() ?: '/images/default_user.png',
+                    $treeIconFilter
+                ),
+                'a_attr'   => [
+                    'data-href' => $this->generateUrl('experts_detail', ['username' => $expert->getUsername()]),
+                    'target'    => '_blank',
+                ],
+                'children' => true,
+            ];
+        }
+
+        return new JsonResponse($result);
     }
 }
