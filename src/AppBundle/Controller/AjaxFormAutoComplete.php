@@ -6,10 +6,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class AjaxFormAutoComplete extends BaseController
 {
@@ -122,6 +124,43 @@ class AjaxFormAutoComplete extends BaseController
                     'target'    => '_blank',
                 ],
                 'children' => true,
+            ];
+        }
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/ajax/categories/{slug}", name="ajax_category_tree", defaults={"slug": null})
+     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
+     */
+    public function categoriesAjaxTreeAction(Request $request, Category $category = null)
+    {
+        $route = $request->get('route_name');
+        $isAdmin = $request->get('is_admin');
+        $user = null;
+        $admin = null;
+        if ($isAdmin) {
+            $admin = $this->getUser();
+        } else {
+            $user = $this->getUser();
+        }
+        $result = [];
+
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($user, $admin);
+
+        foreach ($categories as $categoryArray) {
+            $result[] = [
+                'id'     => $categoryArray['id'],
+                'parent' => $categoryArray['parent_id'] ?: '#',
+                'text'   => $categoryArray['name'],
+                'a_attr' => [
+                    'href'      => $this->generateUrl($route, ['slug' => $categoryArray['id']]),
+                    'data_slug' => $categoryArray['id'],
+                ],
+                'state'  => [
+                    'selected' => ($categoryArray['id'] == $category),
+                ],
             ];
         }
 

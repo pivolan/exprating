@@ -1,2 +1,25 @@
-{% extends '_layout/Expert/_items.html.twig' %}
+{% extends '_layout/_profile.html.twig' %}
 {% block title %}Доступные категории{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path(app.request.get('_route')) }}">{{ block('title') }}</a>
+    {% if category %}
+        → <a href="{{ path(app.request.get('_route'), {"slug": category.slug}) }}">{{ category.name }}</a>
+    {% endif %}
+{% endblock %}
+{% block profile_body %}
+    <h1>{{ block('title') }}</h1>
+
+    <div class="col-md-4">
+        <div id="treeCategory" class="well" data-url="{{ path("ajax_category_tree", {'slug': category}) }}" data-route_name="{{ app.request.get('_route') }}" data-is_admin="0"></div>
+    </div>
+    <div class="col-md-8 history_category">
+        {{ include("Expert/part.html.twig") }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@layout_expert_items_js' output='bundles/js/*'%}
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}

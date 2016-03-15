@@ -11,8 +11,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Product.
  *
- * @ORM\Table(name="product",indexes={@ORM\Index(name="is_enabled_idx", columns={"is_enabled"}),
- * @ORM\Index(name="enabled_at_idx", columns={"enabled_at"})})
+ * @ORM\Table(name="product",indexes={
+ *     @ORM\Index(name="is_enabled_idx", columns={"is_enabled"}),
+ *     @ORM\Index(name="enabled_at_idx", columns={"enabled_at"}),
+ *     @ORM\Index(name="category_id_expert_user_id_idx", columns={"category_id", "expert_user_id"})
+ * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks
  */

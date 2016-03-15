@@ -24,78 +24,6 @@ class ExpertController extends BaseController
     const KEY_INVITE = 'invite';
 
     /**
-     * @Route("/profile/expert/published_items/{page}/{slug}", name="expert_published_items",
-     *     defaults={"page":1, "slug": null})
-     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
-     */
-    public function publishedItemsAction(Request $request, $page, Category $category = null)
-    {
-        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertPublishedQuery(
-            $this->getUser(),
-            $category
-        );
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $page,
-            self::LIMIT_PER_PAGE
-        );
-
-        $template = 'Expert/publishedItems.html.twig';
-        if ($request->isXmlHttpRequest()) {
-            $template = 'Expert/part.html.twig';
-        }
-        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($this->getUser());
-
-        return $this->render(
-            $template,
-            [
-                self::KEY_PAGINATION => $pagination,
-                self::KEY_USER       => $this->getUser(),
-                self::KEY_PAGE       => $page,
-                self::KEY_CATEGORY   => $category,
-                self::KEY_CATEGORIES => $categories,
-            ]
-        );
-    }
-
-    /**
-     * @Route("/profile/expert/not_published_items/{page}/{slug}", name="expert_not_published_items",
-     *     defaults={"page":1, "slug": null})
-     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
-     */
-    public function notPublishedItemsAction(Request $request, $page, Category $category = null)
-    {
-        $query = $this->getEm()->getRepository('AppBundle:Product')->findByExpertNotPublishedQuery(
-            $this->getUser(),
-            $category
-        );
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $page,
-            self::LIMIT_PER_PAGE
-        );
-
-        $template = 'Expert/notPublishedItems.html.twig';
-        if ($request->isXmlHttpRequest()) {
-            $template = 'Expert/part.html.twig';
-        }
-        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($this->getUser());
-
-        return $this->render(
-            $template,
-            [
-                self::KEY_PAGINATION => $pagination,
-                self::KEY_USER       => $this->getUser(),
-                self::KEY_PAGE       => $page,
-                self::KEY_CATEGORY   => $category,
-                self::KEY_CATEGORIES => $categories,
-            ]
-        );
-    }
-
-    /**
      * @Route("/profile/expert/categories/{page}/{slug}", name="expert_categories",
      *     defaults={"page":1, "slug": null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
@@ -118,8 +46,6 @@ class ExpertController extends BaseController
             $template = 'Expert/part.html.twig';
         }
 
-        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($this->getUser());
-
         return $this->render(
             $template,
             [
@@ -127,7 +53,6 @@ class ExpertController extends BaseController
                 self::KEY_USER       => $this->getUser(),
                 self::KEY_PAGE       => $page,
                 self::KEY_CATEGORY   => $category,
-                self::KEY_CATEGORIES => $categories,
             ]
         );
     }
