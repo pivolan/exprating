@@ -4,12 +4,15 @@ namespace Exprating\CharacteristicBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Characteristic.
  *
  * @ORM\Table(name="characteristic")
  * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\CharacteristicRepository")
+ * @UniqueEntity(fields={"slug"})
+ * @UniqueEntity(fields={"name"})
  */
 class Characteristic
 {

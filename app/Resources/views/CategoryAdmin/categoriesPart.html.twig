@@ -10,4 +10,5 @@
 {% form_theme form 'Form/form_rating_settings.html.twig' %}
 {% if category %}
     {{ form(form) }}
+    <button id="add_characteristic" data-url="{{ path('characteristic_create') }}" class="btn btn-info">Добавить новую характеристику</button>
 {% endif %}

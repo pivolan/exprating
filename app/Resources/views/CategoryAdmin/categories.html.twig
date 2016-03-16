@@ -2,7 +2,7 @@
 {% block title %}Доступные категории{% endblock %}
 {% block breadcrumbs %}
     {{ parent() }}
-    → <a href="{{ path("category_admin_categories") }}">Доступные категории</a>
+    → <a href="{{ path("category_admin_categories") }}">Доступные категории редактировать</a>
 {% endblock %}
 {% block profile_body %}
     <div class="row">
@@ -15,6 +15,10 @@
         </div>
     </div>
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/external/colorbox.css') }}">
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
@@ -22,7 +26,14 @@
             {{ include("_include/Category/_jsTree.json.twig") }}
         ];
     </script>
-    {% javascripts '@category_admin_categories_js' output='bundles/js/*'%}
-        <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    {% javascripts '@category_admin_categories_js' output='bundles/js/*' %}
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
     {% endjavascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select2entity').on('select2:selecting', function (data) {
+                console.log(data);
+            });
+        });
+    </script>
 {% endblock %}
