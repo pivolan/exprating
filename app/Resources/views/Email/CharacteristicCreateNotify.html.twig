@@ -16,4 +16,6 @@ scale(Единица измерения, если это не строка): {{ 
 
 Редактировать характеристику можно по ссылке: {{ url('characteristic_edit', {'slug': characteristic.slug}) }}
 Редактировать категорию: {{ url('category_admin_categories', {'slug': category.slug}) }}
+{% if product %}
 Посмотреть товар: {{ url('product_detail', {'slug': product.slug}) }}
+{% endif %}

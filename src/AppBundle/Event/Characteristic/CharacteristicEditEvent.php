@@ -10,8 +10,9 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
+use Symfony\Component\EventDispatcher\Event;
 
-class CharacteristicEditEvent
+class CharacteristicEditEvent extends Event
 {
     /**
      * @var Characteristic

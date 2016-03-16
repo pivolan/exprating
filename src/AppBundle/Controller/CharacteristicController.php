@@ -9,6 +9,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Event\Characteristic\CharacteristicCreateEvent;
+use AppBundle\Event\Characteristic\CharacteristicEditEvent;
 use AppBundle\Event\Characteristic\CharacteristicEvents;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Form\CharacteristicType;
@@ -33,7 +34,7 @@ class CharacteristicController extends BaseController
      *
      * @return Response
      */
-    public function create(Request $request, Category $category, Product $product = null)
+    public function createAction(Request $request, Category $category, Product $product = null)
     {
         $form = $this->createForm(CharacteristicType::class, null, ['action' => $request->getUri()]);
 
@@ -61,15 +62,15 @@ class CharacteristicController extends BaseController
     }
 
     /**
-     * @Route("/characteristic/edit/{slug}, name="characteristic_edit")
+     * @Route("/characteristic/edit/{slug}", name="characteristic_edit")
      * @param Request $request
-     * @Security("is_granted('ROLE_EXPERT')")
+     * @Security("is_granted('ROLE_ADMIN')")
      * @ParamConverter(name="characteristic", class="Exprating\CharacteristicBundle\Entity\Characteristic",
      *     options={"mapping":{"slug":"slug"}})
      *
      * @return Response
      */
-    public function edit(Request $request, Characteristic $characteristic)
+    public function editAction(Request $request, Characteristic $characteristic)
     {
         $form = $this->createForm(CharacteristicType::class, $characteristic, ['action' => $request->getUri()]);
 
@@ -86,10 +87,12 @@ class CharacteristicController extends BaseController
             );
             $this->getEm()->flush();
             $this->addFlash(self::FLASH_MESSAGE, 'Характеристика успешно сохранена '.$entity->getName());
+
+            return $this->redirectToRoute('characteristic_edit', ['slug' => $entity->getSlug()]);
         }
 
         return $this->render(
-            'Characteristic/create.html.twig',
+            'Characteristic/edit.html.twig',
             [self::KEY_FORM => $form->createView()],
             new Response('', $status)
         );

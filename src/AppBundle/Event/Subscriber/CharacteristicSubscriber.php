@@ -67,7 +67,7 @@ class CharacteristicSubscriber implements EventSubscriberInterface
         $admins = $this->em->getRepository('AppBundle:User')->findEmails(User::ROLE_ADMIN);
         $emails = [];
         foreach ($admins as $email) {
-            $emails[] = $email['name'];
+            $emails[] = $email['email'];
         }
         $message = \Swift_Message::newInstance()
             ->setSubject('Создана новая характеристика товара '.$characteristic->getName())

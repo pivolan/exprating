@@ -59,7 +59,7 @@ class CharacteristicType extends AbstractType
                     ],
                 ]
             )
-            ->add('save', SubmitType::class, ['label' => 'Создать']);
+            ->add('save', SubmitType::class, ['label' => 'Сохранить']);
     }
 
     /**
