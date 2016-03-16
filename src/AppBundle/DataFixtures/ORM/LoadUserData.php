@@ -30,6 +30,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
             ->setCity('Москва')
             ->setCaption('Главный эксперт всея Руси ')
             ->addRole(User::ROLE_SUPER_ADMIN)
+            ->addRole(User::ROLE_ADMIN)
             ->addRole(User::ROLE_EXPERT);
         $manager->persist($userAdmin);
 
