@@ -1,5 +1,17 @@
 Exp.historical('.edit-menu a, ul.pagination a', 'div.content-inner.clearfix');
 
+function add_characteristic(selector) {
+    var $this = $(selector);
+    var $html = $('[data-type="characteristic"]:last');
+    var index = $html.data('index');
+    var indexNext = index + 1;
+    var html = $html.outerHTML();
+    var htmlNew = html.replaceAll('_' + index + '_', '_' + indexNext + '_').replaceAll('\[' + index + '\]', '[' + indexNext + ']').replaceAll('data-index="' + index + '"', 'data-index="' + indexNext + '"');
+    $this.before(htmlNew);
+    $this.parent().find('select:last').removeAttr('disabled');
+    $this.parent().find('input:last').val('');
+    return $this.parent().find('select:last');
+}
 $(document).on('click', 'button[data-type="add"]', function (event) {
     var $this = $(this);
     var html = $this.data('prototype');
@@ -10,15 +22,7 @@ $(document).on('click', 'button[data-type="remove"]', function (event) {
     $this.parent().remove();
 });
 $(document).on('click', 'button[data-type="add-ch"]', function (event) {
-    var $this = $(this);
-    var $html = $('[data-type="characteristic"]:last');
-    var index = $html.data('index');
-    var indexNext = index + 1;
-    var html = $html.outerHTML();
-    var htmlNew = html.replaceAll('_' + index + '_', '_' + indexNext + '_').replaceAll('\[' + index + '\]', '[' + indexNext + ']').replaceAll('data-index="' + index + '"', 'data-index="' + indexNext + '"');
-    $this.before(htmlNew);
-    $this.parent().find('select:last').removeAttr('disabled');
-    $this.parent().find('input:last').val('');
+    add_characteristic(this);
 });
 $(document).on('click', 'button[data-type="remove-ch"]', function (event) {
     var $this = $(this);
@@ -87,4 +91,14 @@ $(document).on('click', '#opinion_preview', function () {
     var converter = new showdown.Converter();
     var text = $('#product_expertOpinion').val();
     $(selector).html(converter.makeHtml(text));
+});
+$(document).ready(function () {
+    Exp.colorbox('#add_characteristic');
+    Exp.form_ajax('form[name="characteristic"]', '#cboxLoadedContent', function () {
+        var $select = add_characteristic('button[data-type="add-ch"]');
+        var slug = $('#characteristic_slug').val();
+        var name = $('#characteristic_name').val();
+        $select.find('option[selected]').removeAttr('selected');
+        $select.append('<option value="'+slug+'" selected="selected">'+name+'</option>');
+    });
 });

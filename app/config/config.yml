@@ -206,7 +206,10 @@ assetic:
                 - 'js/external/jquery.ui.widget.js'
                 - 'js/external/jquery.iframe-transport.js'
                 - 'js/external/jquery.fileupload.js'
+                - 'js/external/jquery.colorbox-min.js'
                 - 'js/Exp/exp_historical.js'
+                - 'js/Exp/exp_form_ajax.js'
+                - 'js/Exp/exp_colorbox.js'
                 - 'js/plugins/outer_html.plugin.js'
                 - 'js/product_edit.init.js'
         product_choose_category_js:
@@ -264,6 +267,7 @@ assetic:
                 - 'css/external/bootstrap332.min.css'
                 - 'css/external/superfish.css'
                 - 'css/external/select2.min.css'
+                - 'css/external/colorbox.css'
                 - 'css/style.css'
                 - 'css/external/jquery.mmenu.all.css'
 
