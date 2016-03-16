@@ -15,8 +15,8 @@ class CharacteristicRepository extends \Doctrine\ORM\EntityRepository
     public function getIdNameByQ($q, $pageLimit, $skip)
     {
         $result = $this->createQueryBuilder('a')
-            ->select('a.slug as id, a.label as text')
-            ->where('a.label LIKE :q')
+            ->select('a.slug as id, a.name as text')
+            ->where('a.name LIKE :q')
             ->setParameter('q', '%'.$q.'%')
             ->setMaxResults($pageLimit)
             ->setFirstResult($skip)

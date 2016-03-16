@@ -32,7 +32,7 @@ class CategoryType extends AbstractType
                     'multiple'             => true,
                     'remote_route'         => 'ajax_characteristics',
                     'class'                => Characteristic::class,
-                    'text_property'        => 'label',
+                    'text_property'        => 'name',
                     'page_limit'           => null,
                     'primary_key'          => 'slug',
                     'label'                => 'Характеристики',
