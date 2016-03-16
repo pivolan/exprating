@@ -94,11 +94,12 @@ $(document).on('click', '#opinion_preview', function () {
 });
 $(document).ready(function () {
     Exp.colorbox('#add_characteristic');
-    Exp.form_ajax('form[name="characteristic"]', '#cboxLoadedContent', function () {
+    Exp.form_ajax('form[name="characteristic"]', '#cboxLoadedContent', null, function () {
         var $select = add_characteristic('button[data-type="add-ch"]');
         var slug = $('#characteristic_slug').val();
         var name = $('#characteristic_name').val();
         $select.find('option[selected]').removeAttr('selected');
         $select.append('<option value="'+slug+'" selected="selected">'+name+'</option>');
+        $.colorbox.close();
     });
 });

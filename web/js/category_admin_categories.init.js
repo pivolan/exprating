@@ -6,5 +6,7 @@ $(document).ready(function () {
     Exp.historical('#treeCategory a, div.breadcrumbs a:last', 'div.history_category', callback);
     Exp.form_ajax('form[name="category"]', 'div.history_category', callback);
     Exp.colorbox('#add_characteristic');
-    Exp.form_ajax('form[name="characteristic"]', '#cboxLoadedContent');
+    Exp.form_ajax('form[name="characteristic"]', '#cboxLoadedContent', null, function () {
+        $.colorbox.close();
+    });
 });

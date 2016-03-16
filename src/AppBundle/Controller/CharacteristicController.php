@@ -33,12 +33,18 @@ class CharacteristicController extends BaseController
 
         $form->handleRequest($request);
 
+        $status = 200;
         if ($form->isValid()) {
             $this->getEm()->persist($form->getData());
             $this->getEm()->flush();
             $this->addFlash(self::FLASH_MESSAGE, 'Новая характеристика успешно сохранена '.$form->getData()->getName());
+            $status = 201;
         }
 
-        return $this->render('Characteristic/create.html.twig', [self::KEY_FORM => $form->createView()]);
+        return $this->render(
+            'Characteristic/create.html.twig',
+            [self::KEY_FORM => $form->createView()],
+            new Response('', $status)
+        );
     }
 }
