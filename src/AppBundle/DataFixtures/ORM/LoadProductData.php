@@ -44,7 +44,6 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
                      т.к. в нем мощность немного выше. Пылесосом очень довольны.
                      Все функции выполняет на 5 с плюсом! Работает тихо и качественно.'
                 )
-                ->setPreviewImage('http://placehold.it/280x250')
                 ->setDisadvantages(
                     [
                         'Невысокая мощность всасывания',
