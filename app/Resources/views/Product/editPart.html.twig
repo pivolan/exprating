@@ -1,6 +1,7 @@
 {% extends ':Product:detailPart.html.twig' %}
 {% block edit_category %}
-    <a href="{{ path('product_choose_category', {'slug':product.slug}) }}" class="btn btn-xs btn-info" type="button" data-toggle="tooltip" title="Изменить категорию">
+    <a href="{{ path('product_choose_category', {'slug':product.slug}) }}" class="btn btn-xs btn-info" type="button"
+       data-toggle="tooltip" title="Изменить категорию">
         <span class="glyphicon glyphicon-edit"></span>
     </a>
     {% for peopleGroup in product.peopleGroups %}
@@ -149,7 +150,10 @@
     {% endfor %}
 
     <button class="btn btn-info" data-type="add-ch" type="button">Добавить</button>
-    <button id="add_characteristic" type="button" data-url="{{ path('characteristic_create') }}" class="btn btn-info">Добавить новую характеристику</button>
+    <button id="add_characteristic" type="button"
+            data-url="{{ path('characteristic_create', {"category_slug":product.category.slug, "product_slug":product.slug}) }}"
+            class="btn btn-info">Добавить новую характеристику
+    </button>
 {% endblock %}
 {% block form_comment_block %}{% endblock %}
 {% block delete_button %}

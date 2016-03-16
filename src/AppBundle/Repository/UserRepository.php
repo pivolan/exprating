@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\AbstractQuery;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 /**
@@ -21,8 +22,7 @@ class UserRepository extends NestedTreeRepository
         $qb->andWhere('u.enabled = :isEnabled')
             ->andWhere('u.isActivated = :isEnabled')
             ->setParameter('isEnabled', true)
-            ->orderBy('u.id', 'DESC')
-        ;
+            ->orderBy('u.id', 'DESC');
 
         return $qb->getQuery();
     }
@@ -74,5 +74,15 @@ class UserRepository extends NestedTreeRepository
         $user = $qb->select('a')->setFirstResult(rand(0, $count - 1))->setMaxResults(1)->getQuery()->getSingleResult();
 
         return $user;
+    }
+
+    public function findEmails($role = User::ROLE_EXPERT)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.email')
+            ->where('a.roles LIKE :role')
+            ->setParameter('role', '%'.$role.'%');
+
+        return $qb->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
     }
 }

@@ -1,0 +1,19 @@
+Пользователем {{ user.fullName }}({{ user.username }}) создана новая харктеристика во время редактирования
+{% if product %}
+    товара {{ product.name }} с категорией {{ product.category.name }}
+{% else %}
+    категории {{ category.parent.name|default('') }}->{{ category.name }}
+{% endif %}
+.
+
+Необходимо проверить характеристику и отмодерировать:
+slug(уникальный идентификатор): {{ characteristic.slug }}
+name(Уникальное имя): {{ characteristic.name }}
+label(Короткое имя, не уникальное): {{ characteristic.label }}
+group(Группа куда относится характеристика): {{ characteristic.group }}
+type(Тип значения, целое, строка, вещественное): {{ characteristic.type }}
+scale(Единица измерения, если это не строка): {{ characteristic.scale }}
+
+Редактировать характеристику можно по ссылке: {{ url('characteristic_edit', {'slug': characteristic.slug}) }}
+Редактировать категорию: {{ url('category_admin_categories', {'slug': category.slug}) }}
+Посмотреть товар: {{ url('product_detail', {'slug': product.slug}) }}
