@@ -12,6 +12,7 @@ use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -31,11 +32,34 @@ class CharacteristicType extends AbstractType
             ->add('slug', null, ['label' => 'slug'])
             ->add('name', null, ['label' => 'Название уникальное'])
             ->add('group', null, ['label' => 'Группа'])
-            ->add('type', null, ['label' => 'Тип'])
+            ->add(
+                'type',
+                ChoiceType::class,
+                [
+                    'label'   => 'Тип',
+                    'choices' => [
+                        'Строка'                 => Characteristic::TYPE_STRING,
+                        'Целочисленное значение' => Characteristic::TYPE_INT,
+                        'Вещественное число'     => Characteristic::TYPE_DECIMAL,
+                    ],
+                ]
+            )
             ->add('label', null, ['label' => 'Название краткое'])
-            ->add('scale', null, ['label' => 'Единицы иззмерения'])
-            ->add('save', SubmitType::class, ['label' => 'Создать'])
-        ;
+            ->add(
+                'scale',
+                ChoiceType::class,
+                [
+                    'label'   => 'Единицы иззмерения',
+                    'choices' => [
+                        'Нет'        => null,
+                        'Сантиметры' => Characteristic::SCALE_CM,
+                        'Килограммы' => Characteristic::SCALE_KG,
+                        'Метры'      => Characteristic::SCALE_METERS,
+                        'Ватт'       => Characteristic::SCALE_WATT,
+                    ],
+                ]
+            )
+            ->add('save', SubmitType::class, ['label' => 'Создать']);
     }
 
     /**

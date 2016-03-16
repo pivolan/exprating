@@ -29,7 +29,15 @@ class CharacteristicController extends BaseController
      */
     public function create(Request $request)
     {
-        $form = $this->createForm(CharacteristicType::class);
+        $form = $this->createForm(CharacteristicType::class, null, ['action' => $request->getUri()]);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->getEm()->persist($form->getData());
+            $this->getEm()->flush();
+            $this->addFlash(self::FLASH_MESSAGE, 'Новая характеристика успешно сохранена '.$form->getData()->getName());
+        }
 
         return $this->render('Characteristic/create.html.twig', [self::KEY_FORM => $form->createView()]);
     }
