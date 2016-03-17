@@ -34,7 +34,7 @@
                 <div class="col-md-4 col-md-offset-4">
                     <div class="btn-group">
                         {% block edit_buttons_label %}
-                            {% if app.user == product.expertUser %}
+                            {% if product.expertUser %}
                                 <a class="btn btn-info" href="{{ path("product_edit", {"slug": product}) }}">
                                     Редактировать
                                 </a>
