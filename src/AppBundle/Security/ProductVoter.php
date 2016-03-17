@@ -206,6 +206,14 @@ class ProductVoter extends Voter
             return true;
         }
 
+        //Админу категории можно
+        if ($this->decisionManager->decide($token, [User::ROLE_EXPERT_CATEGORY_ADMIN])
+            &&
+            $user->getAdminCategories()->contains($product->getCategory())
+        ) {
+            return true;
+        }
+
         return false;
     }
 
