@@ -28,15 +28,6 @@ class IndexController extends BaseController
     const FLASH_COMMENT_MESSAGE = 'flash.comment.message';
 
     /**
-     * @Route('/apc/somepassword', name="apc_clear")
-     */
-    public function apcAction()
-    {
-        apc_clear_cache();
-        return new Response('cleared!');
-    }
-
-    /**
      * @Route("/", name="homepage")
      */
     public function indexAction()
