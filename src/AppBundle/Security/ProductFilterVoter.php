@@ -100,7 +100,7 @@ class ProductFilterVoter extends Voter
         if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
             return true;
         }
-        //Если нет прав эксперта значит точно нельзя
+        //Если нет прав куратора значит точно нельзя
         if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
             return false;
         }

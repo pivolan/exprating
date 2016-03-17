@@ -35,11 +35,11 @@
                 </div>
 
                 <div class="btn-group">
-                    {% if is_granted('ROLE_EXPERT') %}
+                    {% if is_granted('SHOW_FREE', category) %}
                         <a href="{{ path('product_list', {'slug':category.slug, 'peopleGroup': productFilter.peopleGroup.slug, 'status': productFilter.status == 'free'?null:'free'}) }}"
                            class="btn btn-info {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')?'active':'' }}">Посмотреть свободные товары</a>
                     {% endif %}
-                    {% if is_granted('ROLE_EXPERT_CURATOR') %}
+                    {% if is_granted('SHOW_WAIT', category) %}
                         <a href="{{ path('product_list', {'slug': category.slug, 'peopleGroup': productFilter.peopleGroup.slug, 'status': productFilter.status == 'wait'?null:'wait'}) }}"
                            class="btn btn-info {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')?'active':'' }}">Смотреть ожидающие подтверждения</a>
                     {% endif %}
