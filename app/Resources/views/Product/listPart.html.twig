@@ -8,7 +8,7 @@
             {% endfor %}
             {{ breadcrumbs(category)|raw }}
         </div>
-        <h1>{{ category.name }} - рейтинг по мнению экспертов</h1>
+        <h1>{% if category.seo.h1|default(false) %} {{ category.seo.h1 }} {% else %}{{ category.name }} - рейтинг по мнению экспертов{% endif %}</h1>
         {% if is_granted('EDIT', category) %}
             <a href="{{ path('category_admin_categories', {'slug': category.slug}) }}" class="btn btn-info">Редактировать</a>
         {% endif %}

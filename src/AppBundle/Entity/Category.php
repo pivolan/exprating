@@ -539,4 +539,20 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProductCount()
+    {
+        return $this->productCount;
+    }
+
+    /**
+     * @param mixed $productCount
+     */
+    public function setProductCount($productCount)
+    {
+        $this->productCount = $productCount;
+    }
 }
