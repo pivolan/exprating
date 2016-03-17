@@ -73,12 +73,24 @@ class AjaxFormAutoComplete extends BaseController
             $user->getAvatarImage() ?: '/images/default_user.png',
             $treeIconFilter
         );
+        $expertText = sprintf(
+            '%s (страниц: %d, экспертов: %d, доходных страниц: %d, доходных экспертов: %d)',
+            $user->getFullName() ?: $user->getUsername(),
+            $user->getProducts()->count(),
+            $user->getExperts()->count(),
+            0,
+            0
+        );
 
         $result = [
             'id'       => $user->getId(),
-            'text'     => $user->getUsername(),
+            'text'     => $expertText,
             'state'    => ['opened' => true],
             'icon'     => $userIcon,
+            'a_attr'   => [
+                'data-href' => $this->generateUrl('experts_detail', ['username' => $user->getUsername()]),
+                'target'    => '_blank',
+            ],
             'children' => [
                 [
                     'id'       => $user->getId().'pages',
