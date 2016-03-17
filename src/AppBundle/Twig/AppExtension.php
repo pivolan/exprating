@@ -38,7 +38,7 @@ class AppExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function breadcrumbs(Category $category, $peopleGroup)
+    public function breadcrumbs(Category $category)
     {
         /** @var Category[] $categories */
         $categories = $this->entityManager->getRepository('AppBundle:Category')->getPath($category);
@@ -46,8 +46,7 @@ class AppExtension extends \Twig_Extension
         return $this->twig->render(
             'AppBundle:Extensions:breadcrumbs.html.twig',
             [
-                self::KEY_CATEGORIES   => $categories,
-                self::KEY_PEOPLE_GROUP => $peopleGroup,
+                self::KEY_CATEGORIES   => $categories
             ]
         );
     }
