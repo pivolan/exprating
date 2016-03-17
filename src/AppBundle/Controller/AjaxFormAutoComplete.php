@@ -148,11 +148,19 @@ class AjaxFormAutoComplete extends BaseController
         $result = [];
 
         $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($user, $admin);
-
+        $categoriesIndexed = [];
         foreach ($categories as $categoryArray) {
+            $categoriesIndexed[$categoryArray['id']] = $categoryArray;
+        }
+
+        foreach ($categoriesIndexed as $categoryArray) {
+            $parent = $categoryArray['parent_id'] ?: '#';
+            if (!isset($categoriesIndexed[$categoryArray['parent_id']])) {
+                $parent = '#';
+            }
             $result[] = [
                 'id'     => $categoryArray['id'],
-                'parent' => $categoryArray['parent_id'] ?: '#',
+                'parent' => $parent,
                 'text'   => $categoryArray['name'],
                 'a_attr' => [
                     'href'      => $this->generateUrl($route, ['slug' => $categoryArray['id']]),
