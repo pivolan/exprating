@@ -21,19 +21,24 @@ class VisitsLogController extends BaseController
     public function productAction(Request $request, Product $product)
     {
         $visit = new Visit();
-        $visit->setProduct($product)
-            ->setUser($this->getUser())
-            ->setExpert($product->getExpertUser())
-            ->setCuratorFirstLevel($product->getExpertUser()->getCurator())
-            ->setIp($request->getClientIp())
-            ->setUserAgent($request->headers->get('User-Agent'))
-            ->setUrl($request->getUri());
-        if ($product->getExpertUser()->getCurator()) {
-            $visit->setCuratorSecondLevel($product->getExpertUser()->getCurator()->getCurator());
+        $expert = $product->getExpertUser();
+        $curatorFirstLevel = null;
+        if ($expert && $product->getIsEnabled()) {
+            $curatorFirstLevel = $expert->getCurator();
+            $visit->setProduct($product)
+                ->setUser($this->getUser())
+                ->setExpert($expert)
+                ->setCuratorFirstLevel($curatorFirstLevel)
+                ->setIp($request->getClientIp())
+                ->setUserAgent($request->headers->get('User-Agent'))
+                ->setUrl($request->getUri());
+            if ($expert->getCurator()) {
+                $visit->setCuratorSecondLevel($expert->getCurator()->getCurator());
+            }
+            $product->setVisitsCount($product->getVisitsCount() + 1);
+            $this->getEm()->persist($visit);
+            $this->getEm()->flush();
         }
-        $product->setVisitsCount($product->getVisitsCount() + 1);
-        $this->getEm()->persist($visit);
-        $this->getEm()->flush();
 
         return new Response();
     }
