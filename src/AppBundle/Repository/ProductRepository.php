@@ -53,8 +53,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('curator', $productFilter->getCurator())
                     ->setParameter('status', CuratorDecision::STATUS_WAIT);
             }
-        }
-        if ($productFilter->getPeopleGroup() &&
+        } elseif (
+            $productFilter->getPeopleGroup() &&
             $productFilter->getPeopleGroup()->getSlug() != ProductFilter::PEOPLE_GROUP_ALL
         ) {
             $qb->innerJoin('a.peopleGroups', 'e', 'WITH', 'e.slug = :people_group')
