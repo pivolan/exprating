@@ -1,7 +1,7 @@
         {% block form_start_block %}{% endblock %}
         <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
             <a href="{{ path("homepage") }}">Главная</a>
-            {{ breadcrumbs(product.category, productPeopleGroups.0.name|default('dlya-vseh'))|raw }}
+            {{ breadcrumbs(product.category)|raw }}
             {% block edit_category %}{% endblock %}
         </div>
         {% block curator_decision %}

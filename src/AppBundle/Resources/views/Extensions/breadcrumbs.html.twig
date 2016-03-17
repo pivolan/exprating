@@ -1,6 +1,6 @@
 {% for category in categories %}
     <span class="dropdown">
-        → <a role="button" class="dropdown-toggle" id="dropdown-{{ category.slug }}" href="#" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">{{ category.name }} <span class="caret"></span></a>
+        → <a role="button" class="dropdown-toggle" id="dropdown-{{ category.slug }}" href="" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">{{ category.name }} <span class="caret"></span></a>
         <ul class="dropdown-menu" aria-labelledby="dropdown-{{ category.slug }}">
             {% for peopleGroup in category.peopleGroups %}
                 <li>

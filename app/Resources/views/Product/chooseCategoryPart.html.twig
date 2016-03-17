@@ -1,7 +1,7 @@
 <div class="row">
     <div class="breadcrumbs col-md-8" xmlns="http://www.w3.org/1999/html">
         <a href="{{ path("homepage") }}">Главная</a>
-        {{ breadcrumbs(product.category, product.peopleGroups.0.slug|default('dlya-vseh'))|raw }}
+        {{ breadcrumbs(product.category)|raw }}
     </div>
 </div>
 {{ form_start(form) }}
