@@ -17,6 +17,12 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    comment_subscriber:
+        class: AppBundle\Event\Subscriber\CommentSubscriber
+        arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig']
+        tags:
+            - { name: kernel.event_subscriber }
+
     characteristic_subscriber:
         class: AppBundle\Event\Subscriber\CharacteristicSubscriber
         arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig', '@appbundle.slugify']

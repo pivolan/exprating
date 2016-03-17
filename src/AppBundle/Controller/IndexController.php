@@ -26,6 +26,7 @@ class IndexController extends BaseController
     const FLASH_SORT_ERRORS = 'sortErrors';
     const KEY_SORT_PRODUCT = 'productFilter';
     const FLASH_COMMENT_MESSAGE = 'flash.comment.message';
+    const KEY_COMMENTS = 'comments';
 
     /**
      * @Route("/", name="homepage")
@@ -86,6 +87,7 @@ class IndexController extends BaseController
     public function commentCreateAction(Request $request, Product $product)
     {
         $comment = new Comment();
+        $this->getEm()->persist($comment);
         if ($request->getUser()) {
             $comment->setUser($this->getUser());
         }
@@ -95,6 +97,9 @@ class IndexController extends BaseController
         if ($form->isValid()) {
             $this->get('event_dispatcher')->dispatch(ProductEvents::COMMENTED, new ProductCommentedEvent($comment));
             $this->addFlash(self::FLASH_COMMENT_MESSAGE, 'Ваш комментарий будет опубликован после модерации');
+        } elseif ($form->isSubmitted()) {
+            $errors = $form->getErrors(true);
+            $this->addFlash(self::FLASH_COMMENT_MESSAGE, print_r($errors, true));
         }
 
         return $this->redirectToRoute('product_detail', ['slug' => $comment->getProduct()->getSlug()]);
@@ -122,12 +127,15 @@ class IndexController extends BaseController
             $template = 'Product/detailPart.html.twig';
         }
 
+        $comments = $this->getEm()->getRepository('AppBundle:Comment')->findByProductEnabled($product);
+
         return $this->render(
             $template,
             [
                 self::KEY_PRODUCT          => $product,
                 self::KEY_SIMILAR_PRODUCTS => $similarProducts,
                 self::KEY_FORM_COMMENT     => $formComment->createView(),
+                self::KEY_COMMENTS         => $comments,
             ]
         );
     }

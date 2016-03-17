@@ -2,6 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Product;
+
 /**
  * CommentRepository.
  *
@@ -18,5 +21,22 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('isPublished', false);
 
         return $qb->getQuery();
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return array|Comment[]
+     */
+    public function findByProductEnabled(Product $product)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.isPublished = :isPublished')
+            ->setParameter('isPublished', true)
+            ->andWhere('a.product = :product')
+            ->setParameter('product', $product)
+            ->orderBy('a.createdAt', 'DESC');
+
+        return $qb->getQuery()->getResult();
     }
 }

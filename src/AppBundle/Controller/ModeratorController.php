@@ -8,6 +8,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
+use AppBundle\Event\Comment\CommentEvents;
+use AppBundle\Event\Comment\CommentPublishEvent;
+use AppBundle\Event\Comment\CommentRejectEvent;
 use AppBundle\Event\ProductCommentedEvent;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Form\ModeratorCommentType;
@@ -81,9 +84,30 @@ class ModeratorController extends BaseController
         $form = $this->createForm(ModeratorCommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $event = new ProductCommentedEvent($comment);
-            $this->get('event_dispatcher')->dispatch(ProductEvents::COMMENTED, $event);
-            $this->addFlash(self::FLASH_MESSAGE, $event->getMessage());
+            if ($form->get(ModeratorCommentType::APPROVE)->isClicked()) {
+                $this->get('event_dispatcher')->dispatch(
+                    CommentEvents::COMMENT_PUBLISH,
+                    new CommentPublishEvent($comment)
+                );
+                $this->getEm()->flush();
+                $this->addFlash(
+                    self::FLASH_MESSAGE,
+                    sprintf('Комментарий №%s пользователя %s опубликован', $comment->getId(), $comment->getFullName())
+                );
+            } elseif ($form->get(ModeratorCommentType::REJECT)->isClicked()) {
+                $this->get('event_dispatcher')->dispatch(
+                    CommentEvents::COMMENT_REJECT,
+                    new CommentRejectEvent($comment)
+                );
+                $this->getEm()->flush();
+                $this->addFlash(
+                    self::FLASH_MESSAGE,
+                    sprintf('Комментарий №%s пользователя %s отклонен', $comment->getId(), $comment->getFullName())
+                );
+            } else {
+                throw new \LogicException('Нажата не существующая кнопка при модерации комментария');
+            }
+            return $this->redirectToRoute('moderator_comments');
         }
 
         return $this->render('Moderator/decision.html.twig', [self::KEY_FORM => $form, self::KEY_COMMENT => $comment]);

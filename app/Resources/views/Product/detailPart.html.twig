@@ -264,7 +264,7 @@
 
                         <h3>Обсуждение товара</h3>
                         <ul>
-                            {% for comment in product.comments %}
+                            {% for comment in comments %}
                                 <li class="comment-item">
                                     <div class="comment-date">
                                         {{ comment.createdAt|date('d.m.Y') }}
@@ -280,7 +280,14 @@
                         </ul>
                         {% block form_comment_block %}
                             <div class="comment-form-wrapper">
+
                                 <h4>Оставьте комментарий о продукте {{ product.name }}</h4>
+                                {% for flash_message in app.session.flashbag.get('flash.comment.message') %}
+                                    <div id="flash_info_{{ loop.index }}" class="well alert-success">{{ flash_message }}</div>
+                                    <script type="text/javascript">setTimeout(function () {
+                                            $('#flash_info_{{ loop.index }}').remove()
+                                        }, 5000)</script>
+                                {% endfor %}
                                 {% form_theme formComment '/Form/form_comment_custom_layout.html.twig' %}
                                 {{ form(formComment) }}
                             </div>

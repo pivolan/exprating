@@ -100,6 +100,7 @@ $(document).ready(function () {
         var name = $('#characteristic_name').val();
         $select.find('option[selected]').removeAttr('selected');
         $select.append('<option value="'+slug+'" selected="selected">'+name+'</option>');
+        $select.val(slug);
         $.colorbox.close();
     });
 });
