@@ -264,7 +264,7 @@
 
                         <h3>Обсуждение товара</h3>
                         <ul>
-                            {% for comment in comments %}
+                            {% for comment in product.publishedComments %}
                                 <li class="comment-item">
                                     <div class="comment-date">
                                         {{ comment.createdAt|date('d.m.Y') }}

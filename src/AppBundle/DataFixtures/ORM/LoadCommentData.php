@@ -19,6 +19,8 @@ class LoadCommentData extends AbstractFixture implements DependentFixtureInterfa
                 $comment = new \AppBundle\Entity\Comment();
                 $comment->setProduct($product)
                     ->setFullName('Василий Зайцев '.$key * $i)
+                    ->setIsPublished(true)
+                    ->setPublishedAt(new \DateTime())
                     ->setMessage('Хороший и надежный пылесос, пользуюсь им уже давно и ни разу не подводил');
                 $manager->persist($comment);
             }

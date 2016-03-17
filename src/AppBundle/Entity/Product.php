@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
@@ -1083,5 +1084,13 @@ class Product
     public function getPeopleGroups()
     {
         return $this->peopleGroups;
+    }
+
+    public function getPublishedComments()
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('isPublished', true));
+
+        return $this->comments->matching($criteria);
     }
 }
