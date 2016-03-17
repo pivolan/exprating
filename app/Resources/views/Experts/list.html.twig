@@ -6,9 +6,11 @@
             <div class="col-md-7">
                 <h1>Наши эксперты</h1>
             </div>
-            <div class="col-md-5">
-                <h1>Куратор</h1>
-            </div>
+            {% if is_granted('ROLE_EXPERT') %}
+                <div class="col-md-5">
+                    <h1>Куратор</h1>
+                </div>
+            {% endif %}
         </div>
 
         {{ knp_pagination_render(experts) }}
@@ -25,17 +27,19 @@
                                 {{ expert.caption }}
                             </div>
                         </div>
-                        <div class="col-md-5">
-                            {% if expert.curator %}
-                                <div class="expert-img-wrapper">
-                                    {{ include("_include/User/_imageList.html.twig", {'expert': expert.curator}) }}
-                                </div>
-                                <div class="expert-name">
-                                    <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName|default(expert.curator.username) }}</span></a>
-                                    {{ expert.curator.caption }}
-                                </div>
-                            {% endif %}
-                        </div>
+                        {% if is_granted('ROLE_EXPERT') %}
+                            <div class="col-md-5">
+                                {% if expert.curator %}
+                                    <div class="expert-img-wrapper">
+                                        {{ include("_include/User/_imageList.html.twig", {'expert': expert.curator}) }}
+                                    </div>
+                                    <div class="expert-name">
+                                        <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName|default(expert.curator.username) }}</span></a>
+                                        {{ expert.curator.caption }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>
