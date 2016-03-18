@@ -1,7 +1,7 @@
 services:
     search_bundle.sphinx:
         class: Exprating\SearchBundle\Engine\SphinxEngine
-        arguments: ["@doctrine.orm.entity_manager", '@iakumai.sphinxsearch.search']
+        arguments: ['@iakumai.sphinxsearch.search']
 
     search_bundle.sql:
         class: Exprating\SearchBundle\Engine\SqlEngine

@@ -15,11 +15,6 @@ use IAkumaI\SphinxsearchBundle\Search\Sphinxsearch;
 class SphinxEngine implements EngineInterface
 {
     /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
      * @var Sphinxsearch
      */
     private $sphinxSearch;
@@ -27,12 +22,10 @@ class SphinxEngine implements EngineInterface
     /**
      * SphinxEngine constructor.
      *
-     * @param EntityManager $entityManager
      * @param Sphinxsearch  $sphinxSearch
      */
-    public function __construct(EntityManager $entityManager, Sphinxsearch $sphinxSearch)
+    public function __construct(Sphinxsearch $sphinxSearch)
     {
-        $this->entityManager = $entityManager;
         $this->sphinxSearch = $sphinxSearch;
     }
 
