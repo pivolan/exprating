@@ -85,6 +85,12 @@ class CategoryRepository extends NestedTreeRepository
         return $ids;
     }
 
+    /**
+     * @param User|null $user
+     * @param User|null $admin
+     *
+     * @return array
+     */
     public function getForJsTree(User $user = null, User $admin = null)
     {
         $qb = $this->createQueryBuilder('a')
@@ -111,6 +117,13 @@ class CategoryRepository extends NestedTreeRepository
         return $result;
     }
 
+    /**
+     * @param $q
+     * @param $pageLimit
+     * @param $skip
+     *
+     * @return array
+     */
     public function getIdNameByQ($q, $pageLimit, $skip)
     {
         $result = $this->createQueryBuilder('a')
