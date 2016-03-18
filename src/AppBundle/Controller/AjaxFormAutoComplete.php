@@ -40,13 +40,13 @@ class AjaxFormAutoComplete extends BaseController
         $pageLimit = $request->get('page_limit');
         $q = $request->get('q');
         $skip = 0;
-        $characteristics = $this->getEm()->getRepository('AppBundle:Category')->getIdNameByQ(
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->getIdNameByQ(
             $q,
             $pageLimit,
             $skip
         );
 
-        return new JsonResponse($characteristics);
+        return new JsonResponse($categories);
     }
 
     /**
@@ -55,7 +55,7 @@ class AjaxFormAutoComplete extends BaseController
      *
      * @return JsonResponse
      */
-    public function expertAjaxTree(Request $request)
+    public function expertAjaxTreeAction(Request $request)
     {
         $userId = $request->get('id');
         if ($userId == '#') {
