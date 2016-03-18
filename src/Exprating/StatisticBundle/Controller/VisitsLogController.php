@@ -1,10 +1,10 @@
 <?php
 
-namespace Exprating\StaticsticBundle\Controller;
+namespace Exprating\StatisticBundle\Controller;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Product;
-use Exprating\StaticsticBundle\Entity\Visit;
+use Exprating\StatisticBundle\Entity\Visit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

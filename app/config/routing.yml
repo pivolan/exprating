@@ -1,5 +1,5 @@
 exprating_staticstic:
-    resource: "@ExpratingStaticsticBundle/Controller/"
+    resource: "@ExpratingStatisticBundle/Controller/"
     type:     annotation
     prefix:   /
 

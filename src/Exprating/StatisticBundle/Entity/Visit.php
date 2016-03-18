@@ -1,6 +1,6 @@
 <?php
 
-namespace Exprating\StaticsticBundle\Entity;
+namespace Exprating\StatisticBundle\Entity;
 
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Visit
  *
  * @ORM\Table(name="visit")
- * @ORM\Entity(repositoryClass="Exprating\StaticsticBundle\Repository\VisitRepository")
+ * @ORM\Entity(repositoryClass="Exprating\StatisticBundle\Repository\VisitRepository")
  */
 class Visit
 {

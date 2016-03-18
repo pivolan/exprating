@@ -32,7 +32,7 @@ class AppKernel extends Kernel
             new Oneup\UploaderBundle\OneupUploaderBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new IAkumaI\SphinxsearchBundle\SphinxsearchBundle(),
-            new Exprating\StaticsticBundle\ExpratingStaticsticBundle(),
+            new Exprating\StatisticBundle\ExpratingStatisticBundle(),
             new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
             new Glifery\EntityHiddenTypeBundle\GliferyEntityHiddenTypeBundle(),
         ];

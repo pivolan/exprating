@@ -1,6 +1,6 @@
 <?php
 
-namespace Exprating\StaticsticBundle\Repository;
+namespace Exprating\StatisticBundle\Repository;
 
 /**
  * VisitRepository

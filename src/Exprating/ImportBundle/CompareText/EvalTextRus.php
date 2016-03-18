@@ -18,7 +18,7 @@ final class EvalTextRus
     public function preprocessRus($lim_len_symb, $text, &$arrt, &$count_t)
     {
         $text2 = mb_strtolower($text);
-        $strm = preg_replace('/[^а-я]/u', ' ', $text2);
+        $strm = preg_replace('/[^\w]/u', ' ', $text2);
         $arrt = [];
         $_wordst = preg_split('/ +/u', $strm);
         foreach ($_wordst as $ws) {

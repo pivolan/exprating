@@ -1,6 +1,6 @@
 <?php
 
-namespace Exprating\StaticsticBundle\Tests\Controller;
+namespace Exprating\StatisticBundle\Tests\Controller;
 
 use AppBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -14,7 +14,7 @@ class VisitsLogControllerTest extends WebTestCase
         $em = $client->getContainer()->get('doctrine.orm.default_entity_manager');
         $product = $em->getRepository('AppBundle:Product')->findOneBy(['slug' => 'product_1']);
         $count = count(
-            $em->getRepository('ExpratingStaticsticBundle:Visit')->findBy(
+            $em->getRepository('ExpratingStatisticBundle:Visit')->findBy(
                 ['product' => $product]
             )
         );
@@ -22,7 +22,7 @@ class VisitsLogControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
 
-        $visits = $em->getRepository('ExpratingStaticsticBundle:Visit')->findBy(
+        $visits = $em->getRepository('ExpratingStatisticBundle:Visit')->findBy(
             ['product' => $product]
         );
         $countAfter = count($visits);
