@@ -69,17 +69,19 @@ class UserSubscriber implements EventSubscriberInterface
         $createExpertRequest = $event->getCreateExpertRequest();
         $curator = $createExpertRequest->getCurator();
         $message = \Swift_Message::newInstance()
-            ->setSubject($curator->getUsername().' Запрос на регистрацию нового эксперта '.$createExpertRequest->getEmail())
+            ->setSubject(
+                $curator->getUsername().' Запрос на регистрацию нового эксперта '.$createExpertRequest->getEmail()
+            )
             ->setTo($curator->getEmail())
             ->setBody(
                 $this->twig->render(
                     'Email/createExpertRequest.html.twig',
                     [
-                        'curator'    => $curator,
-                        'email'      => $createExpertRequest->getEmail(),
-                        'message'    => $createExpertRequest->getMessage(),
+                        'curator' => $curator,
+                        'email' => $createExpertRequest->getEmail(),
+                        'message' => $createExpertRequest->getMessage(),
                         'categories' => $createExpertRequest->getCategories(),
-                        'id'         => $createExpertRequest->getId(),
+                        'id' => $createExpertRequest->getId(),
                     ]
                 )
             );
