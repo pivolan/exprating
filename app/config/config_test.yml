@@ -34,4 +34,4 @@ doctrine:
                 charset:  UTF8
             import:
                 driver: pdo_sqlite
-                path: %kernel.root_dir%/data/import_data_test.db3
+                memory: true
