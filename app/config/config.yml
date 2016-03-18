@@ -126,7 +126,7 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
     delivery_address: 'pivolan@gmail.com'
-    sender_address: 'pivolan@gmail.com'
+    sender_address: "%mailer_sender_address%"
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
