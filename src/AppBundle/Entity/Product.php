@@ -243,7 +243,7 @@ class Product
     /**
      * @var ProductCharacteristic[]
      * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\ProductCharacteristic",
-     *      mappedBy="product", cascade={"all"}, orphanRemoval=true, indexBy="characteristic")
+     *      mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @Assert\Valid
      */
     private $productCharacteristics;

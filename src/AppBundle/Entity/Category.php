@@ -90,7 +90,7 @@ class Category
     /**
      * @var CategoryCharacteristic[]
      *
-     * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\CategoryCharacteristic", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\CategoryCharacteristic", mappedBy="category")
      */
     private $categoryCharacteristics;
 
@@ -538,21 +538,5 @@ class Category
         $this->seo = $seo;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProductCount()
-    {
-        return $this->productCount;
-    }
-
-    /**
-     * @param mixed $productCount
-     */
-    public function setProductCount($productCount)
-    {
-        $this->productCount = $productCount;
     }
 }
