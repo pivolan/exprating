@@ -78,7 +78,13 @@ class AdminController extends BaseController
             ->findAll();
         $categoryAssociate = [];
         foreach ($categories as $category) {
-            $categoryAssociate[$category->getSlug()] = $category;
+            $parent = $category;
+            $path = [$parent->getName()];
+            while ($parent = $parent->getParent()) {
+                $path[] = $parent->getName();
+            }
+
+            $categoryAssociate[$category->getSlug()] = implode('/', array_reverse($path));
         }
 
         return $this->render(

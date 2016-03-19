@@ -3,16 +3,17 @@
 {% block profile_body %}
     <div class="col-md-6">
         <h1>Категории Exprating</h1>
-        <div id="treeCategory" class="well"></div>
+        <div id="treeCategory" class="well height-full"></div>
     </div>
     <div class="col-md-6">
         <h1>Категории irecommend</h1>
-        <div id="treeCategoryImport"></div>
+        <div id="treeCategoryImport" class="well height-full"></div>
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/external/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/external/jquery.scrollTo.min.js') }}"></script>
     <script type="text/javascript">
         var selected_by_event = false;
         $('#treeCategory').jstree({
@@ -26,6 +27,7 @@
                         a_attr: {
                             href: '{{ path('category_admin_categories', {'slug': category.slug}) }}',
                             data_slug: '{{ category.slug }}',
+                            data_text: '{{ categoryAssociate[category.slug] }}'
                         },
                     },
                     {% endfor %}
@@ -39,26 +41,36 @@
                 console.log(selected.node.text);
 
                 var alias_category_id = selected_nodes[0];
-                $.ajax('{{ path('admin_import_settings_change') }}', {
-                    method: "POST",
-                    data: {category_slug: category_slug, alias_category_id: alias_category_id},
-                    success: function (data) {
-                        var html = '<div class="message-box alert-success">'+
-                                '<span class="close">X</span>'+
-                                '<p>Изменения успешно сохранены</p>'+
-                        '</div>';
-                        $('div.alert-message').html(html);
-                        setTimeout(function(){
-                            $('div.alert-message').html('');
-                        }, 2000);
-                        var node = $('#treeCategoryImport').jstree(true).get_node(alias_category_id);
-                        node.a_attr.data_relation = category_slug;
-                        console.log(node.text);
-                        var new_text = node.text.replace(/\(.*\)/g, '') + '(' + category_text + ')';
-                        console.log(new_text);
-                        $('#treeCategoryImport').jstree(true).set_text(node, new_text);
-                    }
-                })
+                var node = $('#treeCategoryImport').jstree(true).get_node(alias_category_id);
+                if (confirm('Вы хотите поменять "' + node.a_attr.data_current_path + '" на "' + selected.node.a_attr.data_text + '"')) {
+                    $.ajax('{{ path('admin_import_settings_change') }}', {
+                        method: "POST",
+                        data: {category_slug: category_slug, alias_category_id: alias_category_id},
+                        success: function (data) {
+                            var html = '<div class="message-box alert-success">' +
+                                    '<span class="close">X</span>' +
+                                    '<p>Изменения успешно сохранены</p>' +
+                                    '</div>';
+                            $('div.alert-message').html(html);
+                            setTimeout(function () {
+                                $('div.alert-message').html('');
+                            }, 2000);
+                            node.a_attr.data_relation = category_slug;
+                            console.log(node.text);
+                            var new_text = node.text.replace(/\(.*\)/g, '') + '(<span class="small text-success">' + selected.node.a_attr.data_text + '</span>)';
+                            node.a_attr.data_current_path = selected.node.a_attr.data_text;
+                            $('#treeCategoryImport').jstree(true).set_text(node, new_text);
+                        }
+                    });
+                } else {
+                    selected_by_event = true;
+                    var dataRelation = node.a_attr.data_relation;
+                    $('#treeCategory').jstree(true).deselect_all();
+                    $('#treeCategory').jstree(true).close_all();
+                    $('#treeCategory').jstree(true).select_node(dataRelation);
+                    $('#treeCategory').stop(true).scrollTo('#' + dataRelation);
+                    $('#treeCategory').jstree(true).open_node(dataRelation);
+                }
             }
             selected_by_event = false;
         });
@@ -67,18 +79,21 @@
                 data: [
                     {% for category in categoriesImport %}
                     {% set categoryName = '' %}
+                    {% set categoryNameHtml = '' %}
                     {% if category.aliasCategory %}
-                    {% set categoryName = '(' ~ categoryAssociate[category.aliasCategory.categoryExpratingId].name|default(null) ~ ')' %}
+                    {% set categoryNameHtml = '(<span class="small text-success">' ~ categoryAssociate[category.aliasCategory.categoryExpratingId]|default(null) ~ '</span>)' %}
+                    {% set categoryName = categoryAssociate[category.aliasCategory.categoryExpratingId]|default(null) %}
                     {% endif %}
                     {
                         id: '{{ category.id }}',
                         parent: '{{ category.parent.id|default('#') }}',
-                        text: '{{ category.name|raw }} {{ categoryName }}',
+                        text: '{{ category.name|raw }} {{ categoryNameHtml|raw }}',
                         opened: true,
                         a_attr: {
                             href: '#',
                             data_id: '{{ category.id }}',
-                            data_relation: '{{ category.aliasCategory.categoryExpratingId|default(null) }}'
+                            data_relation: '{{ category.aliasCategory.categoryExpratingId|default(null) }}',
+                            data_current_path: '{{ categoryName }}'
                         },
                         state: {
                             opened: true
@@ -91,7 +106,9 @@
             var dataRelation = selected.node.a_attr.data_relation;
             selected_by_event = true;
             $('#treeCategory').jstree(true).deselect_all();
+            $('#treeCategory').jstree(true).close_all();
             $('#treeCategory').jstree(true).select_node(dataRelation);
+            $('#treeCategory').stop(true).scrollTo('#' + dataRelation);
             $('#treeCategory').jstree(true).open_node(dataRelation);
         });
     </script>

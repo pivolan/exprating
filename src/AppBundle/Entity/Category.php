@@ -148,6 +148,9 @@ class Category
         return $this;
     }
 
+    /**
+     * @return Category
+     */
     public function getParent()
     {
         return $this->parent;

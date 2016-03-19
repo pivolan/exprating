@@ -1600,3 +1600,7 @@ textarea.decision.form-control {
   height: 20px;
   width: 20px;
 }
+.height-full {
+  height: 70vh;
+  overflow-y: scroll;
+}
