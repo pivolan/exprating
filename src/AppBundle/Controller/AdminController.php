@@ -107,9 +107,18 @@ class AdminController extends BaseController
         $emImport = $this->get('doctrine.orm.import_entity_manager');
         /** @var AliasCategory $aliasCategory */
         $aliasCategory = $emImport->getRepository('ExpratingImportBundle:AliasCategory')->find($aliasCategoryId);
+        $irecommendCategory = $emImport->getRepository('ExpratingImportBundle:Categories')->find($aliasCategoryId);
         $category = $this->getEm()->getRepository('AppBundle:Category')->find($categorySlug);
         if ($aliasCategory && $category) {
             $aliasCategory->setCategoryExpratingId($categorySlug);
+            $emImport->flush();
+
+            return new Response('ok');
+        } elseif ($category && $irecommendCategory) {
+            $aliasCategory = new AliasCategory();
+            $aliasCategory->setCategoryIrecommend($irecommendCategory)
+                ->setCategoryExpratingId($category);
+            $emImport->persist($aliasCategory);
             $emImport->flush();
 
             return new Response('ok');
