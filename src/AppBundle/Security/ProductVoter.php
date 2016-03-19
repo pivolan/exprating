@@ -144,14 +144,20 @@ class ProductVoter extends Voter
         if (!$this->decisionManager->decide($token, [User::ROLE_EXPERT_CURATOR])) {
             return false;
         }
+        //Админу можно
+        if ($this->decisionManager->decide($token, [User::ROLE_ADMIN])) {
+            return true;
+        }
 
         /** @var User $user */
         $user = $token->getUser();
 
         //Если товар принадлежит подчиненному эксперту
-        if ($user != $product->getExpertUser()->getCurator()) {
-            return false;
+        if ($user == $product->getExpertUser()->getCurator()) {
+            return true;
         }
+
+
 
         return true;
     }
