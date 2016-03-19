@@ -14,7 +14,7 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       null
     mailer_password:   null
-
+    mailer_sender_address: ~
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     database_test_driver:   pdo_mysql
@@ -25,5 +25,7 @@ parameters:
     database_test_password: rydTyb5Drics
     # You should uncomment this if you want use pdo_sqlite
     # database_test_path:     %kernel.root_dir%/app.sqlite
+    # Search engine "sql" or "sphinx"
     search_engine: sql
+    #asset_base_url: //exprating.ru/
     asset_base_url: ~
