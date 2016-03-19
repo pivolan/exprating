@@ -35,3 +35,4 @@ doctrine:
             import:
                 driver: pdo_sqlite
                 memory: true
+                path: %kernel.root_dir%/data/import_data_test.db3
