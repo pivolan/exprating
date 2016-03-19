@@ -120,7 +120,7 @@ class ProductType extends AbstractType
         foreach ($product->getProductCharacteristics() as $productCharacteristic) {
             $characteristics[] = $productCharacteristic->getCharacteristic();
         }
-        foreach ($category->getCharacteristics() as $characteristic) {
+        foreach ($category->getCategoryCharacteristics() as $characteristic) {
             if (!in_array($characteristic, $characteristics)) {
                 $productCharacteristic = new ProductCharacteristic();
                 $productCharacteristic->setProduct($product)

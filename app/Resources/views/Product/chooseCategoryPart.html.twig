@@ -47,14 +47,14 @@
                 <h4>Список характеристик товара</h4>
                 <div id="props">
                     {% for characteristic in product.productCharacteristics %}
-                        <p>{{ characteristic.characteristic.name }}({{ characteristic.characteristic.group }}) = {{ characteristic.value }} {{ characteristic.characteristic.scale }}</p>
+                        <p>{{ characteristic.characteristic.name }}({{ characteristic.headGroup }}) = {{ characteristic.value }} {{ characteristic.characteristic.scale }}</p>
                     {% endfor %}
                 </div>
 
                 <h4>Список характеристик Категории</h4>
                 <div id="props">
-                    {% for characteristic in product.category.characteristics %}
-                        <p>{{ characteristic.name }}({{ characteristic.group }}) {{ characteristic.scale }}</p>
+                    {% for categoryCharacteristics in product.category.categoryCharacteristics %}
+                        <p>{{ categoryCharacteristics.characteristic.name }}({{ categoryCharacteristics.group }}) {{ categoryCharacteristics.characteristic.scale }}</p>
                     {% endfor %}
                 </div>
 

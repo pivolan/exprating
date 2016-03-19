@@ -49,12 +49,14 @@ class ProductCharacteristicType extends AbstractType
         /** @var ProductCharacteristic $productCharacteristic */
         $productCharacteristic = $event->getData();
         if (!$productCharacteristic) {
-            $form->add('value', null, ['label' => 'Значение']);
             $form->add('characteristic', null, ['label' => 'Название характеристики']);
+            $form->add('headGroup', null, ['label' => 'Группа']);
+            $form->add('value', null, ['label' => 'Значение']);
 
             return;
         }
         $form->add('characteristic', null, ['label' => 'Название характеристики', 'disabled' => true]);
+        $form->add('headGroup', null, ['label' => 'Группа']);
         $characteristic = $productCharacteristic->getCharacteristic();
         switch ($characteristic->getType()) {
             case Characteristic::TYPE_DECIMAL:

@@ -36,7 +36,7 @@ class CharacteristicExtension extends \Twig_Extension
         $result = [];
         foreach ($productCharacteristics as $productCharacteristic) {
             $characteristic = $productCharacteristic->getCharacteristic();
-            $result[$characteristic->getGroup()][] = [
+            $result[$productCharacteristic->getHeadGroup()][] = [
                 $characteristic->getLabel(),
                 $productCharacteristic->getValue(),
                 $characteristic->getScale(),

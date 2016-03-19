@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -87,15 +88,11 @@ class Category
     private $seo;
 
     /**
-     * @var Characteristic[]
+     * @var CategoryCharacteristic[]
      *
-     * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic")
-     * @ORM\JoinTable(name="category_characteristic", joinColumns={@ORM\JoinColumn(name="category_id",
-     *     referencedColumnName="slug", onDelete="CASCADE")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug",
-     *     onDelete="CASCADE")})
+     * @ORM\ManyToMany(targetEntity="Exprating\CharacteristicBundle\Entity\CategoryCharacteristic", mappedBy="category")
      */
-    private $characteristics;
+    private $categoryCharacteristics;
 
     /**
      * @var User[]
@@ -131,7 +128,7 @@ class Category
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->characteristics = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categoryCharacteristics = new \Doctrine\Common\Collections\ArrayCollection();
         $this->peopleGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->experts = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -332,13 +329,13 @@ class Category
     /**
      * Add characteristic.
      *
-     * @param \Exprating\CharacteristicBundle\Entity\Characteristic $characteristic
+     * @param \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $characteristic
      *
      * @return Category
      */
-    public function addCharacteristic(\Exprating\CharacteristicBundle\Entity\Characteristic $characteristic)
+    public function addCharacteristic(\Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $characteristic)
     {
-        $this->characteristics[] = $characteristic;
+        $this->categoryCharacteristics[] = $characteristic;
 
         return $this;
     }
@@ -346,21 +343,21 @@ class Category
     /**
      * Remove characteristic.
      *
-     * @param \Exprating\CharacteristicBundle\Entity\Characteristic $characteristic
+     * @param \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $characteristic
      */
-    public function removeCharacteristic(\Exprating\CharacteristicBundle\Entity\Characteristic $characteristic)
+    public function removeCharacteristic(\Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $characteristic)
     {
-        $this->characteristics->removeElement($characteristic);
+        $this->categoryCharacteristics->removeElement($characteristic);
     }
 
     /**
      * Get characteristics.
      *
-     * @return \Doctrine\Common\Collections\Collection | Characteristic[]
+     * @return \Doctrine\Common\Collections\Collection | CategoryCharacteristic[]
      */
-    public function getCharacteristics()
+    public function getCategoryCharacteristics()
     {
-        return $this->characteristics;
+        return $this->categoryCharacteristics;
     }
 
     /**

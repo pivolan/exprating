@@ -23,7 +23,7 @@ class SearchTypeFabric
     public function create(FormFactoryInterface $formFactory, Category $category)
     {
         $productSearch = new CommonProductSearch();
-        foreach ($category->getCharacteristics() as $characteristics) {
+        foreach ($category->getCategoryCharacteristics() as $characteristics) {
             $params = new CharacteristicSearchParameter();
             $params->setName($characteristics->getSlug());
             $params->setType($characteristics->getType());

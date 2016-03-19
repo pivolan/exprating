@@ -9,10 +9,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
+use AppBundle\Event\ProductChangeExpertEvent;
 use AppBundle\Event\ProductEditedEvent;
 use AppBundle\Event\ProductEvents;
 use AppBundle\Event\ProductPublishRequestEvent;
 use AppBundle\Event\ProductReservationEvent;
+use AppBundle\Form\ProductChangeExpertType;
 use AppBundle\Form\ProductChooseCategoryType;
 use AppBundle\Security\ProductVoter;
 use AppBundle\Form\ProductType;
@@ -134,5 +136,46 @@ class EditController extends BaseController
             'Product/chooseCategory.html.twig',
             [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView(), self::KEY_CATEGORIES => $categories]
         );
+    }
+
+    /**
+     * @param Request $request
+     * @param         $product
+     *
+     * @Route("/tovar/{slug}/change_expert", name="product_change_expert")
+     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
+     * @Security("is_granted('CHANGE_EXPERT', product)")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changeProductExpertAction(Request $request, Product $product)
+    {
+        $currentExpert = $product->getExpertUser();
+        $form = $this->createForm(ProductChangeExpertType::class, $product);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->get('event_dispatcher')
+                ->dispatch(
+                    ProductEvents::CHANGE_EXPERT,
+                    new ProductChangeExpertEvent(
+                        $product,
+                        $product->getExpertUser(),
+                        $currentExpert,
+                        $this->getUser()
+                    )
+                );
+            $this->addFlash(self::FLASH_MESSAGE, 'Изменения сохранены');
+
+            return $this->redirect($request->getRequestUri());
+        } elseif ($form->getErrors(true)->count()) {
+            $this->addFlash(self::FLASH_ERROR_MESSAGE, 'Ошибка заполнения данных');
+        }
+        $template = 'Product/editChangeExpert.html.twig';
+        if ($request->isXmlHttpRequest()) {
+            $template = 'Product/editChangeExpertPart.html.twig';
+        }
+
+        return $this->render($template, [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]);
     }
 }

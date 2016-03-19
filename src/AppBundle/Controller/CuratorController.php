@@ -88,47 +88,6 @@ class CuratorController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param         $product
-     *
-     * @Route("/change_expert/{slug}", name="curator_product_change_expert")
-     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
-     * @Security("is_granted('CHANGE_EXPERT', product)")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function changeProductExpertAction(Request $request, Product $product)
-    {
-        $currentExpert = $product->getExpertUser();
-        $form = $this->createForm(ProductChangeExpertType::class, $product);
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $this->get('event_dispatcher')
-                ->dispatch(
-                    ProductEvents::CHANGE_EXPERT,
-                    new ProductChangeExpertEvent(
-                        $product,
-                        $product->getExpertUser(),
-                        $currentExpert,
-                        $this->getUser()
-                    )
-                );
-            $this->addFlash(self::FLASH_MESSAGE, 'Изменения сохранены');
-
-            return $this->redirect($request->getRequestUri());
-        } elseif ($form->getErrors(true)->count()) {
-            $this->addFlash(self::FLASH_ERROR_MESSAGE, 'Ошибка заполнения данных');
-        }
-        $template = 'Product/editChangeExpert.html.twig';
-        if ($request->isXmlHttpRequest()) {
-            $template = 'Product/editChangeExpertPart.html.twig';
-        }
-
-        return $this->render($template, [self::KEY_PRODUCT => $product, self::KEY_FORM => $form->createView()]);
-    }
-
-    /**
      * @Route("/curator/experts/{level}/{page}", name="curator_experts", defaults={"level":1, "page":1})
      *
      * @return \Symfony\Component\HttpFoundation\Response

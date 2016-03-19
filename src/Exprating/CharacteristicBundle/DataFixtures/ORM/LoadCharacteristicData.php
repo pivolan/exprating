@@ -10,6 +10,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -83,7 +84,6 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
             $characteristic->setName($key)
                 ->setSlug($slugify->slugify($key))
                 ->setLabel($key)
-                ->setGroup($values[0])
                 ->setType($values[2])
                 ->setScale($values[1]);
 
@@ -97,6 +97,7 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
             foreach ($characteristics as $characteristic) {
                 $productCharacteristic = new ProductCharacteristic();
                 $value = $keys[$characteristic->getName()][3];
+                $headGroup = $keys[$characteristic->getName()][0];
                 if (is_numeric($value) && $value == 300) {
                     $value = rand(100, 300);
                 } elseif (is_numeric($value)) {
@@ -104,6 +105,7 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
                 }
                 $productCharacteristic
                     ->setProduct($product)
+                    ->setHeadGroup($headGroup)
                     ->setCharacteristic($characteristic)
                     ->setValue($value);
 
@@ -114,8 +116,14 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
         /** @var Category[] $categories */
         $categories = $manager->getRepository('AppBundle:Category')->findAll();
         foreach ($categories as $category) {
-            foreach ($characteristics as $characteristic) {
-                $category->addCharacteristic($characteristic);
+            foreach ($characteristics as $key => $characteristic) {
+                $headGroup = $keys[$characteristic->getName()][0];
+                $categoryCharacteristic = new CategoryCharacteristic();
+                $categoryCharacteristic->setCategory($category)
+                    ->setCharacteristic($characteristic)
+                    ->setHeadGroup($headGroup);
+                $manager->persist($categoryCharacteristic);
+                $category->addCharacteristic($categoryCharacteristic);
             }
         }
         $manager->flush();

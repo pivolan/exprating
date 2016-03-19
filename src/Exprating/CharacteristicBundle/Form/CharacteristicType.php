@@ -31,7 +31,6 @@ class CharacteristicType extends AbstractType
         $builder
             ->add('slug', null, ['label' => 'slug'])
             ->add('name', null, ['label' => 'Название уникальное'])
-            ->add('group', null, ['label' => 'Группа'])
             ->add(
                 'type',
                 ChoiceType::class,

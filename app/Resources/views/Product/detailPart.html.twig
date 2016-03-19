@@ -21,7 +21,7 @@
                     <div class="col-md-4 col-md-offset-4">
                         <div class="btn-group">
                             {% block change_expert_buttons %}
-                                <a href="{{ path('curator_product_change_expert', {'slug': product.slug}) }}" class="btn btn-info">Сменить эксперта</a>
+                                <a href="{{ path('product_change_expert', {'slug': product.slug}) }}" class="btn btn-info">Сменить эксперта</a>
                             {% endblock %}
                         </div>
                     </div>

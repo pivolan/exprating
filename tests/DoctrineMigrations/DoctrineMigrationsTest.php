@@ -30,7 +30,6 @@ class AllMigrationsTest extends CommandTestCase
     {
         // зальем в таблицу начальные данные
         $this->importFromFile();
-        $client = static::createClient();
         $output = $this->runCommand('doctrine:migrations:migrate --no-interaction');
         $this->assertContains('sql queries', $output, 'Миграция не удалась');
         // проверим что разницы между базой и схемой из кода нету
@@ -80,7 +79,6 @@ class AllMigrationsTest extends CommandTestCase
      */
     protected function checkDiffTableAndSchema()
     {
-        $client = static::createClient();
         $output = $this->runCommand('doctrine:schema:update --dump-sql');
         $this->assertContains(
             'Nothing to update - your database is already in sync with the current entity metadata.',
@@ -103,7 +101,6 @@ class AllMigrationsTest extends CommandTestCase
 
     protected function dropTables()
     {
-        $client = static::createClient();
         $this->runCommand('doctrine:database:drop --force');
         $this->runCommand('doctrine:database:create');
     }

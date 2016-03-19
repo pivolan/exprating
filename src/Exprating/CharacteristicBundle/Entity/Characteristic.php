@@ -66,15 +66,6 @@ class Characteristic
     private $scale;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="head_group", type="string", length=255, nullable=true,
-     * options={"comment":
-     * "Группа к которой принадлежит характеристика. Используется при отображении характеристик на странице товара."})
-     */
-    private $group;
-
-    /**
      * Set name.
      *
      * @param string $name
@@ -194,32 +185,8 @@ class Characteristic
         return $this->scale;
     }
 
-    /**
-     * Set group.
-     *
-     * @param string $group
-     *
-     * @return Characteristic
-     */
-    public function setGroup($group)
-    {
-        $this->group = $group;
-
-        return $this;
-    }
-
-    /**
-     * Get group.
-     *
-     * @return string
-     */
-    public function getGroup()
-    {
-        return $this->group;
-    }
-
     public function __toString()
     {
-        return $this->getName().' ('.$this->getGroup().')';
+        return $this->getName();
     }
 }

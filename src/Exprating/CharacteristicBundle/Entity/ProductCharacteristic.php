@@ -57,7 +57,7 @@ class ProductCharacteristic
      * @var Product
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="productCharacteristics")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $product;
 
@@ -65,9 +65,23 @@ class ProductCharacteristic
      * @var Characteristic
      *
      * @ORM\ManyToOne(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic", fetch="EAGER")
-     * @ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug")
+     * @ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug", onDelete="CASCADE")
      */
     private $characteristic;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="head_group", type="string", length=255, nullable=true)
+     */
+    private $headGroup;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="order_index", type="integer", options={"comment":"Порядок"})
+     */
+    private $orderIndex = 0;
 
     /**
      * Set value.
@@ -237,32 +251,55 @@ class ProductCharacteristic
         return $this;
     }
 
-    /**
-     * Set id.
-     *
-     * @param string $id
-     *
-     * @return ProductCharacteristic
-     */
-    public function setId($id)
+    public function __toString()
     {
-        $this->id = $id;
+        return $this->characteristic->getName();
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderIndex()
+    {
+        return $this->orderIndex;
+    }
+
+    /**
+     * @param int $orderIndex
+     *
+     * @return $this
+     */
+    public function setOrderIndex($orderIndex)
+    {
+        $this->orderIndex = $orderIndex;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeadGroup()
+    {
+        return $this->headGroup;
+    }
+
+    /**
+     * @param string $headGroup
+     *
+     * @return $this
+     */
+    public function setHeadGroup($headGroup)
+    {
+        $this->headGroup = $headGroup;
 
         return $this;
     }
 
     /**
-     * Get id.
-     *
-     * @return string
+     * @return int
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    public function __toString()
-    {
-        return $this->characteristic->getName();
     }
 }

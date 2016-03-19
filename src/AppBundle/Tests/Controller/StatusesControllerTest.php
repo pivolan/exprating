@@ -35,6 +35,7 @@ class StatusesControllerTest extends WebTestCase
             ['/expert/expert'],
             ['/rubric/dlya-vseh/elektronika'],
             ['/rubric/dlya-vseh/elektronika/2'],
+            ['/tovar/product_10'],
             ['/tovar/search'],
             ['/tovar/search?search_params[string]=titl'],
             ['/tovar/search/3?search_params[string]=titl'],
@@ -70,6 +71,9 @@ class StatusesControllerTest extends WebTestCase
         return [
             ['/rubric/dlya-vseh/elektronika/1/minPrice/ASC/free'],
             ['/rubric/dlya-vseh/elektronika/1/minPrice/ASC/wait'],
+            ['/tovar/product_10/choose_category'],
+            ['/tovar/product_10/edit'],
+            ['/tovar/product_10/change_expert'],
             ['/expert/edit/admin'],
             ['/expert/edit/curator'],
             ['/expert/edit/expert'],
