@@ -6,6 +6,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\PeopleGroup;
 use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
+use Exprating\CharacteristicBundle\Form\CategoryCharacteristicType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -31,7 +32,7 @@ class CategoryType extends AbstractType
                 'categoryCharacteristics',
                 CollectionType::class,
                 [
-                    'entry_type'    => CategoryCharacteristic::class,
+                    'entry_type'    => CategoryCharacteristicType::class,
                     'entry_options' => [
                         'label'         => false,
                         'error_mapping' => ['.' => 'value'],
