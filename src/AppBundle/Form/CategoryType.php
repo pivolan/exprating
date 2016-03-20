@@ -25,23 +25,12 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
-            ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
             ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
+            ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
+            ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
             ->add(
                 'categoryCharacteristics',
-                CollectionType::class,
-                [
-                    'entry_type'    => CategoryCharacteristicType::class,
-                    'entry_options' => [
-                        'label'         => false,
-                        'error_mapping' => ['.' => 'value'],
-                    ],
-                    'allow_add'     => true,
-                    'allow_delete'  => true,
-                    'by_reference'  => false,
-                    'label'         => 'Характеристики',
-                ]
+                CategoryCharacteristicType::class
             )
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
