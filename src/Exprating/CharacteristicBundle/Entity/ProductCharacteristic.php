@@ -74,7 +74,7 @@ class ProductCharacteristic
      *
      * @ORM\Column(name="head_group", type="string", length=255, nullable=true)
      */
-    private $headGroup;
+    private $headGroup = 'Основные характеристики';
 
     /**
      * @var int
