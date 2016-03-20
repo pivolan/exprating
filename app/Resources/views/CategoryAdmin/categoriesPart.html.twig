@@ -9,127 +9,27 @@
 {% endfor %}
 {% form_theme form 'Form/form_rating_settings.html.twig' %}
 {% if category %}
-    {{ form(form) }}
-    <button id="add_characteristic" data-url="{{ path('characteristic_create', {"category_slug": category.slug}) }}"
-            class="btn btn-info">Добавить новую характеристику
-    </button>
     <div class="row"></div>
-    <div class="row">
+    <div class="row chars_sortable">
         <h1>Характеристики</h1>
         <div class="col-md-6">
-            <h2>Основные характеристики</h2>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
+            <input type="text" value="Основные характеристики" readonly class="form-control class_title"/>
+            <div class="sortable list-group well">
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-transfer"></span>
+                    <select class="form-control" name="sdf" id="sdf">
+                        <option value="sdf">Брэнд</option>
+                    </select>
+                    <input type="hidden" name="headGroup"/>
+                    <input type="hidden" name="orderIndex"/>
+                    <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>
+                </div>
+                <div></div>
+                <button class="btn btn-info btn-sm add_param" type="button">Добавить характеристику</button>
             </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
         </div>
-        <div class="col-md-6">
-            <h2>Дополнительные характеристики             <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-            </h2>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <h2>Насадки             <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-            </h2>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <button data-type="remove-ch" class="btn btn-error btn-info" type="button">
-                Добавить
-            </button>
-
-            <h2>Габариты             <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-            </h2>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <div class="col-md-10">
-                <select class="form-control" name="sdf" id="sdf">
-                    <option value="sdf">Брэнд</option>
-                </select>
-            </div>
-            <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <button data-type="remove-ch" class="btn btn-error btn-info" type="button">
-                Добавить
-            </button>
-            <button data-type="remove-ch" class="btn btn-error btn-info" type="button">
-                Добавить группу
-            </button>
-        </div>
+    </div>
+    <div class="row">
+        <button class="add_new btn btn-info" type="button">Добавить группу</button>
     </div>
 {% endif %}

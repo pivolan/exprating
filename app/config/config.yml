@@ -246,6 +246,7 @@ assetic:
                 - 'js/layout_expert_items.init.js'
         category_admin_categories_js:
             inputs:
+                - 'js/external/jquery-ui.min.js'
                 - 'js/external/select2.full.min.js'
                 - '@TetranzSelect2EntityBundle/Resources/public/js/select2entity.js'
                 - 'js/Exp/exp_historical.js'
@@ -272,6 +273,7 @@ assetic:
                 - 'css/external/colorbox.css'
                 - 'css/style.css'
                 - 'css/external/jquery.mmenu.all.css'
+                - 'css/external/jquery-ui.min.css'
 
 exprating_search:
     engine: '%search_engine%'

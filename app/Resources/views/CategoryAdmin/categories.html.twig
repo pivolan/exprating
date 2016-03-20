@@ -34,6 +34,31 @@
             $('.select2entity').on('select2:selecting', function (data) {
                 console.log(data);
             });
+            $('.sortable').sortable({connectWith: '.sortable', items: '> div'});
+            $(document).on('click', 'button.add_new', function () {
+                $('.chars_sortable').append('<div class="col-md-6">\
+                <input type="text" value="" placeholder="Название группы" class="form-control class_title"/>\
+                <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>\
+                <div class="sortable list-group well">\
+                    <div></div>\
+                    <button class="btn btn-info btn-sm add_param" type="button">Добавить характеристику</button>\
+                </div>\
+                </div>');
+                $('.sortable').sortable({connectWith: '.sortable', items: '> div'});
+            });
+            $(document).on('click', 'button.add_param', function () {
+                var $this = $(this);
+                $this.before('<div class="list-group-item">\
+                        <span class="glyphicon glyphicon-transfer"></span>\
+                        <select class="form-control" name="sdf" id="sdf">\
+                        <option value="sdf">Брэнд</option>\
+                        </select>\
+                        <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>\
+                        </div>');
+            });
+            $(document).on('click', 'button.remove', function () {
+                $(this).parent().remove();
+            })
         });
     </script>
 {% endblock %}

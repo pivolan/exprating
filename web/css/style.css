@@ -1604,3 +1604,22 @@ textarea.decision.form-control {
   height: 70vh;
   overflow-y: scroll;
 }
+div.chars_sortable select
+{
+  display: inline;
+  font-size: 0.95em;
+  width: 75%;
+}
+div.chars_sortable  .glyphicon.glyphicon-transfer
+{
+  width: 10%;
+  cursor: move;
+}
+div.chars_sortable  input.class_title{
+    display:inline;
+  width: 75%;
+}
+div.chars_sortable  .btn.btn-danger.btn-xs
+{
+  width: 10%;
+}
