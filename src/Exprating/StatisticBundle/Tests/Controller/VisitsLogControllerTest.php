@@ -37,5 +37,6 @@ class VisitsLogControllerTest extends WebTestCase
         $this->assertInstanceOf(\DateTime::class, $visit->getCreatedAt());
         $this->assertEquals('127.0.0.1', $visit->getIp());
         $this->assertEquals('Symfony2 BrowserKit', $visit->getUserAgent());
+        $this->assertNotNull($visit->getId());
     }
 }

@@ -75,53 +75,59 @@ class ImportRubricsToCategoryCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $entityManagerImport = $this->emImport;
-        $repo = $entityManagerImport->getRepository('ExpratingImportBundle:SiteProductRubrics');
-        $appEntityManager = $this->em;
+        //Достанем рубрики(категории) из базы импорта
         /** @var SiteProductRubrics[] $rubrics */
-        $rubrics = $repo->createQueryBuilder('a')->where('a.parent is null')
-            ->getQuery()->getResult();
-        $slugify = $this->slugify;
+        $rubrics = $this->emImport
+            ->getRepository('ExpratingImportBundle:SiteProductRubrics')
+            ->findBy(['parent' => null]);
 
-        $recursiveFunction = function (
-            $rubrics,
-            Category $root = null
-        ) use (
-            &$recursiveFunction,
-            $slugify,
-            $entityManagerImport,
-            $appEntityManager
-        ) {
-            /** @var SiteProductRubrics $rubric */
-            foreach ($rubrics as $rubric) {
-                $category = new Category();
-                $slug = $slugify->slugify($rubric->getName());
-                $category->setName($rubric->getName())
-                    ->setSlug($slug);
-                if ($rubric->getShowchild()) {
-                    $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_CHILD));
-                }
-                if ($rubric->getShowwoman()) {
-                    $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_WOMAN));
-                }
-                if ($rubric->getShowman()) {
-                    $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_MAN));
-                }
-                if ($rubric->getShowall()) {
-                    $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_ALL));
-                }
-                if ($root) {
-                    $category->setParent($root)
-                        ->setName($rubric->getName())
-                        ->setSlug($slug.'-'.$rubric->getId());
-                }
-                $appEntityManager->persist($category);
-                if (count($rubric->getChildren())) {
-                    $recursiveFunction($rubric->getChildren(), $category);
-                }
+        $this->recursiveFunction($rubrics, null);
+        $this->em->flush();
+    }
+
+    /**
+     * Рекурсивная функция обхода  и копирования всего дерева.
+     * На вход даем рубрики для импорта из базы Инфоскидки и родителя, если есть, к кому принадлежат категории
+     * Передаем в качестве use для возможности использовать внутри функции внешние данные
+     * САму функцию, slugify, менеджеры для нашей базы и базы импорта
+     *
+     * @param               $rubrics
+     * @param Category|null $root
+     *
+     * @throws \Doctrine\ORM\ORMException
+     */
+    protected function recursiveFunction($rubrics, Category $root = null)
+    {
+        /** @var SiteProductRubrics $rubric */
+        foreach ($rubrics as $rubric) {
+            //Проходим по каждой категории в списке
+            $category = new Category();
+            $slug = $this->slugify->slugify($rubric->getName());
+            $category->setName($rubric->getName())
+                ->setSlug($slug.'-'.$rubric->getId());
+            //Заполняем группу людей, в инфоскиде это просто поля с галочками для кого. У нас - связанная таблица
+            if ($rubric->getShowchild()) {
+                $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_CHILD));
             }
-        };
-        $recursiveFunction($rubrics, null);
-        $appEntityManager->flush();
+            if ($rubric->getShowwoman()) {
+                $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_WOMAN));
+            }
+            if ($rubric->getShowman()) {
+                $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_MAN));
+            }
+            if ($rubric->getShowall()) {
+                $category->addPeopleGroup($this->em->getReference(PeopleGroup::class, PeopleGroup::SLUG_ALL));
+            }
+            //Если есть родитель, прописываем его
+            if ($root) {
+                $category->setParent($root);
+            }
+
+            $this->em->persist($category);
+            //Если есть дети, запускаем функцию по кругу, рекурсивно
+            if (count($rubric->getChildren())) {
+                $this->recursiveFunction($rubric->getChildren(), $category);
+            }
+        }
     }
 }

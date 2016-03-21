@@ -11,6 +11,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\RatingSettings;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -19,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @package Exprating\ImportBundle\Command
  * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
-class RepairCategoryCommand extends ContainerAwareCommand
+class RepairCategoryCommand extends Command
 {
     /**
      * @var EntityManager
