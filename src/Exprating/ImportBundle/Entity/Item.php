@@ -329,4 +329,16 @@ class Item
     {
         return $this->getUrl();
     }
+
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

@@ -6,12 +6,10 @@
 
 namespace Exprating\ImportBundle\Tests\Command;
 
-
 use AppBundle\Entity\Category;
 use AppBundle\Entity\RatingSettings;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Repository\CategoryRepository;
-use Exprating\FakerBundle\Faker\FakeEntitiesGenerator;
 use Exprating\ImportBundle\Command\RepairCategoryCommand;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\InputInterface;

@@ -92,8 +92,6 @@ class ImportItemCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->emImport->getConnection()->getConfiguration()->setSQLLogger(null);
-        $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
         //Получаем Итем для импорта
         $itemIterate = $this->emImport->getRepository('ExpratingImportBundle:Item')->getAllQuery()->iterate();
 

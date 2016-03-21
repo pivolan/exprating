@@ -205,10 +205,13 @@ class Categories
 
     /**
      * @param AliasCategory $aliasCategory
+     *
+     * @return $this
      */
     public function setAliasCategory(AliasCategory $aliasCategory)
     {
         $this->aliasCategory = $aliasCategory;
+        return $this;
     }
 
     /**

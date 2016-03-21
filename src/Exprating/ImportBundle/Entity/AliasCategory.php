@@ -43,11 +43,11 @@ class AliasCategory
     /**
      * Set categoryIrecommend.
      *
-     * @param string $categoryIrecommend
+     * @param Categories $categoryIrecommend
      *
      * @return AliasCategory
      */
-    public function setCategoryIrecommend($categoryIrecommend)
+    public function setCategoryIrecommend(Categories $categoryIrecommend)
     {
         $this->categoryIrecommend = $categoryIrecommend;
 
@@ -57,7 +57,7 @@ class AliasCategory
     /**
      * Get categoryIrecommend.
      *
-     * @return string
+     * @return Categories
      */
     public function getCategoryIrecommend()
     {
