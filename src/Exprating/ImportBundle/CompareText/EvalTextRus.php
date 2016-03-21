@@ -73,13 +73,16 @@ final class EvalTextRus
             }
         }
         $sumcount = ($count2 + $count1) / 2;
-        $per = (100 * $eq) / $sumcount;
-        $per = sprintf('%5.2f', $per);
-        $out['limit'] = $limit_symbols;
-        $out['count1'] = $count1;
-        $out['count2'] = $count2;
-        $out['avercount'] = $sumcount;
+        if($sumcount > 0){
+            $per = (100 * $eq) / $sumcount;
+            $per = sprintf('%5.2f', $per);
+            $out['limit'] = $limit_symbols;
+            $out['count1'] = $count1;
+            $out['count2'] = $count2;
+            $out['avercount'] = $sumcount;
+            return $per;
+        }
 
-        return $per;
+        return 0;
     }
 }

@@ -169,7 +169,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
             }
         );
         foreach ($matches as $percent => $row) {
-            echo sprintf("%d %d %s: %s -> %s \n", $row[3], $row[4], $row[2], $row[0], $row[1]);
+            $output->writeln(sprintf("%d %d %s: %s -> %s \n", $row[3], $row[4], $row[2], $row[0], $row[1]));
         }
         foreach ($aliases as $alias) {
             $aliasCategory = new AliasCategory();
