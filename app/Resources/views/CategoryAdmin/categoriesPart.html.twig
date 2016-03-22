@@ -1,13 +1,13 @@
 <h1>{{ category.name|default("Выберите категорию") }}</h1>
-{% for flash_message in app.session.flashbag.get('flash.category_saved') %}
-    <div id="flash_info_{{ loop.index }}" class="well alert-success">
-        {{ flash_message }}
-        <script type="text/javascript">setTimeout(function () {
-                $('#flash_info_{{ loop.index }}').remove()
-            }, 4000)</script>
-    </div>
-{% endfor %}
 {% form_theme form 'Form/form_rating_settings.html.twig' %}
 {% if category %}
     {{ form(form) }}
+    {% for flash_message in app.session.flashbag.get('flash.category_saved') %}
+        <div id="flash_info_{{ loop.index }}" class="well alert-success">
+            {{ flash_message }}
+            <script type="text/javascript">setTimeout(function () {
+                    $('#flash_info_{{ loop.index }}').remove()
+                }, 4000)</script>
+        </div>
+    {% endfor %}
 {% endif %}

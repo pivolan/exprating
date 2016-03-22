@@ -9,5 +9,6 @@ namespace AppBundle\Event\Category;
 
 final class CategoryEvents
 {
-    const CATEGORY_UPDATE = '';
+    const CATEGORY_UPDATE = 'category_update_event';
+    const CATEGORY_CREATE = 'category_create_event';
 }

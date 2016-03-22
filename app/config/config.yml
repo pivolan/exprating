@@ -244,6 +244,9 @@ assetic:
                 - 'js/external/jstree.min.js'
                 - 'js/Exp/exp_jstree.js'
                 - 'js/layout_expert_items.init.js'
+        category_admin_create_js:
+            inputs:
+                - 'js/external/jstree.min.js'
         category_admin_categories_js:
             inputs:
                 - 'js/external/jquery-ui.min.js'

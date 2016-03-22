@@ -44,6 +44,9 @@
                 <li class="{% if path('category_admin_requests') in app.request.uri %}active{% endif %}"><a href="{{ path('category_admin_requests') }}">
                         Заявки на регистрацию
                     </a></li>
+                <li class="{% if path('category_admin_create_category') in app.request.uri %}active{% endif %}"><a href="{{ path('category_admin_create_category') }}">
+                        Создать категорию
+                    </a></li>
             {% endif %}
             {% if is_granted("ROLE_MODERATOR") %}
                 <li role="separator" class="divider"></li>

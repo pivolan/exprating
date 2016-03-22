@@ -9,6 +9,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\CreateExpertRequest;
+use AppBundle\Event\Category\CategoryCreateEvent;
+use AppBundle\Event\Category\CategoryEvents;
+use AppBundle\Form\CategoryCreateType;
 use AppBundle\Form\CategoryType;
 use AppBundle\Form\CreateExpertRequestApproveType;
 use AppBundle\Form\RatingSettingsType;
@@ -95,5 +98,25 @@ class CategoryAdminController extends BaseController
                 self::KEY_FORM                  => $form,
             ]
         );
+    }
+
+    /**
+     * @Route("/category_admin/create/category", name="category_admin_create_category")
+     */
+    public function createAction(Request $request)
+    {
+        $form = $this->createForm(CategoryCreateType::class);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            /** @var Category $category */
+            $category = $form->getData();
+            $event = new CategoryCreateEvent($category, $this->getUser());
+            $this->get('event_dispatcher')->dispatch(CategoryEvents::CATEGORY_CREATE, $event);
+            $this->addFlash(self::FLASH_MESSAGE, 'Категория успешно создана ('.$category->getName().')');
+
+            return $this->redirectToRoute('category_admin_categories', ['slug' => $category->getSlug()]);
+        }
+
+        return $this->render('CategoryAdmin/create.html.twig', [self::KEY_FORM => $form->createView()]);
     }
 }

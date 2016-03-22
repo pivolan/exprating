@@ -35,3 +35,9 @@ services:
         tags:
             - {name: kernel.event_subscriber}
 
+    app.category_subscriber:
+        class: AppBundle\Event\Subscriber\CategorySubscriber
+        arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig', '@appbundle.slugify']
+        tags:
+            - {name: kernel.event_subscriber}
+

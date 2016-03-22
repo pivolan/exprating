@@ -77,6 +77,12 @@ services:
         tags:
             - { name: form.type, alias: AppBundle\Form\CreateExpertRequestType }
 
+    app.form.category_create_type:
+        class: AppBundle\Form\CategoryCreateType
+        arguments: [ '@appbundle.slugify' ]
+        tags:
+            - { name: form.type, alias: AppBundle\Form\CategoryCreateType }
+
     app.humanize.product_history_diff_humanize:
         class: AppBundle\Humanize\ProductHistoryDiffHumanize
 
