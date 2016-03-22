@@ -89,7 +89,7 @@
                     {
                         id: '{{ category.id }}',
                         parent: '{{ category.parent.id|default('#') }}',
-                        text: '{{ category.name|raw }} {{ categoryNameHtml|raw }}',
+                        text: '{{ category.name|raw }} <a href="{{ category.url }}" class="external"><span class="glyphicon glyphicon-share"></span></a> {{ categoryNameHtml|raw }}',
                         opened: true,
                         a_attr: {
                             href: '#',
@@ -114,6 +114,10 @@
                 $('#treeCategory').stop(true).scrollTo('#' + dataRelation);
                 $('#treeCategory').jstree(true).open_node(dataRelation);
             }
+        });
+        $(document).on('click', 'a.external', function () {
+            var href = $(this).attr('href');
+            window.open(href, '_blank');
         });
     </script>
 {% endblock %}
