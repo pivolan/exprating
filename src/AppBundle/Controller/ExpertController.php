@@ -58,6 +58,30 @@ class ExpertController extends BaseController
     }
 
     /**
+     * @Route("/profile/expert/products/{page}", name="expert_products_without_category", defaults={"page": 1})
+     *
+     * @return Response
+     */
+    public function productsWithoutCategoryAction($page)
+    {
+        $query = $this->getEm()->getRepository('AppBundle:Product')->getProductsWithoutCategoryQuery();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $page,
+            self::LIMIT_PER_PAGE
+        );
+
+        return $this->render(
+            'Expert/productsWithoutCategory.html.twig',
+            [
+                self::KEY_PAGINATION => $pagination,
+                self::KEY_PAGE       => $page,
+            ]
+        );
+    }
+
+    /**
      * @param User $expert
      *
      * @Security("is_granted('DETAIL_VIEW', expert)")

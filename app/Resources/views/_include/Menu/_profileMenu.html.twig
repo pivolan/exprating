@@ -17,6 +17,9 @@
             <li class="{% if path('expert_categories') in app.request.uri %}active{% endif %}"><a href="{{ path('expert_categories') }}">
                     Доступные категории
                 </a></li>
+            <li class="{% if path('expert_products_without_category') in app.request.uri %}active{% endif %}"><a href="{{ path('expert_products_without_category') }}">
+                    Товары без категории
+                </a></li>
 
             {% if not is_granted("ROLE_EXPERT_CURATOR") %}
                 <li class="{% if path('expert_my_pages') in app.request.uri %}active{% endif %}"><a href="{{ path('expert_my_pages') }}">

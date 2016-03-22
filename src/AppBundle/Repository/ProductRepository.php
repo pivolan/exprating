@@ -275,4 +275,11 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('isEnabled', true)
             ->setParameter(':expert', $expert);
     }
+
+    public function getProductsWithoutCategoryQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.category IS NULL')
+            ->getQuery();
+    }
 }

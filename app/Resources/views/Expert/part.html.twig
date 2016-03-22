@@ -6,6 +6,8 @@
         <ul>
             {% for product in pagination %}
                 {{ include("_include/Product/_itemList.twig") }}
+            {% else %}
+                <div class="alert alert-danger">А нету таких товаров</div>
             {% endfor %}
         </ul>
     </div>

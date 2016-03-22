@@ -1,0 +1,10 @@
+{% extends '_layout/_profile.html.twig' %}
+{% block title %}Товары не имеющие категории{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path(app.request.get('_route')) }}">{{ block('title') }}</a>
+{% endblock %}
+{% block profile_body %}
+    <h1>{{ block('title') }}</h1>
+    {{ include("Expert/part.html.twig") }}
+{% endblock %}
