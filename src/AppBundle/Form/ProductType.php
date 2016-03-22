@@ -109,7 +109,13 @@ class ProductType extends AbstractType
         $form = $event->getForm();
         /** @var Product $product */
         $product = $event->getData();
+        if (!$product) {
+            return;
+        }
         $category = $product->getCategory();
+        if (!$category) {
+            return;
+        }
         $form
             ->add('rating1', TextType::class, ['label' => $category->getRatingSettings()->getRating1Label()])
             ->add('rating2', TextType::class, ['label' => $category->getRatingSettings()->getRating2Label()])

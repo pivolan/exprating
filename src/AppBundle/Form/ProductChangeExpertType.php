@@ -45,6 +45,9 @@ class ProductChangeExpertType extends AbstractType
         /** @var Product $product */
         $product = $event->getData();
         $form = $event->getForm();
-        $form->add('expertUser', null, ['choices' => $product->getExpertUser()->getCurator()->getExperts()]);
+        if ($product && $product->getExpertUser() && $product->getExpertUser()->getCurator()) {
+            $users = $product->getExpertUser()->getCurator()->getExperts();
+            $form->add('expertUser', null, ['choices' => $users]);
+        }
     }
 }

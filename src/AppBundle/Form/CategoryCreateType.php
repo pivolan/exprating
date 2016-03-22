@@ -43,6 +43,7 @@ class CategoryCreateType extends AbstractType
     {
         $builder
             ->add('parent', EntityHiddenType::class, ['class' => Category::class, 'property' => 'slug'])
+            ->add('slug', null, ['label' => 'Уникальное название на латинице, будет отображаться в адресе'])
             ->add('name', null, ['label' => 'Название'])
             ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
@@ -67,9 +68,6 @@ class CategoryCreateType extends AbstractType
     {
         /** @var Category $category */
         $category = $event->getData();
-        if (!$category->getSlug()) {
-            $category->setSlug($this->slugify->slugify($category->getName()));
-        }
         $category->getSeo()->setCategory($category);
         $category->getRatingSettings()->setCategory($category);
     }

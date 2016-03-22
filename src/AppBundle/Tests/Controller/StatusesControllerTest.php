@@ -83,6 +83,7 @@ class StatusesControllerTest extends WebTestCase
             ['/wait_list'],
             ['/curator/decisions'],
             ['/curator/experts'],
+            ['/category_admin/create/category'],
             ['/category_admin/categories'],
             ['/category_admin/categories/elektronika'],
             ['/category_admin/requests'],
