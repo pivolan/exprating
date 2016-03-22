@@ -13,13 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class AliasItem
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="item_exprating_id", type="bigint", unique=true)
-     */
-    private $itemExpratingId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="item_exprating_name", type="string", length=255)
@@ -41,30 +34,6 @@ class AliasItem
      * @ORM\JoinColumn(name="item_irecommend_id", referencedColumnName="id")
      */
     private $itemIrecommend;
-
-    /**
-     * Set itemExpratingId.
-     *
-     * @param int $itemExpratingId
-     *
-     * @return AliasItem
-     */
-    public function setItemExpratingId($itemExpratingId)
-    {
-        $this->itemExpratingId = $itemExpratingId;
-
-        return $this;
-    }
-
-    /**
-     * Get itemExpratingId.
-     *
-     * @return int
-     */
-    public function getItemExpratingId()
-    {
-        return $this->itemExpratingId;
-    }
 
     /**
      * Set itemExpratingName.

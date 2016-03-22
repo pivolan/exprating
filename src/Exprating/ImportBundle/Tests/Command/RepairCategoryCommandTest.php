@@ -11,13 +11,12 @@ use AppBundle\Entity\RatingSettings;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Repository\CategoryRepository;
 use Exprating\ImportBundle\Command\RepairCategoryCommand;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RepairCategoryCommandTest extends WebTestCase
+class RepairCategoryCommandTest extends  \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {

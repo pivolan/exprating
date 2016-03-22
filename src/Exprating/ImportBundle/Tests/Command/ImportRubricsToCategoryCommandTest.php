@@ -12,13 +12,12 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
 use Exprating\ImportBundle\Command\ImportRubricsToCategoryCommand;
 use Exprating\ImportBundle\Entity\SiteProductRubrics;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ImportRubricsToCategoryCommandTest extends WebTestCase
+class ImportRubricsToCategoryCommandTest extends  \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {

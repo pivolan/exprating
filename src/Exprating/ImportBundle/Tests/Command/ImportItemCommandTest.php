@@ -7,30 +7,22 @@
 namespace Exprating\ImportBundle\Tests\Command;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\Product;
-use AppBundle\Entity\RatingSettings;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
-use AppBundle\Repository\CategoryRepository;
 use Doctrine\ORM\EntityRepository;
-use Exprating\FakerBundle\Faker\FakeEntitiesGenerator;
 use Exprating\ImportBundle\Command\ImportItemCommand;
-use Exprating\ImportBundle\Command\ImportRubricsToCategoryCommand;
-use Exprating\ImportBundle\Command\RepairCategoryCommand;
 use Exprating\ImportBundle\Entity\AliasCategory;
 use Exprating\ImportBundle\Entity\AliasItem;
 use Exprating\ImportBundle\Entity\Categories;
 use Exprating\ImportBundle\Entity\Item;
 use Exprating\ImportBundle\Entity\Parameters;
-use Exprating\ImportBundle\Entity\SiteProductRubrics;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ImportItemCommandTest extends WebTestCase
+class ImportItemCommandTest extends  \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {
@@ -142,5 +134,7 @@ class ImportItemCommandTest extends WebTestCase
 
         $this->assertEquals('Название нового итема 1', $item->getAliasItem()->getItemExpratingName());
         $this->assertEquals('item_slug', $item->getAliasItem()->getItemExpratingSlug());
+        $this->assertEquals($item, $item->getAliasItem()->getItemIrecommend());
+        $this->assertEquals($item->getUrl(), $item->__toString());
     }
 }

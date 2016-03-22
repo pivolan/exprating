@@ -155,10 +155,14 @@ class Categories
      * Remove parameter.
      *
      * @param \Exprating\ImportBundle\Entity\Parameters $parameter
+     *
+     * @return $this
      */
     public function removeParameter(\Exprating\ImportBundle\Entity\Parameters $parameter)
     {
         $this->parameters->removeElement($parameter);
+
+        return $this;
     }
 
     /**
@@ -232,10 +236,14 @@ class Categories
      * Remove item.
      *
      * @param \Exprating\ImportBundle\Entity\Item $item
+     *
+     * @return $this
      */
     public function removeItem(\Exprating\ImportBundle\Entity\Item $item)
     {
         $this->items->removeElement($item);
+
+        return $this;
     }
 
     /**

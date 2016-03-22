@@ -26,6 +26,8 @@ class EvalTextRusTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, (int)$percent);
         $percent = $evalText->evaltextRus('different', '');
         $this->assertEquals(0, (int)$percent);
+        $percent = $evalText->evaltextRus('', '');
+        $this->assertEquals(0, (int)$percent);
         $percent = $evalText->evaltextRus('', 'different');
         $this->assertEquals(0, (int)$percent);
     }

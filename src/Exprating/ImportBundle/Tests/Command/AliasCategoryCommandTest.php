@@ -14,13 +14,12 @@ use Exprating\ImportBundle\Command\AliasCategoryCommand;
 use Exprating\ImportBundle\CompareText\EvalTextRus;
 use Exprating\ImportBundle\Entity\AliasCategory;
 use Exprating\ImportBundle\Entity\Categories;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AliasCategoryCommandTest extends WebTestCase
+class AliasCategoryCommandTest extends \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {

@@ -626,10 +626,14 @@ class SiteProductRubrics
      * Remove child.
      *
      * @param SiteProductRubrics $child
+     *
+     * @return $this
      */
     public function removeChild(SiteProductRubrics $child)
     {
         $this->children->removeElement($child);
+
+        return $this;
     }
 
     /**
@@ -650,6 +654,7 @@ class SiteProductRubrics
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 }

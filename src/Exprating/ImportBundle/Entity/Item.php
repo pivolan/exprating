@@ -269,10 +269,14 @@ class Item
      * Remove parameter.
      *
      * @param \Exprating\ImportBundle\Entity\Parameters $parameter
+     *
+     * @return $this
      */
     public function removeParameter(\Exprating\ImportBundle\Entity\Parameters $parameter)
     {
         $this->parameters->removeElement($parameter);
+
+        return $this;
     }
 
     /**
