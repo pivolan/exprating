@@ -282,4 +282,10 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->where('a.category IS NULL')
             ->getQuery();
     }
+
+    public function getAllQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->getQuery();
+    }
 }

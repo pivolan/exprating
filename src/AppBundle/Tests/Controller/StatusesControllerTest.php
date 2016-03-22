@@ -80,6 +80,7 @@ class StatusesControllerTest extends WebTestCase
             ['/invite'],
             ['/profile/expert/categories'],
             ['/profile/expert/categories/1/elektronika'],
+            ['/profile/expert/products'],
             ['/wait_list'],
             ['/curator/decisions'],
             ['/curator/experts'],
@@ -90,6 +91,8 @@ class StatusesControllerTest extends WebTestCase
             ['/moderator/comments'],
             ['/moderator/feedbacks'],
             ['/admin/experts'],
+            ['/admin/all_products'],
+            ['/admin/all_products/2'],
             ['/admin/experts/1/expert'],
         ];
     }

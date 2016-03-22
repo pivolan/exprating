@@ -66,6 +66,10 @@
                         Список пользователей
                     </a>
                 </li>
+                <li class="{% if path('admin_all_products') in app.request.uri %}active{% endif %}"><a href="{{ path('admin_all_products') }}">
+                        Все товары
+                    </a>
+                </li>
                 <li class="{% if path('admin_import_settings') in app.request.uri %}active{% endif %}"><a href="{{ path('admin_import_settings') }}">
                         Настройки импорта
                     </a>

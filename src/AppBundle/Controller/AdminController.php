@@ -98,6 +98,29 @@ class AdminController extends BaseController
     }
 
     /**
+     * @Route("/admin/all_products/{page}", name="admin_all_products", defaults={"page":1})
+     * @return Response
+     */
+    public function allProductAction($page)
+    {
+        $query = $this->getEm()->getRepository('AppBundle:Product')->getAllQuery();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $page,
+            24
+        );
+
+        return $this->render(
+            'Admin/allProducts.html.twig',
+            [
+                self::KEY_PAGINATION => $pagination,
+                self::KEY_PAGE       => $page,
+            ]
+        );
+    }
+
+    /**
      * @Route("/admin/import_settings_change", name="admin_import_settings_change")
      */
     public function importSettingsChangeAction(Request $request)
