@@ -51,9 +51,11 @@
                 check_callback: true,
                 data: [
                     {% for category in categories %}
+                    {% set parent_slug = category.parent.slug|default('#') %}
+                    {% if category.parent.slug|default('#') == 'root' %}{% set parent_slug = '#' %}{% endif %}
                     {
                         id: '{{ category.slug }}',
-                        parent: '{{ category.parent.slug|default('#') }}',
+                        parent: '{{ parent_slug }}',
                         text: '{{ category.name|raw }} <a href="{{ path("category_admin_categories", {"slug":category.slug}) }}" class="external"><span class="glyphicon glyphicon-edit"></span></a> <a href="{{ path("product_list", {"slug":category.slug, "peopleGroup": "dlya-vseh"}) }}" class="external"><span class="glyphicon glyphicon-share"></span></a>',
                         a_attr: {
                             href: '{{ path('category_admin_categories', {'slug': category.slug}) }}',

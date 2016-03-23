@@ -25,6 +25,7 @@ class AdminController extends BaseController
     const KEY_USER = 'user';
     const KEY_CATEGORIES_IMPORT = 'categoriesImport';
     const KEY_CATEGORY_ASSOCIATE = 'categoryAssociate';
+    const RESPONSE_OK = 'ok';
 
     /**
      * @Route("/admin/experts/{page}/{username}", name="admin_experts", defaults={"page": 1, "username": null})
@@ -81,10 +82,12 @@ class AdminController extends BaseController
             $parent = $category;
             $path = [$parent->getName()];
             while ($parent = $parent->getParent()) {
-                $path[] = $parent->getName();
+                if ($parent->getSlug() !== Category::ROOT_SLUG) {
+                    $path[] = $parent->getName();
+                }
             }
 
-            $categoryAssociate[$category->getSlug()] = implode('/', array_reverse($path));
+            $categoryAssociate[$category->getSlug()] = implode('/', ($path));
         }
 
         return $this->render(
@@ -136,7 +139,7 @@ class AdminController extends BaseController
             $aliasCategory->setCategoryExpratingId($categorySlug);
             $emImport->flush();
 
-            return new Response('ok');
+            return new Response(self::RESPONSE_OK);
         } elseif ($category && $irecommendCategory) {
             $aliasCategory = new AliasCategory();
             $aliasCategory->setCategoryIrecommend($irecommendCategory)
@@ -144,7 +147,7 @@ class AdminController extends BaseController
             $emImport->persist($aliasCategory);
             $emImport->flush();
 
-            return new Response('ok');
+            return new Response(self::RESPONSE_OK);
         }
 
         return new Response('error', 400);
@@ -164,10 +167,7 @@ class AdminController extends BaseController
             throw $this->createNotFoundException();
         }
         $parent = $parentSlug ? $repo->find($parentSlug) : null;
-        if($parentSlug && !$parent){
-            throw $this->createNotFoundException();
-        }
-        if($parent){
+        if ($parent) {
             $category->setParent($parent);
         }
         $this->getEm()->flush();
@@ -178,6 +178,38 @@ class AdminController extends BaseController
             $this->getEm()->flush();
         }
 
-        return new Response('ok');
+        return new Response(self::RESPONSE_OK);
+    }
+
+    /**
+     * @Route("/admin/category/create", name="admin_category_create")
+     */
+    public function createCategory(Request $request)
+    {
+        $name = $request->get('name');
+        $parentSlug = $request->get('parent');
+        $parent = $this->getEm()->getRepository('AppBundle:Category')->find($parentSlug);
+        $parent = $parent ?: $this->getEm()->getRepository('AppBundle:Category')->find(Category::ROOT_SLUG);
+        $category = (new Category())
+            ->setName($name)
+            ->setParent($parent)
+            ->setSlug($this->get('appbundle.slugify')->slugify($name).time());
+        $this->getEm()->persist($category);
+        $this->getEm()->flush();
+
+        return new Response($category->getSlug());
+    }
+
+    /**
+     * @Route("/admin/category/rename/{slug}", name="admin_category_rename")
+     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
+     */
+    public function renameCategoryAction(Request $request, Category $category)
+    {
+        $name = $request->get('name');
+        $category->setName($name);
+        $this->getEm()->flush();
+
+        return new Response(self::RESPONSE_OK);
     }
 }
