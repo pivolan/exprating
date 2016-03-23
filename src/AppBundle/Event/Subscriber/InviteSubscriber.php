@@ -61,7 +61,7 @@ class InviteSubscriber implements EventSubscriberInterface
                 ['inviteCompleteNotify', 1],
                 ['flush'],
             ],
-            InviteEvents::ACTIVATE              => [['inviteActivate', 2], ['inviteActivateNotify', 2],],
+            InviteEvents::ACTIVATE              => [['inviteActivate', 2],],
             InviteEvents::SEND                  => [['inviteSend', 2], ['inviteSendNotify', 2], ['flush'],],
             InviteEvents::APPROVE_RIGHTS        => [['approveRights', 2], ['approveRightsNotify', 2], ['flush']],
             InviteEvents::REQUEST_RIGHTS        => [['requestRightsNotify', 2], ['flush']],
@@ -109,32 +109,6 @@ class InviteSubscriber implements EventSubscriberInterface
             ->setIsActivated(true)
             ->setActivatedAt(new \DateTime());
         $this->em->persist($expert);
-    }
-
-    public function inviteActivateNotify(InviteActivateEvent $event)
-    {
-        $invite = $event->getInvite();
-        $curator = $invite->getCurator();
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Ваш инвайт был активирован пользователем '.$invite->getEmail())
-            ->setTo($curator->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'Email/InviteActivateNotify.html.twig',
-                    ['invite' => $invite,]
-                )
-            );
-        $this->mailer->send($message);
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Вы активировали инвайт, создан пользователь.')
-            ->setTo($curator->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'Email/InviteActivateNotifyExpert.html.twig',
-                    ['invite' => $invite,]
-                )
-            );
-        $this->mailer->send($message);
     }
 
     public function inviteComplete(
