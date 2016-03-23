@@ -61,13 +61,11 @@ class InviteEventTest extends AbstractWebCaseTest
         $this->em->flush();
 
         $container = $this->client->getContainer();
-        $request = new Request();
-        $user = new User();
         $container->get('event_dispatcher')->dispatch(
             InviteEvents::ACTIVATE,
-            new InviteActivateEvent($invite, $user, $request, new Response())
+            new InviteActivateEvent($invite)
         );
-        $user = $this->em->getRepository('AppBundle:User')->findOneBy(['email' => 'email@email.com']);
+        $user = $invite->getExpert();
         $this->assertNotNull($user);
         $this->assertEquals('email@email.com', $user->getUsername());
         $this->assertFalse($user->getIsActivated());
@@ -94,8 +92,8 @@ class InviteEventTest extends AbstractWebCaseTest
 
         $container = $this->client->getContainer();
         $container->get('event_dispatcher')->dispatch(
-            InviteEvents::ACTIVATE,
-            new InviteCompleteRegistrationEvent($expert)
+            InviteEvents::COMPLETE_REGISTRATION,
+            new InviteCompleteRegistrationEvent($expert, new Request(), new Response())
         );
         $this->assertTrue($expert->getIsActivated());
         $this->assertEquals($expert->getCurator(), $invite->getCurator());
