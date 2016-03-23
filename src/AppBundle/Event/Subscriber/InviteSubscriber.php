@@ -61,7 +61,7 @@ class InviteSubscriber implements EventSubscriberInterface
                 ['inviteCompleteNotify', 1],
                 ['flush'],
             ],
-            InviteEvents::ACTIVATE              => [['inviteActivate', 2], ['inviteActivateNotify', 2], ['flush'],],
+            InviteEvents::ACTIVATE              => [['inviteActivate', 2], ['inviteActivateNotify', 2],],
             InviteEvents::SEND                  => [['inviteSend', 2], ['inviteSendNotify', 2], ['flush'],],
             InviteEvents::APPROVE_RIGHTS        => [['approveRights', 2], ['approveRightsNotify', 2], ['flush']],
             InviteEvents::REQUEST_RIGHTS        => [['requestRightsNotify', 2], ['flush']],
@@ -90,18 +90,17 @@ class InviteSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function inviteActivate(
-        InviteActivateEvent $event,
-        $eventName,
-        EventDispatcherInterface $dispatcher
-    ) {
+    public function inviteActivate(InviteActivateEvent $event)
+    {
         $invite = $event->getInvite();
         $expert = new User();
-        $expert->setEmail($invite->getEmail())
+        $expert
+            ->setIsActivated(false)
+            ->setInvite($invite)
+            ->setEmail($invite->getEmail())
             ->setUsername($invite->getEmail())
             ->setPlainPassword(uniqid())
             ->setEnabled(true)
-            ->setIsActivated(false)
             ->setEmailCanonical($invite->getEmail())
             ->setUsernameCanonical($invite->getEmail())
             ->addRole(User::ROLE_EXPERT);
@@ -110,10 +109,6 @@ class InviteSubscriber implements EventSubscriberInterface
             ->setIsActivated(true)
             ->setActivatedAt(new \DateTime());
         $this->em->persist($expert);
-        $dispatcher->dispatch(
-            FOSUserEvents::REGISTRATION_COMPLETED,
-            new FilterUserResponseEvent($expert, $event->getRequest(), $event->getResponse())
-        );
     }
 
     public function inviteActivateNotify(InviteActivateEvent $event)
@@ -142,13 +137,20 @@ class InviteSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function inviteComplete(InviteCompleteRegistrationEvent $event)
-    {
+    public function inviteComplete(
+        InviteCompleteRegistrationEvent $event,
+        $eventName,
+        EventDispatcherInterface $dispatcher
+    ) {
         $user = $event->getExpert();
         $invite = $user->getInvite();
         $curator = $invite->getCurator();
         $user->setCurator($curator)
             ->setIsActivated(true);
+        $dispatcher->dispatch(
+            FOSUserEvents::REGISTRATION_COMPLETED,
+            new FilterUserResponseEvent($event->getExpert(), $event->getRequest(), $event->getResponse())
+        );
     }
 
     public function inviteCompleteFillCategories(InviteCompleteRegistrationEvent $event)

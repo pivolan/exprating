@@ -21,13 +21,25 @@ class InviteCompleteRegistrationEvent extends Event
     protected $expert;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var Response
+     */
+    protected $response;
+
+    /**
      * InviteCompleteRegistrationEvent constructor.
      *
      * @param User $expert
      */
-    public function __construct(User $expert)
+    public function __construct(User $expert, Request $request, Response $response)
     {
         $this->expert = $expert;
+        $this->request = $request;
+        $this->response = $response;
     }
 
     /**
@@ -36,5 +48,21 @@ class InviteCompleteRegistrationEvent extends Event
     public function getExpert()
     {
         return $this->expert;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

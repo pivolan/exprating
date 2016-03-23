@@ -60,29 +60,18 @@ class InviteController extends BaseController
      */
     public function inviteActivateAction(Request $request, Invite $invite)
     {
-        $response = $this->redirectToRoute('invite_complete');
         $this->get('event_dispatcher')->dispatch(
             InviteEvents::ACTIVATE,
-            new InviteActivateEvent($invite, $request, $response)
+            new InviteActivateEvent($invite)
         );
-
-        return $response;
-    }
-
-    /**
-     * @Route("/invite/complete/registration", name="invite_complete")
-     * @Security("is_granted('INVITE_COMPLETE_REGISTRATION')")
-     */
-    public function inviteCompleteRegistrationAction(Request $request)
-    {
-        $user = $this->getUser();
+        $user = $invite->getExpert();
         $form = $this->createForm(UserCompleteType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $response = $this->redirectToRoute('experts_detail', ['username' => $user->getUsername()]);
-            $event = new \AppBundle\Event\Invite\InviteCompleteRegistrationEvent($user);
+            $event = new \AppBundle\Event\Invite\InviteCompleteRegistrationEvent($user, $request, $response);
             $this->get('event_dispatcher')->dispatch(InviteEvents::COMPLETE_REGISTRATION, $event);
 
             return $response;
@@ -91,7 +80,8 @@ class InviteController extends BaseController
         return $this->render(
             'Invite/inviteComplete.html.twig',
             [
-                self::KEY_FORM => $form->createView(),
+                self::KEY_FORM   => $form->createView(),
+                self::KEY_INVITE => $invite,
             ]
         );
     }
