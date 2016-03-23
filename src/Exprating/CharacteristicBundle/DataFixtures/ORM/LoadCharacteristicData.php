@@ -114,7 +114,7 @@ class LoadCharacteristicData extends AbstractFixture implements DependentFixture
         }
 
         /** @var Category[] $categories */
-        $categories = $manager->getRepository('AppBundle:Category')->findAll();
+        $categories = $manager->getRepository('AppBundle:Category')->getAll();
         foreach ($categories as $category) {
             foreach ($characteristics as $key => $characteristic) {
                 $headGroup = $keys[$characteristic->getName()][0];

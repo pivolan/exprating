@@ -45,12 +45,14 @@ class CategoryRepository extends NestedTreeRepository
     {
         $qb = $this->createQueryBuilder('a')
             ->select('a, b, c, d, e, f')
-            ->where('a.parent IS NULL')
+            ->where('a.parent = :root')
+            ->setParameter('root', Category::ROOT_SLUG)
             ->leftJoin('a.peopleGroups', 'b')
             ->leftJoin('a.ratingSettings', 'c')
             ->leftJoin('a.children', 'd')
             ->leftJoin('d.peopleGroups', 'e')
-            ->leftJoin('d.ratingSettings', 'f');
+            ->leftJoin('d.ratingSettings', 'f')
+            ->orderBy('a.lft');
         $query = $qb->getQuery();
 
         return $query->getResult();
@@ -95,7 +97,9 @@ class CategoryRepository extends NestedTreeRepository
     {
         $qb = $this->createQueryBuilder('a')
             ->select('a.name, a.slug as id, b.slug as parent_id')
-            ->leftJoin('a.parent', 'b');
+            ->leftJoin('a.parent', 'b')
+            ->where('a.slug != :root')
+            ->setParameter('root', Category::ROOT_SLUG);
         if ($user && !$user->hasRole(User::ROLE_ADMIN)) {
             $qb->innerJoin('a.experts', 'e')
                 ->where('e.id = :user')
@@ -128,7 +132,9 @@ class CategoryRepository extends NestedTreeRepository
     {
         $result = $this->createQueryBuilder('a')
             ->select('a.slug as id, a.name as text')
-            ->where('a.name LIKE :q')
+            ->where('a.slug != :root')
+            ->setParameter('root', Category::ROOT_SLUG)
+            ->andWhere('a.name LIKE :q')
             ->setParameter('q', '%'.$q.'%')
             ->setMaxResults($pageLimit)
             ->setFirstResult($skip)
@@ -136,5 +142,13 @@ class CategoryRepository extends NestedTreeRepository
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
 
         return $result;
+    }
+
+    public function getAll()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.slug != :root')
+            ->setParameter('root', Category::ROOT_SLUG)
+            ->orderBy('a.lft')->getQuery()->getResult();
     }
 }

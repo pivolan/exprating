@@ -3,10 +3,14 @@
 {% block profile_body %}
     <div class="col-md-6">
         <h1>Категории Exprating</h1>
+        <button type="button" class="btn btn-success" onclick="create_node()">Создать</button>
+        <button type="button" class="btn btn-warning" onclick="rename_node()">Переименовать</button>
+
         <div id="treeCategory" class="well height-full"></div>
     </div>
     <div class="col-md-6">
         <h1>Категории irecommend</h1>
+        <button type="button" class="btn btn-info" onclick="deselect_all_import()">Снять выделение</button>
         <div id="treeCategoryImport" class="well height-full"></div>
     </div>
 {% endblock %}
@@ -16,23 +20,53 @@
     <script type="text/javascript" src="{{ asset('js/external/jquery.scrollTo.min.js') }}"></script>
     <script type="text/javascript">
         var selected_by_event = false;
+        function create_node() {
+            var ref = $('#treeCategory').jstree(true),
+                    sel = ref.get_selected();
+            if (!sel.length) {
+                return false;
+            }
+            sel = sel[0];
+            sel = ref.create_node(sel, {"type": "file"});
+            if (sel) {
+                ref.edit(sel);
+            }
+        }
+        function rename_node() {
+            var ref = $('#treeCategory').jstree(true),
+                    sel = ref.get_selected();
+            if (!sel.length) {
+                return false;
+            }
+            sel = sel[0];
+            node = ref.get_node(sel);
+            ref.set_text(sel, node.a_attr.data_name);
+            ref.edit(sel);
+        }
+        function deselect_all_import() {
+            $('#treeCategoryImport').jstree(true).deselect_all();
+        }
         $('#treeCategory').jstree({
             core: {
+                check_callback: true,
                 data: [
                     {% for category in categories %}
                     {
                         id: '{{ category.slug }}',
                         parent: '{{ category.parent.slug|default('#') }}',
-                        text: '{{ category.name|raw }}',
+                        text: '{{ category.name|raw }} <a href="{{ path("category_admin_categories", {"slug":category.slug}) }}" class="external"><span class="glyphicon glyphicon-edit"></span></a> <a href="{{ path("product_list", {"slug":category.slug, "peopleGroup": "dlya-vseh"}) }}" class="external"><span class="glyphicon glyphicon-share"></span></a>',
                         a_attr: {
                             href: '{{ path('category_admin_categories', {'slug': category.slug}) }}',
                             data_slug: '{{ category.slug }}',
-                            data_text: '{{ categoryAssociate[category.slug] }}'
+                            data_path: '{{ categoryAssociate[category.slug] }}',
+                            data_name: '{{ category.name|raw }}',
+                            data_actions: '<a href="{{ path("category_admin_categories", {"slug":category.slug}) }}" class="external"><span class="glyphicon glyphicon-edit"></span></a> <a href="{{ path("product_list", {"slug":category.slug, "peopleGroup": "dlya-vseh"}) }}" class="external"><span class="glyphicon glyphicon-share"></span></a>',
                         },
                     },
                     {% endfor %}
                 ]
-            }
+            },
+            plugins: ['dnd']
         }).on('select_node.jstree', function (node, selected, event) {
             var selected_nodes = $('#treeCategoryImport').jstree(true).get_selected();
             if (selected_nodes.length && !selected_by_event) {
@@ -42,7 +76,7 @@
 
                 var alias_category_id = selected_nodes[0];
                 var node = $('#treeCategoryImport').jstree(true).get_node(alias_category_id);
-                if (confirm('Вы хотите поменять "' + node.a_attr.data_current_path + '" на "' + selected.node.a_attr.data_text + '"')) {
+                if (confirm('Вы хотите поменять "' + node.a_attr.data_current_path + '" на "' + selected.node.a_attr.data_path + '"')) {
                     $.ajax('{{ path('admin_import_settings_change') }}', {
                         method: "POST",
                         data: {category_slug: category_slug, alias_category_id: alias_category_id},
@@ -57,8 +91,8 @@
                             }, 2000);
                             node.a_attr.data_relation = category_slug;
                             console.log(node.text);
-                            var new_text = node.text.replace(/\(.*\)/g, '') + '(<span class="small text-success">' + selected.node.a_attr.data_text + '</span>)';
-                            node.a_attr.data_current_path = selected.node.a_attr.data_text;
+                            var new_text = node.text.replace(/\(.*\)/g, '') + '(<span class="small text-success">' + selected.node.a_attr.data_path + '</span>)';
+                            node.a_attr.data_current_path = selected.node.a_attr.data_path;
                             $('#treeCategoryImport').jstree(true).set_text(node, new_text);
                         }
                     });
@@ -75,6 +109,30 @@
                 }
             }
             selected_by_event = false;
+        }).on('rename_node.jstree', function (event, entity) {
+            var node = entity.node;
+            if (confirm('Сохранить новое имя ' + entity.text + '?')) {
+                node.a_attr.data_name = entity.text;
+                var new_text = node.a_attr.data_name + ' ' + node.a_attr.data_actions;
+                node.a_attr.data_path = node.a_attr.data_path.replace(entity.old, entity.text);
+                $('#treeCategory').jstree(true).set_text(node, new_text);
+            } else {
+                $('#treeCategory').jstree(true).set_text(node, entity.old + ' ' + node.a_attr.data_actions);
+            }
+        }).on('move_node.jstree', function (e, data) {
+            console.log(data);
+            $.ajax({
+                url: '{{ path("admin_category_move") }}',
+                methot: 'post',
+                data: {
+                    category: data.node.id,
+                    position: data.position,
+                    parent: data.parent,
+                },
+                success: function () {
+                    alert('saved');
+                }
+            })
         });
         $('#treeCategoryImport').jstree({
             core: {

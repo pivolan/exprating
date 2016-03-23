@@ -48,7 +48,7 @@ class RepairCategoryCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var Category[] $categories */
-        $categories = $this->em->getRepository('AppBundle:Category')->findAll();
+        $categories = $this->em->getRepository('AppBundle:Category')->getAll();
         foreach ($categories as $category) {
             if (!$category->getRatingSettings()) {
                 $ratingSettings = new RatingSettings();

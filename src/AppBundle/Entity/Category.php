@@ -18,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Category
 {
+    const ROOT_SLUG = 'root';
+
     /**
      * @var string
      * @ORM\Column(name="name", type="string", length=255, unique=false, options={"comment":"Название категории"})

@@ -37,7 +37,7 @@ class RepairCategoryCommandTest extends  \PHPUnit_Framework_TestCase
         $repository = $this->getMockBuilder(CategoryRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repository->method('findAll')
+        $repository->method('getAll')
             ->willReturn($categories);
 
         $entityManager = $this->getMockBuilder(EntityManager::class)

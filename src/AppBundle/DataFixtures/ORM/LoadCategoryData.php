@@ -76,13 +76,16 @@ class LoadCategoryData extends AbstractFixture implements
         $expert = $this->getReference(LoadUserData::REFERENCE_EXPERT_USER);
         /** @var User $categoryAdmin */
         $categoryAdmin = $this->getReference(LoadUserData::REFERENCE_CATEGORY_ADMIN_USER);
+        $rootCategory = (new Category())->setSlug(Category::ROOT_SLUG)->setName(Category::ROOT_SLUG);
+        $manager->persist($rootCategory);
         foreach ($categories_names as $key => $value) {
-            $name=$value[0];
+            $name = $value[0];
             $peopleGroupSlug = $value[1];
             $category = new Category();
-            $category->setName($name);
-            $category->setSlug($slugify->slugify($name));
-            $category->addPeopleGroup($this->getReference($peopleGroupSlug));
+            $category->setName($name)
+                ->setParent($rootCategory)
+                ->setSlug($slugify->slugify($name))
+                ->addPeopleGroup($this->getReference($peopleGroupSlug));
             $manager->persist($category);
             if (isset($categoriesTree[$name])) {
                 foreach ($categoriesTree[$name] as $childName) {

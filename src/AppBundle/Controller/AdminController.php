@@ -72,7 +72,7 @@ class AdminController extends BaseController
     public function importSettingsAction()
     {
         /** @var Category[] $categories */
-        $categories = $this->getEm()->getRepository('AppBundle:Category')->findAll();
+        $categories = $this->getEm()->getRepository('AppBundle:Category')->getAll();
         $categoriesImport = $this->get('doctrine.orm.import_entity_manager')
             ->getRepository('ExpratingImportBundle:Categories')
             ->findAll();
@@ -148,5 +148,36 @@ class AdminController extends BaseController
         }
 
         return new Response('error', 400);
+    }
+
+    /**
+     * @Route("/admin/category/move", name="admin_category_move")
+     */
+    public function moveCategoryAction(Request $request)
+    {
+        $categorySlug = $request->get('category');
+        $parentSlug = $request->get('parent');
+        $position = $request->get('position');
+        $repo = $this->getEm()->getRepository('AppBundle:Category');
+        $category = $repo->find($categorySlug);
+        if (!$category) {
+            throw $this->createNotFoundException();
+        }
+        $parent = $parentSlug ? $repo->find($parentSlug) : null;
+        if($parentSlug && !$parent){
+            throw $this->createNotFoundException();
+        }
+        if($parent){
+            $category->setParent($parent);
+        }
+        $this->getEm()->flush();
+        if ($position > 0) {
+            $repo->moveUp($category, true);
+            $this->getEm()->flush();
+            $repo->moveDown($category, $position);
+            $this->getEm()->flush();
+        }
+
+        return new Response('ok');
     }
 }

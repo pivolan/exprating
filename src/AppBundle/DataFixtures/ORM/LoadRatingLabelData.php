@@ -13,7 +13,7 @@ class LoadRatingLabelData extends AbstractFixture implements DependentFixtureInt
     public function load(ObjectManager $manager)
     {
         /** @var Category[] $categories */
-        $categories = $manager->getRepository('AppBundle:Category')->findAll();
+        $categories = $manager->getRepository('AppBundle:Category')->getAll();
         foreach ($categories as $category) {
             $ratingSettings = new RatingSettings();
             $ratingSettings->setRating1Label('Качество работы')

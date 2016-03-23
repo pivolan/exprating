@@ -42,11 +42,15 @@ class AppExtension extends \Twig_Extension
     {
         /** @var Category[] $categories */
         $categories = $this->entityManager->getRepository('AppBundle:Category')->getPath($category);
-
+        foreach ($categories as $key => $category) {
+            if ($category->getSlug() == Category::ROOT_SLUG) {
+                unset($categories[$key]);
+            }
+        }
         return $this->twig->render(
             'AppBundle:Extensions:breadcrumbs.html.twig',
             [
-                self::KEY_CATEGORIES   => $categories
+                self::KEY_CATEGORIES => $categories,
             ]
         );
     }
