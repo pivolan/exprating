@@ -79,6 +79,34 @@
                 };
             };
         })(jQuery);
+
+        (function ($, undefined) {
+            "use strict";
+            var span = document.createElement('span');
+            span.className = 'small text-success';
+
+            $.jstree.defaults.linker = $.noop;
+            $.jstree.plugins.linker = function (options, parent) {
+                this.redraw_node = function (obj, deep, callback, force_draw) {
+                    obj = parent.redraw_node.call(this, obj, deep, callback, force_draw);
+                    if (obj) {
+                        var node = (this.get_node(obj));
+                        if (node.data.linker) {
+                            var node_id = node.data.linker.node_id;
+                            var selector = node.data.linker.selector;
+                            var node_relation = $(selector).jstree(true).get_node(node_id);
+                            console.log(node.data.linker);
+                            if (node_relation) {
+                                var tmp = span.cloneNode(true);
+                                tmp.textContent = node_relation.a_attr.data_path;
+                                obj.insertBefore(tmp, obj.childNodes[2]);
+                            }
+                        }
+                    }
+                    return obj;
+                };
+            };
+        })(jQuery);
         $('#treeCategory').jstree({
             core: {
                 check_callback: true,
@@ -120,7 +148,8 @@
 
                 var alias_category_id = selected_nodes[0];
                 var node = $('#treeCategoryImport').jstree(true).get_node(alias_category_id);
-                if (confirm('Вы хотите поменять "' + node.data.actions[0].text + '" на "' + selected.node.a_attr.data_path + '"')) {
+                var old_path = $('#treeCategory').jstree(true).get_node(node.data.linker.node_id).a_attr.data_path;
+                if (confirm('Вы хотите поменять "' + old_path + '" на "' + selected.node.a_attr.data_path + '"')) {
                     $.ajax('{{ path('admin_import_settings_change') }}', {
                         method: "POST",
                         data: {category_slug: category_slug, alias_category_id: alias_category_id},
@@ -133,13 +162,12 @@
                             setTimeout(function () {
                                 $('div.alert-message').html('');
                             }, 2000);
-                            node.a_attr.data_relation = category_slug;
-                            node.data.actions[0].text = selected.node.a_attr.data_path;
+                            node.data.linker.node_id = category_slug;
                             $('#treeCategoryImport').jstree(true).set_text(node, node.text);
                         }
                     });
                 } else {
-                    var dataRelation = node.a_attr.data_relation;
+                    var dataRelation = node.data.linker.node_id;
                     $('#treeCategory').jstree(true).deselect_all();
                     $('#treeCategory').jstree(true).close_all();
                     if (dataRelation) {
@@ -156,33 +184,95 @@
             if (!node.data.created) {
                 if (confirm('Сохранить новое имя ' + entity.text + '?')) {
                     node.a_attr.data_path = node.a_attr.data_path.replace(entity.old, entity.text);
+                    $.ajax({
+                        url: '{{ path("admin_category_rename") }}',
+                        method: 'post',
+                        data: {
+                            name: entity.text,
+                            slug: node.id
+                        },
+                        success: function (data) {
+                            console.log('renamed');
+                            console.log(data);
+                            node.a_attr.data_path = data.path;
+                            $('#treeCategoryImport').jstree(true).refresh();
+                        }
+                    });
                 } else {
                     $('#treeCategory').jstree(true).set_text(node, entity.old);
                 }
             } else {
+                $.ajax({
+                    url: '{{ path("admin_category_create") }}',
+                    method: 'post',
+                    data: {
+                        name: entity.text,
+                        parent: node.parent
+                    },
+                    success: function (data) {
+                        console.log('Created');
+                        console.log(data);
+                        node.a_attr.data_path = data.path;
+                        node.data = {
+                            actions: [
+                                {
+                                    span_class: "glyphicon glyphicon-edit",
+                                    url: data.edit_url,
+                                },
+                                {
+                                    span_class: "glyphicon glyphicon-share",
+                                    url: data.show_url,
+                                },
+                            ]
+                        };
+                        $('#treeCategory').jstree(true).set_id(node, data.slug);
+                        $('#treeCategory').jstree(true).set_text(node, entity.text);
+                    }
+                });
                 node.data.created = false;
             }
         }).on('move_node.jstree', function (e, data) {
             console.log(data);
-            $.ajax({
-                url: '{{ path("admin_category_move") }}',
-                methot: 'post',
-                data: {
-                    category: data.node.id,
-                    position: data.position,
-                    parent: data.parent,
-                },
-                success: function () {
-                    var html = '<div class="message-box alert-success">' +
-                            '<span class="close">X</span>' +
-                            '<p>Изменения успешно сохранены</p>' +
-                            '</div>';
-                    $('div.alert-message').html(html);
-                    setTimeout(function () {
-                        $('div.alert-message').html('');
-                    }, 2000);
-                }
-            })
+            var node = data.node;
+            if (!node.data.failover) {
+                $.ajax({
+                    url: '{{ path("admin_category_move") }}',
+                    methot: 'post',
+                    data: {
+                        category: data.node.id,
+                        position: data.position,
+                        parent: data.parent,
+                    },
+                    success: function (data) {
+                        node.a_attr.data_path = data.path;
+                        $('#treeCategoryImport').jstree(true).refresh();
+                        var html = '<div class="message-box alert-success">' +
+                                '<span class="close">X</span>' +
+                                '<p>Изменения успешно сохранены</p>' +
+                                '</div>';
+                        $('div.alert-message').html(html);
+                        setTimeout(function () {
+                            $('div.alert-message').html('');
+                        }, 2000);
+                    },
+                    error: function () {
+                        var html = '<div class="message-box alert-danger">' +
+                                '<span class="close">X</span>' +
+                                '<p>Ошибка во время сохранения. Изменения отменены</p>' +
+                                '</div>';
+                        $('div.alert-message').html(html);
+                        setTimeout(function () {
+                            $('div.alert-message').html('');
+                        }, 2000);
+                        node.data.failover = true;
+                        $('#treeCategory').jstree(true).move_node(node, data.old_parent, data.old_position);
+                    }
+                })
+            } else {
+                node.data.failover = false;
+            }
+        }).on('loaded.jstree', function(){
+            $('#treeCategoryImport').jstree('refresh');
         });
         $('#treeCategoryImport').jstree({
             core: {
@@ -200,19 +290,17 @@
                         text: '{{ category.name|raw }}',
                         opened: true,
                         a_attr: {
-                            href: '#',
-                            data_relation: '{{ category.aliasCategory.categoryExpratingId|default(null) }}',
-                            data_current_path: '{{ categoryName }}'
+                            href: '#'
                         },
                         state: {
                             opened: true
                         },
                         data: {
+                            linker: {
+                                selector: '#treeCategory',
+                                node_id: '{{ category.aliasCategory.categoryExpratingId|default(null) }}'
+                            },
                             actions: [
-                                {
-                                    span_class: 'small text-success',
-                                    text: '{{ categoryName }}'
-                                },
                                 {
                                     span_class: 'glyphicon glyphicon-share',
                                     url: '{{ category.url|raw }}'
@@ -223,9 +311,9 @@
                     {% endfor %}
                 ]
             },
-            plugins: ['actions']
+            plugins: ['linker', 'actions']
         }).on('select_node.jstree', function (node, selected, event) {
-            var dataRelation = selected.node.a_attr.data_relation;
+            var dataRelation = selected.node.data.linker.node_id;
             $('#treeCategory').jstree(true).deselect_all();
             $('#treeCategory').jstree(true).close_all();
             if (dataRelation) {
@@ -234,10 +322,6 @@
                 $('#treeCategory').stop(true).scrollTo('#' + dataRelation);
                 $('#treeCategory').jstree(true).open_node(dataRelation);
             }
-        });
-        $(document).on('click', 'a.external', function () {
-            var href = $(this).attr('href');
-            window.open(href, '_blank');
         });
     </script>
 {% endblock %}

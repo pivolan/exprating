@@ -8,6 +8,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserEditType;
 use Exprating\ImportBundle\Entity\AliasCategory;
@@ -155,30 +156,40 @@ class AdminController extends BaseController
         $categorySlug = $request->get('category');
         $parentSlug = $request->get('parent');
         $position = $request->get('position');
-        $repo = $this->getEm()->getRepository('AppBundle:Category');
-        $category = $repo->find($categorySlug);
+        $categoryRepository = $this->getEm()->getRepository('AppBundle:Category');
+        $category = $categoryRepository->find($categorySlug);
         if (!$category) {
             throw $this->createNotFoundException();
         }
-        $parent = $parentSlug ? $repo->find($parentSlug) : null;
-        if ($parent) {
-            $category->setParent($parent);
+        $parent = $parentSlug ? $categoryRepository->find($parentSlug) : null;
+        if (!$parent) {
+            $parent = $categoryRepository->find(Category::ROOT_SLUG);
         }
-        $this->getEm()->flush();
+        $category->setParent($parent);
         if ($position > 0) {
-            $repo->moveUp($category, true);
-            $this->getEm()->flush();
-            $repo->moveDown($category, $position);
-            $this->getEm()->flush();
+            $categoryRepository->moveUp($category, true);
+            $categoryRepository->moveDown($category, $position);
         }
 
-        return new Response(self::RESPONSE_OK);
+        $this->getEm()->flush();
+
+        return new JsonResponse(
+            [
+                'slug'     => $category->getSlug(),
+                'path'     => $categoryRepository->getPathString($category),
+                'edit_url' => $this->generateUrl('category_admin_categories', ['slug' => $category->getSlug()]),
+                'show_url' => $this->generateUrl(
+                    'product_list',
+                    ['slug' => $category->getSlug(), 'peopleGroup' => PeopleGroup::SLUG_ALL]
+                ),
+            ]
+        );
     }
 
     /**
      * @Route("/admin/category/create", name="admin_category_create")
      */
-    public function createCategory(Request $request)
+    public function createCategoryAction(Request $request)
     {
         $name = $request->get('name');
         $parentSlug = $request->get('parent');
@@ -189,24 +200,48 @@ class AdminController extends BaseController
             ->setName($name)
             ->setParent($parent)
             ->setSlug($this->get('appbundle.slugify')->slugify($name).time());
-        $this->getEm()->persist($category);
+        $categoryRepository->persistAsFirstChildOf($category, $parent);
+
         $this->getEm()->flush();
 
         return new JsonResponse(
-            ['slug' => $category->getSlug(), 'path' => $categoryRepository->getPathString($category)]
+            [
+                'slug'     => $category->getSlug(),
+                'path'     => $categoryRepository->getPathString($category),
+                'edit_url' => $this->generateUrl('category_admin_categories', ['slug' => $category->getSlug()]),
+                'show_url' => $this->generateUrl(
+                    'product_list',
+                    ['slug' => $category->getSlug(), 'peopleGroup' => PeopleGroup::SLUG_ALL]
+                ),
+            ]
         );
     }
 
     /**
-     * @Route("/admin/category/rename/{slug}", name="admin_category_rename")
-     * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
+     * @Route("/admin/category/rename", name="admin_category_rename")
      */
-    public function renameCategoryAction(Request $request, Category $category)
+    public function renameCategoryAction(Request $request)
     {
         $name = $request->get('name');
+        $categorySlug = $request->get('slug');
+        $categoryRepository = $this->getEm()->getRepository('AppBundle:Category');
+        $category = $categoryRepository->find($categorySlug);
+        if (!$category) {
+            throw $this->createNotFoundException();
+        }
         $category->setName($name);
         $this->getEm()->flush();
 
-        return new Response(self::RESPONSE_OK);
+        return new JsonResponse(
+            [
+                'slug'     => $category->getSlug(),
+                'path'     => $categoryRepository->getPathString($category),
+                'edit_url' => $this->generateUrl('category_admin_categories', ['slug' => $category->getSlug()]),
+                'show_url' => $this->generateUrl(
+                    'product_list',
+                    ['slug' => $category->getSlug(), 'peopleGroup' => PeopleGroup::SLUG_ALL]
+                ),
+            ]
+        );
     }
 }
