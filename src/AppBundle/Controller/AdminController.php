@@ -11,6 +11,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserEditType;
 use Exprating\ImportBundle\Entity\AliasCategory;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -73,21 +74,14 @@ class AdminController extends BaseController
     public function importSettingsAction()
     {
         /** @var Category[] $categories */
-        $categories = $this->getEm()->getRepository('AppBundle:Category')->getAll();
+        $categoryRepository = $this->getEm()->getRepository('AppBundle:Category');
+        $categories = $categoryRepository->getAll();
         $categoriesImport = $this->get('doctrine.orm.import_entity_manager')
             ->getRepository('ExpratingImportBundle:Categories')
             ->findAll();
         $categoryAssociate = [];
         foreach ($categories as $category) {
-            $parent = $category;
-            $path = [$parent->getName()];
-            while ($parent = $parent->getParent()) {
-                if ($parent->getSlug() !== Category::ROOT_SLUG) {
-                    $path[] = $parent->getName();
-                }
-            }
-
-            $categoryAssociate[$category->getSlug()] = implode('/', ($path));
+            $categoryAssociate[$category->getSlug()] = $categoryRepository->getPathString($category);
         }
 
         return $this->render(
@@ -188,8 +182,9 @@ class AdminController extends BaseController
     {
         $name = $request->get('name');
         $parentSlug = $request->get('parent');
-        $parent = $this->getEm()->getRepository('AppBundle:Category')->find($parentSlug);
-        $parent = $parent ?: $this->getEm()->getRepository('AppBundle:Category')->find(Category::ROOT_SLUG);
+        $categoryRepository = $this->getEm()->getRepository('AppBundle:Category');
+        $parent = $categoryRepository->find($parentSlug);
+        $parent = $parent ?: $categoryRepository->find(Category::ROOT_SLUG);
         $category = (new Category())
             ->setName($name)
             ->setParent($parent)
@@ -197,7 +192,9 @@ class AdminController extends BaseController
         $this->getEm()->persist($category);
         $this->getEm()->flush();
 
-        return new Response($category->getSlug());
+        return new JsonResponse(
+            ['slug' => $category->getSlug(), 'path' => $categoryRepository->getPathString($category)]
+        );
     }
 
     /**

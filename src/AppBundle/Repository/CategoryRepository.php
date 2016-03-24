@@ -151,4 +151,17 @@ class CategoryRepository extends NestedTreeRepository
             ->setParameter('root', Category::ROOT_SLUG)
             ->orderBy('a.lft')->getQuery()->getResult();
     }
+
+    public function getPathString(Category $category)
+    {
+        $parent = $category;
+        $path = [$parent->getName()];
+        while ($parent = $parent->getParent()) {
+            if ($parent->getSlug() !== Category::ROOT_SLUG) {
+                $path[] = $parent->getName();
+            }
+        }
+
+        return implode('/', ($path));
+    }
 }

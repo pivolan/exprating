@@ -27,7 +27,7 @@
                 return false;
             }
             sel = sel[0];
-            sel = ref.create_node(sel, {"type": "file"});
+            sel = ref.create_node(sel, {"type": "file", a_attr: {data_path: ''}, data: {created: true, actions: []}});
             if (sel) {
                 ref.edit(sel);
             }
@@ -39,13 +39,46 @@
                 return false;
             }
             sel = sel[0];
-            node = ref.get_node(sel);
-            ref.set_text(sel, node.a_attr.data_name);
             ref.edit(sel);
         }
         function deselect_all_import() {
             $('#treeCategoryImport').jstree(true).deselect_all();
         }
+        (function ($, undefined) {
+            "use strict";
+            var anchor = document.createElement('A');
+            var span = document.createElement('span');
+            anchor.href = '#';
+            anchor.target = '_blank';
+            span.className = 'glyphicon glyphicon-edit';
+            anchor.appendChild(span);
+
+            $.jstree.defaults.actions = $.noop;
+            $.jstree.plugins.actions = function (options, parent) {
+                this.redraw_node = function (obj, deep, callback, force_draw) {
+                    obj = parent.redraw_node.call(this, obj, deep, callback, force_draw);
+                    if (obj) {
+                        var node = (this.get_node(obj));
+                        for (var key in node.data.actions) {
+                            var span_class = node.data.actions[key].span_class;
+                            var url = node.data.actions[key].url;
+                            var tmp = anchor.cloneNode(true);
+                            tmp.href = url;
+                            tmp.firstChild.className = span_class;
+                            if (node.data.actions[key].text) {
+                                tmp.firstChild.textContent = node.data.actions[key].text;
+                            }
+                            if (!url) {
+                                obj.insertBefore(tmp.firstChild, obj.childNodes[2]);
+                            } else {
+                                obj.insertBefore(tmp, obj.childNodes[2]);
+                            }
+                        }
+                    }
+                    return obj;
+                };
+            };
+        })(jQuery);
         $('#treeCategory').jstree({
             core: {
                 check_callback: true,
@@ -56,19 +89,28 @@
                     {
                         id: '{{ category.slug }}',
                         parent: '{{ parent_slug }}',
-                        text: '{{ category.name|raw }} <a href="{{ path("category_admin_categories", {"slug":category.slug}) }}" class="external"><span class="glyphicon glyphicon-edit"></span></a> <a href="{{ path("product_list", {"slug":category.slug, "peopleGroup": "dlya-vseh"}) }}" class="external"><span class="glyphicon glyphicon-share"></span></a>',
+                        text: '{{ category.name|raw }}',
                         a_attr: {
                             href: '{{ path('category_admin_categories', {'slug': category.slug}) }}',
-                            data_slug: '{{ category.slug }}',
                             data_path: '{{ categoryAssociate[category.slug] }}',
-                            data_name: '{{ category.name|raw }}',
-                            data_actions: '<a href="{{ path("category_admin_categories", {"slug":category.slug}) }}" class="external"><span class="glyphicon glyphicon-edit"></span></a> <a href="{{ path("product_list", {"slug":category.slug, "peopleGroup": "dlya-vseh"}) }}" class="external"><span class="glyphicon glyphicon-share"></span></a>',
                         },
+                        data: {
+                            actions: [
+                                {
+                                    span_class: "glyphicon glyphicon-edit",
+                                    url: '{{ path('category_admin_categories', {'slug': category.slug}) }}',
+                                },
+                                {
+                                    span_class: "glyphicon glyphicon-share",
+                                    url: '{{ path("product_list", {"slug":category.slug, "peopleGroup": "dlya-vseh"}) }}'
+                                },
+                            ]
+                        }
                     },
                     {% endfor %}
                 ]
             },
-            plugins: ['dnd']
+            plugins: ['dnd', 'actions']
         }).on('select_node.jstree', function (node, selected, event) {
             var selected_nodes = $('#treeCategoryImport').jstree(true).get_selected();
             if (selected_nodes.length && !selected_by_event) {
@@ -78,7 +120,7 @@
 
                 var alias_category_id = selected_nodes[0];
                 var node = $('#treeCategoryImport').jstree(true).get_node(alias_category_id);
-                if (confirm('Вы хотите поменять "' + node.a_attr.data_current_path + '" на "' + selected.node.a_attr.data_path + '"')) {
+                if (confirm('Вы хотите поменять "' + node.data.actions[0].text + '" на "' + selected.node.a_attr.data_path + '"')) {
                     $.ajax('{{ path('admin_import_settings_change') }}', {
                         method: "POST",
                         data: {category_slug: category_slug, alias_category_id: alias_category_id},
@@ -92,10 +134,8 @@
                                 $('div.alert-message').html('');
                             }, 2000);
                             node.a_attr.data_relation = category_slug;
-                            console.log(node.text);
-                            var new_text = node.text.replace(/\(.*\)/g, '') + '(<span class="small text-success">' + selected.node.a_attr.data_path + '</span>)';
-                            node.a_attr.data_current_path = selected.node.a_attr.data_path;
-                            $('#treeCategoryImport').jstree(true).set_text(node, new_text);
+                            node.data.actions[0].text = selected.node.a_attr.data_path;
+                            $('#treeCategoryImport').jstree(true).set_text(node, node.text);
                         }
                     });
                 } else {
@@ -113,13 +153,14 @@
             selected_by_event = false;
         }).on('rename_node.jstree', function (event, entity) {
             var node = entity.node;
-            if (confirm('Сохранить новое имя ' + entity.text + '?')) {
-                node.a_attr.data_name = entity.text;
-                var new_text = node.a_attr.data_name + ' ' + node.a_attr.data_actions;
-                node.a_attr.data_path = node.a_attr.data_path.replace(entity.old, entity.text);
-                $('#treeCategory').jstree(true).set_text(node, new_text);
+            if (!node.data.created) {
+                if (confirm('Сохранить новое имя ' + entity.text + '?')) {
+                    node.a_attr.data_path = node.a_attr.data_path.replace(entity.old, entity.text);
+                } else {
+                    $('#treeCategory').jstree(true).set_text(node, entity.old);
+                }
             } else {
-                $('#treeCategory').jstree(true).set_text(node, entity.old + ' ' + node.a_attr.data_actions);
+                node.data.created = false;
             }
         }).on('move_node.jstree', function (e, data) {
             console.log(data);
@@ -132,7 +173,14 @@
                     parent: data.parent,
                 },
                 success: function () {
-                    alert('saved');
+                    var html = '<div class="message-box alert-success">' +
+                            '<span class="close">X</span>' +
+                            '<p>Изменения успешно сохранены</p>' +
+                            '</div>';
+                    $('div.alert-message').html(html);
+                    setTimeout(function () {
+                        $('div.alert-message').html('');
+                    }, 2000);
                 }
             })
         });
@@ -149,21 +197,33 @@
                     {
                         id: '{{ category.id }}',
                         parent: '{{ category.parent.id|default('#') }}',
-                        text: '{{ category.name|raw }} <a href="{{ category.url }}" class="external"><span class="glyphicon glyphicon-share"></span></a> {{ categoryNameHtml|raw }}',
+                        text: '{{ category.name|raw }}',
                         opened: true,
                         a_attr: {
                             href: '#',
-                            data_id: '{{ category.id }}',
                             data_relation: '{{ category.aliasCategory.categoryExpratingId|default(null) }}',
                             data_current_path: '{{ categoryName }}'
                         },
                         state: {
                             opened: true
+                        },
+                        data: {
+                            actions: [
+                                {
+                                    span_class: 'small text-success',
+                                    text: '{{ categoryName }}'
+                                },
+                                {
+                                    span_class: 'glyphicon glyphicon-share',
+                                    url: '{{ category.url|raw }}'
+                                }
+                            ]
                         }
                     },
                     {% endfor %}
                 ]
-            }
+            },
+            plugins: ['actions']
         }).on('select_node.jstree', function (node, selected, event) {
             var dataRelation = selected.node.a_attr.data_relation;
             $('#treeCategory').jstree(true).deselect_all();
