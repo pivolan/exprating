@@ -78,6 +78,7 @@ class InviteControllerTest extends AbstractWebCaseTest
 
         $client = $this->client;
         $client->request('GET', '/invite/'.$invite->getHash());
-        $this->assertEquals(302, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+        $this->assertContains('Регистрация по приглашению', $client->getResponse()->getContent());
     }
 }
