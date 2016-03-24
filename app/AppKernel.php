@@ -35,6 +35,7 @@ class AppKernel extends Kernel
             new Exprating\StatisticBundle\ExpratingStatisticBundle(),
             new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
             new Glifery\EntityHiddenTypeBundle\GliferyEntityHiddenTypeBundle(),
+            new EmanueleMinotto\TwigCacheBundle\TwigCacheBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
