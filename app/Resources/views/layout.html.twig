@@ -19,9 +19,13 @@
 
     {% block stylesheets %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        {% stylesheets '@common_css' output='bundles/common.css' %}
-        <link rel="stylesheet" href="{{ asset(asset_url) }}"/>
-        {% endstylesheets %}
+        <link href="{{ asset('css/external/bootstrap332.min.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('css/external/superfish.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('css/external/select2.min.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('css/external/colorbox.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('css/external/jquery.mmenu.all.css') }}" type="text/css" rel="stylesheet"/>
+        <link href="{{ asset('css/external/jquery-ui.min.css') }}" type="text/css" rel="stylesheet"/>
     {% endblock %}
 
 </head>
