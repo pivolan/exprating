@@ -88,12 +88,13 @@
     text-shadow: none;
     color: #444;
     font-weight: 300;
-    line-height: 22px;
-    height: 22px;
+    line-height: 30px;
+    height: 30px;
 }
 .sf-menu ul li a:hover {
     background: #bcd2b2;
     color: #fff;
+    text-shadow: none;
 }
 .sf-menu ul ul li a {
     font-weight: 300;
@@ -103,9 +104,11 @@
     /* only transition out, not in */
     -webkit-transition: none;
     transition: none;
+    text-shadow: none;
 }
 .sf-menu li:hover a {
     color: #333;
+    text-shadow: none;
 }
 
 /*** arrows (for all except IE7) **/

@@ -16,7 +16,7 @@
         {% block children %}
             <div class="category-child">
                 {% for category_child in category.children %}
-                    <a href="{{ path("product_list", {"slug": category_child.slug, "peopleGroup": productFilter.peopleGroup.slug}) }}" class="btn btn-success btn-xs">{{ category_child.name }}</a>
+                    <a href="{{ path("product_list", {"slug": category_child.slug, "peopleGroup": productFilter.peopleGroup.slug}) }}">{{ category_child.name }}</a>
                 {% endfor %}
             </div>
         {% endblock %}
