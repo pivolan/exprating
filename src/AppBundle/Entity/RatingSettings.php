@@ -85,7 +85,7 @@ class RatingSettings
      * @var Category
      *
      * @ORM\Id
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="ratingSettings")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="slug", onDelete="CASCADE")
      */
     private $category;
