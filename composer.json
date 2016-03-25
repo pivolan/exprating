@@ -2,6 +2,11 @@
     "name": "igorpecenikin/exprating",
     "license": "proprietary",
     "type": "project",
+    "config": {
+        "platform": {
+            "php": "5.6"
+        }
+    },
     "autoload": {
         "psr-4": {
             "": "src/"
@@ -23,6 +28,10 @@
         {
             "type": "git",
             "url": "git@github.com:pivolan/select2entity-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:pivolan/assetic.git"
         }
     ],
     "autoload-dev": {
