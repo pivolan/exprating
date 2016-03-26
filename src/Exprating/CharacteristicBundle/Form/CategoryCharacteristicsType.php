@@ -8,12 +8,15 @@
 namespace Exprating\CharacteristicBundle\Form;
 
 use AppBundle\Entity\Category;
+use Doctrine\ORM\EntityManager;
 use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
+use Exprating\CharacteristicBundle\Form\DataTransformer\EntitiesToPropertyTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,46 +29,30 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
-class CategoryCharacteristicType extends AbstractType
+class CategoryCharacteristicsType extends CollectionType
 {
     /**
      * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(
-                'characteristic',
-                Select2EntityType::class,
-                [
-                    'multiple'             => false,
-                    'remote_route'         => 'ajax_characteristics',
-                    'class'                => Characteristic::class,
-                    'text_property'        => 'name',
-                    'page_limit'           => null,
-                    'primary_key'          => 'slug',
-                    'label'                => null,
-                    'minimum_input_length' => 0,
-                ]
-            )
-            ->add('headGroup', HiddenType::class)
-            ->add('orderIndex', HiddenType::class);
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            [
-                'data_class' => CategoryCharacteristic::class
-            ]
-        );
+        $options['entry_type'] = CategoryCharacteristicType::class;
+        parent::buildForm($builder, $options);
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
+        $view->vars['headGroups'] = ['Основные характеристики' => []];
+        foreach ($view->vars['form'] as $formView) {
+            /** @var FormView $formView */
+            $key = $formView->children['headGroup']->vars['value'];
+            $view->vars['headGroups'][$key][] = $formView;
+        }
         parent::finishView($view, $form, $options);
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'category_characteristics';
     }
 }

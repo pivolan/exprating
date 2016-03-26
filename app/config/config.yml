@@ -252,7 +252,7 @@ assetic:
             inputs:
                 - 'js/external/jquery-ui.min.js'
                 - 'js/external/select2.full.min.js'
-                - '@TetranzSelect2EntityBundle/Resources/public/js/select2entity.js'
+                - 'js/plugins/select2entity.js'
                 - 'js/Exp/exp_historical.js'
                 - 'js/Exp/exp_colorbox.js'
                 - 'js/external/jstree.min.js'
@@ -264,7 +264,7 @@ assetic:
         admin_experts_js:
             inputs:
                 - 'js/external/select2.full.min.js'
-                - '@TetranzSelect2EntityBundle/Resources/public/js/select2entity.js'
+                - 'js/plugins/select2entity.js'
         category_admin_requests_js:
             inputs:
                 - 'js/Exp/exp_historical.js'

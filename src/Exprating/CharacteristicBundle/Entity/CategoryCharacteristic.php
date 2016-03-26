@@ -154,4 +154,9 @@ class CategoryCharacteristic
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        return $this->getHeadGroup();
+    }
 }
