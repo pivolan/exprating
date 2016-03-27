@@ -7,6 +7,7 @@ use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints\UniqueCategoryCharacteristic;
 
 /**
  * Category.
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * @UniqueCategoryCharacteristic
  */
 class Category
 {
@@ -93,6 +95,7 @@ class Category
      * @var CategoryCharacteristic[]
      *
      * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\CategoryCharacteristic", mappedBy="category")
+     * @Assert\Valid
      */
     private $categoryCharacteristics;
 

@@ -1,24 +1,32 @@
-{% block category_characteristics_widget %}
-    <div class="row chars_sortable">
-        <h1>Характеристики</h1>
-        <div class="row chars_sortable">
-            <h1>Характеристики</h1>
+{% block category_characteristic_row %}
+    <div class="list-group-item {{ not valid?'has-error' }}">
+        {{ form_errors(form) }}
+        {{ form_errors(form.characteristic) }}
+        {{ form_errors(form.headGroup) }}
+        <span class="glyphicon glyphicon-transfer"></span>
+        {{ form_widget(form.characteristic) }}
+        <div class="hidden">
+            {{ form_widget(form.headGroup) }}
+        </div>
+        {{ form_widget(form.orderIndex) }}
+        <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span>
+        </button>
+    </div>
+{% endblock category_characteristic_row %}
+
+{% block category_characteristics_row %}
+    <label for="characteristics">Характеристики</label>
+    <div id="characteristics" class="row chars_sortable" data-prototype="{{ form_row(prototype)|e }}">
+        <div id="characteristicGroups" class="row">
             {% for headGroup, forms in headGroups %}
                 <div class="col-md-6">
-                    <input type="text" value="{{ headGroup }}" {{ loop.first?'readonly':'' }} class="form-control class_title"/>
+                    <input type="text" value="{{ headGroup }}" {{ loop.first?'readonly':'' }} placeholder="Название группы" class="form-control class_title"/>
                     {% if not loop.first %}
                         <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>
                     {% endif %}
                     <div class="sortable list-group well">
-                        {% for fields in forms %}
-                            <div class="list-group-item">
-                                <span class="glyphicon glyphicon-transfer"></span>
-                                {{ form_widget(fields.characteristic) }}
-                                {{ form_widget(fields.headGroup) }}
-                                {{ form_widget(fields.orderIndex) }}
-                                <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </div>
+                        {% for field in forms %}
+                            {{ form_row(field) }}
                         {% endfor %}
                         <div></div>
                         <button class="btn btn-info btn-sm add_param" type="button">Добавить характеристику</button>

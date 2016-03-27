@@ -31,12 +31,9 @@
     {% endjavascripts %}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.select2entity').on('select2:selecting', function (data) {
-                console.log(data);
-            });
             $('.sortable').sortable({connectWith: '.sortable', items: '> div'});
             $(document).on('click', 'button.add_new', function () {
-                $('.chars_sortable').append('<div class="col-md-6">\
+                $('#characteristicGroups').append('<div class="col-md-6">\
                 <input type="text" value="" placeholder="Название группы" class="form-control class_title"/>\
                 <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>\
                 <div class="sortable list-group well">\
@@ -48,13 +45,10 @@
             });
             $(document).on('click', 'button.add_param', function () {
                 var $this = $(this);
-                $this.before('<div class="list-group-item">\
-                        <span class="glyphicon glyphicon-transfer"></span>\
-                        <select class="form-control" name="sdf" id="sdf">\
-                        <option value="sdf">Брэнд</option>\
-                        </select>\
-                        <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>\
-                        </div>');
+                var prototype = $('#characteristics').data('prototype');
+                var index = $('#characteristics').find('select').length;
+                $this.before(prototype.replace(/__name__/g, index));
+                $('.select2entity').select2entity();
             });
             $(document).on('click', 'button.remove', function () {
                 $(this).parent().remove();

@@ -37,6 +37,10 @@ class CategoryCharacteristicsType extends CollectionType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $options['entry_type'] = CategoryCharacteristicType::class;
+        $options['allow_add'] = true;
+        $options['allow_delete'] = true;
+        $options['label'] = null;
+        $options['entry_options']['label'] = null;
         parent::buildForm($builder, $options);
     }
 

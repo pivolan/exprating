@@ -46,9 +46,10 @@ class CategoryCharacteristicType extends AbstractType
                     'primary_key'          => 'slug',
                     'label'                => null,
                     'minimum_input_length' => 0,
+                    'required'             => true,
                 ]
             )
-            ->add('headGroup', HiddenType::class)
+            ->add('headGroup', null, ['required'=>false])
             ->add('orderIndex', HiddenType::class);
     }
 
@@ -59,7 +60,7 @@ class CategoryCharacteristicType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => CategoryCharacteristic::class
+                'data_class' => CategoryCharacteristic::class,
             ]
         );
     }

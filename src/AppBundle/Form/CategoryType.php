@@ -30,7 +30,8 @@ class CategoryType extends AbstractType
             ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
             ->add(
                 'categoryCharacteristics',
-                CategoryCharacteristicsType::class
+                CategoryCharacteristicsType::class,
+                ['label'=> null]
             )
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);

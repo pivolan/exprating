@@ -26,6 +26,12 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: 'unique_user_validator'}
 
+    validator.unique_category_characteristic_validator:
+        class: AppBundle\Validator\Constraints\UniqueCategoryCharacteristicValidator
+        arguments: ['@doctrine.orm.default_entity_manager']
+        tags:
+            - { name: validator.constraint_validator, alias: 'unique_category_characteristic_validator'}
+
     app.product_voter:
         class: AppBundle\Security\ProductVoter
         arguments: ['@security.access.decision_manager']

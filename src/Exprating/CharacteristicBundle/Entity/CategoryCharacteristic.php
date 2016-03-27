@@ -4,6 +4,7 @@ namespace Exprating\CharacteristicBundle\Entity;
 
 use AppBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CategoryCharacteristic
@@ -27,6 +28,7 @@ class CategoryCharacteristic
      * @var string
      *
      * @ORM\Column(name="head_group", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Значение для 'Название группы' не должно быть пустым")
      */
     private $headGroup = 'Основные характеристики';
 
@@ -48,6 +50,7 @@ class CategoryCharacteristic
      * @var Characteristic
      * @ORM\ManyToOne(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic", fetch="EAGER")
      * @ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug", onDelete="CASCADE", nullable=false)
+     * @Assert\NotBlank
      */
     private $characteristic;
 
@@ -157,6 +160,6 @@ class CategoryCharacteristic
 
     public function __toString()
     {
-        return $this->getHeadGroup();
+        return (string)$this->getId();
     }
 }
