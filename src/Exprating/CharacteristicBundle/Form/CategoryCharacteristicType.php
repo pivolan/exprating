@@ -50,7 +50,8 @@ class CategoryCharacteristicType extends AbstractType
                 ]
             )
             ->add('headGroup', null, ['required'=>false])
-            ->add('orderIndex', HiddenType::class);
+            ->add('orderIndex', HiddenType::class)
+            ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
 
     /**
@@ -65,8 +66,14 @@ class CategoryCharacteristicType extends AbstractType
         );
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function onPostSubmit(FormEvent $event)
     {
-        parent::finishView($view, $form, $options);
+        /** @var CategoryCharacteristic $data */
+        $data = $event->getData();
+        $form = $event->getForm();
+        if (($data->getCategory() == null) && $form->getParent() && $form->getParent()->getParent()) {
+            $category = $form->getParent()->getParent()->getData();
+            $data->setCategory($category);
+        }
     }
 }

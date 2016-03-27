@@ -5,6 +5,7 @@ namespace Exprating\CharacteristicBundle\Entity;
 use AppBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * CategoryCharacteristic
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="category_characteristic", uniqueConstraints={@ORM\uniqueConstraint(name="category_characteristic",
  *     columns={"category_id", "characteristic_id"})})
  * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\CategoryCharacteristicRepository")
+ * @UniqueEntity(fields={"category", "characteristic"})
  */
 class CategoryCharacteristic
 {
@@ -43,6 +45,7 @@ class CategoryCharacteristic
      * @var Category
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="categoryCharacteristics")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="slug", onDelete="CASCADE", nullable=false)
+     * @Assert\NotBlank
      */
     private $category;
 

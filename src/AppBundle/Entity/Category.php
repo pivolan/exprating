@@ -94,7 +94,9 @@ class Category
     /**
      * @var CategoryCharacteristic[]
      *
-     * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\CategoryCharacteristic", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\CategoryCharacteristic", mappedBy="category",
+     *      cascade="all", orphanRemoval=true)
+     * @ORM\OrderBy({"orderIndex" = "ASC"})
      * @Assert\Valid
      */
     private $categoryCharacteristics;

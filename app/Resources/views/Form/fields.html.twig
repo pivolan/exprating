@@ -5,10 +5,8 @@
         {{ form_errors(form.headGroup) }}
         <span class="glyphicon glyphicon-transfer"></span>
         {{ form_widget(form.characteristic) }}
-        <div class="hidden">
-            {{ form_widget(form.headGroup) }}
-        </div>
-        {{ form_widget(form.orderIndex) }}
+        <div class="hidden headGroup">{{ form_widget(form.headGroup) }}</div>
+        <div class="hidden orderIndex">{{ form_widget(form.orderIndex) }}</div>
         <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span>
         </button>
     </div>
@@ -20,9 +18,11 @@
         <div id="characteristicGroups" class="row">
             {% for headGroup, forms in headGroups %}
                 <div class="col-md-6">
-                    <input type="text" value="{{ headGroup }}" {{ loop.first?'readonly':'' }} placeholder="Название группы" class="form-control class_title"/>
+                    <input type="text" value="{{ headGroup }}" {{ loop.first?'readonly':'' }}
+                           placeholder="Название группы" class="form-control class_title" name="headGroup"/>
                     {% if not loop.first %}
-                        <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span>
+                        </button>
                     {% endif %}
                     <div class="sortable list-group well">
                         {% for field in forms %}

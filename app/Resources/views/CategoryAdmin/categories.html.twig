@@ -22,16 +22,38 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function update_positions() {
+            $('div.orderIndex input').each(function (index, object) {
+                object.value = index;
+                console.log(object);
+            });
+        }
+
+        function update_head_group(object) {
+            console.log(object);
+            var head_group = $(object).parent().parent().find('input.class_title').eq(0).val();
+            console.log(head_group);
+            $(object).find('div.headGroup input').each(function (index, object2) {
+                object2.value = head_group;
+            });
+        }
         Bridge.js_tree_data = [
             {{ include("_include/Category/_jsTree.json.twig") }}
         ];
     </script>
     {% javascripts '@category_admin_categories_js' output='bundles/js/*' %}
-        <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
     {% endjavascripts %}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.sortable').sortable({connectWith: '.sortable', items: '> div'});
+            $('.history_category').sortable({connectWith: '.sortable', items: '.sortable > div'});
+
+            $(document).on('sortupdate', '.history_category', function (e, ui) {
+                console.log('update');
+                update_positions();
+                update_head_group($(ui.item));
+            });
+
             $(document).on('click', 'button.add_new', function () {
                 $('#characteristicGroups').append('<div class="col-md-6">\
                 <input type="text" value="" placeholder="Название группы" class="form-control class_title"/>\
@@ -47,12 +69,24 @@
                 var $this = $(this);
                 var prototype = $('#characteristics').data('prototype');
                 var index = $('#characteristics').find('select').length;
-                $this.before(prototype.replace(/__name__/g, index));
+                var html = $(prototype.replace(/__name__/g, index));
+                $this.before(html);
+                update_head_group(html);
+                update_positions();
+
                 $('.select2entity').select2entity();
             });
             $(document).on('click', 'button.remove', function () {
                 $(this).parent().remove();
-            })
+            });
+            $(document).on('change', 'input.class_title', function (e) {
+                var $this = $(this);
+                $this.parent().find('.headGroup input').each(function (index, object) {
+                    object.value = e.target.value;
+                    console.log(object);
+                });
+            });
+
         });
     </script>
 {% endblock %}
