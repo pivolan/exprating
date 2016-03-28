@@ -4,6 +4,8 @@ namespace Exprating\CharacteristicBundle\Entity;
 
 use AppBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * CategoryCharacteristic
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="category_characteristic", uniqueConstraints={@ORM\uniqueConstraint(name="category_characteristic",
  *     columns={"category_id", "characteristic_id"})})
  * @ORM\Entity(repositoryClass="Exprating\CharacteristicBundle\Repository\CategoryCharacteristicRepository")
+ * @UniqueEntity(fields={"category", "characteristic"})
  */
 class CategoryCharacteristic
 {
@@ -27,6 +30,7 @@ class CategoryCharacteristic
      * @var string
      *
      * @ORM\Column(name="head_group", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Значение для 'Название группы' не должно быть пустым")
      */
     private $headGroup = 'Основные характеристики';
 
@@ -41,6 +45,7 @@ class CategoryCharacteristic
      * @var Category
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="categoryCharacteristics")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="slug", onDelete="CASCADE", nullable=false)
+     * @Assert\NotBlank
      */
     private $category;
 
@@ -48,6 +53,7 @@ class CategoryCharacteristic
      * @var Characteristic
      * @ORM\ManyToOne(targetEntity="Exprating\CharacteristicBundle\Entity\Characteristic", fetch="EAGER")
      * @ORM\JoinColumn(name="characteristic_id", referencedColumnName="slug", onDelete="CASCADE", nullable=false)
+     * @Assert\NotBlank
      */
     private $characteristic;
 
@@ -153,5 +159,10 @@ class CategoryCharacteristic
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->getId();
     }
 }

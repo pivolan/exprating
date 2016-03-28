@@ -24,6 +24,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 class CategoryCharacteristicType extends AbstractType
 {
@@ -33,10 +34,24 @@ class CategoryCharacteristicType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('characteristic')
-            ->add('headGroup', HiddenType::class)
+            ->add(
+                'characteristic',
+                Select2EntityType::class,
+                [
+                    'multiple'             => false,
+                    'remote_route'         => 'ajax_characteristics',
+                    'class'                => Characteristic::class,
+                    'text_property'        => 'name',
+                    'page_limit'           => null,
+                    'primary_key'          => 'slug',
+                    'label'                => null,
+                    'minimum_input_length' => 0,
+                    'required'             => true,
+                ]
+            )
+            ->add('headGroup', null, ['required'=>false])
             ->add('orderIndex', HiddenType::class)
-        ;
+            ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
 
     /**
@@ -46,11 +61,19 @@ class CategoryCharacteristicType extends AbstractType
     {
         $resolver->setDefaults(
             [
+                'data_class' => CategoryCharacteristic::class,
             ]
         );
     }
-    public function finishView(FormView $view, FormInterface $form, array $options)
+
+    public function onPostSubmit(FormEvent $event)
     {
-        parent::finishView($view, $form, $options);
+        /** @var CategoryCharacteristic $data */
+        $data = $event->getData();
+        $form = $event->getForm();
+        if (($data->getCategory() == null) && $form->getParent() && $form->getParent()->getParent()) {
+            $category = $form->getParent()->getParent()->getData();
+            $data->setCategory($category);
+        }
     }
 }

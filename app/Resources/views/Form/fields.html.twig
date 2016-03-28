@@ -1,24 +1,41 @@
-{% block category_characteristic_widget %}
-    <div class="row chars_sortable">
-        <h1>Характеристики</h1>
-        <div class="col-md-6">
-            <input type="text" value="Основные характеристики" readonly class="form-control class_title"/>
-            <div class="sortable list-group well">
-                <div class="list-group-item">
-                    <span class="glyphicon glyphicon-transfer"></span>
-                    <select class="form-control" name="sdf" id="sdf">
-                        <option value="sdf">Брэнд</option>
-                    </select>
-                    <input type="hidden" name="headGroup"/>
-                    <input type="hidden" name="orderIndex"/>
-                    <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>
-                </div>
-                <div></div>
-                <button class="btn btn-info btn-sm add_param" type="button">Добавить характеристику</button>
-            </div>
-        </div>
+{% block category_characteristic_row %}
+    <div class="list-group-item {{ not valid?'has-error' }}">
+        {{ form_errors(form) }}
+        {{ form_errors(form.characteristic) }}
+        {{ form_errors(form.headGroup) }}
+        <span class="glyphicon glyphicon-transfer"></span>
+        {{ form_widget(form.characteristic) }}
+        <div class="hidden headGroup">{{ form_widget(form.headGroup) }}</div>
+        <div class="hidden orderIndex">{{ form_widget(form.orderIndex) }}</div>
+        <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span>
+        </button>
     </div>
-    <div class="row">
-        <button class="add_new btn btn-info" type="button">Добавить группу</button>
+{% endblock category_characteristic_row %}
+
+{% block category_characteristics_row %}
+    <label for="characteristics">Характеристики</label>
+    <div id="characteristics" class="row chars_sortable" data-prototype="{{ form_row(prototype)|e }}">
+        <div id="characteristicGroups" class="row">
+            {% for headGroup, forms in headGroups %}
+                <div class="col-md-6">
+                    <input type="text" value="{{ headGroup }}" {{ loop.first?'readonly':'' }}
+                           placeholder="Название группы" class="form-control class_title" name="headGroup"/>
+                    {% if not loop.first %}
+                        <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    {% endif %}
+                    <div class="sortable list-group well">
+                        {% for field in forms %}
+                            {{ form_row(field) }}
+                        {% endfor %}
+                        <div></div>
+                        <button class="btn btn-info btn-sm add_param" type="button">Добавить характеристику</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <button class="add_new btn btn-info" type="button">Добавить группу</button>
+        </div>
     </div>
 {% endblock %}

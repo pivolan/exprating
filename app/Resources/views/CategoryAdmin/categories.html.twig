@@ -22,21 +22,40 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function update_positions() {
+            $('div.orderIndex input').each(function (index, object) {
+                object.value = index;
+                console.log(object);
+            });
+        }
+
+        function update_head_group(object) {
+            console.log(object);
+            var head_group = $(object).parent().parent().find('input.class_title').eq(0).val();
+            console.log(head_group);
+            $(object).find('div.headGroup input').each(function (index, object2) {
+                object2.value = head_group;
+            });
+        }
         Bridge.js_tree_data = [
             {{ include("_include/Category/_jsTree.json.twig") }}
         ];
     </script>
     {% javascripts '@category_admin_categories_js' output='bundles/js/*' %}
-        <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
+    <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
     {% endjavascripts %}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.select2entity').on('select2:selecting', function (data) {
-                console.log(data);
+            $('.history_category').sortable({connectWith: '.sortable', items: '.sortable > div'});
+
+            $(document).on('sortupdate', '.history_category', function (e, ui) {
+                console.log('update');
+                update_positions();
+                update_head_group($(ui.item));
             });
-            $('.sortable').sortable({connectWith: '.sortable', items: '> div'});
+
             $(document).on('click', 'button.add_new', function () {
-                $('.chars_sortable').append('<div class="col-md-6">\
+                $('#characteristicGroups').append('<div class="col-md-6">\
                 <input type="text" value="" placeholder="Название группы" class="form-control class_title"/>\
                 <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>\
                 <div class="sortable list-group well">\
@@ -48,17 +67,26 @@
             });
             $(document).on('click', 'button.add_param', function () {
                 var $this = $(this);
-                $this.before('<div class="list-group-item">\
-                        <span class="glyphicon glyphicon-transfer"></span>\
-                        <select class="form-control" name="sdf" id="sdf">\
-                        <option value="sdf">Брэнд</option>\
-                        </select>\
-                        <button class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>\
-                        </div>');
+                var prototype = $('#characteristics').data('prototype');
+                var index = $('#characteristics').find('select').length;
+                var html = $(prototype.replace(/__name__/g, index));
+                $this.before(html);
+                update_head_group(html);
+                update_positions();
+
+                $('.select2entity').select2entity();
             });
             $(document).on('click', 'button.remove', function () {
                 $(this).parent().remove();
-            })
+            });
+            $(document).on('change', 'input.class_title', function (e) {
+                var $this = $(this);
+                $this.parent().find('.headGroup input').each(function (index, object) {
+                    object.value = e.target.value;
+                    console.log(object);
+                });
+            });
+
         });
     </script>
 {% endblock %}

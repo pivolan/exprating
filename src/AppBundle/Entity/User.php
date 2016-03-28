@@ -179,7 +179,7 @@ class User extends BaseUser
     /**
      * @var Category[]
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="experts")
      * @ORM\JoinTable(name="user_category", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id",
      *     onDelete="CASCADE")},
      *            inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug",
@@ -197,6 +197,20 @@ class User extends BaseUser
      */
     private $adminCategories;
 
+    /**
+     * @var Comment[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="user")
+     */
+    private $comments;
+
+    /**
+     * @var CuratorDecision[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CuratorDecision", mappedBy="curator")
+     */
+    private $myDecisions;
+
+
+
     public function __construct()
     {
         parent::__construct();
@@ -205,6 +219,8 @@ class User extends BaseUser
         $this->experts = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->adminCategories = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->myDecisions = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
 
@@ -752,6 +768,7 @@ class User extends BaseUser
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 }

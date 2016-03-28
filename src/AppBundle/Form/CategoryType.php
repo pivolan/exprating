@@ -6,7 +6,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\PeopleGroup;
 use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
-use Exprating\CharacteristicBundle\Form\CategoryCharacteristicType;
+use Exprating\CharacteristicBundle\Form\CategoryCharacteristicsType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -30,7 +30,8 @@ class CategoryType extends AbstractType
             ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
             ->add(
                 'categoryCharacteristics',
-                CategoryCharacteristicType::class
+                CategoryCharacteristicsType::class,
+                ['label'=> null]
             )
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);

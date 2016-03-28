@@ -2,6 +2,10 @@
 {% form_theme form 'Form/form_rating_settings.html.twig' %}
 {% if category %}
     {{ form(form) }}
+    <button id="add_characteristic" type="button"
+            data-url="{{ path('characteristic_create', {"category_slug":category.slug}) }}"
+            class="btn btn-info">Добавить новую характеристику
+    </button>
     {% for flash_message in app.session.flashbag.get('flash.category_saved') %}
         <div id="flash_info_{{ loop.index }}" class="well alert-success">
             {{ flash_message }}

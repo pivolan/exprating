@@ -72,7 +72,7 @@ class Invite
     /**
      * @var User
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="invites")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="invite")
      * @ORM\JoinColumn(name="expert_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $expert;
