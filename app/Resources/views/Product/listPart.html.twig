@@ -16,7 +16,9 @@
         {% block children %}
             <div class="category-child">
                 {% for category_child in category.children %}
-                    <a href="{{ path("product_list", {"slug": category_child.slug, "peopleGroup": productFilter.peopleGroup.slug}) }}">{{ category_child.name }}</a>
+                    {% if not category_child.isHidden %}
+                        <a href="{{ path("product_list", {"slug": category_child.slug, "peopleGroup": productFilter.peopleGroup.slug}) }}">{{ category_child.name }}</a>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endblock %}

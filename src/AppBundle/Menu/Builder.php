@@ -49,7 +49,8 @@ class Builder implements ContainerAwareInterface
                 );
             }
             foreach ($categories as $category) {
-                if ($category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, $peopleGroup))) {
+                if (!$category->getIsHidden() &&
+                    $category->getPeopleGroups()->contains($em->getReference(PeopleGroup::class, $peopleGroup))) {
                     $menuChild->addChild(
                         $category->getName(),
                         [

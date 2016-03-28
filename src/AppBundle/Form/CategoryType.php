@@ -25,6 +25,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('isHidden', null, ['label' => 'Скрыть категорию?'])
             ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
             ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
