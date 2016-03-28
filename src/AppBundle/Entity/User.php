@@ -771,4 +771,72 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return User
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add myDecision
+     *
+     * @param \AppBundle\Entity\CuratorDecision $myDecision
+     *
+     * @return User
+     */
+    public function addMyDecision(\AppBundle\Entity\CuratorDecision $myDecision)
+    {
+        $this->myDecisions[] = $myDecision;
+
+        return $this;
+    }
+
+    /**
+     * Remove myDecision
+     *
+     * @param \AppBundle\Entity\CuratorDecision $myDecision
+     */
+    public function removeMyDecision(\AppBundle\Entity\CuratorDecision $myDecision)
+    {
+        $this->myDecisions->removeElement($myDecision);
+    }
+
+    /**
+     * Get myDecisions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMyDecisions()
+    {
+        return $this->myDecisions;
+    }
 }
