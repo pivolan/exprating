@@ -11,6 +11,7 @@ use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
 use Exprating\CharacteristicBundle\Exceptions\CharacteristicTypeException;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,6 +28,7 @@ class ProductCharacteristicType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('orderIndex', HiddenType::class)
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
@@ -52,7 +54,6 @@ class ProductCharacteristicType extends AbstractType
             $form->add('characteristic', null, ['label' => 'Название характеристики']);
             $form->add('headGroup', null, ['label' => 'Группа']);
             $form->add('value', null, ['label' => 'Значение']);
-
             return;
         }
         $form->add('characteristic', null, ['label' => 'Название характеристики', 'disabled' => true]);

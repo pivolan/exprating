@@ -103,4 +103,11 @@ $(document).ready(function () {
         $select.val(slug);
         $.colorbox.close();
     });
+
+    $('.content-inner').sortable({items: 'div[data-type="characteristic"]'});
+
+    $(document).on('sortupdate', '.content-inner', function (e, ui) {
+        console.log('update');
+        update_positions('div.orderIndex input');
+    });
 });
