@@ -244,6 +244,7 @@ class Product
      * @var ProductCharacteristic[]
      * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\ProductCharacteristic",
      *      mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"orderIndex": "ASC"})
      * @Assert\Valid
      */
     private $productCharacteristics;
