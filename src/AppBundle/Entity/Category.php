@@ -92,6 +92,13 @@ class Category
     private $seo;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_hidden", type="boolean", nullable=false, options={"default": false})
+     */
+    private $isHidden = false;
+
+    /**
      * @var CategoryCharacteristic[]
      *
      * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\CategoryCharacteristic", mappedBy="category",
@@ -545,5 +552,53 @@ class Category
         $this->seo = $seo;
 
         return $this;
+    }
+
+    /**
+     * Set isHidden
+     *
+     * @param string $isHidden
+     *
+     * @return Category
+     */
+    public function setIsHidden($isHidden)
+    {
+        $this->isHidden = $isHidden;
+
+        return $this;
+    }
+
+    /**
+     * Get isHidden
+     *
+     * @return string
+     */
+    public function getIsHidden()
+    {
+        return $this->isHidden;
+    }
+
+    /**
+     * Add categoryCharacteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic
+     *
+     * @return Category
+     */
+    public function addCategoryCharacteristic(\Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic)
+    {
+        $this->categoryCharacteristics[] = $categoryCharacteristic;
+
+        return $this;
+    }
+
+    /**
+     * Remove categoryCharacteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic
+     */
+    public function removeCategoryCharacteristic(\Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic)
+    {
+        $this->categoryCharacteristics->removeElement($categoryCharacteristic);
     }
 }
