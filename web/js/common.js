@@ -5,6 +5,28 @@ $(document).ready(function () {
     });
 
 
+    $("#mainSiteMenuMMenuNav").append($("#mainSiteMenu").clone().attr("id", "mainSiteMenuMMenu").attr("class", ""));
+    $("#mainSiteMenuMMenuNav ul").removeAttr('class');
+    $("#mainSiteMenuMMenuNav li").removeAttr('class');
+    $("#mainSiteMenuMMenuNav a").removeAttr('class');
+    $("#mainSiteMenuMMenuNav div").removeAttr('class');
+    $("#mainSiteMenuMMenuNav").mmenu({
+        configuration: {
+            pageNodetype: "div"
+        },
+        extensions 	: [ "border-none" ],
+        navbar 		: false,
+        navbars		: {
+            //content : [ "searchfield" ],
+            height 	: 1
+        },
+        //searchfield: {
+        //    add: true,
+        //    placeholder: 'Поиск'
+        //}
+    });
+    var API = $("#mainSiteMenuMMenuNav").data( "mmenu" );
+    
     $(".navbar-toggle").click(function () {
         API.open();
         return false;
