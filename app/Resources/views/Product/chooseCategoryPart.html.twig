@@ -34,14 +34,6 @@
                 <p class="label label-info">{{ product.category.name }}</p>
                 <h4>Новая категория</h4>
                 <p id="new_category" class="label label-info">{{ product.category.name }}</p>
-                <h4>Выбор Группы для товара</h4>
-                {{ form_widget(form.peopleGroups) }}
-                <h4>Группы для категории</h4>
-                <div id="groups">
-                    {% for peopleGroup in product.category.peopleGroups %}
-                        <div class="checkbox"><label for="category_people_group_{{ loop.index }}"><input id="category_people_group_{{ loop.index }}" disabled type="checkbox" checked/>{{ peopleGroup.name }}</label></div>
-                    {% endfor %}
-                </div>
             </div>
             <div class="col-md-6">
                 <h4>Список характеристик товара</h4>

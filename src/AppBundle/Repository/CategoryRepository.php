@@ -8,7 +8,6 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\User;
 use Doctrine\ORM\AbstractQuery;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
@@ -44,15 +43,13 @@ class CategoryRepository extends NestedTreeRepository
     public function getFirstLevel()
     {
         $qb = $this->createQueryBuilder('a')
-            ->select('a, b, c, d, e, f')
+            ->select('a, c, d, f')
             ->where('a.parent = :root')
             ->andWhere('a.isHidden != :is_hidden')
             ->setParameter('root', Category::ROOT_SLUG)
             ->setParameter('is_hidden', true)
-            ->leftJoin('a.peopleGroups', 'b')
             ->leftJoin('a.ratingSettings', 'c')
             ->leftJoin('a.children', 'd')
-            ->leftJoin('d.peopleGroups', 'e')
             ->leftJoin('d.ratingSettings', 'f')
             ->orderBy('a.lft');
         $query = $qb->getQuery();
@@ -72,14 +69,10 @@ class CategoryRepository extends NestedTreeRepository
         return $qb->getQuery();
     }
 
-    public function getChildrenIds(Category $category, PeopleGroup $peopleGroup = null)
+    public function getChildrenIds(Category $category)
     {
         $qb = $this->getChildrenQueryBuilder($category, false, null, 'ASC', true)
             ->select('node.slug');
-        if ($peopleGroup) {
-            $qb->innerJoin('node.peopleGroups', 'pg', 'WITH', 'pg.slug = :peopleGroup')
-                ->setParameter('peopleGroup', $peopleGroup->getSlug());
-        }
         $result = $qb->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
         $ids = [];
         foreach ($result as $row) {
@@ -149,10 +142,9 @@ class CategoryRepository extends NestedTreeRepository
     public function getAll()
     {
         return $this->createQueryBuilder('a')
-            ->select('a, b, c, d')
+            ->select('a, c, d')
             ->where('a.slug != :root')
             ->setParameter('root', Category::ROOT_SLUG)
-            ->leftJoin('a.peopleGroups', 'b')
             ->leftJoin('a.ratingSettings', 'c')
             ->leftJoin('a.seo', 'd')
             ->orderBy('a.lft')

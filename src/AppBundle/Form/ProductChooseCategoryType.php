@@ -31,7 +31,6 @@ class ProductChooseCategoryType extends AbstractType
     {
         $builder
             ->add('category', EntityHiddenType::class, ['class' => Category::class, 'property' => 'slug'])
-            ->add('peopleGroups', null, ['expanded' => true])
             ->add('save', SubmitType::class, ['label' => 'Сохранить']);
     }
 

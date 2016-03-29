@@ -1,23 +1,11 @@
-{% extends ':Product:detailPart.html.twig' %}
+{% extends 'Product/detailPart.html.twig' %}
 {% block edit_category %}
     {% if is_granted('CATEGORY_CHANGE', product) %}
         <a href="{{ path('product_choose_category', {'slug':product.slug}) }}" class="btn btn-xs btn-info" type="button"
-           data-toggle="tooltip" title="Изменить категорию">
+           title="Изменить категорию">
             <span class="glyphicon glyphicon-edit"></span>
         </a>
     {% endif %}
-    {% for peopleGroup in product.peopleGroups %}
-        {% if peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_WOMAN') %}
-            {% set faClass = 'fa-female' %}
-        {% elseif peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_MAN') %}
-            {% set faClass = 'fa-male' %}
-        {% elseif peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_CHILD') %}
-            {% set faClass = 'fa-child' %}
-        {% else %}
-            {% set faClass = 'fa-group' %}
-        {% endif %}
-        <i class="fa {{ faClass }}" data-toggle="tooltip" title="{{ peopleGroup.name }}"></i>
-    {% endfor %}
 {% endblock %}
 {% block form_start_block %}
     {% form_theme form 'Form/form_product_edit.html.twig' %}

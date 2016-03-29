@@ -3,7 +3,6 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -30,81 +29,58 @@ class LoadCategoryData extends AbstractFixture implements
 
     public function load(ObjectManager $manager)
     {
-        $categories_names = [
-            ['Бытовая электроника', LoadPeopleGroupData::DLYA_VSEH],
-            ['Электроника', LoadPeopleGroupData::DLYA_VSEH],
-            ['Косметика, парфюмерия', LoadPeopleGroupData::DLYA_ZHENSHCHIN],
-            ['Товары для детей', LoadPeopleGroupData::DLYA_DETEY],
-            ['Спортинвентарь', LoadPeopleGroupData::DLYA_VSEH],
-            ['Мебель интерьер', LoadPeopleGroupData::DLYA_VSEH],
-        ];
-        $categoriesTree = [
-            'Электроника'           => [
-                'Электроника и фото',
-                'Телефоны и аксессуары',
-                'Компьютеры',
-            ],
-            'Косметика, парфюмерия' => [
-                'Средства по уходу за кожей и волосами',
-                'Декоративная косметика',
-                'Парфюмерия',
-                'Средства гигиены',
-            ],
-            'Мебель интерьер'       => [
-                'Мебель для малышей',
-                'Готовые комплекты',
-                'Компьютерные столы, стулья и кресла',
-                'Корпусная мебель',
-                'Матрасы',
-                'Мягкая мебель',
-                'Надувная мебель',
-                'Основания для матрасов и наматрасникиь',
-                'Плетеная мебель',
-                'Раскладушки',
-                'Специальная мебель',
-                'Фурнитура',
-                'Постеры, картины',
-                'Товары для дачи',
-                'Товары для дома и ремонта',
-            ],
-        ];
+        $categoriesTree = include(__DIR__.'/categories.php');
         /** @var Slugify $slugify */
         $slugify = $this->container->get('appbundle.slugify');
-        /** @var User $admin */
-        $admin = $this->getReference(LoadUserData::REFERENCE_ADMIN_USER);
         $curator = $this->getReference(LoadUserData::REFERENCE_CURATOR_USER);
         $expert = $this->getReference(LoadUserData::REFERENCE_EXPERT_USER);
         /** @var User $categoryAdmin */
         $categoryAdmin = $this->getReference(LoadUserData::REFERENCE_CATEGORY_ADMIN_USER);
         $rootCategory = (new Category())->setSlug(Category::ROOT_SLUG)->setName(Category::ROOT_SLUG);
         $manager->persist($rootCategory);
-        foreach ($categories_names as $key => $value) {
-            $name = $value[0];
-            $peopleGroupSlug = $value[1];
-            $category = new Category();
-            $category->setName($name)
+        $count = 0;
+        foreach ($categoriesTree as $key => $categoryLevel1) {
+            $count++;
+            $name = $categoryLevel1['name'];
+            $category = (new Category())
+                ->setName($name)
                 ->setParent($rootCategory)
-                ->setSlug($slugify->slugify($name))
-                ->addPeopleGroup($this->getReference($peopleGroupSlug));
+                ->setSlug($slugify->slugify($name));
             $manager->persist($category);
-            if (isset($categoriesTree[$name])) {
-                foreach ($categoriesTree[$name] as $childName) {
-                    $childCategory = new Category();
-                    $childCategory->setParent($category)
-                        ->setName($childName);
-                    $childCategory->setSlug($slugify->slugify($childName));
-                    $childCategory->addPeopleGroup($this->getReference($peopleGroupSlug));
-                    $manager->persist($childCategory);
-                    $categoryAdmin->addAdminCategory($childCategory);
-                }
-            }
-            $admin->addCategory($category);
             $curator->addCategory($category);
             $expert->addCategory($category);
             $categoryAdmin->addCategory($category);
-            $categoryAdmin->addAdminCategory($category);
-            $this->addReference("category_$key", $category);
+            foreach ($categoryLevel1['children'] as $key2 => $categoryLevel2) {
+                $count++;
+                $childName = $categoryLevel2['name'];
+                $childCategory = (new Category())
+                    ->setParent($category)
+                    ->setName($childName)
+                    ->setSlug($slugify->slugify($childName).'-'.$count);
+                $manager->persist($childCategory);
+                $categoryAdmin->addAdminCategory($childCategory);
+                $curator->addCategory($childCategory);
+                $expert->addCategory($childCategory);
+                $categoryAdmin->addCategory($childCategory);
+                foreach ($categoryLevel2['children'] as $key3 => $categoryLevel3) {
+                    $count++;
+                    $name = $categoryLevel3['name'];
+                    $childChildCategory = (new Category())
+                        ->setName($name)
+                        ->setSlug($slugify->slugify($name).'-'.$count)
+                        ->setParent($childCategory);
+                    $manager->persist($childChildCategory);
+                    $curator->addCategory($childChildCategory);
+                    $expert->addCategory($childChildCategory);
+                    $categoryAdmin->addCategory($childChildCategory);
+                    $categoryAdmin->addAdminCategory($childChildCategory);
+                }
+            }
         }
+        $curator->addCategory($rootCategory);
+        $expert->addCategory($rootCategory);
+        $categoryAdmin->addCategory($rootCategory);
+        $categoryAdmin->addAdminCategory($rootCategory);
         $manager->flush();
     }
 
@@ -116,6 +92,6 @@ class LoadCategoryData extends AbstractFixture implements
      */
     public function getDependencies()
     {
-        return [LoadUserData::class, LoadPeopleGroupData::class];
+        return [LoadUserData::class];
     }
 }

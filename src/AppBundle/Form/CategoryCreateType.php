@@ -3,7 +3,6 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\PeopleGroup;
 use Cocur\Slugify\Slugify;
 use Glifery\EntityHiddenTypeBundle\Form\Type\EntityHiddenType;
 use Symfony\Component\Form\AbstractType;
@@ -42,7 +41,6 @@ class CategoryCreateType extends AbstractType
             ->add('parent', EntityHiddenType::class, ['class' => Category::class, 'property' => 'slug'])
             ->add('slug', null, ['label' => 'Уникальное название на латинице, будет отображаться в адресе'])
             ->add('name', null, ['label' => 'Название'])
-            ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
             ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])

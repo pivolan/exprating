@@ -115,16 +115,6 @@ class Category
     private $admins;
 
     /**
-     * @var PeopleGroup[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup")
-     * @ORM\JoinTable(name="category_people_group", joinColumns={@ORM\JoinColumn(name="category_id",
-     *     referencedColumnName="slug", onDelete="CASCADE")},
-     *                    inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug",
-     * onDelete="CASCADE")})
-     */
-    private $peopleGroups;
-
-    /**
      * @var @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="category", fetch="EXTRA_LAZY")
      */
     private $products;
@@ -143,7 +133,6 @@ class Category
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categoryCharacteristics = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->peopleGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->experts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -430,40 +419,6 @@ class Category
     public function getAdmins()
     {
         return $this->admins;
-    }
-
-    /**
-     * Add peopleGroup.
-     *
-     * @param \AppBundle\Entity\PeopleGroup $peopleGroup
-     *
-     * @return Category
-     */
-    public function addPeopleGroup(\AppBundle\Entity\PeopleGroup $peopleGroup)
-    {
-        $this->peopleGroups[] = $peopleGroup;
-
-        return $this;
-    }
-
-    /**
-     * Remove peopleGroup.
-     *
-     * @param \AppBundle\Entity\PeopleGroup $peopleGroup
-     */
-    public function removePeopleGroup(\AppBundle\Entity\PeopleGroup $peopleGroup)
-    {
-        $this->peopleGroups->removeElement($peopleGroup);
-    }
-
-    /**
-     * Get peopleGroups.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPeopleGroups()
-    {
-        return $this->peopleGroups;
     }
 
     /**

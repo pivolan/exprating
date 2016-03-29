@@ -139,25 +139,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
                         $evalTextPercent,
                         $percent,
                     ];
-                    $peopleGroup = AliasCategory::PEOPLE_GROUP_ALL;
-                    $childText = 'детей детский детское детские дети мальчиков девочек';
-                    $manText = 'мужчин мужская мужское';
-                    $womanText = 'женщин женская девушек девушки';
-                    $childPercent = $this->evalTextRus->evaltextRus($categoryImport->getName(), $childText, 3);
-                    $manPercent = $this->evalTextRus->evaltextRus($categoryImport->getName(), $manText, 3);
-                    $womanPercent = $this->evalTextRus->evaltextRus($categoryImport->getName(), $womanText, 3);
-                    $allPercent = 45;
-                    if ($childPercent > $allPercent) {
-                        $peopleGroup = AliasCategory::PEOPLE_GROUP_CHILD;
-                    }
-                    if ($manPercent > $childPercent && $manPercent > $allPercent) {
-                        $peopleGroup = AliasCategory::PEOPLE_GROUP_MAN;
-                    }
-                    if ($womanPercent > $manPercent && $womanPercent > $childPercent && $womanPercent > $allPercent) {
-                        $peopleGroup = AliasCategory::PEOPLE_GROUP_WOMAN;
-                    }
-
-                    $aliases[$categoryImport->getId()] = [$categoryImport, $category, $peopleGroup];
+                    $aliases[$categoryImport->getId()] = [$categoryImport, $category];
                     $prevPercent = $sumPercent;
                 }
             }
@@ -174,8 +156,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
         foreach ($aliases as $alias) {
             $aliasCategory = new AliasCategory();
             $aliasCategory->setCategoryExpratingId($alias[1]->getSlug())
-                ->setCategoryIrecommend($alias[0])
-                ->setPeopleGroup($alias[2]);
+                ->setCategoryIrecommend($alias[0]);
             $this->emImport->persist($aliasCategory);
         }
         $this->emImport->flush();

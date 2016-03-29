@@ -31,10 +31,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
     public function findByFilterQuery(ProductFilter $productFilter)
     {
         $category = $productFilter->getCategory();
-        $categories = $this->_em->getRepository('AppBundle:Category')->getChildrenIds(
-            $category,
-            $productFilter->getPeopleGroup()
-        );
+        $categories = $this->_em->getRepository('AppBundle:Category')->getChildrenIds($category);
         $isEnabled = ($productFilter->getStatus() == null);
 
         $qb = $this->createQueryBuilder('a')
@@ -53,12 +50,6 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('curator', $productFilter->getCurator())
                     ->setParameter('status', CuratorDecision::STATUS_WAIT);
             }
-        } elseif (
-            $productFilter->getPeopleGroup() &&
-            $productFilter->getPeopleGroup()->getSlug() != ProductFilter::PEOPLE_GROUP_ALL
-        ) {
-            $qb->innerJoin('a.peopleGroups', 'e', 'WITH', 'e.slug = :people_group')
-                ->setParameter('people_group', $productFilter->getPeopleGroup()->getSlug());
         }
         $qb->orderBy('a.'.$productFilter->getSortField(), $productFilter->getSortDirection());
 

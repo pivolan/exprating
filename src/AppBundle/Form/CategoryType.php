@@ -3,7 +3,6 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\PeopleGroup;
 use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Form\CategoryCharacteristicsType;
@@ -26,7 +25,6 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('isHidden', null, ['label' => 'Скрыть категорию?'])
-            ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
             ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
             ->add(

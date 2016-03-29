@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManager;
 class AppExtension extends \Twig_Extension
 {
     const KEY_CATEGORIES = 'categories';
-    const KEY_PEOPLE_GROUP = 'peopleGroup';
+
     /** @var  \Twig_Environment */
     protected $twig;
 

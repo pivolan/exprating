@@ -34,13 +34,6 @@ class AliasCategory
     private $categoryIrecommend;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="people_group", type="string", length=255, nullable=true)
-     */
-    private $peopleGroup = self::PEOPLE_GROUP_ALL;
-
-    /**
      * Set categoryIrecommend.
      *
      * @param Categories $categoryIrecommend
@@ -74,30 +67,12 @@ class AliasCategory
 
     /**
      * @param string $categoryExpratingId
+     *
+     * @return $this
      */
     public function setCategoryExpratingId($categoryExpratingId)
     {
         $this->categoryExpratingId = $categoryExpratingId;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPeopleGroup()
-    {
-        return $this->peopleGroup;
-    }
-
-    /**
-     * @param string $peopleGroup
-     *
-     * @return $this
-     */
-    public function setPeopleGroup($peopleGroup)
-    {
-        $this->peopleGroup = $peopleGroup;
 
         return $this;
     }

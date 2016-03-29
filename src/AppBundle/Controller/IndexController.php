@@ -141,12 +141,9 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/rubric/{peopleGroup}/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list",
-     *     requirements = {"peopleGroup": "(dlya-zhenshchin)|(dlya-muzhchin)|(dlya-detey)|(dlya-vseh)"},
+     * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list",
      *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
-     * @ParamConverter(name="peopleGroup", class="AppBundle\Entity\PeopleGroup",
-     *     options={"mapping":{"peopleGroup":"slug"}})
      */
     public function listAction(Request $request)
     {
