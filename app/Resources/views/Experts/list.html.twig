@@ -2,19 +2,14 @@
 {% block body_type %}experts{% endblock %}
 {% block content %}
     <div class="content-inner clearfix">
-        <div class="row">
-            <div class="col-md-7">
-                <h1>Наши эксперты</h1>
-            </div>
-            {% if is_granted('ROLE_EXPERT') %}
-                <div class="col-md-5">
-                    <h1>Куратор</h1>
-                </div>
-            {% endif %}
-        </div>
+        <h1>Наши эксперты</h1>
 
         {{ knp_pagination_render(experts) }}
         <div class="experts-wrapper">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2"><h1>Эксперт</h1></div>
+                <div class="col-md-2"><h1>Куратор</h1></div>
+            </div>
             <ul>
                 {% for expert in experts %}
                     <li class="expert-item">
@@ -28,10 +23,10 @@
                             </div>
                         </div>
                         {% if is_granted('ROLE_EXPERT') %}
-                            <div class="col-md-5">
+                            <div class="col-md-5 curator">
                                 {% if expert.curator %}
                                     <div class="expert-img-wrapper">
-                                        {{ include("_include/User/_imageList.html.twig", {'expert': expert.curator}) }}
+                                        {{ include("_include/User/_imageCuratorList.html.twig", {'expert': expert.curator}) }}
                                     </div>
                                     <div class="expert-name">
                                         <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName|default(expert.curator.username) }}</span></a>

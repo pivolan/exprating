@@ -319,6 +319,13 @@ liip_imagine:
                 thumbnail: { size: [90, 90], mode: inset }
                 background: { size: [90, 90] color: '#fff' }
 
+        user_list_curator_filter:
+            quality: 100
+            filters:
+                downscale: { max: [45, 45]}
+                thumbnail: { size: [45, 45], mode: inset }
+                background: { size: [45, 45] color: '#fff' }
+
         product_filter:
             quality: 90
             filters:
