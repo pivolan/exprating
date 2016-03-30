@@ -12,6 +12,7 @@ use AppBundle\Event\Invite\InviteRequestRightsEvent;
 use AppBundle\Event\Invite\InviteSendEvent;
 use AppBundle\Form\InviteType;
 use AppBundle\Form\UserCompleteType;
+use AppBundle\Security\InviteVoter;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -60,10 +61,12 @@ class InviteController extends BaseController
     /**
      * @Route("/invite/{hash}", name="invite_activate")
      * @ParamConverter(name="invite", class="AppBundle\Entity\Invite", options={"mapping":{"hash":"hash"}})
-     * @Security("is_granted('ACTIVATE_INVITE', invite)")
      */
     public function inviteActivateAction(Request $request, Invite $invite)
     {
+        if(!$this->isGranted(InviteVoter::ACTIVATE_INVITE, $invite)){
+            return $this->render('Invite/inviteAlreadyActivated.html.twig');
+        }
         $this->get('event_dispatcher')->dispatch(
             InviteEvents::ACTIVATE,
             new InviteActivateEvent($invite)
