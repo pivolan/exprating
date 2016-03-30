@@ -175,7 +175,7 @@ stof_doctrine_extensions:
             sluggable: true
 
 assetic:
-    debug:          '%kernel.debug%'
+    debug:          '%asset_debug%'
     use_controller: false
     bundles: ['AppBundle']
     filters:
@@ -279,6 +279,7 @@ assetic:
                 - 'css/external/select2.min.css'
                 - 'css/external/colorbox.css'
                 - 'css/style.css'
+                - 'css/additional_style.css'
                 - 'css/external/jquery.mmenu.all.css'
                 - 'css/external/jquery-ui.min.css'
 

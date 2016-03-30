@@ -9,6 +9,15 @@ Exp.historical = function (selectorClick, selectorUpdate, callback) {
     });
     History.Adapter.bind(window, 'statechange', function () {
         var State = History.getState();
-        $(selectorUpdate).load(State.url, callback);
+        var $html = $(selectorUpdate);
+        var $loader = $('<span class="loader-ajax"></span>');
+        $html.css('opacity', '0.5');
+        $loader.css('top', window.innerHeight/2+window.scrollY);
+        $('body').append($loader);
+        $html.load(State.url, function () {
+            $html.css('opacity', '1');
+            $loader.remove();
+            callback();
+        });
     });
 };

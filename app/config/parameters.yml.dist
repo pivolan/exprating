@@ -29,3 +29,4 @@ parameters:
     search_engine: sql
     #asset_base_url: //exprating.ru/
     asset_base_url: ~
+    asset_debug: false
