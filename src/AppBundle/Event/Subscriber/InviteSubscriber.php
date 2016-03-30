@@ -6,7 +6,7 @@
 
 namespace AppBundle\Event\Subscriber;
 
-use AppBundle\Entity\CreateExpertRequest;
+use AppBundle\Entity\RegistrationRequest;
 use AppBundle\Entity\User;
 use AppBundle\Event\Invite\InviteActivateEvent;
 use AppBundle\Event\Invite\InviteApproveRightsEvent;
@@ -134,8 +134,8 @@ class InviteSubscriber implements EventSubscriberInterface
         $curator = $invite->getCurator();
 
         if ($invite->getIsFromFeedback()) {
-            /** @var CreateExpertRequest $registrationRequest */
-            $registrationRequest = $this->em->getRepository('AppBundle:CreateExpertRequest')->getOneByEmail(
+            /** @var RegistrationRequest $registrationRequest */
+            $registrationRequest = $this->em->getRepository('AppBundle:RegistrationRequest')->getOneByEmail(
                 $invite->getEmail()
             );
             foreach ($registrationRequest->getCategories() as $category) {

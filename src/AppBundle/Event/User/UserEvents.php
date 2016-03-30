@@ -8,6 +8,6 @@ namespace AppBundle\Event\User;
 
 final class UserEvents
 {
-    const CREATE_EXPERT_REQUEST = 'create_expert_request';
-    const CREATE_EXPERT_APPROVE = 'create_expert_approve';
+    const REGISTRATION_REQUEST = 'registration_request';
+    const REGISTRATION_APPROVE = 'registration_approve';
 }

@@ -77,11 +77,11 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preRemove, connection: default }
 
-    app.form.create_expert_request_type:
-        class: AppBundle\Form\CreateExpertRequestType
+    app.form.registration_request_type:
+        class: AppBundle\Form\RegistrationRequestType
         arguments: [ '@doctrine.orm.default_entity_manager' ]
         tags:
-            - { name: form.type, alias: AppBundle\Form\CreateExpertRequestType }
+            - { name: form.type, alias: AppBundle\Form\RegistrationRequestType }
 
     app.form.category_create_type:
         class: AppBundle\Form\CategoryCreateType

@@ -17,8 +17,9 @@
                 </div>
                 <div class="expert-name">
                     {{ expert.caption }}
-                    {% if expert.curator %}
+                    {% if expert.curator and is_granted('DETAIL_VIEW', expert) %}
                         <div class="level2">
+                            <div class="pull-left small">Куратор: </div>
                             <div class="expert-img-wrapper">
                                 {{ include("_include/User/_imageList.html.twig", {'expert': expert.curator}) }}
                             </div>

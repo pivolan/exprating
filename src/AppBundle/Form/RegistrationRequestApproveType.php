@@ -7,7 +7,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\CreateExpertRequest;
+use AppBundle\Entity\RegistrationRequest;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +21,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreateExpertRequestApproveType extends AbstractType
+class RegistrationRequestApproveType extends AbstractType
 {
     const APPROVE = 'approve';
     const REJECT = 'reject';
@@ -43,7 +43,7 @@ class CreateExpertRequestApproveType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => CreateExpertRequest::class,
+                'data_class' => RegistrationRequest::class,
             ]
         );
     }

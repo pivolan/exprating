@@ -10,8 +10,8 @@ use AppBundle\Entity\Invite;
 use AppBundle\Entity\User;
 use AppBundle\Event\Invite\InviteEvents;
 use AppBundle\Event\Invite\InviteSendEvent;
-use AppBundle\Event\User\ApproveCreateExpertEvent;
-use AppBundle\Event\User\CreateExpertRequestEvent;
+use AppBundle\Event\User\ApproveRegistrationEvent;
+use AppBundle\Event\User\RegistrationRequestEvent;
 use AppBundle\Event\User\UserEvents;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -47,14 +47,14 @@ class UserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            UserEvents::CREATE_EXPERT_REQUEST => [['createExpertRequest', 1], ['notifyRequest'], ['flush']],
-            UserEvents::CREATE_EXPERT_APPROVE => [['createExpertApprove', 1], ['flush']],
+            UserEvents::REGISTRATION_REQUEST => [['registrationRequest', 1], ['notifyRequest'], ['flush']],
+            UserEvents::REGISTRATION_APPROVE => [['createExpertApprove', 1], ['flush']],
         ];
     }
 
-    public function createExpertRequest(CreateExpertRequestEvent $event)
+    public function registrationRequest(RegistrationRequestEvent $event)
     {
-        $entity = $event->getCreateExpertRequest();
+        $entity = $event->getRegistrationRequest();
         $this->em->persist($entity);
         /** @var User $categoryAdmin */
         $categoryAdmin = $this->em->getRepository('AppBundle:User')->getRandomByCategories($entity->getCategories());
@@ -64,24 +64,24 @@ class UserSubscriber implements EventSubscriberInterface
         $entity->setCurator($categoryAdmin);
     }
 
-    public function notifyRequest(CreateExpertRequestEvent $event)
+    public function notifyRequest(RegistrationRequestEvent $event)
     {
-        $createExpertRequest = $event->getCreateExpertRequest();
-        $curator = $createExpertRequest->getCurator();
+        $registrationRequest = $event->getRegistrationRequest();
+        $curator = $registrationRequest->getCurator();
         $message = \Swift_Message::newInstance()
             ->setSubject(
-                $curator->getUsername().' Запрос на регистрацию нового эксперта '.$createExpertRequest->getEmail()
+                $curator->getUsername().' Запрос на регистрацию нового эксперта '.$registrationRequest->getEmail()
             )
             ->setTo($curator->getEmail())
             ->setBody(
                 $this->twig->render(
-                    'Email/createExpertRequest.html.twig',
+                    'Email/registrationRequest.html.twig',
                     [
                         'curator' => $curator,
-                        'email' => $createExpertRequest->getEmail(),
-                        'message' => $createExpertRequest->getMessage(),
-                        'categories' => $createExpertRequest->getCategories(),
-                        'id' => $createExpertRequest->getId(),
+                        'email' => $registrationRequest->getEmail(),
+                        'message' => $registrationRequest->getMessage(),
+                        'categories' => $registrationRequest->getCategories(),
+                        'id' => $registrationRequest->getId(),
                     ]
                 )
             );
@@ -89,17 +89,17 @@ class UserSubscriber implements EventSubscriberInterface
     }
 
     public function createExpertApprove(
-        ApproveCreateExpertEvent $event,
+        ApproveRegistrationEvent $event,
         $eventName,
         EventDispatcherInterface $dispatcher
     ) {
-        $createExpertRequest = $event->getCreateExpertRequest();
+        $registrationRequest = $event->getRegistrationRequest();
         $invite = new Invite();
         $invite->setIsFromFeedback(true)
-            ->setCurator($createExpertRequest->getCurator())
-            ->setEmail($createExpertRequest->getEmail());
+            ->setCurator($registrationRequest->getCurator())
+            ->setEmail($registrationRequest->getEmail());
         $this->em->persist($invite);
-        $createExpertRequest->setIsApproved(true);
+        $registrationRequest->setIsApproved(true);
 
         $dispatcher->dispatch(InviteEvents::SEND, new InviteSendEvent($invite));
     }

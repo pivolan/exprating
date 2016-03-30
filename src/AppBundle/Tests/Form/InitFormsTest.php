@@ -8,7 +8,7 @@ namespace AppBundle\Tests\Form;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
-use AppBundle\Entity\CreateExpertRequest;
+use AppBundle\Entity\RegistrationRequest;
 use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Invite;
@@ -19,8 +19,8 @@ use AppBundle\Entity\User;
 use AppBundle\Form\CategoryCreateType;
 use AppBundle\Form\CategoryType;
 use AppBundle\Form\CommentType;
-use AppBundle\Form\CreateExpertRequestApproveType;
-use AppBundle\Form\CreateExpertRequestType;
+use AppBundle\Form\RegistrationRequestApproveType;
+use AppBundle\Form\RegistrationRequestType;
 use AppBundle\Form\DecisionType;
 use AppBundle\Form\ImageType;
 use AppBundle\Form\InviteType;
@@ -63,8 +63,8 @@ class InitFormsTest extends AbstractWebCaseTest
             CategoryCreateType::class             => [CategoryCreateType::class, new Category()],
             CategoryType::class                   => [CategoryType::class, new Category()],
             CommentType::class                    => [CommentType::class, new Comment()],
-            CreateExpertRequestApproveType::class => [CreateExpertRequestApproveType::class, new CreateExpertRequest()],
-            CreateExpertRequestType::class        => [CreateExpertRequestType::class, new CreateExpertRequest()],
+            RegistrationRequestApproveType::class => [RegistrationRequestApproveType::class, new RegistrationRequest()],
+            RegistrationRequestType::class        => [RegistrationRequestType::class, new RegistrationRequest()],
             DecisionType::class                   => [DecisionType::class, new CuratorDecision()],
             ImageType::class                      => [ImageType::class, new Image()],
             InviteType::class                     => [InviteType::class, new Invite()],
