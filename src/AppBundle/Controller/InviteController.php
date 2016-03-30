@@ -46,7 +46,9 @@ class InviteController extends BaseController
 
         if ($form->isValid()) {
             $this->get('event_dispatcher')->dispatch(InviteEvents::SEND, new InviteSendEvent($invite));
-            $this->addFlash(self::FLASH_INVITE_SENDED, 'Приглашение успешно отправлено');
+            $this->addFlash(self::FLASH_INVITE_SENDED, 'Приглашение успешно отправлено на e-mail '.$invite->getEmail());
+
+            return $this->redirect($request->getUri());
         }
 
         return $this->render(

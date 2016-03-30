@@ -6,6 +6,7 @@ use AppBundle\Entity\Invite;
 use AppBundle\Entity\User;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
+use Exprating\FakerBundle\Faker\FakeEntitiesGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class InviteControllerTest extends AbstractWebCaseTest
@@ -51,7 +52,7 @@ class InviteControllerTest extends AbstractWebCaseTest
     {
         $client = $this->client;
 
-        $crawler = $client->request(
+        $client->request(
             'POST',
             '/invite',
             ['invite' => ['email' => 'qwerty@qwerty.ru']],
@@ -61,8 +62,8 @@ class InviteControllerTest extends AbstractWebCaseTest
                 'PHP_AUTH_PW'   => 'qwerty',
             ]
         );
-
-        $this->assertContains('invite[email]', $client->getResponse()->getContent());
+        $crawler = $client->followRedirect();
+        $this->assertNotContains('invite[email]', $client->getResponse()->getContent());
         $this->assertContains('Приглашение успешно отправлено', $crawler->filter('.content')->html());
     }
 

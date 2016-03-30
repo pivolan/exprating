@@ -22,8 +22,9 @@
                     <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash }}</li>
                 </ul>
             </div>
+        {% else %}
+            {{ form(form) }}
         {% endfor %}
-        {{ form(form) }}
     {% else %}
         <h1>Вам недоступна эта функция</h1>
         <a href="{{ path('invite_request_rights') }}" class="btn btn-default">Подать заявку</a>

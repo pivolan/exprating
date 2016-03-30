@@ -34,11 +34,14 @@ vendor/bin/phpunit
 
 3. bin/console doctrine:fixtures:load
 
+4. bin/console assetic:dump
+
 Первая команда обновит все зависимости и почистит кэш. Мы не храним все зависимости в репе.
 Вторая команда обновит структуру базы данных.
-Третья команда обновит данные в базе, точнее загрзуит все заного.
+Третья команда обновит данные в базе, точнее загрузит все заного.
 
 ***Включить Sphinx***
+Если хочется локально потестить как работает поиск с помощью SPhinx:
 
 indexer --config app/config/Sphinx/sphinx.conf --rotate --all
 
@@ -46,3 +49,5 @@ searchd --config app/config/Sphinx/sphinx.conf
 
 Поставить в конфиге parameters.yml:
     search_engine: sphinx
+
+Без этой настройки функционал остается таким же, но для поиска используется простой sql запрос.
