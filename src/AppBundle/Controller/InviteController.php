@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Invite;
 use AppBundle\Entity\User;
+use AppBundle\Event\Invite\Exception\RequestInviteRightsException;
 use AppBundle\Event\Invite\InviteActivateEvent;
 use AppBundle\Event\Invite\InviteApproveRightsEvent;
 use AppBundle\Event\Invite\InviteEvents;
@@ -28,6 +29,7 @@ class InviteController extends BaseController
     const FLASH_INVITE_SENDED = 'flash.invite_sended';
     const FLASH_APPROVED_RIGHTS = 'flash.approved_rights';
     const FLASH_REQUEST_RIGHTS_SENDED = 'flash.request_rights_sended';
+    const FLASH_REQUEST_RIGHTS_FAIL = 'flash.request_rights_fail';
 
     /**
      * @Route("/invite", name="invite")
@@ -93,10 +95,13 @@ class InviteController extends BaseController
     public function requestInviteRightsAction()
     {
         $expert = $this->getUser();
-        $curator = $expert->getCurator();
-        $event = new InviteRequestRightsEvent($expert, $curator);
-        $this->get('event_dispatcher')->dispatch(InviteEvents::REQUEST_RIGHTS, $event);
-        $this->addFlash(self::FLASH_REQUEST_RIGHTS_SENDED, 'Ваша заявка отправлена куратору');
+        $event = new InviteRequestRightsEvent($expert);
+        try {
+            $this->get('event_dispatcher')->dispatch(InviteEvents::REQUEST_RIGHTS, $event);
+            $this->addFlash(self::FLASH_REQUEST_RIGHTS_SENDED, 'Ваша заявка отправлена куратору');
+        } catch (RequestInviteRightsException $e) {
+            $this->addFlash(self::FLASH_REQUEST_RIGHTS_FAIL, $e->getMessage());
+        }
 
         return $this->redirectToRoute('invite');
     }

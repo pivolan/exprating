@@ -32,6 +32,12 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: 'unique_category_characteristic_validator'}
 
+    validator.request_curator_rights_validator:
+        class: AppBundle\Validator\Constraints\RequestCuratorRightsValidator
+        arguments: ['@doctrine.orm.default_entity_manager']
+        tags:
+            - { name: validator.constraint_validator, alias: 'request_curator_rights_validator'}
+
     app.product_voter:
         class: AppBundle\Security\ProductVoter
         arguments: ['@security.access.decision_manager']

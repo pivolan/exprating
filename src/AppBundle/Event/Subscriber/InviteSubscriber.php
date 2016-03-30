@@ -7,7 +7,9 @@
 namespace AppBundle\Event\Subscriber;
 
 use AppBundle\Entity\RegistrationRequest;
+use AppBundle\Entity\RequestCuratorRights;
 use AppBundle\Entity\User;
+use AppBundle\Event\Invite\Exception\RequestInviteRightsException;
 use AppBundle\Event\Invite\InviteActivateEvent;
 use AppBundle\Event\Invite\InviteApproveRightsEvent;
 use AppBundle\Event\Invite\InviteEvents;
@@ -24,6 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class InviteSubscriber implements EventSubscriberInterface
 {
@@ -42,11 +45,21 @@ class InviteSubscriber implements EventSubscriberInterface
      */
     protected $twig;
 
-    public function __construct(\Swift_Mailer $mailer, EntityManager $em, \Twig_Environment $twig)
-    {
+    /**
+     * @var ValidatorInterface
+     */
+    protected $validator;
+
+    public function __construct(
+        \Swift_Mailer $mailer,
+        EntityManager $em,
+        \Twig_Environment $twig,
+        ValidatorInterface $validator
+    ) {
         $this->mailer = $mailer;
         $this->em = $em;
         $this->twig = $twig;
+        $this->validator = $validator;
     }
 
     /**
@@ -64,7 +77,7 @@ class InviteSubscriber implements EventSubscriberInterface
             InviteEvents::ACTIVATE              => [['inviteActivate', 2],],
             InviteEvents::SEND                  => [['inviteSend', 2], ['inviteSendNotify', 2], ['flush'],],
             InviteEvents::APPROVE_RIGHTS        => [['approveRights', 2], ['approveRightsNotify', 2], ['flush']],
-            InviteEvents::REQUEST_RIGHTS        => [['requestRightsNotify', 2], ['flush']],
+            InviteEvents::REQUEST_RIGHTS        => [['requestRights', 3], ['requestRightsNotify', 2], ['flush']],
         ];
 
     }
@@ -193,6 +206,19 @@ class InviteSubscriber implements EventSubscriberInterface
                 )
             );
         $this->mailer->send($message);
+    }
+
+    public function requestRights(InviteRequestRightsEvent $event)
+    {
+        $expert = $event->getExpert();
+        $requestRights = (new RequestCuratorRights())
+            ->setExpert($expert)
+            ->setCurator($expert->getCurator());
+        $errors = $this->validator->validate($requestRights);
+        if (count($errors) > 0) {
+            throw new RequestInviteRightsException($errors->get(0)->getMessage());
+        }
+        $this->em->persist($requestRights);
     }
 
     public function requestRightsNotify(InviteRequestRightsEvent $event)

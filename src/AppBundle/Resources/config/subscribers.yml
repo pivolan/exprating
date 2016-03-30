@@ -7,7 +7,7 @@ services:
 
     invite_subscriber:
         class: AppBundle\Event\Subscriber\InviteSubscriber
-        arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig']
+        arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig', '@validator']
         tags:
             - { name: kernel.event_subscriber }
 

@@ -8,6 +8,13 @@
             </ul>
         </div>
     {% endfor %}
+    {% for flash in app.session.flashbag.get('flash.request_rights_fail') %}
+        <div class="alert alert-danger">
+            <ul class="list-unstyled">
+                <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash }}</li>
+            </ul>
+        </div>
+    {% endfor %}
     {% if is_granted('ROLE_EXPERT_CURATOR') %}
         {% for flash in app.session.flashbag.get('flash.invite_sended') %}
             <div class="alert alert-success">
