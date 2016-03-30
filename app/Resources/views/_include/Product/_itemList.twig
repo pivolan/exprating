@@ -1,6 +1,6 @@
 <li>
     <a href="{{ path('product_detail', {'slug':product.slug}) }}">
-        <div class="sticker-rating">{{ product.rating }}</div>
+        <div class="sticker-rating" data-toggle="tooltip" title="Общая оценка {{ product.rating }} из 100">{{ product.rating }}</div>
         {% block additional %}{% endblock %}
         <div class="img-wrapper" style="background-image: url({{ product.previewImage|default('/images/default.jpeg')|imagine_filter('product_list_filter') }});"></div>
         <div class="sticker-title">{{ product.name }}</div>

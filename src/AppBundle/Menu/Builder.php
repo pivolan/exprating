@@ -89,7 +89,7 @@ class Builder implements ContainerAwareInterface
                     'status'        => $status,
                 ],
             ]
-        );
+        )->setLinkAttribute('rel', 'nofollow');
 
         $menu->addChild(
             'по дате',
@@ -102,7 +102,7 @@ class Builder implements ContainerAwareInterface
                     'status'        => $status,
                 ],
             ]
-        );
+        )->setLinkAttribute('rel', 'nofollow');
 
         $menu->addChild(
             'по рейтингу',
@@ -115,7 +115,7 @@ class Builder implements ContainerAwareInterface
                     'status'        => $status,
                 ],
             ]
-        );
+        )->setLinkAttribute('rel', 'nofollow');
         $menu->addChild('divider', ['divider' => true])->setAttribute('class', 'divider');
         $menu->addChild(
             'по возрастанию',
@@ -128,7 +128,7 @@ class Builder implements ContainerAwareInterface
                     'status'        => $status,
                 ],
             ]
-        );
+        )->setLinkAttribute('rel', 'nofollow');
 
         $menu->addChild(
             'по убыванию',
@@ -141,7 +141,7 @@ class Builder implements ContainerAwareInterface
                     'status'        => $status,
                 ],
             ]
-        );
+        )->setLinkAttribute('rel', 'nofollow');
 
         return $menu;
     }
