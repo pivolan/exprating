@@ -17,22 +17,14 @@
                 </div>
                 <div class="expert-name">
                     {{ expert.caption }}
-                    {% if expert.curator and is_granted('DETAIL_VIEW', expert) %}
-                        <div class="level2">
-                            <div class="pull-left small">Куратор: </div>
-                            <div class="expert-img-wrapper">
-                                {{ include("_include/User/_imageList.html.twig", {'expert': expert.curator}) }}
-                            </div>
-                            <div class="expert-name">
-                                <a href="{{ path("experts_detail", {"username": expert.curator.username}) }}"><span>{{ expert.curator.fullName }}</span></a>
-                            </div>
-                        </div>
+                    {% if is_granted('DETAIL_VIEW', expert) %}
+                        {% if expert.curator %}
+                            {{ include('_include/User/_expertCurator.html.twig', {'user': expert.curator}) }}
+                        {% endif %}
+                        {{ render(controller('AppBundle:Expert:detailView', {'expert': expert})) }}
                     {% endif %}
                 </div>
             </div>
-            {% if is_granted('DETAIL_VIEW', expert) %}
-                {{ render(controller('AppBundle:Expert:detailView', {'expert': expert})) }}
-            {% endif %}
             {% if is_granted('ADD_ROLE_CURATOR', expert) %}
                 <div class="btn-group"><a href="{{ path('invite_approve_rights', {'username': expert.username}) }}"
                                           class="btn btn-info">Сделать куратором</a></div>

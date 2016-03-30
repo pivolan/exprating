@@ -1,6 +1,5 @@
-<div class="alert alert-info">
-    Пришел по приглашению куратора <a href="{{ path('experts_detail', {'username': invite.curator.username}) }}">{{ invite.curator.fullName|default(invite.curator.username) }}</a>
+{% set postfix = '' %}
 {% if invite.isFromFeedback %}
-    , через обратную связь
+    {% set postfix = 'через обратную связь' %}
 {% endif %}
-</div>
+{{ include("_include/User/_expertCurator.html.twig", {"user":invite.curator, "prefix": "Пришел от:", 'postfix': postfix}) }}
