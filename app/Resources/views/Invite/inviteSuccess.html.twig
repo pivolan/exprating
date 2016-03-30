@@ -1,0 +1,17 @@
+{% extends '_layout/_profile.html.twig' %}
+{% block title %}Пригласить эксперта{% endblock %}
+{% block breadcrumbs %}
+    {{ parent() }}
+    → <a href="{{ path("invite") }}">Приглашение эксперта</a>
+{% endblock %}
+{% block profile_body %}
+    {% if is_granted('ROLE_EXPERT_CURATOR') %}
+        {% for flash in app.session.flashbag.get('flash.invite_sended') %}
+            <div class="alert alert-success">
+                <ul class="list-unstyled">
+                    <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash }}</li>
+                </ul>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

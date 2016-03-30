@@ -48,7 +48,7 @@ class InviteController extends BaseController
             $this->get('event_dispatcher')->dispatch(InviteEvents::SEND, new InviteSendEvent($invite));
             $this->addFlash(self::FLASH_INVITE_SENDED, 'Приглашение успешно отправлено на e-mail '.$invite->getEmail());
 
-            return $this->redirect($request->getUri());
+            return $this->render('Invite/inviteSuccess.html.twig');
         }
 
         return $this->render(
