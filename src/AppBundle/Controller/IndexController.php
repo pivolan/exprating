@@ -141,7 +141,7 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/rubric/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list",
+     * @Route("/rubric/{slug}/{page}/filter/{sortField}/{sortDirection}/{status}", name="product_list",
      *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
