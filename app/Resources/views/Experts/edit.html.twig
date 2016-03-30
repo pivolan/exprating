@@ -5,7 +5,13 @@
     <div class="content-inner clearfix">
         <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
             <a href="{{ path("experts_list") }}">Наши эксперты</a> →
-            <a href="{{ path("experts_detail", {'username': expert.username}) }}">Профиль эксперта</a> →
+            <a href="{{ path("experts_detail", {'username': expert.username}) }}">
+                {% if app.user == expert %}
+                    Мой профиль
+                {% else %}
+                    Профиль эксперта
+                {% endif %}
+            </a> →
         </div>
         <h1>Рдактирование профиля эксперта {{ expert.fullName }}</h1>
 
