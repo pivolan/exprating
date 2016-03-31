@@ -7,12 +7,19 @@
 namespace Exprating\ImportBundle\Parser;
 
 
+use PHPHtmlParser\CurlInterface;
 use PHPHtmlParser\Dom;
 
 class OtzyvProParser
 {
-    public function __construct()
+    /**
+     * @var CurlInterface
+     */
+    private $curl;
+
+    public function __construct(CurlInterface $curl)
     {
+        $this->curl = $curl;
     }
 
     public function parse($html)
@@ -26,7 +33,7 @@ class OtzyvProParser
             $anchor = $list->find('a.href')[0];
             $categories[$key] = ['href' => $anchor->href, 'name' => $anchor->text, 'children' => []];
             $categoryDom = new Dom();
-            $categoryDom->loadFromUrl('http://otzyv.pro'.$anchor->href);
+            $categoryDom->loadFromUrl('http://otzyv.pro'.$anchor->href, [], $this->curl);
             foreach ($categoryDom->find('div.catmenu') as $keyChild => $child) {
                 /** @var Dom $child */
                 /** @var Dom $childNode */
