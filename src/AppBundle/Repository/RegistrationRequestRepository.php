@@ -24,7 +24,8 @@ class RegistrationRequestRepository extends \Doctrine\ORM\EntityRepository
             ->where('a.curator = :user')
             ->andWhere('a.isApproved = :false')
             ->setParameter('user', $categoryAdmin)
-            ->setParameter('false', false);
+            ->setParameter('false', false)
+            ->orderBy('a.id', 'DESC');
 
         return $qb->getQuery();
     }
