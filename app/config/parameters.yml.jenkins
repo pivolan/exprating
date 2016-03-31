@@ -15,6 +15,7 @@ parameters:
     mailer_user:       null
     mailer_password:   null
     mailer_sender_address: ~
+    mailer_sender_fullname: ~
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     database_test_driver:   pdo_mysql
@@ -30,3 +31,4 @@ parameters:
     #asset_base_url: //exprating.ru/
     asset_base_url: ~
     asset_debug: false
+    asset_version: 1

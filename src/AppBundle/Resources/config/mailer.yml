@@ -1,0 +1,6 @@
+services:
+    app.mailer_plugin.mailer_sender:
+        class: AppBundle\MailerPlugin\MailerSender
+        arguments: [ '%mailer_sender_address%', '%mailer_sender_fullname%' ]
+        tags:
+            - { name: swiftmailer.default.plugin }

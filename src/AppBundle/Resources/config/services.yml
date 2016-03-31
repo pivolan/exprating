@@ -100,3 +100,4 @@ services:
 
 imports:
     - { resource: "subscribers.yml" }
+    - { resource: "mailer.yml" }
