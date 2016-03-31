@@ -30,3 +30,4 @@ parameters:
     #asset_base_url: //exprating.ru/
     asset_base_url: ~
     asset_debug: false
+    asset_version: 1
