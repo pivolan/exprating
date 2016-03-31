@@ -32,6 +32,7 @@ class UniqueCategoryCharacteristicValidator extends ConstraintValidator
     }
 
     /**
+     * @inheritdoc
      * @param Category   $category
      * @param Constraint $constraint
      *

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ */
 return [
     0 =>
         [
