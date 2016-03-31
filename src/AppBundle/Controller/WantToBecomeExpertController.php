@@ -41,7 +41,7 @@ class WantToBecomeExpertController extends BaseController
             );
             $this->addFlash(self::FLASH_CREATE_EXPERT_REQUEST_SENDED, 'Ваш запрос успешно отправлен');
 
-            return $this->redirectToRoute('request_create_expert');
+            return $this->render('WantToBecomeExpert/requestSuccess.html.twig');
         }
 
         return $this->render(

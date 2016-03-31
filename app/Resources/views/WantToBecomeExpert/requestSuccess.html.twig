@@ -1,0 +1,15 @@
+{% extends '_layout/_profile.html.twig' %}
+{% block title %}Заявка на регистрацию успешно оформлена{% endblock %}
+{% block breadcrumbs %}
+    <a href="{{ path("homepage") }}">Главная</a> →
+    <a href="{{ path("request_create_expert") }}">Хочу стать экспертом</a>
+{% endblock %}
+{% block profile_body %}
+    {% for flash_message in app.session.flashbag.get('flash.registration_request_sended') %}
+        <div class="alert alert-success">
+            <ul class="list-unstyled">
+                <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash_message }}</li>
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}
