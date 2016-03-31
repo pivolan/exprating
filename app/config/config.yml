@@ -37,7 +37,7 @@ framework:
     http_method_override: true
     assets:
         version: '%asset_version%'
-        base_path:' %asset_base_url%'
+        base_path: '%asset_base_url%'
 
 
 # Twig Configuration
