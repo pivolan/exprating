@@ -5,7 +5,7 @@ function set_categories(node, selected, event) {
     for (key in all) {
         html += '<option value="' + all[key].id + '" selected>' + all[key].text + '</option>';
     }
-    $('#create_expert_request_categories').html(html);
+    $('#registration_request_categories').html(html);
 }
 $('#jstree').jstree({
     core: {
@@ -16,5 +16,5 @@ $('#jstree').jstree({
         tie_selection: false
     },
     plugins: ["checkbox"]
-}).on("check_node.jstree", set_categories).on('uncheck_node.jstree')
+}).on("check_node.jstree", set_categories).on('uncheck_node.jstree', set_categories)
 ;

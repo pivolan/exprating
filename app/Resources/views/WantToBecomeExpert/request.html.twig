@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <h1>Заполните форму</h1>
             <div class="well">
-                {% for flash_message in app.session.flashbag.get('flash.create_expert_request_sended') %}
+                {% for flash_message in app.session.flashbag.get('flash.registration_request_sended') %}
                     <div class="alert alert-success">
                         <ul class="list-unstyled">
                             <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash_message }}</li>
@@ -31,7 +31,7 @@
             {{ include("_include/Category/_jsTree.json.twig", {"category": null}) }}
         ];
     </script>
-    {% javascripts '@want_to_become_expert_request_js' output='bundles/js/want_to_become_expert_request.js'%}
+    {% javascripts '@want_to_become_expert_request_js' output='bundles/js/want_to_become_expert_request.js' %}
     <script src="{{ asset(asset_url) }}" type="text/javascript"></script>
     {% endjavascripts %}
 {% endblock %}

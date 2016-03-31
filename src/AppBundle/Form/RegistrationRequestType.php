@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -47,7 +48,12 @@ class RegistrationRequestType extends AbstractType
             ->add(
                 'categories',
                 EntityType::class,
-                ['multiple' => true, 'choices' => [], 'class' => Category::class, 'label' => 'Категории']
+                [
+                    'multiple' => true,
+                    'choices'  => [],
+                    'class'    => Category::class,
+                    'label'    => 'Категории',
+                ]
             )
             ->add('send', SubmitType::class, ['label' => 'Отправить'])
             ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
