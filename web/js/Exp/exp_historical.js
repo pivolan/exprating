@@ -12,12 +12,13 @@ Exp.historical = function (selectorClick, selectorUpdate, callback) {
         var $html = $(selectorUpdate);
         var $loader = $('<span class="loader-ajax"></span>');
         $html.css('opacity', '0.5');
-        $loader.css('top', window.innerHeight/2+window.scrollY);
+        $loader.css('top', window.innerHeight / 2 + window.scrollY);
         $('body').append($loader);
         $html.load(State.url, function () {
             $html.css('opacity', '1');
             $loader.remove();
-            callback();
+            if (callback)
+                callback();
         });
     });
 };

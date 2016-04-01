@@ -22,7 +22,7 @@ class WantToBecomeExpertController extends BaseController
     const FLASH_REGISTRATION_REQUEST_REJECTED = 'flash.registration_request_rejected';
 
     /**
-     * @Route("/want-to-become-an-expert", name="request_create_expert")
+     * @Route("/want-to-become-an-expert/", name="request_create_expert")
      */
     public function requestAction(Request $request)
     {
@@ -54,7 +54,7 @@ class WantToBecomeExpertController extends BaseController
     }
 
     /**
-     * @Route("/want-to-become-an-expert/approve/{id}", name="approve_create_expert")
+     * @Route("/want-to-become-an-expert/approve/{id}/", name="approve_create_expert")
      *
      * @ParamConverter(name="registrationRequest", class="AppBundle\Entity\RegistrationRequest",
      *     options={"mapping":{"id":"id"}})

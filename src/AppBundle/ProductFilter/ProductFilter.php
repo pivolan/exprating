@@ -29,6 +29,7 @@ class ProductFilter
 
     const STATUS_WAIT = 'wait';
     const STATUS_FREE = 'free';
+    const STATUS_ALL = 'all';
 
     /**
      * @var string
@@ -41,7 +42,7 @@ class ProductFilter
     /**
      * @var string
      *
-     * @Assert\Choice(choices = {"free", "wait"}, message = "Выберите верный фильтр")
+     * @Assert\Choice(choices = {"free", "wait", "all"}, message = "Выберите верный фильтр")
      */
     protected $status;
 
