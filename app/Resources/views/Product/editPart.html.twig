@@ -243,21 +243,24 @@
                        class="form-control" value="" type="hidden">
             </div>
         </div>
-        <div class="row history_edit">
-            <div class="col-md-12">
-                <h1>История изменений</h1>
-                {% for history in historyLogs %}
-                    <div class="well well-sm">
-                        <img src="{{ history.user.avatarImage }}" height="30" alt="" class="pull-left">
-                        <span class="label label-info pull-right">{{ history.createdAt|date }}</span>
-                        <h5>
-                            <a href="{{ path('experts_detail', {'username': history.user.username}) }}">{{ history.user.fullName }}</a>
-                        </h5>
-                        <p>{{ history.text }}</p>
-                    </div>
-                {% endfor %}
-                {{ knp_pagination_render(historyLogs) }}
-            </div>
+    </div>
+{% endblock %}
+
+{% block where_to_buy_title %}История изменений{% endblock %}
+{% block where_to_buy_body %}
+    <div class="row history_edit">
+        <div class="col-md-12">
+            {% for history in historyLogs %}
+                <div class="well well-sm">
+                    <img src="{{ history.user.avatarImage }}" height="30" alt="" class="pull-left">
+                    <span class="label label-info pull-right">{{ history.createdAt|date }}</span>
+                    <h5>
+                        <a href="{{ path('experts_detail', {'username': history.user.username}) }}">{{ history.user.fullName }}</a>
+                    </h5>
+                    <p>{{ history.text }}</p>
+                </div>
+            {% endfor %}
+            {{ knp_pagination_render(historyLogs) }}
         </div>
     </div>
 {% endblock %}
