@@ -274,6 +274,7 @@ assetic:
         common_css:
             inputs:
                 - 'css/external/bootstrap332.min.css'
+                - 'css/external/font-awesome.min.css'
                 - 'css/external/superfish.css'
                 - 'css/external/select2.min.css'
                 - 'css/external/colorbox.css'
