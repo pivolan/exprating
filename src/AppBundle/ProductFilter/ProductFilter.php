@@ -27,9 +27,9 @@ class ProductFilter
     const FIELD_ENABLED_AT = 'enabledAt';
     const FIELD_RATING = 'rating';
 
-    const STATUS_WAIT = 'wait';
-    const STATUS_FREE = 'free';
-    const STATUS_ALL = 'all';
+    const STATUS_WAIT = 'STATUS_WAIT';
+    const STATUS_FREE = 'STATUS_FREE';
+    const STATUS_ALL = 'STATUS_ALL';
 
     /**
      * @var string
@@ -42,9 +42,9 @@ class ProductFilter
     /**
      * @var string
      *
-     * @Assert\Choice(choices = {"free", "wait", "all"}, message = "Выберите верный фильтр")
+     * @Assert\Choice(choices = {"STATUS_FREE", "STATUS_WAIT", "STATUS_ALL"}, message = "Выберите верный фильтр")
      */
-    protected $status;
+    protected $status = self::STATUS_ALL;
 
     /**
      * @var string

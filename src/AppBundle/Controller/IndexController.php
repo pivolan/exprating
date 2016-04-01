@@ -142,7 +142,7 @@ class IndexController extends BaseController
 
     /**
      * @Route("/rubric/{slug}/{page}/filter/{sortField}/{sortDirection}/{status}/", name="product_list",
-     *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = "all"})
+     *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = "STATUS_ALL"})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
     public function listAction(Request $request)

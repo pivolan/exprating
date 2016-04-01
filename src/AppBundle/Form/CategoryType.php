@@ -26,13 +26,8 @@ class CategoryType extends AbstractType
         $builder
             ->add('isHidden', null, ['label' => 'Скрыть категорию?'])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
-            ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
-            ->add(
-                'categoryCharacteristics',
-                CategoryCharacteristicsType::class,
-                ['label'=> null]
-            )
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])
+            ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
 
@@ -53,5 +48,21 @@ class CategoryType extends AbstractType
         /** @var Category $category */
         $category = $event->getData();
         $category->getSeo()->setCategory($category);
+    }
+
+    public function onPreSetData(FormEvent $event)
+    {
+        /** @var Category $category */
+        $category = $event->getData();
+        if ($category->getChildren()->count() == 0) {
+            $form = $event->getForm();
+            $form
+                ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
+                ->add(
+                    'categoryCharacteristics',
+                    CategoryCharacteristicsType::class,
+                    ['label' => null]
+                );
+        }
     }
 }
