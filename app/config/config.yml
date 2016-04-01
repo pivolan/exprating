@@ -237,7 +237,7 @@ assetic:
                 - 'js/curator_wait_list.init.js'
         curator_my_experts_js:
             inputs:
-                - 'js/external/jstree.min.js'
+                - 'js/external/jquery.treegrid.min.js'
                 - 'js/curator_my_experts.js'
         layout_expert_items_js:
             inputs:
@@ -281,6 +281,7 @@ assetic:
                 - 'css/additional_style.css'
                 - 'css/external/jquery.mmenu.all.css'
                 - 'css/external/jquery-ui.min.css'
+                - 'css/external/jquery.treegrid.css'
 
 exprating_search:
     engine: '%search_engine%'

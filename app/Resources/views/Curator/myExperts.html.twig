@@ -1,4 +1,43 @@
 {% extends '_layout/_profile.html.twig' %}
+{% macro tree(user, level, parent) %}
+    {% if level > 0 or level < 0 %}
+        {% import _self as tree %}
+        <tr class="treegrid-u{{ user.id }} {{ parent?'treegrid-parent-u'~parent }}">
+            <td><img class="avatar-img"
+                     src="{{ app.user.avatarImage|default('/images/default_user.png')|imagine_filter('user_list_filter') }}"
+                     alt=""><a href="{{ path("experts_detail", {"username":user.username}) }}" target="_blank">{{ user.username }}</a>
+            </td>
+            <td>{{ user.products.count }}</td>
+            <td>{{ user.experts.count }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% if user.products.count %}
+            <tr class="treegrid-p{{ user.id }} treegrid-parent-u{{ user.id }}">
+                <td><span class="glyphicon glyphicon-book"></span>Страницы:</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% for product in user.products %}
+                <tr class="treegrid-0 treegrid-parent-p{{ user.id }}">
+                    <td><img class="avatar-img"
+                             src="{{ product.previewImage|default('/images/default.jpeg')|imagine_filter('user_list_filter') }}"
+                             alt=""><a href="{{ path('product_detail', {'slug':product.slug}) }}" target="_blank">{{ product.name }}</a>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        {% for expert in user.experts %}
+            {{ tree.tree(expert, level - 1, user.id) }}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
 {% block title %}Мое эксперты{% endblock %}
 {% block breadcrumbs %}
     {{ parent() }}
@@ -13,7 +52,19 @@
         {% else %}
             <h1>Мои страницы</h1>
         {% endif %}
-        <div id="experts" class="well well-sm" data-url="{{ path('ajax_expert_tree') }}"></div>
+        <div id="experts" data-url="{{ path('ajax_expert_tree') }}">
+            <table class="table tree">
+                <tr>
+                    <th>Эксперты</th>
+                    <th>Страниц</th>
+                    <th>Экспертов</th>
+                    <th>Доходных страниц</th>
+                    <th>Доходных экспертов</th>
+                </tr>
+                {% import _self as tree %}
+                {{ tree.tree(app.user, -1) }}
+            </table>
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}
