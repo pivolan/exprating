@@ -12,7 +12,7 @@ class ExpertsControllerTest extends WebTestCase
 
         $crawler = $client->request(
             'GET',
-            '/expert/edit/admin',
+            '/expert/edit/admin/',
             [],
             [],
             [
@@ -25,7 +25,7 @@ class ExpertsControllerTest extends WebTestCase
         $this->assertContains('Мой профиль', $crawler->filter('.breadcrumbs')->text());
         $crawler = $client->request(
             'GET',
-            '/expert/edit/curator',
+            '/expert/edit/curator/',
             [],
             [],
             [

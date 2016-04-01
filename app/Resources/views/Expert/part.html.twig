@@ -4,7 +4,7 @@
 <div class="rubric-wrapper">
     <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
         <ul>
-            {% if is_granted('VIEW_FREE', category) %}
+            {% if category is defined and is_granted('VIEW_FREE', category) %}
                 {% for product in pagination %}
                     {{ include("_include/Product/_itemList.twig") }}
                 {% else %}

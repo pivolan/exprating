@@ -32,7 +32,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
     {
         $category = $productFilter->getCategory();
         $categories = $this->_em->getRepository('AppBundle:Category')->getChildrenIds($category);
-        $isEnabled = ($productFilter->getStatus() == null);
+        $isEnabled = ($productFilter->getStatus() == ProductFilter::STATUS_ALL);
 
         $qb = $this->createQueryBuilder('a')
             ->where('a.category IN (:categories)')

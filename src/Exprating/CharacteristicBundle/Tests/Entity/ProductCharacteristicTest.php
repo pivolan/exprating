@@ -24,8 +24,8 @@ class ProductCharacteristicTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('string_text', $productCharacteristic->getValue());
         $this->assertEquals('string_text', $productCharacteristic->getValueString());
-        $this->assertNull($productCharacteristic->getValueInt());
-        $this->assertNull($productCharacteristic->getValueDecimal());
+        $this->assertEquals(0, $productCharacteristic->getValueInt());
+        $this->assertEquals(0.0, $productCharacteristic->getValueDecimal());
 
         $characteristic->setType(Characteristic::TYPE_INT);
         $productCharacteristic = new ProductCharacteristic();
@@ -35,8 +35,8 @@ class ProductCharacteristicTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('2564', $productCharacteristic->getValue());
         $this->assertFalse(2564 === $productCharacteristic->getValue());
         $this->assertEquals(2564, $productCharacteristic->getValueInt());
-        $this->assertNull($productCharacteristic->getValueString());
-        $this->assertNull($productCharacteristic->getValueDecimal());
+        $this->assertEquals('n/a', $productCharacteristic->getValueString());
+        $this->assertEquals(0.0, $productCharacteristic->getValueDecimal());
 
         $characteristic->setType(Characteristic::TYPE_DECIMAL);
         $productCharacteristic = new ProductCharacteristic();
@@ -47,8 +47,8 @@ class ProductCharacteristicTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(123456.78 === $productCharacteristic->getValue());
         $this->assertEquals(123456.78, $productCharacteristic->getValueDecimal());
         $this->assertEquals('123456.78', $productCharacteristic->getValueDecimal());
-        $this->assertNull($productCharacteristic->getValueString());
-        $this->assertNull($productCharacteristic->getValueInt());
+        $this->assertEquals('n/a', $productCharacteristic->getValueString());
+        $this->assertEquals(0, $productCharacteristic->getValueInt());
 
         $characteristic->setType('other');
         $productCharacteristic = new ProductCharacteristic();

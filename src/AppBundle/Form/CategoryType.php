@@ -54,7 +54,7 @@ class CategoryType extends AbstractType
     {
         /** @var Category $category */
         $category = $event->getData();
-        if ($category->getChildren()->count() == 0) {
+        if ($category && $category->getChildren()->count() == 0) {
             $form = $event->getForm();
             $form
                 ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
