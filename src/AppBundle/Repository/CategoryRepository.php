@@ -92,17 +92,15 @@ class CategoryRepository extends NestedTreeRepository
     {
         $qb = $this->createQueryBuilder('a')
             ->select('a.name, a.slug as id, b.slug as parent_id')
-            ->leftJoin('a.parent', 'b')
-            ->where('a.slug != :root')
-            ->setParameter('root', Category::ROOT_SLUG);
+            ->leftJoin('a.parent', 'b');
         if ($user && !$user->hasRole(User::ROLE_ADMIN)) {
             $qb->innerJoin('a.experts', 'e')
-                ->where('e.id = :user')
+                ->andWhere('e.id = :user')
                 ->setParameter('user', $user);
         }
         if ($admin && !$admin->hasRole(User::ROLE_ADMIN)) {
             $qb->innerJoin('a.admins', 'ad')
-                ->where('ad.id = :admin')
+                ->andWhere('ad.id = :admin')
                 ->setParameter('admin', $admin);
         }
 

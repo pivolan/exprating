@@ -66,15 +66,35 @@ class AjaxFormAutoComplete extends BaseController
         }
         $result = [];
 
-        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($user, $admin);
+        $categoryRepository = $this->getEm()->getRepository('AppBundle:Category');
+        $categories = $categoryRepository->getForJsTree($user, $admin);
         $categoriesIndexed = [];
         foreach ($categories as $categoryArray) {
             $categoriesIndexed[$categoryArray['id']] = $categoryArray;
         }
 
-        foreach ($categoriesIndexed as $categoryArray) {
+        foreach ($categories as $categoryArray) {
             $parent = $categoryArray['parent_id'] ?: '#';
-            if (!isset($categoriesIndexed[$categoryArray['parent_id']])) {
+            if ($categoryArray['parent_id'] && !isset($categoriesIndexed[$categoryArray['parent_id']])) {
+                /** @var Category[] $parentCategories */
+                $parentCategories = $categoryRepository->getPath(
+                    $categoryRepository->find($categoryArray['parent_id'])
+                );
+                foreach ($parentCategories as $categoryParent) {
+                    $categoriesIndexed[$categoryParent->getSlug()] = true;
+                    $result[] = [
+                        'id'     => $categoryParent->getSlug(),
+                        'parent' => $categoryParent->getParent() ? $categoryParent->getParent()->getSlug() : '#',
+                        'text'   => $categoryParent->getName(),
+                        'a_attr' => [
+                            'href'      => $this->generateUrl($route, ['slug' => $categoryParent->getSlug()]),
+                            'data_slug' => $categoryParent->getSlug(),
+                        ],
+                        'state'  => [
+                            'opened' => true,
+                        ],
+                    ];
+                }
                 $parent = '#';
             }
             $result[] = [
@@ -87,6 +107,7 @@ class AjaxFormAutoComplete extends BaseController
                 ],
                 'state'  => [
                     'selected' => ($categoryArray['id'] == $category),
+                    'opened'=>true,
                 ],
             ];
         }
