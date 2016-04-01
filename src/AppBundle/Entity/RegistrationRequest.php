@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Validator\Constraints\UniqueUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * RegistrationRequest
@@ -29,6 +30,8 @@ class RegistrationRequest
     /**
      * @var string
      *
+     * @Assert\Email
+     * @Assert\NotBlank
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
@@ -36,6 +39,7 @@ class RegistrationRequest
     /**
      * @var string
      *
+     * @Assert\NotBlank
      * @ORM\Column(name="message", type="text", nullable=true)
      */
     private $message;
@@ -64,6 +68,9 @@ class RegistrationRequest
 
     /**
      * @var Category
+     *
+     * @Assert\NotBlank
+     * @Assert\Count(min="1", minMessage="Необходимо выбрать хотя бы одну категорию")
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
      * @ORM\JoinTable(name="registration_request_category",

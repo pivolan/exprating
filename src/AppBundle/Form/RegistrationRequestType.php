@@ -9,6 +9,7 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\RegistrationRequest;
 use Doctrine\ORM\EntityManager;
+use Glifery\EntityHiddenTypeBundle\Form\Type\EntityHiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -47,12 +48,12 @@ class RegistrationRequestType extends AbstractType
             ->add('message', TextareaType::class, ['label' => 'Сопроводительное письмо'])
             ->add(
                 'categories',
-                EntityType::class,
+                CollectionType::class,
                 [
-                    'multiple' => true,
-                    'choices'  => [],
-                    'class'    => Category::class,
-                    'label'    => 'Категории',
+                    'entry_type'    => EntityHiddenType::class,
+                    'entry_options' => ['property' => 'slug', 'class' => Category::class],
+                    'allow_add'     => true,
+                    'label'         => false,
                 ]
             )
             ->add('send', SubmitType::class, ['label' => 'Отправить'])
@@ -75,11 +76,5 @@ class RegistrationRequestType extends AbstractType
     {
         $form = $event->getForm();
         $data = $event->getData();
-        $choices = $this->em->getRepository('AppBundle:Category')->findBy(['slug' => $data['categories']]);
-        $form->add(
-            'categories',
-            EntityType::class,
-            ['multiple' => true, 'choices' => $choices, 'class' => Category::class, 'label' => 'Категории']
-        );
     }
 }
