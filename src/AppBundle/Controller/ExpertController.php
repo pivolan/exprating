@@ -9,6 +9,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
+use AppBundle\ProductFilter\ProductFilter;
+use AppBundle\Security\ProductFilterVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,7 +33,7 @@ class ExpertController extends BaseController
     public function categoriesAction(Request $request, $page, Category $category = null)
     {
         $query = [];
-        if ($category) {
+        if ($category && $this->isGranted(ProductFilterVoter::VIEW_FREE, $category)) {
             $query = $this->getEm()->getRepository('AppBundle:Category')->getProductsRecursiveQuery($category);
         }
         $paginator = $this->get('knp_paginator');

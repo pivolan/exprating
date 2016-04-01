@@ -81,21 +81,23 @@ class AjaxFormAutoComplete extends BaseController
                     $categoryRepository->find($categoryArray['parent_id'])
                 );
                 foreach ($parentCategories as $categoryParent) {
-                    $categoriesIndexed[$categoryParent->getSlug()] = true;
-                    $result[] = [
-                        'id'     => $categoryParent->getSlug(),
-                        'parent' => $categoryParent->getParent() ? $categoryParent->getParent()->getSlug() : '#',
-                        'text'   => $categoryParent->getName(),
-                        'a_attr' => [
-                            'href'      => $this->generateUrl($route, ['slug' => $categoryParent->getSlug()]),
-                            'data_slug' => $categoryParent->getSlug(),
-                        ],
-                        'state'  => [
-                            'opened' => true,
-                        ],
-                    ];
+                    if (!isset($categoriesIndexed[$categoryParent->getSlug()])) {
+                        $categoriesIndexed[$categoryParent->getSlug()] = true;
+                        $result[] = [
+                            'id'     => $categoryParent->getSlug(),
+                            'parent' => $categoryParent->getParent() ? $categoryParent->getParent()->getSlug() : '#',
+                            'text'   => $categoryParent->getName(),
+                            'a_attr' => [
+                                'href'      => $this->generateUrl($route, ['slug' => $categoryParent->getSlug()]),
+                                'data_slug' => $categoryParent->getSlug(),
+                            ],
+                            'state'  => [
+                                'opened'   => true,
+                                'disabled' => true,
+                            ],
+                        ];
+                    }
                 }
-                $parent = '#';
             }
             $result[] = [
                 'id'     => $categoryArray['id'],
@@ -107,7 +109,7 @@ class AjaxFormAutoComplete extends BaseController
                 ],
                 'state'  => [
                     'selected' => ($categoryArray['id'] == $category),
-                    'opened'=>true,
+                    'opened'   => true,
                 ],
             ];
         }

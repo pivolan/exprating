@@ -15,8 +15,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class ProductFilterVoter extends Voter
 {
-    const VIEW_WAIT = 'SHOW_WAIT';
-    const VIEW_FREE = 'SHOW_FREE';
+    const VIEW_WAIT = 'VIEW_WAIT';
+    const VIEW_FREE = 'VIEW_FREE';
     /** @var  AccessDecisionManagerInterface */
     private $decisionManager;
 

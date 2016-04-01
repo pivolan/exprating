@@ -34,11 +34,11 @@
                 </div>
 
                 <div class="btn-group">
-                    {% if is_granted('SHOW_FREE', category) %}
+                    {% if is_granted('VIEW_FREE', category) %}
                         <a href="{{ path('product_list', {'slug':category.slug, 'status': productFilter.status == 'STATUS_FREE'?'STATUS_ALL':'STATUS_FREE'}) }}"
                            class="btn btn-info {{ productFilter.status == 'STATUS_FREE'?'active':'' }}">Посмотреть свободные товары</a>
                     {% endif %}
-                    {% if is_granted('SHOW_WAIT', category) %}
+                    {% if is_granted('VIEW_WAIT', category) %}
                         <a href="{{ path('product_list', {'slug': category.slug, 'status': productFilter.status == 'STATUS_WAIT'?'STATUS_ALL':'STATUS_WAIT'}) }}"
                            class="btn btn-info {{ productFilter.status == 'STATUS_WAIT'?'active':'' }}">Смотреть ожидающие подтверждения</a>
                     {% endif %}

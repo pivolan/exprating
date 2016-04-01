@@ -4,11 +4,15 @@
 <div class="rubric-wrapper">
     <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
         <ul>
-            {% for product in pagination %}
-                {{ include("_include/Product/_itemList.twig") }}
+            {% if is_granted('VIEW_FREE', category) %}
+                {% for product in pagination %}
+                    {{ include("_include/Product/_itemList.twig") }}
+                {% else %}
+                    <div class="alert alert-danger">А нету таких товаров</div>
+                {% endfor %}
             {% else %}
-                <div class="alert alert-danger">А нету таких товаров</div>
-            {% endfor %}
+                <div class="alert alert-danger">Нет прав для просмотра этой категории</div>
+            {% endif %}
         </ul>
     </div>
 </div>
