@@ -64,7 +64,7 @@ class Product
      * @ORM\Column(name="expert_opinion", type="text", nullable=true,
      *      options={"comment":"Краткое мнение эксперта о товаре. Отображается на странице эксперта"})
      */
-    private $expertOpinion;
+    private $expertOpinion = 'n/a';
 
     /**
      * @var array|string[]
@@ -189,7 +189,7 @@ class Product
      *
      * @ORM\Column(name="expert_comment", type="string", length=4000, nullable=true)
      */
-    private $expertComment;
+    private $expertComment = 'n/a';
 
     /**
      * @var Image[]
