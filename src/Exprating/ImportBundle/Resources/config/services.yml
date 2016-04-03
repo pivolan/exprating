@@ -26,5 +26,17 @@ services:
         tags:
             -  { name: console.command }
 
+    import.command.xml_reader_command:
+        class: Exprating\ImportBundle\Command\XmlReaderCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setXmlReader, ['@exprating_import.xml.xml_reader']]
+        tags:
+            -  { name: console.command }
+
     import.exval_text_rus:
         class: Exprating\ImportBundle\CompareText\EvalTextRus
+
+    exprating_import.xml.xml_reader:
+        class: Exprating\ImportBundle\Xml\XmlReader
+        arguments: [ '@serializer.encoder.xml' ]

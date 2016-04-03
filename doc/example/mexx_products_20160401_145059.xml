@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE yml_catalog SYSTEM "shops.dtd">
+<yml_catalog date="2016-04-01 12:00">
+    <shop>
+        <name>MEXX</name>
+        <company>ООО Приват Трэйд</company>
+        <url>http://mexx.ru</url>
+        <currencies>
+            <currency id="RUR" rate="1.0000"/>
+        </currencies>
+        <categories>
+            <category id="170">Дети (9-30 мес.)</category>
+            <category id="1701200" parentId="170">Шорты</category>
+            <category id="1701300" parentId="170">Жилеты</category>
+        </categories>
+        <offers>
+            <offer available="true" id="X15042088784" type="vendor.model">
+                <article>H6XMP005002001</article>
+                <categoryId>1101100</categoryId>
+                <currencyId>RUR</currencyId>
+                <description>Состав: 69% полиэстер,29% вискоза,2% спандекс. Артикул: H6XMP005002001. Страна
+                    производства: КИТАЙ. Коллекция: ФЕВРАЛЬ 2015. Цвет: черный. Сезон: весна-лето
+                </description>
+                <model>Брюки Mexx H6XMP005002001</model>
+                <modified_time>1459502626</modified_time>
+                <name>Брюки</name>
+                <oldprice>4599</oldprice>
+                <param name="Состав:">69% полиэстер,29% вискоза,2% спандекс</param>
+                <param name="Артикул:">H6XMP005002001</param>
+                <param name="Страна производства:">КИТАЙ</param>
+                <param name="Коллекция:">ФЕВРАЛЬ 2015</param>
+                <param name="Цвет:">черный</param>
+                <param name="Сезон:">весна-лето</param>
+                <param name="Коллекция">ИЮЛЬ 2015</param>
+                <param name="Сезон">Осень/Зима</param>
+                <param name="Цвет">черный</param>
+                <param name="Размер" quantity="2" type="size" unit="EU">46</param>
+                <param name="Размер" quantity="1" type="size" unit="EU">54</param>
+                <picture>http://mexx.ru/images/P0/02/30/11/86/brjuki-mexx-chernyjj-h6xmp005002001-1b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/86/brjuki-mexx-chernyjj-h6xmp005002001-2b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/86/brjuki-mexx-chernyjj-h6xmp005002001-3b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/86/brjuki-mexx-chernyjj-h6xmp005002001-4b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/86/brjuki-mexx-chernyjj-h6xmp005002001-5b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/86/brjuki-mexx-chernyjj-h6xmp005002001-6b.jpg</picture>
+                <price>1380</price>
+                <topseller>true</topseller>
+                <url>https://ad.admitad.com/g/b65561e436c5a19265485f018a68af/?i=5&amp;ulp=http%3A%2F%2Fmexx.ru%2Fshop%2Fproduct%2Fbrjuki-mexx-h6xmp005002001</url>
+                <vendor>mexx</vendor>
+                <vendorCode>H6XMP005002001</vendorCode>
+            </offer>
+            <offer available="true" id="X15042088754" type="vendor.model">
+                <article>N1BTP002002067</article>
+                <categoryId>1401100</categoryId>
+                <currencyId>RUR</currencyId>
+                <description>Состав: 63% полиэстер,32% вискоза,5% эластан. Артикул: N1BTP002002067. Страна производства:
+                    КИТАЙ. Коллекция: ФЕВРАЛЬ 2015. Цвет: синий. Сезон: весна-лето
+                </description>
+                <model>Брюки Mexx N1BTP002002067</model>
+                <modified_time>1459502626</modified_time>
+                <name>Брюки</name>
+                <oldprice>5299</oldprice>
+                <param name="Состав:">63% полиэстер,32% вискоза,5% эластан</param>
+                <param name="Артикул:">N1BTP002002067</param>
+                <param name="Страна производства:">КИТАЙ</param>
+                <param name="Коллекция:">ФЕВРАЛЬ 2015</param>
+                <param name="Цвет:">синий</param>
+                <param name="Сезон:">весна-лето</param>
+                <param name="Сезон">весна-лето</param>
+                <param name="Коллекция">ФЕВРАЛЬ 2015</param>
+                <param name="Цвет">синий</param>
+                <param name="Размер" quantity="2" type="size" unit="EU">30</param>
+                <param name="Размер" quantity="4" type="size" unit="EU">32</param>
+                <param name="Размер" quantity="2" type="size" unit="EU">38</param>
+                <picture>http://mexx.ru/images/P0/02/30/11/56/brjuki-mexx-sinijj-n1btp002002067-1b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/56/brjuki-mexx-sinijj-n1btp002002067-2b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/56/brjuki-mexx-sinijj-n1btp002002067-3b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/56/brjuki-mexx-sinijj-n1btp002002067-4b.jpg</picture>
+                <picture>http://mexx.ru/images/P0/02/30/11/56/brjuki-mexx-sinijj-n1btp002002067-5b.jpg</picture>
+                <price>2649</price>
+                <topseller>false</topseller>
+                <url>https://ad.admitad.com/g/b65561e436c5a19265485f018a68af/?i=5&amp;ulp=http%3A%2F%2Fmexx.ru%2Fshop%2Fproduct%2Fbrjuki-mexx-n1btp002002067</url>
+                <vendor>mexx</vendor>
+                <vendorCode>N1BTP002002067</vendorCode>
+            </offer>
+        </offers>
+    </shop>
+</yml_catalog>
