@@ -108,6 +108,7 @@ class AliasCategoryCommand extends ContainerAwareCommand
         $matches = [];
         foreach ($lastLevelCategoriesImport as $categoryImport) {
             if ($categoryImport->getAliasCategory()) {
+                $output->writeln('skipped '.$categoryImport->getName());
                 continue;
             }
             $path1 = $categoryImport->getName();
