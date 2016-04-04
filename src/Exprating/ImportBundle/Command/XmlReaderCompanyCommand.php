@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @package Exprating\ImportBundle\Command
  * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
-class XmlReaderCommand extends Command
+class XmlReaderCompanyCommand extends Command
 {
     const ARG_FILE = 'file';
     /**
@@ -67,9 +67,8 @@ class XmlReaderCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('import:xml_reader')
-            ->setDescription('Greet someone')
-            ->addArgument(self::ARG_FILE);
+            ->setName('import:xml_reader_company')
+            ->setDescription('Greet someone');
     }
 
     /**
@@ -77,48 +76,37 @@ class XmlReaderCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $filepath = $input->getArgument(self::ARG_FILE);
-        $fileinfo = new \SplFileInfo('var/admitad.xml');
+        $fileinfo = new \SplFileInfo('var/actionpay.xml');
         if (!$fileinfo->isFile()) {
             $fileinfo = new \SplFileInfo(
-                'http://export.admitad.com/ru/webmaster/websites/40785/partners/export/?user=Antonlukk&code=7569a359ca&format=xml&filter=1&keyword=&region=00&action_type=&status=active&format=xml'
+                'https://api.actionpay.ru/ru/apiWmMyOffers/?key=E1RBQymTBLV53g92yjZc&format=xml'
             );
+            $output->writeln('will download '.$fileinfo->getPathname());
         }
-        //admitad, получим список компаний
-        $fileAdmitadXml = new \SplFileObject('var/admitad.csv', 'w');
-        file_put_contents('var/admitad.xml', file_get_contents($fileinfo->getPathname()));
-        $output->writeln('admitad.xml saved');
-        if (true) {
-            foreach ($this->xmlReader->getElementsData($fileinfo, 'advcampaign') as $key => $data) {
+        //actionpay, получим список компаний
+        $fileactionpayXml = new \SplFileObject('var/actionpay.csv', 'w');
+        file_put_contents('var/actionpay.xml', file_get_contents($fileinfo->getPathname()));
+        $output->writeln('actionpay.xml saved');
+        if (false) {
+            foreach ($this->xmlReader->getElementsData($fileinfo, 'favouriteOffer') as $key => $data) {
                 foreach ($data as $name => $value) {
                     if (is_array($value)) {
-                        $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                        if (isset($value['#'])) {
+                            $value = $value['#'];
+                        } else {
+                            $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                        }
                     }
-                    $fileAdmitadXml->fputcsv([$key, $name, trim($value)]);
+                    $fileactionpayXml->fputcsv([$key, $name, trim($value)]);
                 }
-                $output->writeln($key.' admitad.csv saved');
-                if (false && isset($data['original_products'])) {
-
-                    $priceListUrl = $data['original_products'];
-                    //Идем по списку, качаем файлы, имя файла как md5 от ссылки, сразу парсим
-                    $companyName = $this->slugify->slugify($data['name']);
-                    $priceListXmlFilePath = 'var/admitad/'.$companyName.'.xml';
-                    $filePriceListXml = new \SplFileInfo($priceListXmlFilePath);
-                    if (!$filePriceListXml->isFile()) {
-                        $filePriceListXml = new \SplFileInfo($priceListUrl);
-                    }
-                    $filePriceListCsv = new \SplFileObject('var/admitad/'.md5($priceListUrl).'.csv', 'w');
-                    //запишем этот список в папку.
-                    //Создаем директорию для этого списка
-                    file_put_contents(
-                        $priceListXmlFilePath,
-                        file_get_contents($filePriceListXml->getPathname())
-                    );
-                    $output->writeln('pricelist xml '.$priceListXmlFilePath.' saved');
+                if (isset($data['offer']['id']['#'])) {
+                    $url = 'https://api.actionpay.ru/ru/apiWmOffers/?key=E1RBQymTBLV53g92yjZc&format=xml&offer='.$data['offer']['id']['#'];
+                    $fileactionpayXml->fputcsv([$key, 'url', trim($url)]);
                 }
+                $output->writeln($key.' actionpay.csv saved');
             }
         }
-        foreach (glob('var/admitad/*.xml') as $key => $xmlFilePath) {
+        foreach (glob('var/actionpay/*.xml') as $key => $xmlFilePath) {
             $filePriceListXml = new \SplFileInfo($xmlFilePath);
             $output->writeln('start parsing '.$filePriceListXml->getBasename());
             if ($filePriceListXml->isFile() && !is_file($xmlFilePath.'.csv')) {
@@ -131,7 +119,21 @@ class XmlReaderCommand extends Command
                     ) as $offerNumber => $offerData) {
                         foreach ($offerData as $name => $value) {
                             if (is_array($value)) {
-                                $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                                if (isset($value['#'])) {
+                                    $value = $value['#'];
+                                } elseif ($name == 'Ymls' && isset($value['Yml']['#'])) {
+                                    $filePriceListCsv->fputcsv(
+                                        [$offerNumber, 'urls', $value['Yml']['#'], $filePriceListXml->getBasename()]
+                                    );
+                                } elseif($name == 'Ymls' && isset($value['Yml'][0]['#'])) {
+                                    foreach($value['Yml'] as $ymlData){
+                                        $filePriceListCsv->fputcsv(
+                                            [$offerNumber, 'urls', $ymlData['#'], $filePriceListXml->getBasename()]
+                                        );
+                                    }
+                                } else {
+                                    $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                                }
                             }
                             $filePriceListCsv->fputcsv([$offerNumber, $name, $value, $filePriceListXml->getBasename()]);
                         }
@@ -148,12 +150,15 @@ class XmlReaderCommand extends Command
 
         $pdo = new \PDO('mysql:dbname=import;host=127.0.0.1', 'root', 'chease');
 
-        foreach (glob('var/admitad/*.csv') as $key => $csvFilePath) {
+        foreach (glob('var/actionpay/*.csv') as $key => $csvFilePath) {
             $fileInfo = new \SplFileInfo($csvFilePath);
             if ($fileInfo->isFile()) {
-                $output->writeln('file csv load ' . $csvFilePath);
-                $pdo->exec('LOAD DATA INFILE "'.$fileInfo->getRealPath().'" ignore INTO TABLE key_product FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
-                $output->writeln('file csv loaded ' . $csvFilePath);
+                $output->writeln('file csv load '.$csvFilePath);
+                $pdo->exec(
+                    'LOAD DATA INFILE "'.$fileInfo->getRealPath(
+                    ).'" ignore INTO TABLE key_offer_ap FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";'
+                );
+                $output->writeln('file csv loaded '.$csvFilePath);
             }
         }
 
