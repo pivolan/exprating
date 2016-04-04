@@ -31,6 +31,7 @@ services:
         calls:
             - [setEm, ['@doctrine.orm.entity_manager']]
             - [setXmlReader, ['@exprating_import.xml.xml_reader']]
+            - [setSlugify, ['@appbundle.slugify']]
         tags:
             -  { name: console.command }
 

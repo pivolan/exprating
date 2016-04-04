@@ -9,12 +9,14 @@ namespace Exprating\ImportBundle\Command;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\RatingSettings;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
 use Exprating\ImportBundle\Xml\XmlReader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class RepairCategoryCommand
@@ -35,6 +37,11 @@ class XmlReaderCommand extends Command
     private $xmlReader;
 
     /**
+     * @var Slugify
+     */
+    private $slugify;
+
+    /**
      * @param EntityManager $em
      */
     public function setEm(EntityManager $em)
@@ -48,6 +55,14 @@ class XmlReaderCommand extends Command
     public function setXmlReader($xmlReader)
     {
         $this->xmlReader = $xmlReader;
+    }
+
+    /**
+     * @param Slugify $slugify
+     */
+    public function setSlugify($slugify)
+    {
+        $this->slugify = $slugify;
     }
 
     protected function configure()
@@ -64,16 +79,77 @@ class XmlReaderCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filepath = $input->getArgument(self::ARG_FILE);
-        $fileinfo = new \SplFileInfo($filepath);
-        $file = new \SplFileObject('key_product.csv', 'w');
-        foreach ($this->xmlReader->getElementsData($fileinfo, 'offer') as $key => $data) {
+        $fileinfo = new \SplFileInfo('var/admitad.xml');
+        if (!$fileinfo->isFile()) {
+            $fileinfo = new \SplFileInfo(
+                'http://export.admitad.com/ru/webmaster/websites/40785/partners/export/?user=Antonlukk&code=7569a359ca&format=xml&filter=1&keyword=&region=00&action_type=&status=active&format=xml'
+            );
+        }
+        //admitad, получим список компаний
+        $fileAdmitadXml = new \SplFileObject('var/admitad.csv', 'w');
+        file_put_contents('var/admitad.xml', file_get_contents($fileinfo->getPathname()));
+        $output->writeln('admitad.xml saved');
+        foreach ($this->xmlReader->getElementsData($fileinfo, 'advcampaign') as $key => $data) {
             foreach ($data as $name => $value) {
                 if (is_array($value)) {
                     $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
                 }
-                $file->fputcsv([$fileinfo->getBasename().$key, $name, trim($value)]);
+                $fileAdmitadXml->fputcsv([$key, $name, trim($value)]);
+            }
+            $output->writeln('admitad.csv saved');
+            if (false && isset($data['original_products'])) {
+
+                $priceListUrl = $data['original_products'];
+                //Идем по списку, качаем файлы, имя файла как md5 от ссылки, сразу парсим
+                $companyName = $this->slugify->slugify($data['name']);
+                $priceListXmlFilePath = 'var/admitad/'.$companyName.'.xml';
+                $filePriceListXml = new \SplFileInfo($priceListXmlFilePath);
+                if (!$filePriceListXml->isFile()) {
+                    $filePriceListXml = new \SplFileInfo($priceListUrl);
+                }
+                $filePriceListCsv = new \SplFileObject('var/admitad/'.md5($priceListUrl).'.csv', 'w');
+                //запишем этот список в папку.
+                //Создаем директорию для этого списка
+                file_put_contents(
+                    $priceListXmlFilePath,
+                    file_get_contents($filePriceListXml->getPathname())
+                );
+                $output->writeln('pricelist xml '.$priceListXmlFilePath.' saved');
             }
         }
+        foreach (glob('var/admitad/*.xml') as $key => $xmlFilePath) {
+            $filePriceListXml = new \SplFileInfo($xmlFilePath);
+            $filePriceListCsv = new \SplFileObject('var/admitad/'.$xmlFilePath.'.csv', 'w');
+            if ($filePriceListXml->isFile()) {
+                try {
+
+                    foreach ($this->xmlReader->getElementsData(
+                        $filePriceListXml,
+                        'offer'
+                    ) as $offerNumber => $offerData) {
+                        foreach ($offerData as $name => $value) {
+                            if (is_array($value)) {
+                                $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                            }
+                            $filePriceListCsv->fputcsv([$offerNumber, $name, $value, $filePriceListXml->getBasename()]);
+                        }
+                    }
+                } catch (\Exception $e) {
+                    $output->writeln($e->getMessage());
+                    file_put_contents($filePriceListXml->getPathname().'.error', $e->getMessage());
+                }
+            }
+
+        }
+        $output->writeln('pricelist parsed, csv saved '.$filePriceListCsv->getPathname());
+
+
+        //Ошибки пишем рядом с файлом, добавляем в конце fail расширение
+        //Если все ок, парсим файл, пишем csv key,name,value,company
+        //Сохраняем имя csv в общем массиве.
+        //Делаем то же самое для actionpay
+
+        //Получаем общий массив файлов сsv, запускаем скрипт импорта. Ждем.
         $output->writeln($key);
     }
 }
