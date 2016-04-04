@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class RepairCategoryCommand
@@ -119,7 +118,7 @@ class XmlReaderCommand extends Command
                 }
             }
         }
-        foreach (glob('var/admitad/11934.xml') as $key => $xmlFilePath) {
+        foreach (glob('var/admitad/*.xml') as $key => $xmlFilePath) {
             $filePriceListXml = new \SplFileInfo($xmlFilePath);
             $output->writeln('start parsing '.$filePriceListXml->getBasename());
             if ($filePriceListXml->isFile() && !is_file($xmlFilePath.'.csv')) {
@@ -128,7 +127,7 @@ class XmlReaderCommand extends Command
 
                     foreach ($this->xmlReader->getElementsData(
                         $filePriceListXml,
-                        'offkker'
+                        'offer'
                     ) as $offerNumber => $offerData) {
                         foreach ($offerData as $name => $value) {
                             if (is_array($value)) {
@@ -144,6 +143,17 @@ class XmlReaderCommand extends Command
                 $output->writeln('pricelist parsed, csv saved '.$filePriceListCsv->getPathname());
             } else {
                 $output->writeln('skipped '.$filePriceListXml->getPathname());
+            }
+        }
+
+        $pdo = new \PDO('mysql:dbname=import;host=127.0.0.1', 'root', 'chease');
+
+        foreach (glob('var/admitad/*.csv') as $key => $csvFilePath) {
+            $fileInfo = new \SplFileInfo($csvFilePath);
+            if ($fileInfo->isFile()) {
+                $output->writeln('file csv load ' . $csvFilePath);
+                $pdo->exec('LOAD DATA INFILE "'.$fileInfo->getRealPath().'" ignore INTO TABLE key_product FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
+                $output->writeln('file csv loaded ' . $csvFilePath);
             }
         }
 
