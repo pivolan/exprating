@@ -89,43 +89,46 @@ class XmlReaderCommand extends Command
         $fileAdmitadXml = new \SplFileObject('var/admitad.csv', 'w');
         file_put_contents('var/admitad.xml', file_get_contents($fileinfo->getPathname()));
         $output->writeln('admitad.xml saved');
-        foreach ($this->xmlReader->getElementsData($fileinfo, 'advcampaign') as $key => $data) {
-            foreach ($data as $name => $value) {
-                if (is_array($value)) {
-                    $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        if (false) {
+            foreach ($this->xmlReader->getElementsData($fileinfo, 'advcampaign') as $key => $data) {
+                foreach ($data as $name => $value) {
+                    if (is_array($value)) {
+                        $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                    }
+                    $fileAdmitadXml->fputcsv([$key, $name, trim($value)]);
                 }
-                $fileAdmitadXml->fputcsv([$key, $name, trim($value)]);
-            }
-            $output->writeln('admitad.csv saved');
-            if (false && isset($data['original_products'])) {
+                $output->writeln($key.' admitad.csv saved');
+                if (false && isset($data['original_products'])) {
 
-                $priceListUrl = $data['original_products'];
-                //Идем по списку, качаем файлы, имя файла как md5 от ссылки, сразу парсим
-                $companyName = $this->slugify->slugify($data['name']);
-                $priceListXmlFilePath = 'var/admitad/'.$companyName.'.xml';
-                $filePriceListXml = new \SplFileInfo($priceListXmlFilePath);
-                if (!$filePriceListXml->isFile()) {
-                    $filePriceListXml = new \SplFileInfo($priceListUrl);
+                    $priceListUrl = $data['original_products'];
+                    //Идем по списку, качаем файлы, имя файла как md5 от ссылки, сразу парсим
+                    $companyName = $this->slugify->slugify($data['name']);
+                    $priceListXmlFilePath = 'var/admitad/'.$companyName.'.xml';
+                    $filePriceListXml = new \SplFileInfo($priceListXmlFilePath);
+                    if (!$filePriceListXml->isFile()) {
+                        $filePriceListXml = new \SplFileInfo($priceListUrl);
+                    }
+                    $filePriceListCsv = new \SplFileObject('var/admitad/'.md5($priceListUrl).'.csv', 'w');
+                    //запишем этот список в папку.
+                    //Создаем директорию для этого списка
+                    file_put_contents(
+                        $priceListXmlFilePath,
+                        file_get_contents($filePriceListXml->getPathname())
+                    );
+                    $output->writeln('pricelist xml '.$priceListXmlFilePath.' saved');
                 }
-                $filePriceListCsv = new \SplFileObject('var/admitad/'.md5($priceListUrl).'.csv', 'w');
-                //запишем этот список в папку.
-                //Создаем директорию для этого списка
-                file_put_contents(
-                    $priceListXmlFilePath,
-                    file_get_contents($filePriceListXml->getPathname())
-                );
-                $output->writeln('pricelist xml '.$priceListXmlFilePath.' saved');
             }
         }
-        foreach (glob('var/admitad/*.xml') as $key => $xmlFilePath) {
+        foreach (glob('var/admitad/11934.xml') as $key => $xmlFilePath) {
             $filePriceListXml = new \SplFileInfo($xmlFilePath);
-            $filePriceListCsv = new \SplFileObject('var/admitad/'.$xmlFilePath.'.csv', 'w');
-            if ($filePriceListXml->isFile()) {
+            $output->writeln('start parsing '.$filePriceListXml->getBasename());
+            if ($filePriceListXml->isFile() && !is_file($xmlFilePath.'.csv')) {
+                $filePriceListCsv = new \SplFileObject($xmlFilePath.'.csv', 'w');
                 try {
 
                     foreach ($this->xmlReader->getElementsData(
                         $filePriceListXml,
-                        'offer'
+                        'offkker'
                     ) as $offerNumber => $offerData) {
                         foreach ($offerData as $name => $value) {
                             if (is_array($value)) {
@@ -138,10 +141,11 @@ class XmlReaderCommand extends Command
                     $output->writeln($e->getMessage());
                     file_put_contents($filePriceListXml->getPathname().'.error', $e->getMessage());
                 }
+                $output->writeln('pricelist parsed, csv saved '.$filePriceListCsv->getPathname());
+            } else {
+                $output->writeln('skipped '.$filePriceListXml->getPathname());
             }
-
         }
-        $output->writeln('pricelist parsed, csv saved '.$filePriceListCsv->getPathname());
 
 
         //Ошибки пишем рядом с файлом, добавляем в конце fail расширение

@@ -37,8 +37,7 @@ class XmlReader
         $reader->open($file->getPathname());
         // Move to the first <position /> node.
         do {
-            $reader->read();
-        } while ($reader->localName !== $elementForSearch);
+        } while ($reader->read() && $reader->localName !== $elementForSearch);
 
         // Now that we're at the right depth, hop to the next <position/> until the end of the tree.
         while ($reader->localName === $elementForSearch) {
