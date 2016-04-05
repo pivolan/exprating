@@ -9,6 +9,7 @@ namespace AppBundle\Tests\Repository;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\User;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
 
@@ -48,6 +49,35 @@ class CategoryRepositoryTest extends AbstractWebCaseTest
         $this->assertContains($category->getSlug(), $childrenIds);
         $this->assertContains($category1->getSlug(), $childrenIds);
         $this->assertContains($category11->getSlug(), $childrenIds);
+    }
+
+    public function testGetForJsTree()
+    {
+        $user = $this->client->getContainer()->get('exprating_faker.faker.fake_entities_generator')->user();
+        $categorySlug = 'akkumulyatornye-batarei-4';
+        $user->addCategory($this->em->getReference(Category::class, $categorySlug));
+        $user->addAdminCategory($this->em->getReference(Category::class, $categorySlug));
+        $this->em->persist($user);
+        $this->em->flush();
+        $categories = $this->em->getRepository('AppBundle:Category')->getForJsTree($user);
+        $this->assertCount(1, $categories);
+        $expectedResult = [
+            $categorySlug => [
+                'name'      => 'Аккумуляторные батареи',
+                'id'        => $categorySlug,
+                'parent_id' => 'avtozapchasti-2',
+            ],
+        ];
+        $this->assertEquals(
+            $expectedResult,
+            $categories
+        );
+        $categories = $this->em->getRepository('AppBundle:Category')->getForJsTree(null, $user);
+        $this->assertCount(1, $categories);
+        $this->assertEquals(
+            $expectedResult,
+            $categories
+        );
     }
 
     /**

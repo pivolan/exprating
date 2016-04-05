@@ -55,7 +55,7 @@ class Characteristic
      *     options={"default"="string", "comment":"Тип значения, используется для поиска по характеристикам."})
      * @Assert\Choice(choices = {"string", "integer", "decimal"}, message = "Choose a valid type.")
      */
-    private $type;
+    private $type = self::TYPE_STRING;
 
     /**
      * @var string

@@ -45,7 +45,7 @@ class CharacteristicExtension extends \Twig_Extension
 
         return $this->twig->render(
             'CharacteristicBundle:Extensions:productCharacteristics.html.twig',
-            ['characteristics' => array_reverse($result)]
+            ['characteristics' => $result]
         );
     }
 

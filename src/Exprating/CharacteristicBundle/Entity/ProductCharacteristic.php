@@ -33,7 +33,7 @@ class ProductCharacteristic
      * @ORM\Column(name="value_string", type="string", length=255, nullable=true,
      *     options={"comment":"Значение характеристики товара. Строка"})
      */
-    private $valueString;
+    private $valueString = 'n/a';
 
     /**
      * @var int
@@ -42,7 +42,7 @@ class ProductCharacteristic
      *     options={"comment":"Значение характеристики товара. целочисленное"})
      * @Assert\Type(type="numeric")
      */
-    private $valueInt;
+    private $valueInt = 0;
 
     /**
      * @var string
@@ -51,7 +51,7 @@ class ProductCharacteristic
      *     options={"comment":"Значение характеристики товара. Цифра 0,00"})
      * @Assert\Type(type="numeric")
      */
-    private $valueDecimal;
+    private $valueDecimal = 0.0;
 
     /**
      * @var Product

@@ -130,7 +130,9 @@ class ProductType extends AbstractType
             if (!in_array($categoryCharacteristic->getCharacteristic(), $characteristics)) {
                 $productCharacteristic = new ProductCharacteristic();
                 $productCharacteristic->setProduct($product)
-                    ->setCharacteristic($categoryCharacteristic->getCharacteristic());
+                    ->setCharacteristic($categoryCharacteristic->getCharacteristic())
+                    ->setOrderIndex(count($characteristics) + $categoryCharacteristic->getOrderIndex())
+                ;
                 $product->addProductCharacteristic($productCharacteristic);
             }
         }

@@ -23,7 +23,7 @@ class VisitsLogController extends BaseController
         $visit = new Visit();
         $expert = $product->getExpertUser();
         $curatorFirstLevel = null;
-        if ($expert && $product->getIsEnabled()) {
+        if ($expert && $product->getIsEnabled() && $expert != $this->getUser()) {
             $curatorFirstLevel = $expert->getCurator();
             $visit->setProduct($product)
                 ->setUser($this->getUser())

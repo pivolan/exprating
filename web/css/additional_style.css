@@ -1,0 +1,27 @@
+.loader-ajax {
+    position: absolute;
+    left: 50%;
+    top: 100px;
+    width: 32px;
+    height: 32px;
+    background: url('/images/ajax-loader.gif');
+}
+
+li.expert-item .curator .expert-img-wrapper {
+    width: 45px;
+    height: 45px;
+    margin-right: 25px;
+}
+li.expert-item .curator .expert-img-wrapper img{
+    width: 45px;
+}
+
+li.expert-item .curator .expert-name span {
+    padding-top: 2px;
+}
+li.expert-item .curator .expert-name {
+    font-size: 0.8em;
+}
+.level2 {
+    height: 40px;
+}

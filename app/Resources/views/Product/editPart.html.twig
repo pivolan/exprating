@@ -1,23 +1,11 @@
-{% extends ':Product:detailPart.html.twig' %}
+{% extends 'Product/detailPart.html.twig' %}
 {% block edit_category %}
     {% if is_granted('CATEGORY_CHANGE', product) %}
         <a href="{{ path('product_choose_category', {'slug':product.slug}) }}" class="btn btn-xs btn-info" type="button"
-           data-toggle="tooltip" title="Изменить категорию">
+           title="Изменить категорию">
             <span class="glyphicon glyphicon-edit"></span>
         </a>
     {% endif %}
-    {% for peopleGroup in product.peopleGroups %}
-        {% if peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_WOMAN') %}
-            {% set faClass = 'fa-female' %}
-        {% elseif peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_MAN') %}
-            {% set faClass = 'fa-male' %}
-        {% elseif peopleGroup.slug == constant('AppBundle\\Entity\\PeopleGroup::SLUG_CHILD') %}
-            {% set faClass = 'fa-child' %}
-        {% else %}
-            {% set faClass = 'fa-group' %}
-        {% endif %}
-        <i class="fa {{ faClass }}" data-toggle="tooltip" title="{{ peopleGroup.name }}"></i>
-    {% endfor %}
 {% endblock %}
 {% block form_start_block %}
     {% form_theme form 'Form/form_product_edit.html.twig' %}
@@ -141,9 +129,11 @@
 {% block characteristics %}
     {% for fields in form.productCharacteristics %}
         <div data-index="{{ loop.index0 }}" data-type="characteristic" class="row form-group">
-            <div class="col-sm-4">{{ form_widget(fields.characteristic) }}</div>
+            <div class="col-sm-1"><span class="btn btn-info"><span class="glyphicon glyphicon-transfer"></span></span></div>
+            <div class="col-sm-3">{{ form_widget(fields.characteristic) }}</div>
             <div class="col-sm-4">{{ form_widget(fields.value) }}</div>
             <div class="col-sm-3">{{ form_widget(fields.headGroup) }}</div>
+            <div class="hidden orderIndex">{{ form_widget(fields.orderIndex) }}</div>
             <div class="col-sm-1">
                 <button data-type="remove-ch" class="btn btn-error btn-danger" type="button">
                     <span class="glyphicon glyphicon-trash"></span>
@@ -253,21 +243,24 @@
                        class="form-control" value="" type="hidden">
             </div>
         </div>
-        <div class="row history_edit">
-            <div class="col-md-12">
-                <h1>История изменений</h1>
-                {% for history in historyLogs %}
-                    <div class="well well-sm">
-                        <img src="{{ history.user.avatarImage }}" height="30" alt="" class="pull-left">
-                        <span class="label label-info pull-right">{{ history.createdAt|date }}</span>
-                        <h5>
-                            <a href="{{ path('experts_detail', {'username': history.user.username}) }}">{{ history.user.fullName }}</a>
-                        </h5>
-                        <p>{{ history.text }}</p>
-                    </div>
-                {% endfor %}
-                {{ knp_pagination_render(historyLogs) }}
-            </div>
+    </div>
+{% endblock %}
+
+{% block where_to_buy_title %}История изменений{% endblock %}
+{% block where_to_buy_body %}
+    <div class="row history_edit">
+        <div class="col-md-12">
+            {% for history in historyLogs %}
+                <div class="well well-sm">
+                    <img src="{{ history.user.avatarImage }}" height="30" alt="" class="pull-left">
+                    <span class="label label-info pull-right">{{ history.createdAt|date }}</span>
+                    <h5>
+                        <a href="{{ path('experts_detail', {'username': history.user.username}) }}">{{ history.user.fullName }}</a>
+                    </h5>
+                    <p>{{ history.text }}</p>
+                </div>
+            {% endfor %}
+            {{ knp_pagination_render(historyLogs) }}
         </div>
     </div>
 {% endblock %}

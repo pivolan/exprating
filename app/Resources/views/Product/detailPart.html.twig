@@ -171,7 +171,7 @@
                         <li><a href="#props" data-toggle="tab">Характеристики</a></li>
                         <li><a href="#maintainer" data-toggle="tab">Изготовитель</a></li>
                         <li><a href="#comments" data-toggle="tab">Отзывы</a></li>
-                        <li><a href="#buy" data-toggle="tab">Где купить</a></li>
+                        <li><a href="#buy" data-toggle="tab">{% block where_to_buy_title %}Где купить{% endblock %}</a></li>
                     </ul>
 
                     <div class="tabs-content">
@@ -181,22 +181,24 @@
                             {% endblock %}
                         </div>
                         <div class="tab-pane fade" id="buy">
-                            <h3>Где купить</h3>
-                            <table class="where-by">
-                                <tbody>
-                                {% for productShopPrice in product.productShopPrices %}
-                                    <tr>
-                                        <td><img src="{{ productShopPrice.shop.image }}"></td>
-                                        <td><a href="">{{ productShopPrice.shop.name }}</a></td>
-                                        <td>{{ productShopPrice.price }} <span
-                                                    class="sign_ruble">p<span>уб.</span></span></td>
-                                        <td><a class="btn btn-primary btn-md" role="button"><span
-                                                        class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                            <h3>{{ block('where_to_buy_title') }}</h3>
+                            {% block where_to_buy_body %}
+                                <table class="where-by">
+                                    <tbody>
+                                    {% for productShopPrice in product.productShopPrices %}
+                                        <tr>
+                                            <td><img src="{{ productShopPrice.shop.image }}"></td>
+                                            <td><a href="">{{ productShopPrice.shop.name }}</a></td>
+                                            <td>{{ productShopPrice.price }} <span
+                                                        class="sign_ruble">p<span>уб.</span></span></td>
+                                            <td><a class="btn btn-primary btn-md" role="button"><span
+                                                            class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endblock %}
                         </div>
                         <div class="tab-pane fade" id="comments">
                             <h3>Отзывы покупателей</h3>

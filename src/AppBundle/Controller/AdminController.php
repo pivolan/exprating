@@ -8,7 +8,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserEditType;
 use Exprating\ImportBundle\Entity\AliasCategory;
@@ -180,7 +179,7 @@ class AdminController extends BaseController
                 'edit_url' => $this->generateUrl('category_admin_categories', ['slug' => $category->getSlug()]),
                 'show_url' => $this->generateUrl(
                     'product_list',
-                    ['slug' => $category->getSlug(), 'peopleGroup' => PeopleGroup::SLUG_ALL]
+                    ['slug' => $category->getSlug()]
                 ),
             ]
         );
@@ -211,7 +210,7 @@ class AdminController extends BaseController
                 'edit_url' => $this->generateUrl('category_admin_categories', ['slug' => $category->getSlug()]),
                 'show_url' => $this->generateUrl(
                     'product_list',
-                    ['slug' => $category->getSlug(), 'peopleGroup' => PeopleGroup::SLUG_ALL]
+                    ['slug' => $category->getSlug()]
                 ),
             ]
         );
@@ -239,7 +238,7 @@ class AdminController extends BaseController
                 'edit_url' => $this->generateUrl('category_admin_categories', ['slug' => $category->getSlug()]),
                 'show_url' => $this->generateUrl(
                     'product_list',
-                    ['slug' => $category->getSlug(), 'peopleGroup' => PeopleGroup::SLUG_ALL]
+                    ['slug' => $category->getSlug()]
                 ),
             ]
         );

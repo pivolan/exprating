@@ -19,6 +19,7 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('enabled')
             ->add(
                 'roles',
                 ChoiceType::class,

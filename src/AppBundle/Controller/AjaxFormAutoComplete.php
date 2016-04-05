@@ -50,99 +50,6 @@ class AjaxFormAutoComplete extends BaseController
     }
 
     /**
-     * @Route("/ajax/expert/tree", name="ajax_expert_tree")
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function expertAjaxTreeAction(Request $request)
-    {
-        $userId = $request->get('id');
-        if ($userId == '#') {
-            $user = $this->getUser();
-        } else {
-            $user = $this->getEm()->getRepository('AppBundle:User')->find($userId);
-        }
-        if (!$user) {
-            $this->createNotFoundException();
-        }
-
-        $liipCacheManager = $this->get('liip_imagine.cache.manager');
-        $treeIconFilter = 'tree_icon_filter';
-        $userIcon = $liipCacheManager->getBrowserPath(
-            $user->getAvatarImage() ?: '/images/default_user.png',
-            $treeIconFilter
-        );
-        $expertText = sprintf(
-            '%s (страниц: %d, экспертов: %d, доходных страниц: %d, доходных экспертов: %d)',
-            $user->getFullName() ?: $user->getUsername(),
-            $user->getProducts()->count(),
-            $user->getExperts()->count(),
-            0,
-            0
-        );
-
-        $result = [
-            'id'       => $user->getId(),
-            'text'     => $expertText,
-            'state'    => ['opened' => true],
-            'icon'     => $userIcon,
-            'a_attr'   => [
-                'data-href' => $this->generateUrl('experts_detail', ['username' => $user->getUsername()]),
-                'target'    => '_blank',
-            ],
-            'children' => [
-                [
-                    'id'       => $user->getId().'pages',
-                    'text'     => 'Страницы',
-                    'state'    => ['opened' => true],
-                    'icon'     => 'glyphicon glyphicon-book',
-                    'children' => [
-                    ],
-                ],
-            ],
-        ];
-
-        foreach ($user->getProducts() as $product) {
-            $result['children'][0]['children'][] = [
-                'id'     => $product->getSlug(),
-                'text'   => $product->getName(),
-                'icon'   => $liipCacheManager->getBrowserPath($product->getPreviewImage(), $treeIconFilter),
-                'a_attr' => [
-                    'data-href' => $this->generateUrl('product_edit', ['slug' => $product->getSlug()]),
-                    'target'    => '_blank',
-                ],
-            ];
-        }
-
-        foreach ($user->getExperts() as $expert) {
-            $expertText = sprintf(
-                '%s (страниц: %d, экспертов: %d, доходных страниц: %d, доходных экспертов: %d)',
-                $expert->getFullName() ?: $expert->getUsername(),
-                $expert->getProducts()->count(),
-                $expert->getExperts()->count(),
-                0,
-                0
-            );
-            $result['children'][] = [
-                'id'       => $expert->getId(),
-                'text'     => $expertText,
-                'icon'     => $liipCacheManager->getBrowserPath(
-                    $expert->getAvatarImage() ?: '/images/default_user.png',
-                    $treeIconFilter
-                ),
-                'a_attr'   => [
-                    'data-href' => $this->generateUrl('experts_detail', ['username' => $expert->getUsername()]),
-                    'target'    => '_blank',
-                ],
-                'children' => true,
-            ];
-        }
-
-        return new JsonResponse($result);
-    }
-
-    /**
      * @Route("/ajax/categories/{slug}", name="ajax_category_tree", defaults={"slug": null})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
      */
@@ -159,16 +66,38 @@ class AjaxFormAutoComplete extends BaseController
         }
         $result = [];
 
-        $categories = $this->getEm()->getRepository('AppBundle:Category')->getForJsTree($user, $admin);
+        $categoryRepository = $this->getEm()->getRepository('AppBundle:Category');
+        $categories = $categoryRepository->getForJsTree($user, $admin);
         $categoriesIndexed = [];
         foreach ($categories as $categoryArray) {
             $categoriesIndexed[$categoryArray['id']] = $categoryArray;
         }
 
-        foreach ($categoriesIndexed as $categoryArray) {
+        foreach ($categories as $categoryArray) {
             $parent = $categoryArray['parent_id'] ?: '#';
-            if (!isset($categoriesIndexed[$categoryArray['parent_id']])) {
-                $parent = '#';
+            if ($categoryArray['parent_id'] && !isset($categoriesIndexed[$categoryArray['parent_id']])) {
+                /** @var Category[] $parentCategories */
+                $parentCategories = $categoryRepository->getPath(
+                    $categoryRepository->find($categoryArray['parent_id'])
+                );
+                foreach ($parentCategories as $categoryParent) {
+                    if (!isset($categoriesIndexed[$categoryParent->getSlug()])) {
+                        $categoriesIndexed[$categoryParent->getSlug()] = true;
+                        $result[] = [
+                            'id'     => $categoryParent->getSlug(),
+                            'parent' => $categoryParent->getParent() ? $categoryParent->getParent()->getSlug() : '#',
+                            'text'   => $categoryParent->getName(),
+                            'a_attr' => [
+                                'href'      => $this->generateUrl($route, ['slug' => $categoryParent->getSlug()]),
+                                'data_slug' => $categoryParent->getSlug(),
+                            ],
+                            'state'  => [
+                                'opened'   => true,
+                                'disabled' => true,
+                            ],
+                        ];
+                    }
+                }
             }
             $result[] = [
                 'id'     => $categoryArray['id'],
@@ -180,6 +109,7 @@ class AjaxFormAutoComplete extends BaseController
                 ],
                 'state'  => [
                     'selected' => ($categoryArray['id'] == $category),
+                    'opened'   => true,
                 ],
             ];
         }

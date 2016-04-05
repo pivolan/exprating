@@ -1,11 +1,6 @@
     <div class="content-inner clearfix">
         <div class="breadcrumbs" xmlns="http://www.w3.org/1999/html">
             <a href="{{ path("homepage") }}">Главная</a>
-            {% for peopleGroup in category.peopleGroups %}
-                {% if peopleGroup.slug == productFilter.peopleGroup.slug %}
-                    → <a href="{{ path("product_list", {"slug": category.slug, 'peopleGroup':peopleGroup.slug}) }}">{{ peopleGroup.name }}</a>
-                {% endif %}
-            {% endfor %}
             {{ breadcrumbs(category)|raw }}
         </div>
         <h1>{% if category.seo.h1|default(false) %} {{ category.seo.h1 }} {% else %}{{ category.name }} - рейтинг по мнению экспертов{% endif %}</h1>
@@ -16,7 +11,9 @@
         {% block children %}
             <div class="category-child">
                 {% for category_child in category.children %}
-                    <a href="{{ path("product_list", {"slug": category_child.slug, "peopleGroup": productFilter.peopleGroup.slug}) }}">{{ category_child.name }}</a>
+                    {% if not category_child.isHidden %}
+                        <a href="{{ path("product_list", {"slug": category_child.slug}) }}">{{ category_child.name }}</a>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endblock %}
@@ -37,13 +34,13 @@
                 </div>
 
                 <div class="btn-group">
-                    {% if is_granted('SHOW_FREE', category) %}
-                        <a href="{{ path('product_list', {'slug':category.slug, 'peopleGroup': productFilter.peopleGroup.slug, 'status': productFilter.status == 'free'?null:'free'}) }}"
-                           class="btn btn-info {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_FREE')?'active':'' }}">Посмотреть свободные товары</a>
+                    {% if is_granted('VIEW_FREE', category) %}
+                        <a href="{{ path('product_list', {'slug':category.slug, 'status': productFilter.status == 'STATUS_FREE'?'STATUS_ALL':'STATUS_FREE'}) }}"
+                           class="btn btn-info {{ productFilter.status == 'STATUS_FREE'?'active':'' }}">Посмотреть свободные товары</a>
                     {% endif %}
-                    {% if is_granted('SHOW_WAIT', category) %}
-                        <a href="{{ path('product_list', {'slug': category.slug, 'peopleGroup': productFilter.peopleGroup.slug, 'status': productFilter.status == 'wait'?null:'wait'}) }}"
-                           class="btn btn-info {{ productFilter.status == constant('AppBundle\\ProductFilter\\ProductFilter::STATUS_WAIT')?'active':'' }}">Смотреть ожидающие подтверждения</a>
+                    {% if is_granted('VIEW_WAIT', category) %}
+                        <a href="{{ path('product_list', {'slug': category.slug, 'status': productFilter.status == 'STATUS_WAIT'?'STATUS_ALL':'STATUS_WAIT'}) }}"
+                           class="btn btn-info {{ productFilter.status == 'STATUS_WAIT'?'active':'' }}">Смотреть ожидающие подтверждения</a>
                     {% endif %}
                 </div>
             </div>

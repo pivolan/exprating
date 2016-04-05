@@ -7,8 +7,9 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\CreateExpertRequest;
+use AppBundle\Entity\RegistrationRequest;
 use Doctrine\ORM\EntityManager;
+use Glifery\EntityHiddenTypeBundle\Form\Type\EntityHiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -17,17 +18,18 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreateExpertRequestType extends AbstractType
+class RegistrationRequestType extends AbstractType
 {
     /** @var  EntityManager */
     protected $em;
 
     /**
-     * CreateExpertRequestType constructor.
+     * RegistrationRequestType constructor.
      *
      * @param EntityManager $em
      */
@@ -46,8 +48,13 @@ class CreateExpertRequestType extends AbstractType
             ->add('message', TextareaType::class, ['label' => 'Сопроводительное письмо'])
             ->add(
                 'categories',
-                EntityType::class,
-                ['multiple' => true, 'choices' => [], 'class' => Category::class, 'label' => 'Категории']
+                CollectionType::class,
+                [
+                    'entry_type'    => EntityHiddenType::class,
+                    'entry_options' => ['property' => 'slug', 'class' => Category::class],
+                    'allow_add'     => true,
+                    'label'         => false,
+                ]
             )
             ->add('send', SubmitType::class, ['label' => 'Отправить'])
             ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
@@ -60,7 +67,7 @@ class CreateExpertRequestType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => CreateExpertRequest::class,
+                'data_class' => RegistrationRequest::class,
             ]
         );
     }
@@ -69,11 +76,5 @@ class CreateExpertRequestType extends AbstractType
     {
         $form = $event->getForm();
         $data = $event->getData();
-        $choices = $this->em->getRepository('AppBundle:Category')->findBy(['slug' => $data['categories']]);
-        $form->add(
-            'categories',
-            EntityType::class,
-            ['multiple' => true, 'choices' => $choices, 'class' => Category::class, 'label' => 'Категории']
-        );
     }
 }

@@ -49,6 +49,7 @@ class FilterAccessRightsValidator extends ConstraintValidator
                 $this->context->buildViolation($constraint->message)
                     ->addViolation();
             }
+
             return;
         }
         if ($status == ProductFilter::STATUS_WAIT) {
@@ -60,9 +61,10 @@ class FilterAccessRightsValidator extends ConstraintValidator
                 $this->context->buildViolation($constraint->message)
                     ->addViolation();
             }
+
             return;
         }
-        if (is_null($status)) {
+        if ($status == ProductFilter::STATUS_ALL) {
             return;
         }
         throw new \LogicException('Status is invalid');

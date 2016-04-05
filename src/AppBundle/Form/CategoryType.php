@@ -3,7 +3,6 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\PeopleGroup;
 use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
 use Exprating\CharacteristicBundle\Entity\Characteristic;
 use Exprating\CharacteristicBundle\Form\CategoryCharacteristicsType;
@@ -25,15 +24,10 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('peopleGroups', null, ['label' => 'Группа людей', 'multiple' => true, 'expanded' => true])
+            ->add('isHidden', null, ['label' => 'Скрыть категорию?'])
             ->add('seo', SeoType::class, ['label' => 'Настройки СЕО'])
-            ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
-            ->add(
-                'categoryCharacteristics',
-                CategoryCharacteristicsType::class,
-                ['label'=> null]
-            )
             ->add('save', SubmitType::class, ['label' => 'Сохранить'])
+            ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData'])
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
 
@@ -54,5 +48,21 @@ class CategoryType extends AbstractType
         /** @var Category $category */
         $category = $event->getData();
         $category->getSeo()->setCategory($category);
+    }
+
+    public function onPreSetData(FormEvent $event)
+    {
+        /** @var Category $category */
+        $category = $event->getData();
+        if ($category && $category->getChildren()->count() == 0) {
+            $form = $event->getForm();
+            $form
+                ->add('ratingSettings', RatingSettingsType::class, ['label' => 'Настройка рейтингов'])
+                ->add(
+                    'categoryCharacteristics',
+                    CategoryCharacteristicsType::class,
+                    ['label' => null]
+                );
+        }
     }
 }

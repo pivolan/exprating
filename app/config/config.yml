@@ -36,8 +36,8 @@ framework:
     fragments:       ~
     http_method_override: true
     assets:
-        version: 'v1'
-        base_path: %asset_base_url%
+        version: '%asset_version%'
+        base_path: '%asset_base_url%'
 
 
 # Twig Configuration
@@ -126,7 +126,6 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-    sender_address: "%mailer_sender_address%"
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
@@ -175,7 +174,7 @@ stof_doctrine_extensions:
             sluggable: true
 
 assetic:
-    debug:          '%kernel.debug%'
+    debug:          '%asset_debug%'
     use_controller: false
     bundles: ['AppBundle']
     filters:
@@ -205,6 +204,7 @@ assetic:
                 - 'js/plugins/log_visit.js'
         product_edit_js:
             inputs:
+                - 'js/external/jquery-ui.min.js'
                 - 'js/external/jquery.ui.widget.js'
                 - 'js/external/jquery.iframe-transport.js'
                 - 'js/external/jquery.fileupload.js'
@@ -213,6 +213,7 @@ assetic:
                 - 'js/Exp/exp_form_ajax.js'
                 - 'js/Exp/exp_colorbox.js'
                 - 'js/plugins/outer_html.plugin.js'
+                - 'js/plugins/update_position.js'
                 - 'js/product_edit.init.js'
         product_choose_category_js:
             inputs:
@@ -236,7 +237,7 @@ assetic:
                 - 'js/curator_wait_list.init.js'
         curator_my_experts_js:
             inputs:
-                - 'js/external/jstree.min.js'
+                - 'js/external/jquery.treegrid.min.js'
                 - 'js/curator_my_experts.js'
         layout_expert_items_js:
             inputs:
@@ -253,6 +254,7 @@ assetic:
                 - 'js/external/jquery-ui.min.js'
                 - 'js/external/select2.full.min.js'
                 - 'js/plugins/select2entity.js'
+                - 'js/plugins/update_position.js'
                 - 'js/Exp/exp_historical.js'
                 - 'js/Exp/exp_colorbox.js'
                 - 'js/external/jstree.min.js'
@@ -272,12 +274,15 @@ assetic:
         common_css:
             inputs:
                 - 'css/external/bootstrap332.min.css'
+                - 'css/external/font-awesome.min.css'
                 - 'css/external/superfish.css'
                 - 'css/external/select2.min.css'
                 - 'css/external/colorbox.css'
                 - 'css/style.css'
+                - 'css/additional_style.css'
                 - 'css/external/jquery.mmenu.all.css'
                 - 'css/external/jquery-ui.min.css'
+                - 'css/external/jquery.treegrid.css'
 
 exprating_search:
     engine: '%search_engine%'
@@ -314,6 +319,13 @@ liip_imagine:
                 downscale: { max: [90, 90]}
                 thumbnail: { size: [90, 90], mode: inset }
                 background: { size: [90, 90] color: '#fff' }
+
+        user_list_curator_filter:
+            quality: 100
+            filters:
+                downscale: { max: [45, 45]}
+                thumbnail: { size: [45, 45], mode: inset }
+                background: { size: [45, 45] color: '#fff' }
 
         product_filter:
             quality: 90

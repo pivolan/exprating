@@ -6,6 +6,7 @@ use AppBundle\Entity\Invite;
 use AppBundle\Entity\User;
 use AppBundle\Tests\AbstractWebCaseTest;
 use Doctrine\ORM\EntityManager;
+use Exprating\FakerBundle\Faker\FakeEntitiesGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class InviteControllerTest extends AbstractWebCaseTest
@@ -61,8 +62,8 @@ class InviteControllerTest extends AbstractWebCaseTest
                 'PHP_AUTH_PW'   => 'qwerty',
             ]
         );
-
-        $this->assertContains('invite[email]', $client->getResponse()->getContent());
+        $this->assertNotContains('invite[email]', $client->getResponse()->getContent());
+        $this->assertContains('Приглашение эксперта', $crawler->filter('.breadcrumbs')->html());
         $this->assertContains('Приглашение успешно отправлено', $crawler->filter('.content')->html());
     }
 
@@ -80,5 +81,22 @@ class InviteControllerTest extends AbstractWebCaseTest
         $client->request('GET', '/invite/'.$invite->getHash());
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
         $this->assertContains('Регистрация по приглашению', $client->getResponse()->getContent());
+    }
+
+    public function testInviteActivated()
+    {
+        $invite = new Invite();
+        $invite->setEmail('lolo@olobl.ru')
+            ->setIsActivated(true)
+            ->setCurator($this->em->getRepository('AppBundle:User')->findOneBy(['username' => 'curator']));
+        /** @var EntityManager $em */
+        $em = $this->doctrine->getManager();
+        $em->persist($invite);
+        $em->flush();
+
+        $client = $this->client;
+        $client->request('GET', '/invite/'.$invite->getHash());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+        $this->assertContains('Инвайт уже активирован', $client->getResponse()->getContent());
     }
 }

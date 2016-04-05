@@ -64,7 +64,7 @@ class Product
      * @ORM\Column(name="expert_opinion", type="text", nullable=true,
      *      options={"comment":"Краткое мнение эксперта о товаре. Отображается на странице эксперта"})
      */
-    private $expertOpinion;
+    private $expertOpinion = 'n/a';
 
     /**
      * @var array|string[]
@@ -189,7 +189,7 @@ class Product
      *
      * @ORM\Column(name="expert_comment", type="string", length=4000, nullable=true)
      */
-    private $expertComment;
+    private $expertComment = 'n/a';
 
     /**
      * @var Image[]
@@ -244,18 +244,10 @@ class Product
      * @var ProductCharacteristic[]
      * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\ProductCharacteristic",
      *      mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"orderIndex": "ASC"})
      * @Assert\Valid
      */
     private $productCharacteristics;
-
-    /**
-     * @var PeopleGroup[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup", cascade="ALL")
-     * @ORM\JoinTable(name="product_people_group", joinColumns={@ORM\JoinColumn(name="product_id",
-     *     referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug")})
-     */
-    private $peopleGroups;
 
     public function __construct()
     {
@@ -266,7 +258,6 @@ class Product
         $this->productShopPrices = new ArrayCollection();
         $this->productCharacteristics = new ArrayCollection();
         $this->curatorDecisions = new ArrayCollection();
-        $this->peopleGroups = new ArrayCollection();
     }
 
     /**
@@ -1050,40 +1041,6 @@ class Product
                 }
             }
         }
-    }
-
-    /**
-     * Add peopleGroup.
-     *
-     * @param \AppBundle\Entity\PeopleGroup $peopleGroup
-     *
-     * @return Product
-     */
-    public function addPeopleGroup(\AppBundle\Entity\PeopleGroup $peopleGroup)
-    {
-        $this->peopleGroups[] = $peopleGroup;
-
-        return $this;
-    }
-
-    /**
-     * Remove peopleGroup.
-     *
-     * @param \AppBundle\Entity\PeopleGroup $peopleGroup
-     */
-    public function removePeopleGroup(\AppBundle\Entity\PeopleGroup $peopleGroup)
-    {
-        $this->peopleGroups->removeElement($peopleGroup);
-    }
-
-    /**
-     * Get peopleGroups.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPeopleGroups()
-    {
-        return $this->peopleGroups;
     }
 
     public function getPublishedComments()

@@ -32,6 +32,12 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: 'unique_category_characteristic_validator'}
 
+    validator.request_curator_rights_validator:
+        class: AppBundle\Validator\Constraints\RequestCuratorRightsValidator
+        arguments: ['@doctrine.orm.default_entity_manager']
+        tags:
+            - { name: validator.constraint_validator, alias: 'request_curator_rights_validator'}
+
     app.product_voter:
         class: AppBundle\Security\ProductVoter
         arguments: ['@security.access.decision_manager']
@@ -77,11 +83,11 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preRemove, connection: default }
 
-    app.form.create_expert_request_type:
-        class: AppBundle\Form\CreateExpertRequestType
+    app.form.registration_request_type:
+        class: AppBundle\Form\RegistrationRequestType
         arguments: [ '@doctrine.orm.default_entity_manager' ]
         tags:
-            - { name: form.type, alias: AppBundle\Form\CreateExpertRequestType }
+            - { name: form.type, alias: AppBundle\Form\RegistrationRequestType }
 
     app.form.category_create_type:
         class: AppBundle\Form\CategoryCreateType
@@ -94,3 +100,4 @@ services:
 
 imports:
     - { resource: "subscribers.yml" }
+    - { resource: "mailer.yml" }

@@ -1,0 +1,10 @@
+<div class="level2">
+    <div class="pull-left small">{{ prefix|default('Куратор:') }}</div>
+    <div class="expert-img-wrapper">
+        {{ include("_include/User/_imageList.html.twig", {'expert': user}) }}
+    </div>
+    <div class="expert-name">
+        <a href="{{ path("experts_detail", {"username": user.username}) }}"><span>{{ user.fullName }}</span></a>
+    </div>
+    {{ postfix|default('') }}
+</div>

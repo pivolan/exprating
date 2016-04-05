@@ -168,7 +168,7 @@ class Categories
     /**
      * Get parameters.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|Parameters[]
      */
     public function getParameters()
     {

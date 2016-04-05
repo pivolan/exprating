@@ -66,15 +66,6 @@ class AliasCategoryCommandTest extends \PHPUnit_Framework_TestCase
                     /** @var AliasCategory $aliasCategory */
                     $testCase->assertEquals('slug', $aliasCategory->getCategoryExpratingId());
                     $testCase->assertContains($aliasCategory->getCategoryIrecommend(), $categoriesImport);
-                    $testCase->assertContains(
-                        $aliasCategory->getPeopleGroup(),
-                        [
-                            AliasCategory::PEOPLE_GROUP_ALL,
-                            AliasCategory::PEOPLE_GROUP_CHILD,
-                            AliasCategory::PEOPLE_GROUP_MAN,
-                            AliasCategory::PEOPLE_GROUP_WOMAN,
-                        ]
-                    );
                 }
             );
 

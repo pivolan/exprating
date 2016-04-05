@@ -8,7 +8,6 @@
 namespace AppBundle\Tests\Event;
 
 use AppBundle\Entity\CuratorDecision;
-use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\Event\ProductApproveEvent;

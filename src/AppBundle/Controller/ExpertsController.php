@@ -18,7 +18,7 @@ class ExpertsController extends BaseController
     const FLASH_PROFILE_SAVED = 'flash.profile_saved';
 
     /**
-     * @Route("/experts/{page}", name="experts_list", defaults={"page":1})
+     * @Route("/experts/{page}/", name="experts_list", defaults={"page":1})
      */
     public function listAction($page)
     {
@@ -39,7 +39,7 @@ class ExpertsController extends BaseController
     }
 
     /**
-     * @Route("/expert/{username}", name="experts_detail")
+     * @Route("/expert/{username}/", name="experts_detail")
      * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
      */
     public function detailAction(User $user)
@@ -67,7 +67,7 @@ class ExpertsController extends BaseController
     }
 
     /**
-     * @Route("/expert/edit/{username}", name="experts_detail_edit")
+     * @Route("/expert/edit/{username}/", name="experts_detail_edit")
      *
      * @ParamConverter(name="user", class="AppBundle\Entity\User", options={"mapping":{"username":"username"}})
      * @Security("is_granted('EDIT', expert)")

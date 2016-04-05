@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Invite;
 use AppBundle\Entity\User;
+use AppBundle\Event\Invite\Exception\RequestInviteRightsException;
 use AppBundle\Event\Invite\InviteActivateEvent;
 use AppBundle\Event\Invite\InviteApproveRightsEvent;
 use AppBundle\Event\Invite\InviteEvents;
@@ -11,6 +12,7 @@ use AppBundle\Event\Invite\InviteRequestRightsEvent;
 use AppBundle\Event\Invite\InviteSendEvent;
 use AppBundle\Form\InviteType;
 use AppBundle\Form\UserCompleteType;
+use AppBundle\Security\InviteVoter;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -28,6 +30,7 @@ class InviteController extends BaseController
     const FLASH_INVITE_SENDED = 'flash.invite_sended';
     const FLASH_APPROVED_RIGHTS = 'flash.approved_rights';
     const FLASH_REQUEST_RIGHTS_SENDED = 'flash.request_rights_sended';
+    const FLASH_REQUEST_RIGHTS_FAIL = 'flash.request_rights_fail';
 
     /**
      * @Route("/invite", name="invite")
@@ -44,7 +47,9 @@ class InviteController extends BaseController
 
         if ($form->isValid()) {
             $this->get('event_dispatcher')->dispatch(InviteEvents::SEND, new InviteSendEvent($invite));
-            $this->addFlash(self::FLASH_INVITE_SENDED, 'Приглашение успешно отправлено');
+            $this->addFlash(self::FLASH_INVITE_SENDED, 'Приглашение успешно отправлено на e-mail '.$invite->getEmail());
+
+            return $this->render('Invite/inviteSuccess.html.twig');
         }
 
         return $this->render(
@@ -56,10 +61,12 @@ class InviteController extends BaseController
     /**
      * @Route("/invite/{hash}", name="invite_activate")
      * @ParamConverter(name="invite", class="AppBundle\Entity\Invite", options={"mapping":{"hash":"hash"}})
-     * @Security("is_granted('ACTIVATE_INVITE', invite)")
      */
     public function inviteActivateAction(Request $request, Invite $invite)
     {
+        if(!$this->isGranted(InviteVoter::ACTIVATE_INVITE, $invite)){
+            return $this->render('Invite/inviteAlreadyActivated.html.twig');
+        }
         $this->get('event_dispatcher')->dispatch(
             InviteEvents::ACTIVATE,
             new InviteActivateEvent($invite)
@@ -93,10 +100,13 @@ class InviteController extends BaseController
     public function requestInviteRightsAction()
     {
         $expert = $this->getUser();
-        $curator = $expert->getCurator();
-        $event = new InviteRequestRightsEvent($expert, $curator);
-        $this->get('event_dispatcher')->dispatch(InviteEvents::REQUEST_RIGHTS, $event);
-        $this->addFlash(self::FLASH_REQUEST_RIGHTS_SENDED, 'Ваша заявка отправлена куратору');
+        $event = new InviteRequestRightsEvent($expert);
+        try {
+            $this->get('event_dispatcher')->dispatch(InviteEvents::REQUEST_RIGHTS, $event);
+            $this->addFlash(self::FLASH_REQUEST_RIGHTS_SENDED, 'Ваша заявка отправлена куратору');
+        } catch (RequestInviteRightsException $e) {
+            $this->addFlash(self::FLASH_REQUEST_RIGHTS_FAIL, $e->getMessage());
+        }
 
         return $this->redirectToRoute('invite');
     }

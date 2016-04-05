@@ -92,6 +92,13 @@ class Category
     private $seo;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_hidden", type="boolean", nullable=false, options={"default": false})
+     */
+    private $isHidden = false;
+
+    /**
      * @var CategoryCharacteristic[]
      *
      * @ORM\OneToMany(targetEntity="Exprating\CharacteristicBundle\Entity\CategoryCharacteristic", mappedBy="category",
@@ -106,16 +113,6 @@ class Category
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="adminCategories")
      */
     private $admins;
-
-    /**
-     * @var PeopleGroup[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PeopleGroup")
-     * @ORM\JoinTable(name="category_people_group", joinColumns={@ORM\JoinColumn(name="category_id",
-     *     referencedColumnName="slug", onDelete="CASCADE")},
-     *                    inverseJoinColumns={@ORM\JoinColumn(name="people_group_id", referencedColumnName="slug",
-     * onDelete="CASCADE")})
-     */
-    private $peopleGroups;
 
     /**
      * @var @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="category", fetch="EXTRA_LAZY")
@@ -136,7 +133,6 @@ class Category
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categoryCharacteristics = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->peopleGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->experts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -426,40 +422,6 @@ class Category
     }
 
     /**
-     * Add peopleGroup.
-     *
-     * @param \AppBundle\Entity\PeopleGroup $peopleGroup
-     *
-     * @return Category
-     */
-    public function addPeopleGroup(\AppBundle\Entity\PeopleGroup $peopleGroup)
-    {
-        $this->peopleGroups[] = $peopleGroup;
-
-        return $this;
-    }
-
-    /**
-     * Remove peopleGroup.
-     *
-     * @param \AppBundle\Entity\PeopleGroup $peopleGroup
-     */
-    public function removePeopleGroup(\AppBundle\Entity\PeopleGroup $peopleGroup)
-    {
-        $this->peopleGroups->removeElement($peopleGroup);
-    }
-
-    /**
-     * Get peopleGroups.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPeopleGroups()
-    {
-        return $this->peopleGroups;
-    }
-
-    /**
      * Add product.
      *
      * @param \AppBundle\Entity\Product $product
@@ -545,5 +507,53 @@ class Category
         $this->seo = $seo;
 
         return $this;
+    }
+
+    /**
+     * Set isHidden
+     *
+     * @param string $isHidden
+     *
+     * @return Category
+     */
+    public function setIsHidden($isHidden)
+    {
+        $this->isHidden = $isHidden;
+
+        return $this;
+    }
+
+    /**
+     * Get isHidden
+     *
+     * @return string
+     */
+    public function getIsHidden()
+    {
+        return $this->isHidden;
+    }
+
+    /**
+     * Add categoryCharacteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic
+     *
+     * @return Category
+     */
+    public function addCategoryCharacteristic(\Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic)
+    {
+        $this->categoryCharacteristics[] = $categoryCharacteristic;
+
+        return $this;
+    }
+
+    /**
+     * Remove categoryCharacteristic
+     *
+     * @param \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic
+     */
+    public function removeCategoryCharacteristic(\Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic)
+    {
+        $this->categoryCharacteristics->removeElement($categoryCharacteristic);
     }
 }

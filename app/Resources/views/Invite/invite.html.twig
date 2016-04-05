@@ -1,8 +1,16 @@
 {% extends '_layout/_profile.html.twig' %}
-{% block title %}Пригласить эксперта{% endblock %}
+{% block title %}Пригласить нового эксперта{% endblock %}
 {% block profile_body %}
+    <h1>{{ block('title') }}</h1>
     {% for flash in app.session.flashbag.get('flash.request_rights_sended') %}
         <div class="alert alert-success">
+            <ul class="list-unstyled">
+                <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash }}</li>
+            </ul>
+        </div>
+    {% endfor %}
+    {% for flash in app.session.flashbag.get('flash.request_rights_fail') %}
+        <div class="alert alert-danger">
             <ul class="list-unstyled">
                 <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash }}</li>
             </ul>
@@ -15,8 +23,9 @@
                     <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ flash }}</li>
                 </ul>
             </div>
+        {% else %}
+            {{ form(form) }}
         {% endfor %}
-        {{ form(form) }}
     {% else %}
         <h1>Вам недоступна эта функция</h1>
         <a href="{{ path('invite_request_rights') }}" class="btn btn-default">Подать заявку</a>

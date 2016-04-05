@@ -51,7 +51,7 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/tovar/search/{page}", name="product_search", defaults={"page"=1})
+     * @Route("/tovar/search/{page}/", name="product_search", defaults={"page"=1})
      *
      * @param Request $request
      *
@@ -81,7 +81,7 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/tovar/{slug}/comment/create", name="product_comment_create")
+     * @Route("/tovar/{slug}/comment/create/", name="product_comment_create")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      */
     public function commentCreateAction(Request $request, Product $product)
@@ -106,7 +106,7 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/tovar/{slug}", name="product_detail")
+     * @Route("/tovar/{slug}/", name="product_detail")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      * @Security("is_granted('VIEW', product)")
      */
@@ -141,12 +141,9 @@ class IndexController extends BaseController
     }
 
     /**
-     * @Route("/rubric/{peopleGroup}/{slug}/{page}/{sortField}/{sortDirection}/{status}", name="product_list",
-     *     requirements = {"peopleGroup": "(dlya-zhenshchin)|(dlya-muzhchin)|(dlya-detey)|(dlya-vseh)"},
-     *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = null})
+     * @Route("/rubric/{slug}/{page}/filter/{sortField}/{sortDirection}/{status}/", name="product_list",
+     *     defaults={"page"=1, "sortField"="minPrice", "sortDirection"="ASC", "status" = "STATUS_ALL"})
      * @ParamConverter(name="category", class="AppBundle\Entity\Category", options={"mapping":{"slug":"slug"}})
-     * @ParamConverter(name="peopleGroup", class="AppBundle\Entity\PeopleGroup",
-     *     options={"mapping":{"peopleGroup":"slug"}})
      */
     public function listAction(Request $request)
     {

@@ -9,11 +9,12 @@ namespace AppBundle\Tests\Event;
 
 use AppBundle\Entity\CuratorDecision;
 use AppBundle\Entity\Invite;
-use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
+use AppBundle\Event\Invite\Exception\RequestInviteRightsException;
 use AppBundle\Event\Invite\InviteActivateEvent;
 use AppBundle\Event\Invite\InviteEvents;
+use AppBundle\Event\Invite\InviteRequestRightsEvent;
 use AppBundle\Event\Invite\InviteSendEvent;
 use AppBundle\Event\ProductApproveEvent;
 use AppBundle\Event\ProductEvents;
@@ -97,5 +98,34 @@ class InviteEventTest extends AbstractWebCaseTest
         );
         $this->assertTrue($expert->getIsActivated());
         $this->assertEquals($expert->getCurator(), $invite->getCurator());
+    }
+
+    public function testInviteRights()
+    {
+        $expert = $this->client->getContainer()->get('exprating_faker.faker.fake_entities_generator')->user();
+        $expert->addRole(User::ROLE_EXPERT);
+        $curator = $this->em->getRepository('AppBundle:User')->findOneBy(['username' => 'curator']);
+        $expert->setCurator($curator);
+        $this->em->persist($expert);
+        $this->em->flush();
+
+        $this->client->getContainer()->get('event_dispatcher')->dispatch(
+            InviteEvents::REQUEST_RIGHTS,
+            new InviteRequestRightsEvent($expert)
+        );
+        $requestCuratorRightsList = $this->em->getRepository('AppBundle:RequestCuratorRights')->findLastByPeriod(
+            $expert,
+            1
+        );
+        $this->assertCount(1, $requestCuratorRightsList);
+        try {
+            $this->client->getContainer()->get('event_dispatcher')->dispatch(
+                InviteEvents::REQUEST_RIGHTS,
+                new InviteRequestRightsEvent($expert)
+            );
+            $this->assertFalse(true, 'Must be an exception here');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(RequestInviteRightsException::class, $e);
+        }
     }
 }

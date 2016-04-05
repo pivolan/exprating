@@ -8,7 +8,6 @@
 namespace AppBundle\ProductFilter;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\PeopleGroup;
 use AppBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AcmeAssert;
@@ -28,13 +27,9 @@ class ProductFilter
     const FIELD_ENABLED_AT = 'enabledAt';
     const FIELD_RATING = 'rating';
 
-    const STATUS_WAIT = 'wait';
-    const STATUS_FREE = 'free';
-
-    const PEOPLE_GROUP_WOMAN = PeopleGroup::SLUG_WOMAN;
-    const PEOPLE_GROUP_MAN = PeopleGroup::SLUG_MAN;
-    const PEOPLE_GROUP_CHILD = PeopleGroup::SLUG_CHILD;
-    const PEOPLE_GROUP_ALL = PeopleGroup::SLUG_ALL;
+    const STATUS_WAIT = 'STATUS_WAIT';
+    const STATUS_FREE = 'STATUS_FREE';
+    const STATUS_ALL = 'STATUS_ALL';
 
     /**
      * @var string
@@ -47,9 +42,9 @@ class ProductFilter
     /**
      * @var string
      *
-     * @Assert\Choice(choices = {"free", "wait"}, message = "Выберите верный фильтр")
+     * @Assert\Choice(choices = {"STATUS_FREE", "STATUS_WAIT", "STATUS_ALL"}, message = "Выберите верный фильтр")
      */
-    protected $status;
+    protected $status = self::STATUS_ALL;
 
     /**
      * @var string
@@ -69,13 +64,6 @@ class ProductFilter
      * @var Category
      */
     protected $category;
-
-    /**
-     * @var PeopleGroup
-     *
-     * @Assert\Valid
-     */
-    protected $peopleGroup;
 
     /**
      * @return mixed
@@ -173,26 +161,6 @@ class ProductFilter
     public function setCurator(User $curator = null)
     {
         $this->curator = $curator;
-
-        return $this;
-    }
-
-    /**
-     * @return PeopleGroup
-     */
-    public function getPeopleGroup()
-    {
-        return $this->peopleGroup;
-    }
-
-    /**
-     * @param PeopleGroup $peopleGroup
-     *
-     * @return $this
-     */
-    public function setPeopleGroup(PeopleGroup $peopleGroup)
-    {
-        $this->peopleGroup = $peopleGroup;
 
         return $this;
     }

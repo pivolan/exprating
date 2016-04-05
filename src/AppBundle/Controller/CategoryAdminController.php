@@ -8,12 +8,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\CreateExpertRequest;
+use AppBundle\Entity\RegistrationRequest;
 use AppBundle\Event\Category\CategoryCreateEvent;
 use AppBundle\Event\Category\CategoryEvents;
 use AppBundle\Form\CategoryCreateType;
 use AppBundle\Form\CategoryType;
-use AppBundle\Form\CreateExpertRequestApproveType;
+use AppBundle\Form\RegistrationRequestApproveType;
 use AppBundle\Form\RatingSettingsType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,21 +67,21 @@ class CategoryAdminController extends BaseController
 
     /**
      * @Route("/category_admin/requests/{id}", name="category_admin_requests", defaults={"id":null})
-     * @ParamConverter(name="createExpertRequest", class="AppBundle\Entity\CreateExpertRequest")
+     * @ParamConverter(name="registrationRequest", class="AppBundle\Entity\RegistrationRequest")
      */
-    public function requestsAction(Request $request, CreateExpertRequest $createExpertRequest = null)
+    public function requestsAction(Request $request, RegistrationRequest $registrationRequest = null)
     {
         $em = $this->getEm();
-        $query = $em->getRepository('AppBundle:CreateExpertRequest')->queryByCurator($this->getUser());
-        /** @var CreateExpertRequest[] $createExpertRequests */
-        $createExpertRequests = $query->getResult();
+        $query = $em->getRepository('AppBundle:RegistrationRequest')->queryByCurator($this->getUser());
+        /** @var RegistrationRequest[] $registrationRequests */
+        $registrationRequests = $query->getResult();
 
         $form = null;
-        if ($createExpertRequest) {
+        if ($registrationRequest) {
             $form = $this->createForm(
-                CreateExpertRequestApproveType::class,
-                $createExpertRequest,
-                ['action' => $this->generateUrl('approve_create_expert', ['id' => $createExpertRequest->getId()])]
+                RegistrationRequestApproveType::class,
+                $registrationRequest,
+                ['action' => $this->generateUrl('approve_create_expert', ['id' => $registrationRequest->getId()])]
             )->createView();
         }
 
@@ -93,8 +93,8 @@ class CategoryAdminController extends BaseController
         return $this->render(
             $template,
             [
-                self::KEY_REGISTRATION_REQUESTS => $createExpertRequests,
-                self::KEY_REGISTRATION_REQUEST  => $createExpertRequest,
+                self::KEY_REGISTRATION_REQUESTS => $registrationRequests,
+                self::KEY_REGISTRATION_REQUEST  => $registrationRequest,
                 self::KEY_FORM                  => $form,
             ]
         );

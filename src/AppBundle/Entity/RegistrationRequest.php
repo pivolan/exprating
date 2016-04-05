@@ -6,16 +6,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Validator\Constraints\UniqueUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CreateExpertRequest
+ * RegistrationRequest
  *
- * @ORM\Table(name="create_expert_request")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CreateExpertRequestRepository")
+ * @ORM\Table(name="registration_request")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RegistrationRequestRepository")
  * @UniqueEntity(fields={"email"}, message="Вы уже отправляли приглашение на этот адрес")
  * @UniqueUser
  */
-class CreateExpertRequest
+class RegistrationRequest
 {
     /**
      * @var int
@@ -29,6 +30,8 @@ class CreateExpertRequest
     /**
      * @var string
      *
+     * @Assert\Email
+     * @Assert\NotBlank
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
@@ -36,6 +39,7 @@ class CreateExpertRequest
     /**
      * @var string
      *
+     * @Assert\NotBlank
      * @ORM\Column(name="message", type="text", nullable=true)
      */
     private $message;
@@ -65,9 +69,12 @@ class CreateExpertRequest
     /**
      * @var Category
      *
+     * @Assert\NotBlank
+     * @Assert\Count(min="1", minMessage="Необходимо выбрать хотя бы одну категорию")
+     *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
-     * @ORM\JoinTable(name="create_expert_request_category",
-     *     joinColumns={@ORM\JoinColumn(name="create_expert_request_id", referencedColumnName="id",
+     * @ORM\JoinTable(name="registration_request_category",
+     *     joinColumns={@ORM\JoinColumn(name="registration_request_id", referencedColumnName="id",
      *      onDelete="CASCADE")},
      *            inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="slug",
      *      onDelete="CASCADE")})
@@ -95,7 +102,7 @@ class CreateExpertRequest
      *
      * @param string $email
      *
-     * @return CreateExpertRequest
+     * @return RegistrationRequest
      */
     public function setEmail($email)
     {
@@ -119,7 +126,7 @@ class CreateExpertRequest
      *
      * @param string $message
      *
-     * @return CreateExpertRequest
+     * @return RegistrationRequest
      */
     public function setMessage($message)
     {
@@ -143,7 +150,7 @@ class CreateExpertRequest
      *
      * @param \DateTime $createdAt
      *
-     * @return CreateExpertRequest
+     * @return RegistrationRequest
      */
     public function setCreatedAt($createdAt)
     {
@@ -167,7 +174,7 @@ class CreateExpertRequest
      *
      * @param \AppBundle\Entity\User $curator
      *
-     * @return CreateExpertRequest
+     * @return RegistrationRequest
      */
     public function setCurator(\AppBundle\Entity\User $curator = null)
     {
@@ -191,7 +198,7 @@ class CreateExpertRequest
      *
      * @param \AppBundle\Entity\Category $category
      *
-     * @return CreateExpertRequest
+     * @return RegistrationRequest
      */
     public function addCategory(\AppBundle\Entity\Category $category)
     {
@@ -225,7 +232,7 @@ class CreateExpertRequest
      *
      * @param boolean $isApproved
      *
-     * @return CreateExpertRequest
+     * @return RegistrationRequest
      */
     public function setIsApproved($isApproved)
     {
