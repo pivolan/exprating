@@ -1444,6 +1444,26 @@ div.chars_sortable  .btn.btn-danger.btn-xs
     }
   }
 
+  .nav-tabs>li>a {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 5px;
+    margin: 3px;
+    font-size: 0.9em;
+  }
+
+  .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    cursor: default;
+    background-color: #6AC851;
+    border: 1px solid #289C1B;
+    border-radius: 3px;
+    color: #fff;
+  }
+
+  .tabs-container .nav-tabs {
+    padding-bottom: 10px;
+  }
+
   #footer {
     .footer-wrap {
       .footer-col {

@@ -1681,51 +1681,74 @@ div.chars_sortable .btn.btn-danger.btn-xs {
     width: 80px;
   }
 
-  /* line 1449, ../sass/style.scss */
+  /* line 1447, ../sass/style.scss */
+  .nav-tabs > li > a {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 5px;
+    margin: 3px;
+    font-size: 0.9em;
+  }
+
+  /* line 1455, ../sass/style.scss */
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    cursor: default;
+    background-color: #6AC851;
+    border: 1px solid #289C1B;
+    border-radius: 3px;
+    color: #fff;
+  }
+
+  /* line 1463, ../sass/style.scss */
+  .tabs-container .nav-tabs {
+    padding-bottom: 10px;
+  }
+
+  /* line 1469, ../sass/style.scss */
   #footer .footer-wrap .footer-col {
     float: none;
     width: 100% !important;
     padding: 0 10px 20px 10px;
   }
-  /* line 1457, ../sass/style.scss */
+  /* line 1477, ../sass/style.scss */
   #footer .footer-wrap .footer-col2 ul {
     margin-left: 20px;
   }
-  /* line 1462, ../sass/style.scss */
+  /* line 1482, ../sass/style.scss */
   #footer .footer-wrap .footer-col1 ul {
     font-size: 0.9em;
   }
 }
 @media (min-width: 768px) {
-  /* line 1472, ../sass/style.scss */
+  /* line 1492, ../sass/style.scss */
   ul.nav li:hover > ul.dropdown-menu {
     display: block;
   }
 
-  /* line 1475, ../sass/style.scss */
+  /* line 1495, ../sass/style.scss */
   #navbar {
     text-align: center;
   }
 }
 @media (min-width: 1024px) {
-  /* line 1482, ../sass/style.scss */
+  /* line 1502, ../sass/style.scss */
   #mainSiteMenuMMenuNav {
     display: none;
   }
 }
 @media (max-width: 1155px) {
-  /* line 1492, ../sass/style.scss */
+  /* line 1512, ../sass/style.scss */
   .tabs-container .nav-tabs {
     font-size: 1.2em;
   }
 }
 @media (max-width: 1024px) {
-  /* line 1497, ../sass/style.scss */
+  /* line 1517, ../sass/style.scss */
   .socialWrapper {
     display: none;
   }
 
-  /* line 1500, ../sass/style.scss */
+  /* line 1520, ../sass/style.scss */
   .navbar-toggle {
     display: block;
     background: #6CAB31;
@@ -1734,17 +1757,17 @@ div.chars_sortable .btn.btn-danger.btn-xs {
     right: 10px;
     margin: 0;
   }
-  /* line 1507, ../sass/style.scss */
+  /* line 1527, ../sass/style.scss */
   .navbar-toggle .icon-bar {
     background: #fff;
   }
 
-  /* line 1512, ../sass/style.scss */
+  /* line 1532, ../sass/style.scss */
   #top-menu {
     display: none;
   }
 
-  /* line 1516, ../sass/style.scss */
+  /* line 1536, ../sass/style.scss */
   .sidebar-right {
     width: 100%;
     margin-left: 0;
@@ -1753,7 +1776,7 @@ div.chars_sortable .btn.btn-danger.btn-xs {
     margin-top: 40px;
   }
 
-  /* line 1524, ../sass/style.scss */
+  /* line 1544, ../sass/style.scss */
   .sidebar-left {
     width: 100%;
     margin-right: 0;
@@ -1762,47 +1785,47 @@ div.chars_sortable .btn.btn-danger.btn-xs {
     margin-top: 40px;
   }
 
-  /* line 1532, ../sass/style.scss */
+  /* line 1552, ../sass/style.scss */
   .content {
     float: none;
   }
-  /* line 1534, ../sass/style.scss */
+  /* line 1554, ../sass/style.scss */
   .content .content-inner {
     margin-right: 0;
   }
 
-  /* line 1540, ../sass/style.scss */
+  /* line 1560, ../sass/style.scss */
   .tabs-wrapper .tabs-container {
     float: none;
   }
-  /* line 1542, ../sass/style.scss */
+  /* line 1562, ../sass/style.scss */
   .tabs-wrapper .tabs-container .tabs-container-inner {
     margin-left: 0;
   }
 
-  /* line 1549, ../sass/style.scss */
+  /* line 1569, ../sass/style.scss */
   #footer .footer-wrap .footer-col1 {
     float: none;
     width: 49%;
     display: inline-block;
   }
-  /* line 1554, ../sass/style.scss */
+  /* line 1574, ../sass/style.scss */
   #footer .footer-wrap .footer-col2 {
     float: none;
     width: 49%;
     display: inline-block;
   }
-  /* line 1559, ../sass/style.scss */
+  /* line 1579, ../sass/style.scss */
   #footer .footer-wrap .footer-col3 {
     float: none;
     width: 49%;
     display: inline-block;
   }
-  /* line 1563, ../sass/style.scss */
+  /* line 1583, ../sass/style.scss */
   #footer .footer-wrap .footer-col3 .counters {
     float: none;
   }
-  /* line 1567, ../sass/style.scss */
+  /* line 1587, ../sass/style.scss */
   #footer .footer-wrap .footer-copy {
     float: none;
     width: 49%;
