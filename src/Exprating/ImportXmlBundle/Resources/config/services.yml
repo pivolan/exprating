@@ -33,4 +33,15 @@ services:
             - [setSlugify, ['@appbundle.slugify']]
         tags:
             -  { name: console.command }
-        
+
+    exprating_import_xml.filesystem.admitad_files:
+        class: Exprating\ImportXmlBundle\Filesystem\AdmitadFiles
+        arguments: [ '%kernel.cache_dir%' ]
+
+    exprating_import_xml.command.admitad_download_command:
+        class: Exprating\ImportXmlBundle\Command\AdmitadDownloadCommand
+        calls:
+            - [ 'setAdmitadFiles', [ '@exprating_import_xml.filesystem.admitad_files' ] ]
+        tags:
+            - { name: 'console.command' }
+
