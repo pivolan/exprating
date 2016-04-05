@@ -43,5 +43,18 @@ services:
         calls:
             - [ 'setAdmitadFiles', [ '@exprating_import_xml.filesystem.admitad_files' ] ]
         tags:
-            - { name: 'console.command' }
+            - { name: console.command }
 
+    exprating_import_xml.command.admitad_parse_command:
+        class: Exprating\ImportXmlBundle\Command\AdmitadParseCommand
+        calls:
+            - [ setAdmitadFiles, [ '@exprating_import_xml.filesystem.admitad_files' ] ]
+            - [ setSerializer, [ '@serializer'] ]
+            - [ setXmlReader, [ '@exprating_import.xml.xml_reader' ] ]
+        tags:
+            - { name: console.command }
+
+    exprating_import_xml.serialize_normalizer.admitad_adv_normalizer:
+        class: Exprating\ImportXmlBundle\Serialize\Normalizer\AdmitadAdvNormalizer
+        tags:
+            - { name: serializer.normalizer }

@@ -15,12 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AdmitadDownloadCommand extends Command
 {
+    const URL_ADMITAD_XML = 'http://export.admitad.com/ru/webmaster/websites/40785/partners/export/?user=Antonlukk&code=7569a359ca&format=xml&filter=1&keyword=&region=00&action_type=&status=active&format=xml';
+
     /**
      * @var AdmitadFiles
      */
     private $admitadFiles;
-
-    const URL_ADMITAD_XML = 'http://export.admitad.com/ru/webmaster/websites/40785/partners/export/?user=Antonlukk&code=7569a359ca&format=xml&filter=1&keyword=&region=00&action_type=&status=active&format=xml';
 
     /**
      * @param AdmitadFiles $admitadFiles
@@ -40,22 +40,14 @@ class AdmitadDownloadCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $fileinfo = new \SplFileInfo(self::URL_ADMITAD_XML);
-        $fileXmlInfo = $this->admitadFiles->getFileInfoXml();
-        if (!is_dir($fileXmlInfo->getPath())) {
-            $output->writeln('Create dir '.$fileXmlInfo->getPath());
-            mkdir($fileXmlInfo->getPath(), 0777, true);
+        $fileXml = $this->admitadFiles->getFileInfoXml();
+        if (!is_dir($fileXml->getPath())) {
+            $output->writeln('Create dir '.$fileXml->getPath());
+            mkdir($fileXml->getPath(), 0777, true);
         }
         $output->writeln('Start download '.$fileinfo->getPathname());
-        $ch = curl_init($fileinfo->getPathname());
-        if ($fileXmlInfo->isFile()) {
-            $from = $fileXmlInfo->getSize();
-            $output->writeln($from.' continue download file '.$fileXmlInfo->getPathname());
-            curl_setopt($ch, CURLOPT_RANGE, $from.'-');
-        }
-        $fileXmlStream = fopen($fileXmlInfo->getPathname(), 'a');
-        curl_setopt($ch, CURLOPT_FILE, $fileXmlStream);
-        curl_exec($ch);
-        $output->writeln('Saved! '.$fileXmlInfo->getPathname());
-        fclose($fileXmlStream);
+
+        file_put_contents($fileXml->getPathname(), file_get_contents($fileinfo->getPathname()));
+        $output->writeln('Saved! '.$fileXml->getPathname());
     }
 }

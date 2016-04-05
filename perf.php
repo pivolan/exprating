@@ -8,14 +8,10 @@ namespace TestPerf;
  * Time: 0:08
  */
 
-$file = new \SplFileObject('test2.csv', 'w');
-for ($i = 0; $i < 1000000; $i++) {
-    $pid = pcntl_fork();
-    if ($pid == 0) {
-        $csv = ["X15042088784$i", "H6XMP005002001", "321654654"];
-        $file->fputcsv($csv);
-        exit();
-    }
+$file = new \SplFileObject('test.csv', 'w');
+for ($i = 0; $i < 1000; $i++) {
+    $csv = ['asd' => "X15042088784$i", 'asdsd' => "H6XMP005002001", '1' => "321654654"];
+    $file->fputcsv($csv);
 }
 $csv = ["X15042088784$i", "H6XMP005002001", "321654654"];
 $file->fputcsv($csv);

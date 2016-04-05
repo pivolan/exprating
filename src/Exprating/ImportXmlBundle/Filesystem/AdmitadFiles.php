@@ -20,7 +20,7 @@ class AdmitadFiles implements FilesystemInterface
     /**
      * @return \SplFileInfo
      */
-    public function getFileInfoCSV()
+    public function getFileInfoCsv()
     {
         return new \SplFileInfo($this->varDir.self::FOLDER_ADMINER.self::FILENAME_ADMINER_CSV);
     }

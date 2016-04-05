@@ -12,7 +12,7 @@ interface FilesystemInterface
     /**
      * @return \SplFileInfo
      */
-    public function getFileInfoCSV();
+    public function getFileInfoCsv();
 
     /**
      * @return \SplFileInfo
