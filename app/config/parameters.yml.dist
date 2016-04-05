@@ -7,6 +7,11 @@ parameters:
     database_name:     exprating
     database_user:     root
     database_password: ~
+    database_import_host:     127.0.0.1
+    database_import_port:     ~
+    database_import_name:     exprating
+    database_import_user:     root
+    database_import_password: ~
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 

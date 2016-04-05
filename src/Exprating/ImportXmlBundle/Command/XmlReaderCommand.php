@@ -5,13 +5,13 @@
  * Time: 19:26.
  */
 
-namespace Exprating\ImportBundle\Command;
+namespace Exprating\ImportXmlBundle\Command;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\RatingSettings;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
-use Exprating\ImportBundle\Xml\XmlReader;
+use Exprating\ImportXmlBundle\Xml\XmlReader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -88,7 +88,7 @@ class XmlReaderCommand extends Command
         $fileAdmitadXml = new \SplFileObject('var/admitad.csv', 'w');
         file_put_contents('var/admitad.xml', file_get_contents($fileinfo->getPathname()));
         $output->writeln('admitad.xml saved');
-        if (true) {
+        if (false) {
             foreach ($this->xmlReader->getElementsData($fileinfo, 'advcampaign') as $key => $data) {
                 foreach ($data as $name => $value) {
                     if (is_array($value)) {
@@ -152,7 +152,7 @@ class XmlReaderCommand extends Command
             $fileInfo = new \SplFileInfo($csvFilePath);
             if ($fileInfo->isFile()) {
                 $output->writeln('file csv load ' . $csvFilePath);
-                $pdo->exec('LOAD DATA INFILE "'.$fileInfo->getRealPath().'" ignore INTO TABLE key_product FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
+                //$pdo->exec('LOAD DATA INFILE "'.$fileInfo->getRealPath().'" ignore INTO TABLE key_product FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
                 $output->writeln('file csv loaded ' . $csvFilePath);
             }
         }

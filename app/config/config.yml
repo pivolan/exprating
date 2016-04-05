@@ -6,6 +6,7 @@ imports:
     - { resource: "@CharacteristicBundle/Resources/config/services.yml" }
     - { resource: "@ExpratingImportBundle/Resources/config/services.yml" }
     - { resource: "@ExpratingStatisticBundle/Resources/config/services.yml" }
+    - { resource: "@ExpratingImportXmlBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -60,6 +61,14 @@ doctrine:
                 dbname:   "%database_name%"
                 user:     "%database_user%"
                 password: "%database_password%"
+                charset:  UTF8
+            import_xml:
+                driver:   pdo_mysql
+                host:     "%database_import_host%"
+                port:     "%database_import_port%"
+                dbname:   "%database_import_name%"
+                user:     "%database_import_user%"
+                password: "%database_import_password%"
                 charset:  UTF8
             import:
                 driver: pdo_sqlite
@@ -119,6 +128,29 @@ doctrine:
                     class:                ~
                 mappings:
                     ExpratingImportBundle: ~
+            import_xml:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                connection: import_xml
+                query_cache_driver:
+                    type:                 apc # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+                metadata_cache_driver:
+                    type:                 apc # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+                result_cache_driver:
+                    type:                 apc # Required
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                    class:                ~
+                mappings:
+                    ExpratingImportXmlBundle: ~
 
 swiftmailer:
     transport: "%mailer_transport%"

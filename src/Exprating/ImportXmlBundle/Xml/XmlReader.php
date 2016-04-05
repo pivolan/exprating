@@ -4,7 +4,7 @@
  * Time: 3:04
  */
 
-namespace Exprating\ImportBundle\Xml;
+namespace Exprating\ImportXmlBundle\Xml;
 
 
 use Symfony\Component\Serializer\Encoder\DecoderInterface;

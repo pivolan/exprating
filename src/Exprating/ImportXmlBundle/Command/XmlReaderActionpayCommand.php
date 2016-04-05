@@ -5,13 +5,13 @@
  * Time: 19:26.
  */
 
-namespace Exprating\ImportBundle\Command;
+namespace Exprating\ImportXmlBundle\Command;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\RatingSettings;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
-use Exprating\ImportBundle\Xml\XmlReader;
+use Exprating\ImportXmlBundle\Xml\XmlReader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -76,6 +76,7 @@ class XmlReaderActionpayCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if(false)
         foreach (glob('var/actionpay_product/*.xml') as $key => $xmlFilePath) {
             $filePriceListXml = new \SplFileInfo($xmlFilePath);
             $output->writeln('start parsing '.$filePriceListXml->getBasename());
@@ -105,7 +106,7 @@ class XmlReaderActionpayCommand extends Command
 
         $pdo = new \PDO('mysql:dbname=import;host=127.0.0.1', 'root', 'chease');
 
-        foreach (glob('var/actionpay_product/*.csv') as $key => $csvFilePath) {
+        foreach (glob('var/admitad/*.csv') as $key => $csvFilePath) {
             $fileInfo = new \SplFileInfo($csvFilePath);
             if ($fileInfo->isFile()) {
                 $output->writeln('file csv load ' . $csvFilePath);

@@ -1,0 +1,36 @@
+services:
+#    exprating_import_xml.example:
+#        class: Exprating\ImportXmlBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+
+    exprating_import.xml.xml_reader:
+        class: Exprating\ImportXmlBundle\Xml\XmlReader
+        arguments: [ '@serializer.encoder.xml' ]
+        
+    import.command.xml_reader_command:
+        class: Exprating\ImportXmlBundle\Command\XmlReaderCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setXmlReader, ['@exprating_import.xml.xml_reader']]
+            - [setSlugify, ['@appbundle.slugify']]
+        tags:
+            -  { name: console.command }
+
+    import.command.xml_reader_actionpay_command:
+        class: Exprating\ImportXmlBundle\Command\XmlReaderActionpayCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setXmlReader, ['@exprating_import.xml.xml_reader']]
+            - [setSlugify, ['@appbundle.slugify']]
+        tags:
+            -  { name: console.command }
+
+    import.command.xml_reader_company_command:
+        class: Exprating\ImportXmlBundle\Command\XmlReaderCompanyCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setXmlReader, ['@exprating_import.xml.xml_reader']]
+            - [setSlugify, ['@appbundle.slugify']]
+        tags:
+            -  { name: console.command }
+        

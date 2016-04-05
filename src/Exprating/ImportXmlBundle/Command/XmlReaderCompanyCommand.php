@@ -5,13 +5,13 @@
  * Time: 19:26.
  */
 
-namespace Exprating\ImportBundle\Command;
+namespace Exprating\ImportXmlBundle\Command;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\RatingSettings;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
-use Exprating\ImportBundle\Xml\XmlReader;
+use Exprating\ImportXmlBundle\Xml\XmlReader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
