@@ -7,7 +7,7 @@
 namespace Exprating\ImportXmlBundle\Filesystem;
 
 
-class AdmitadFiles implements FilesystemInterface
+class AdmitadFiles
 {
     const FILENAME_ADMINER_CSV = '/admitad.csv';
     const FOLDER_ADMINER = '/admitad';

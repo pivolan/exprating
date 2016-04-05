@@ -38,6 +38,10 @@ services:
         class: Exprating\ImportXmlBundle\Filesystem\AdmitadFiles
         arguments: [ '%kernel.cache_dir%' ]
 
+    exprating_import_xml.filesystem.admitad_price_list_files:
+        class: Exprating\ImportXmlBundle\Filesystem\AdmitadPriceListFiles
+        arguments: [ '%kernel.cache_dir%' ]
+
     exprating_import_xml.command.admitad_download_command:
         class: Exprating\ImportXmlBundle\Command\AdmitadDownloadCommand
         calls:
@@ -51,6 +55,15 @@ services:
             - [ setAdmitadFiles, [ '@exprating_import_xml.filesystem.admitad_files' ] ]
             - [ setSerializer, [ '@serializer'] ]
             - [ setXmlReader, [ '@exprating_import.xml.xml_reader' ] ]
+        tags:
+            - { name: console.command }
+
+    exprating_import_xml.command.admitad_download_price_lists_command:
+        class: Exprating\ImportXmlBundle\Command\AdmitadDownloadPriceListsCommand
+        calls:
+            - [ setAdmitadPriceListFiles, [ '@exprating_import_xml.filesystem.admitad_price_list_files' ] ]
+            - [ setAdmitadFiles, [ '@exprating_import_xml.filesystem.admitad_files' ] ]
+            - [ setSerializer, [ '@serializer'] ]
         tags:
             - { name: console.command }
 
