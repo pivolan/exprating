@@ -69,9 +69,10 @@ class AdmitadParseCommand extends Command
     {
         $fileXmlInfo = $this->admitadFiles->getFileInfoXml();
         if (!$fileXmlInfo->isFile()) {
-            $output->write(
+            $output->writeln(
                 'No file('.$fileXmlInfo->getPathname().') found, please start import_xml:admitad:download first'
             );
+            return;
         }
         $output->writeln('File found, start parsing '.$fileXmlInfo->getPathname());
         $fileAdmitadCsv = New \SplFileObject($this->admitadFiles->getFileInfoCsv()->getPathname(), 'w');

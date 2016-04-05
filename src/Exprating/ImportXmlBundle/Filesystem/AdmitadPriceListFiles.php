@@ -26,7 +26,7 @@ class AdmitadPriceListFiles
     public function getFileInfoCsv(AdmitadAdv $admitadAdv)
     {
         return new \SplFileInfo(
-            $this->varDir.self::FOLDER_ADMINER.$admitadAdv->name.'_'.$admitadAdv->id.'.csv'
+            $this->varDir.self::FOLDER_ADMINER.'/'.$admitadAdv->name.'_'.$admitadAdv->id.'.csv'
         );
     }
 
@@ -38,7 +38,7 @@ class AdmitadPriceListFiles
     public function getFileInfoXml(AdmitadAdv $admitadAdv)
     {
         return new \SplFileInfo(
-            $this->varDir.self::FOLDER_ADMINER.$admitadAdv->name.'_'.$admitadAdv->id.'.xml'
+            $this->varDir.self::FOLDER_ADMINER.'/'.$admitadAdv->name.'_'.$admitadAdv->id.'.xml'
         );
     }
 

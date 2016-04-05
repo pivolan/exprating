@@ -69,9 +69,10 @@ class AdmitadDownloadPriceListsCommand extends Command
     {
         $fileInfoCsv = $this->admitadFiles->getFileInfoCsv();
         if (!$fileInfoCsv->isFile()) {
-            $output->write(
-                'No file('.$fileInfoCsv->getPathname().') found, please start import_xml:admitad:parser first'
+            $output->writeln(
+                'No file('.$fileInfoCsv->getPathname().') found, please start import_xml:admitad:parse first'
             );
+            return;
         }
         $output->writeln('Csv file found '.$fileInfoCsv->getPathname());
         $fileAdmitadCsv = New \SplFileObject($this->admitadFiles->getFileInfoCsv()->getPathname(), 'r');
@@ -81,24 +82,9 @@ class AdmitadDownloadPriceListsCommand extends Command
             /** @var AdmitadAdv $admitadAdv */
             $admitadAdv = $this->serializer->denormalize($data, AdmitadAdv::class, AdmitadAdvNormalizer::FORMAT);
             $priceListXmlFileInfo = $this->admitadPriceListFiles->getFileInfoXml($admitadAdv);
-            if (function_exists('pcntl_fork')) {
-                $pid = @pcntl_fork();
-            } else {
-                $pid = 0;
-            }
-            if ($pid == 0) {
-                $output->writeln('start download '.$admitadAdv->original_products);
-                file_put_contents(
-                    $priceListXmlFileInfo->getPathname(),
-                    file_get_contents($admitadAdv->original_products)
-                );
-                $output->writeln('saved xml pricelist '.$priceListXmlFileInfo->getPathname());
-
-                return;
-            }
-            while ($pid == -1 && pcntl_wait($status, WNOHANG) == 0) {
-                sleep(1);
-            }
+            $output->writeln('start download '.$admitadAdv->original_products);
+            exec("nohup curl '{$admitadAdv->original_products}'> {$priceListXmlFileInfo->getPathname()} 2>/dev/null &");
+            $output->writeln('queued xml pricelist '.$priceListXmlFileInfo->getPathname());
         }
         $output->writeln('Successful. Result in '.$fileAdmitadCsv->getPathname());
     }
