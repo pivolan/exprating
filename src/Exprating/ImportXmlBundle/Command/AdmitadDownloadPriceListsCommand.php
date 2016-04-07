@@ -87,18 +87,22 @@ class AdmitadDownloadPriceListsCommand extends Command
             //Сделаем закачку в 4 потока
             $pid = pcntl_fork();
             if ($pid == 0) {
-                $file = fopen($priceListXmlFileInfo->getPathname(), 'w');
-                $ch = curl_init($admitadAdv->original_products);
-                curl_setopt($ch, CURLOPT_FILE, $file);
-                curl_exec($ch);
-                $curlError = curl_error($ch);
-                if ($curlError) {
-                    file_put_contents($priceListXmlFileInfo->getPathname().'.error', $curlError);
-                    $output->writeln($curlError);
-                } else {
-                    $output->writeln('saved xml pricelist '.$priceListXmlFileInfo->getPathname());
+                try {
+                    $file = fopen($priceListXmlFileInfo->getPathname(), 'w');
+                    $ch = curl_init($admitadAdv->original_products);
+                    curl_setopt($ch, CURLOPT_FILE, $file);
+                    curl_exec($ch);
+                    $curlError = curl_error($ch);
+                    if ($curlError) {
+                        file_put_contents($priceListXmlFileInfo->getPathname().'.error', $curlError);
+                        $output->writeln($curlError);
+                    } else {
+                        $output->writeln('saved xml pricelist '.$priceListXmlFileInfo->getPathname());
+                    }
+                    curl_close($ch);
+                } catch (\Exception $e) {
+                    file_put_contents($priceListXmlFileInfo->getPathname().'.error', $e->getTraceAsString());
                 }
-                curl_close($ch);
                 exit();
             }
             if ($forksCount >= 4) {

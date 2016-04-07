@@ -23,6 +23,7 @@ class AdmitadParsePriceListsCommand extends Command
     const XML_KEY_OFFER = 'offer';
     const XML_KEY_CATEGORY = 'category';
     const XML_KEY_COMPANY = 'company';
+    const XML_KEY_CATEGORIES = 'categories';
     /**
      * @var AdmitadFiles
      */
@@ -113,13 +114,22 @@ class AdmitadParsePriceListsCommand extends Command
                     foreach ($xmlReader->getElementsData($filePriceListXml, self::XML_KEY_COMPANY) as $company) {
                         break;
                     }
-                    foreach ($xmlReader->getElementsData($filePriceListXml, self::XML_KEY_CATEGORY) as $category) {
-                        if (isset($category['@id'], $category['#'])) {
-                            $categories[$category['@id']] = $category['#'];
-                            if (isset($category['@parentId'])) {
-                                $categoriesPath[$category['@id']] = $category['@parentId'];
+                    foreach ($xmlReader->getElementsData($filePriceListXml, self::XML_KEY_CATEGORIES) as $categories) {
+                        if (isset($categories['category'])) {
+                            $categories = $categories['category'];
+                        }
+                        foreach ($categories as $category) {
+                            if (isset($category[0])) {
+                                $category = $category[0];
+                            }
+                            if (isset($category['@id'], $category['#'])) {
+                                $categories[$category['@id']] = $category['#'];
+                                if (isset($category['@parentId'])) {
+                                    $categoriesPath[$category['@id']] = $category['@parentId'];
+                                }
                             }
                         }
+                        break;
                     }
                     $hashes = $this->emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->getHashesByCompany(
                         $company
@@ -141,7 +151,7 @@ class AdmitadParsePriceListsCommand extends Command
                         if (!isset($hashes[$offer->getHash()])) {
                             $offerNormalized = $this->serializer->normalize($offer, OfferNormalizer::FORMAT);
                             $filePriceListCsv->fputcsv($offerNormalized);
-                        }else{
+                        } else {
                             unset($hashes[$offer->getHash()]);
                         }
                     }
