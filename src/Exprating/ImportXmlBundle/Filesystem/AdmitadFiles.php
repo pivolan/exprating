@@ -10,19 +10,19 @@ namespace Exprating\ImportXmlBundle\Filesystem;
 class AdmitadFiles
 {
     const FILENAME_ADMINER_CSV = '/admitad.csv';
-    const FOLDER_ADMINER = '/admitad';
+    const FOLDER_ADMINER = '/../var/admitad';
     const FILENAME_ADMINER_XML = '/admitad.xml';
     /**
      * @var string
      */
-    private $varDir;
+    private $rootDir;
 
     /**
      * @return \SplFileInfo
      */
     public function getFileInfoCsv()
     {
-        return new \SplFileInfo($this->varDir.self::FOLDER_ADMINER.self::FILENAME_ADMINER_CSV);
+        return new \SplFileInfo($this->rootDir.self::FOLDER_ADMINER.self::FILENAME_ADMINER_CSV);
     }
 
     /**
@@ -30,7 +30,7 @@ class AdmitadFiles
      */
     public function getFileInfoXml()
     {
-        return new \SplFileInfo($this->varDir.self::FOLDER_ADMINER.self::FILENAME_ADMINER_XML);
+        return new \SplFileInfo($this->rootDir.self::FOLDER_ADMINER.self::FILENAME_ADMINER_XML);
     }
 
     /**
@@ -38,6 +38,6 @@ class AdmitadFiles
      */
     public function __construct($varDir)
     {
-        $this->varDir = $varDir;
+        $this->rootDir = $varDir;
     }
 }

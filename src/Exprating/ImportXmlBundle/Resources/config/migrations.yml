@@ -1,0 +1,4 @@
+doctrine_migrations:
+    dir_name: "@ExpratingImportXmlBundle/DoctrineMigrations"
+    namespace: "Exprating\\ImportXmlBundle\\DoctrineMigrations"
+    name: "Import Xml Migrations"

@@ -11,12 +11,12 @@ use Exprating\ImportXmlBundle\XmlDto\AdmitadAdv;
 
 class AdmitadPriceListFiles
 {
-    const FOLDER_ADMINER = '/admitad';
+    const FOLDER_ADMITAD = '/../var/admitad';
 
     /**
      * @var string
      */
-    private $varDir;
+    private $rootDir;
 
     /**
      * @param AdmitadAdv $admitadAdv
@@ -26,7 +26,7 @@ class AdmitadPriceListFiles
     public function getFileInfoCsv(AdmitadAdv $admitadAdv)
     {
         return new \SplFileInfo(
-            $this->varDir.self::FOLDER_ADMINER.'/'.$admitadAdv->name.'_'.$admitadAdv->id.'.csv'
+            $this->rootDir.self::FOLDER_ADMITAD.'/'.$admitadAdv->name.'_'.$admitadAdv->id.'.csv'
         );
     }
 
@@ -38,8 +38,16 @@ class AdmitadPriceListFiles
     public function getFileInfoXml(AdmitadAdv $admitadAdv)
     {
         return new \SplFileInfo(
-            $this->varDir.self::FOLDER_ADMINER.'/'.$admitadAdv->name.'_'.$admitadAdv->id.'.xml'
+            $this->rootDir.self::FOLDER_ADMITAD.'/'.$admitadAdv->name.'_'.$admitadAdv->id.'.xml'
         );
+    }
+
+    /**
+     * @return \SplFileInfo
+     */
+    public function getFolder()
+    {
+        return new \SplFileInfo($this->rootDir.self::FOLDER_ADMITAD);
     }
 
     /**
@@ -49,6 +57,6 @@ class AdmitadPriceListFiles
      */
     public function __construct($varDir)
     {
-        $this->varDir = $varDir;
+        $this->rootDir = $varDir;
     }
 }

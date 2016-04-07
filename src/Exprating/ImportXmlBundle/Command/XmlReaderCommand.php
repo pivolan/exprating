@@ -51,7 +51,7 @@ class XmlReaderCommand extends Command
     /**
      * @param XmlReader $xmlReader
      */
-    public function setXmlReader($xmlReader)
+    public function setXmlReader(XmlReader$xmlReader)
     {
         $this->xmlReader = $xmlReader;
     }
