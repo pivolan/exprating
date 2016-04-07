@@ -72,6 +72,7 @@ class AdmitadDownloadPriceListsCommand extends Command
             $output->writeln(
                 'No file('.$fileInfoCsv->getPathname().') found, please start import_xml:admitad:parse first'
             );
+
             return;
         }
         $output->writeln('Csv file found '.$fileInfoCsv->getPathname());
@@ -83,8 +84,30 @@ class AdmitadDownloadPriceListsCommand extends Command
             $admitadAdv = $this->serializer->denormalize($data, AdmitadAdv::class, AdmitadAdvNormalizer::FORMAT);
             $priceListXmlFileInfo = $this->admitadPriceListFiles->getFileInfoXml($admitadAdv);
             $output->writeln('start download '.$admitadAdv->original_products);
-            exec("nohup curl '{$admitadAdv->original_products}'> {$priceListXmlFileInfo->getPathname()} 2>/dev/null &");
-            $output->writeln('queued xml pricelist '.$priceListXmlFileInfo->getPathname());
+            //Сделаем закачку в 4 потока
+            $pid = pcntl_fork();
+            if ($pid == 0) {
+                $file = fopen($priceListXmlFileInfo->getPathname(), 'w');
+                $ch = curl_init($admitadAdv->original_products);
+                curl_setopt($ch, CURLOPT_FILE, $file);
+                curl_exec($ch);
+                $curlError = curl_error($ch);
+                if ($curlError) {
+                    file_put_contents($priceListXmlFileInfo->getPathname().'.error', $curlError);
+                    $output->writeln($curlError);
+                } else {
+                    $output->writeln('saved xml pricelist '.$priceListXmlFileInfo->getPathname());
+                }
+                curl_close($ch);
+                exit();
+            }
+            if ($forksCount >= 4) {
+                while (pcntl_wait($status) == 0) {
+                    sleep(5);
+                }
+                $forksCount--;
+                $output->writeln('fork removed, start new fork. Forks: '.$forksCount);
+            }
         }
         $output->writeln('Successful. Result in '.$fileAdmitadCsv->getPathname());
     }

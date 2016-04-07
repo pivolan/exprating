@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="offer",
  *     uniqueConstraints={@ORM\UniqueConstraint(name="id_company_unique", columns={"id", "company"})})
- * @ORM\Entity(repositoryClass="Exprating\ImportXmlBundle\Repository\offerRepository")
+ * @ORM\Entity(repositoryClass="Exprating\ImportXmlBundle\Repository\OfferRepository")
  */
 class Offer
 {

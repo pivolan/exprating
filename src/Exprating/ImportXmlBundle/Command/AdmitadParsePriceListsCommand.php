@@ -7,6 +7,7 @@
 namespace Exprating\ImportXmlBundle\Command;
 
 
+use Doctrine\ORM\EntityManager;
 use Exprating\ImportXmlBundle\Entity\Offer;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadFiles;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadPriceListFiles;
@@ -43,6 +44,11 @@ class AdmitadParsePriceListsCommand extends Command
     private $xmlReader;
 
     /**
+     * @var EntityManager
+     */
+    private $emImportXml;
+
+    /**
      * @param AdmitadFiles $admitadFiles
      */
     public function setAdmitadFiles(AdmitadFiles $admitadFiles)
@@ -74,6 +80,14 @@ class AdmitadParsePriceListsCommand extends Command
         $this->admitadPriceListFiles = $admitadPriceListFiles;
     }
 
+    /**
+     * @param EntityManager $emImportXml
+     */
+    public function setEmImportXml(EntityManager $emImportXml)
+    {
+        $this->emImportXml = $emImportXml;
+    }
+
     protected function configure()
     {
         $this
@@ -84,8 +98,9 @@ class AdmitadParsePriceListsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $xmlReader = $this->xmlReader;
-
         $globPattern = $this->admitadPriceListFiles->getFolder().'/*.xml';
+        $em = $this->emImportXml;
+
         foreach (glob($globPattern) as $key => $xmlFilePath) {
             $filePriceListXml = new \SplFileInfo($xmlFilePath);
             $output->writeln('start parsing '.$filePriceListXml->getBasename());
@@ -106,6 +121,9 @@ class AdmitadParsePriceListsCommand extends Command
                             }
                         }
                     }
+                    $hashes = $this->emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->getHashesByCompany(
+                        $company
+                    );
                     foreach ($xmlReader->getElementsData($filePriceListXml, self::XML_KEY_OFFER) as $offerData) {
                         $hash = md5(serialize($offerData));
                         /** @var Offer $offer */
@@ -120,9 +138,17 @@ class AdmitadParsePriceListsCommand extends Command
                         }
                         $offer->setCategoryPath($categoryPath);
                         $offer->setCompany($company);
-                        $offerNormalized = $this->serializer->normalize($offer, OfferNormalizer::FORMAT);
-                        $filePriceListCsv->fputcsv($offerNormalized);
+                        if (!isset($hashes[$offer->getHash()])) {
+                            $offerNormalized = $this->serializer->normalize($offer, OfferNormalizer::FORMAT);
+                            $filePriceListCsv->fputcsv($offerNormalized);
+                        }else{
+                            unset($hashes[$offer->getHash()]);
+                        }
                     }
+                    $hashesForRemove = array_keys($hashes);
+                    $this->emImportXml
+                        ->getRepository('ExpratingImportXmlBundle:Offer')
+                        ->removeByHashes($hashesForRemove);
                 } catch (\Exception $e) {
                     $output->writeln($e->getMessage());
                     file_put_contents($filePriceListXml->getPathname().'.error', $e->getMessage());

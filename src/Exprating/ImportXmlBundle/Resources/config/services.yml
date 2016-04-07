@@ -74,6 +74,7 @@ services:
             - [ setAdmitadFiles, [ '@exprating_import_xml.filesystem.admitad_files' ] ]
             - [ setSerializer, [ '@serializer'] ]
             - [ setXmlReader, [ '@exprating_import.xml.xml_reader' ] ]
+            - [ setEmImportXml, [ '@doctrine.orm.import_xml_entity_manager' ] ]
         tags:
             - { name: console.command }
 

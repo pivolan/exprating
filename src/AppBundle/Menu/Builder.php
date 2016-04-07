@@ -32,21 +32,47 @@ class Builder implements ContainerAwareInterface
         $entityRepository = $em->getRepository('AppBundle:Category');
         /** @var Category[] $categories */
         $categories = $entityRepository->getFirstLevel();
+        $categoryNumber = 0;
+        $otherKey = 'Прочие';
         foreach ($categories as $category) {
             if (!$category->getIsHidden()) {
-                $menu->addChild(
-                    $category->getName(),
-                    [
-                        'route'           => 'product_list',
-                        'routeParameters' => [
-                            'slug' => $category->getSlug(),
-                        ],
-                    ]
-                );
+                $categoryNumber++;
+                if ($categoryNumber >= 7) {
+                    if (!isset($otherMenu)) {
+                        $otherMenu = $menu->addChild(
+                            $otherKey,
+                            [
+                                'uri' => '#',
+                            ]
+                        );
+                        $otherMenu->setLinkAttribute('class', 'sf-with-ul');
+                    }
+                }
+                if (isset($otherMenu)) {
+                    $categoryMenu = $otherMenu->addChild(
+                        $category->getName(),
+                        [
+                            'route'           => 'product_list',
+                            'routeParameters' => [
+                                'slug' => $category->getSlug(),
+                            ],
+                        ]
+                    );
+                } else {
+                    $categoryMenu = $menu->addChild(
+                        $category->getName(),
+                        [
+                            'route'           => 'product_list',
+                            'routeParameters' => [
+                                'slug' => $category->getSlug(),
+                            ],
+                        ]
+                    );
+                }
                 foreach ($category->getChildren() as $childCategory) {
                     if (!$childCategory->getIsHidden()) {
-                        $menu[$category->getName()]->setLinkAttribute('class', 'sf-with-ul');
-                        $menu[$category->getName()]->addChild(
+                        $categoryMenu->setLinkAttribute('class', 'sf-with-ul');
+                        $categoryMenu->addChild(
                             $childCategory->getName(),
                             [
                                 'route'           => 'product_list',
