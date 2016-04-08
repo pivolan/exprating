@@ -38,6 +38,10 @@ services:
         class: Exprating\ImportXmlBundle\Filesystem\AdmitadFiles
         arguments: [ '%kernel.root_dir%' ]
 
+    exprating_import_xml.filesystem.actionpay_files:
+        class: Exprating\ImportXmlBundle\Filesystem\ActionPayFiles
+        arguments: [ '%kernel.root_dir%' ]
+
     exprating_import_xml.filesystem.admitad_price_list_files:
         class: Exprating\ImportXmlBundle\Filesystem\AdmitadPriceListFiles
         arguments: [ '%kernel.root_dir%' ]
