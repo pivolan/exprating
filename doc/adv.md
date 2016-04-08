@@ -11,6 +11,11 @@ http://export.admitad.com/ru/webmaster/websites/40785/partners/export/?user=Anto
 ***path to url price list***
 
     advcampaign > original_products
+    
+    advcampaign:
+        name
+        id
+        original_products
 
 ***get one price list for company***
 

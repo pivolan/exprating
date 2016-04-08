@@ -60,6 +60,14 @@ services:
         tags:
             - { name: console.command }
 
+    exprating_import_xml.command.actionpay_parse_command:
+        class: Exprating\ImportXmlBundle\Command\ActionPayParseCommand
+        calls:
+            - [ 'setActionPayFiles', [ '@exprating_import_xml.filesystem.actionpay_files' ] ]
+            - [ setSerializer, [ '@serializer'] ]
+        tags:
+            - { name: console.command }
+
     exprating_import_xml.command.admitad_parse_command:
         class: Exprating\ImportXmlBundle\Command\AdmitadParseCommand
         calls:
@@ -98,6 +106,16 @@ services:
 
     exprating_import_xml.serialize_normalizer.admitad_adv_normalizer:
         class: Exprating\ImportXmlBundle\Serialize\Normalizer\AdmitadAdvNormalizer
+        tags:
+            - { name: serializer.normalizer }
+
+    exprating_import_xml.serialize_normalizer.actionpay_offer_normalizer:
+        class: Exprating\ImportXmlBundle\Serialize\Normalizer\ActionPayOfferNormalizer
+        tags:
+            - { name: serializer.normalizer }
+
+    exprating_import_xml.serialize_normalizer.actionpay_offer_csv_normalizer:
+        class: Exprating\ImportXmlBundle\Serialize\Normalizer\ActionPayOfferCsvNormalizer
         tags:
             - { name: serializer.normalizer }
 
