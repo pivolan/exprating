@@ -53,6 +53,13 @@ services:
         tags:
             - { name: console.command }
 
+    exprating_import_xml.command.actionpay_download_command:
+        class: Exprating\ImportXmlBundle\Command\ActionPayDownloadCommand
+        calls:
+            - [ 'setActionPayFiles', [ '@exprating_import_xml.filesystem.actionpay_files' ] ]
+        tags:
+            - { name: console.command }
+
     exprating_import_xml.command.admitad_parse_command:
         class: Exprating\ImportXmlBundle\Command\AdmitadParseCommand
         calls:

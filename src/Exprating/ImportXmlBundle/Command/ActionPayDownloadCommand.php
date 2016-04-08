@@ -27,7 +27,7 @@ class ActionPayDownloadCommand extends Command
      */
     public function setActionPayFiles(ActionPayFiles $actionPayFiles)
     {
-        $this->ActionPayFiles = $actionPayFiles;
+        $this->actionPayFiles = $actionPayFiles;
     }
 
     protected function configure()
