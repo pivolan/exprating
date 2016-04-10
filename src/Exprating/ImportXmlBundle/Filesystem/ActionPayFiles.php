@@ -12,6 +12,8 @@ class ActionPayFiles
     const FILENAME_ACTIONPAY_CSV = '/actionpay.csv';
     const FOLDER_ACTIONPAY = '/../var/actionpay';
     const FILENAME_ACTIONPAY_XML = '/actionpay.xml';
+    const FILENAME_OFFER_XML = '/offers.xml';
+    const FILENAME_OFFER_CSV = '/offers.csv';
     /**
      * @var string
      */

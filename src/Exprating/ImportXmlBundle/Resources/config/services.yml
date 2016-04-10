@@ -42,6 +42,10 @@ services:
         class: Exprating\ImportXmlBundle\Filesystem\ActionPayFiles
         arguments: [ '%kernel.root_dir%' ]
 
+    exprating_import_xml.filesystem.actionpay_offer_files:
+        class: Exprating\ImportXmlBundle\Filesystem\ActionPayOfferFiles
+        arguments: [ '%kernel.root_dir%' ]
+
     exprating_import_xml.filesystem.admitad_price_list_files:
         class: Exprating\ImportXmlBundle\Filesystem\AdmitadPriceListFiles
         arguments: [ '%kernel.root_dir%' ]
@@ -57,6 +61,24 @@ services:
         class: Exprating\ImportXmlBundle\Command\ActionPayDownloadCommand
         calls:
             - [ 'setActionPayFiles', [ '@exprating_import_xml.filesystem.actionpay_files' ] ]
+        tags:
+            - { name: console.command }
+
+    exprating_import_xml.command.actionpay_download_offers_command:
+        class: Exprating\ImportXmlBundle\Command\ActionPayDownloadOffersCommand
+        calls:
+            - [ 'setActionPayFiles', [ '@exprating_import_xml.filesystem.actionpay_files' ] ]
+            - [ 'setActionPayOfferFiles', [ '@exprating_import_xml.filesystem.actionpay_offer_files' ] ]
+            - [ setSerializer, [ '@serializer'] ]
+        tags:
+            - { name: console.command }
+
+    exprating_import_xml.command.actionpay_parse_offers_command:
+        class: Exprating\ImportXmlBundle\Command\ActionPayParseOffersCommand
+        calls:
+            - [ 'setActionPayOfferFiles', [ '@exprating_import_xml.filesystem.actionpay_offer_files' ] ]
+            - [ 'setAdmitadFiles', [ '@exprating_import_xml.filesystem.admitad_files' ] ]
+            - [ setSerializer, [ '@serializer'] ]
         tags:
             - { name: console.command }
 
@@ -80,6 +102,7 @@ services:
     exprating_import_xml.command.admitad_download_price_lists_command:
         class: Exprating\ImportXmlBundle\Command\AdmitadDownloadPriceListsCommand
         calls:
+            - [ setActionPayOfferFiles, [ '@exprating_import_xml.filesystem.actionpay_offer_files' ] ]
             - [ setAdmitadPriceListFiles, [ '@exprating_import_xml.filesystem.admitad_price_list_files' ] ]
             - [ setAdmitadFiles, [ '@exprating_import_xml.filesystem.admitad_files' ] ]
             - [ setSerializer, [ '@serializer'] ]

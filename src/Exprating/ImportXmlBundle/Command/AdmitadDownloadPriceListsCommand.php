@@ -7,11 +7,13 @@
 namespace Exprating\ImportXmlBundle\Command;
 
 
+use Exprating\ImportXmlBundle\Filesystem\ActionPayOfferFiles;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadFiles;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadPriceListFiles;
 use Exprating\ImportXmlBundle\Serialize\Normalizer\AdmitadAdvNormalizer;
 use Exprating\ImportXmlBundle\Xml\XmlReader;
 use Exprating\ImportXmlBundle\XmlDto\AdmitadAdv;
+use Ivory\CKEditorBundle\Exception\Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,10 +21,19 @@ use Symfony\Component\Serializer\Serializer;
 
 class AdmitadDownloadPriceListsCommand extends Command
 {
+    const ARG_TYPE = 'type';
+    const TYPE_ADMITAD = 'admitad';
+    const TYPE_ACTIONPAY = 'actionpay';
     /**
      * @var AdmitadFiles
      */
     private $admitadFiles;
+
+
+    /**
+     * @var ActionPayOfferFiles
+     */
+    private $actionPayOfferFiles;
 
     /**
      * @var AdmitadPriceListFiles
@@ -40,6 +51,14 @@ class AdmitadDownloadPriceListsCommand extends Command
     public function setAdmitadFiles(AdmitadFiles $admitadFiles)
     {
         $this->admitadFiles = $admitadFiles;
+    }
+
+    /**
+     * @param ActionPayOfferFiles $actionPayOfferFiles
+     */
+    public function setActionPayOfferFiles(ActionPayOfferFiles $actionPayOfferFiles)
+    {
+        $this->actionPayOfferFiles = $actionPayOfferFiles;
     }
 
     /**
@@ -61,24 +80,44 @@ class AdmitadDownloadPriceListsCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('import_xml:admitad:download:price_lists')
-            ->setDescription('Greet someone');
+            ->setName('import_xml:download:price_lists')
+            ->setDescription('Greet someone')
+            ->addArgument(self::ARG_TYPE, null, 'maybe admitad or actionpay');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $fileInfoCsv = $this->admitadFiles->getFileInfoCsv();
-        if (!$fileInfoCsv->isFile()) {
-            $output->writeln(
-                'No file('.$fileInfoCsv->getPathname().') found, please start import_xml:admitad:parse first'
-            );
+        $type = $input->getArgument(self::ARG_TYPE);
 
-            return;
+        if ($type == self::TYPE_ADMITAD) {
+            $fileInfoCsv = $this->admitadFiles->getFileInfoCsv();
+            if (!$fileInfoCsv->isFile()) {
+                $output->writeln(
+                    'No file('.$fileInfoCsv->getPathname().') found, please start import_xml:admitad:parse first'
+                );
+
+                return;
+            }
+            $output->writeln('Csv file found '.$fileInfoCsv->getPathname());
+            $fileCsv = New \SplFileObject($fileInfoCsv->getPathname(), 'r');
+        } elseif ($type == self::TYPE_ACTIONPAY) {
+            $fileInfoCsv = $this->actionPayOfferFiles->getFileInfoCsv();
+            if (!$fileInfoCsv->isFile()) {
+                $output->writeln(
+                    'No file('
+                    .$fileInfoCsv->getPathname()
+                    .') found, please start import_xml:actionpay:parse:offers first'
+                );
+
+                return;
+            }
+            $output->writeln('Csv file found '.$fileInfoCsv->getPathname());
+            $fileCsv = New \SplFileObject($fileInfoCsv->getPathname(), 'r');
+        } else {
+            throw new \Exception('Invalid type argument');
         }
-        $output->writeln('Csv file found '.$fileInfoCsv->getPathname());
-        $fileAdmitadCsv = New \SplFileObject($this->admitadFiles->getFileInfoCsv()->getPathname(), 'r');
         $forksCount = 0;
-        while ($data = $fileAdmitadCsv->fgetcsv()) {
+        while ($data = $fileCsv->fgetcsv()) {
             $forksCount++;
             /** @var AdmitadAdv $admitadAdv */
             $admitadAdv = $this->serializer->denormalize($data, AdmitadAdv::class, AdmitadAdvNormalizer::FORMAT);
@@ -113,6 +152,6 @@ class AdmitadDownloadPriceListsCommand extends Command
                 $output->writeln('fork removed, start new fork. Forks: '.$forksCount);
             }
         }
-        $output->writeln('Successful. Result in '.$fileAdmitadCsv->getPathname());
+        $output->writeln('Successful. Result in '.$fileCsv->getPathname());
     }
 }
