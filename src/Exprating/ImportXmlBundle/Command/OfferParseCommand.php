@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Serializer;
 
-class AdmitadParsePriceListsCommand extends Command
+class OfferParseCommand extends Command
 {
     const XML_KEY_OFFER = 'offer';
     const XML_KEY_CATEGORY = 'category';
@@ -92,7 +92,7 @@ class AdmitadParsePriceListsCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('import_xml:admitad:parse:price_lists')
+            ->setName('import_xml:parse:price_lists')
             ->setDescription('Greet someone');
     }
 

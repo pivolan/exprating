@@ -109,8 +109,8 @@ services:
         tags:
             - { name: console.command }
 
-    exprating_import_xml.command.admitad_parse_price_lists_command:
-        class: Exprating\ImportXmlBundle\Command\AdmitadParsePriceListsCommand
+    exprating_import_xml.command.offer_parse_command:
+        class: Exprating\ImportXmlBundle\Command\OfferParseCommand
         calls:
             - [ setAdmitadPriceListFiles, [ '@exprating_import_xml.filesystem.admitad_price_list_files' ] ]
             - [ setAdmitadFiles, [ '@exprating_import_xml.filesystem.admitad_files' ] ]
