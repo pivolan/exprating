@@ -124,6 +124,7 @@ services:
         class: Exprating\ImportXmlBundle\Command\OfferCsvToDbCommand
         calls:
             - [ setAdmitadPriceListFiles, [ '@exprating_import_xml.filesystem.admitad_price_list_files' ] ]
+            - [ setEmImportXml, [ '@doctrine.orm.import_xml_entity_manager' ] ]
         tags:
             - { name: console.command }
 

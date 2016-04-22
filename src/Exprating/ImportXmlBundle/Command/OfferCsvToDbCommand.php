@@ -7,6 +7,7 @@
 namespace Exprating\ImportXmlBundle\Command;
 
 
+use Doctrine\ORM\EntityManager;
 use Exprating\ImportXmlBundle\Entity\Offer;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadFiles;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadPriceListFiles;
@@ -25,11 +26,32 @@ class OfferCsvToDbCommand extends Command
     private $admitadPriceListFiles;
 
     /**
+     * @var EntityManager
+     */
+    private $emImportXml;
+
+    /**
      * @param AdmitadPriceListFiles $admitadPriceListFiles
      */
     public function setAdmitadPriceListFiles(AdmitadPriceListFiles $admitadPriceListFiles)
     {
         $this->admitadPriceListFiles = $admitadPriceListFiles;
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEmImportXml()
+    {
+        return $this->emImportXml;
+    }
+
+    /**
+     * @param EntityManager $emImportXml
+     */
+    public function setEmImportXml($emImportXml)
+    {
+        $this->emImportXml = $emImportXml;
     }
 
     protected function configure()
@@ -41,13 +63,14 @@ class OfferCsvToDbCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $pdo = new \PDO('mysql:dbname=exprating_import;host=127.0.0.1', 'root', 'chease');
         $globPattern = $this->admitadPriceListFiles->getFolder().'/*.csv';
+        $emImportXml = $this->getEmImportXml();
+        $connection = $emImportXml->getConnection();
         foreach (glob($globPattern) as $csvFilePath) {
             $fileInfo = new \SplFileInfo($csvFilePath);
             if ($fileInfo->isFile()) {
                 $output->writeln('file csv load ' . $csvFilePath);
-                $pdo->exec('LOAD DATA INFILE "'.$fileInfo->getRealPath().'" REPLACE INTO TABLE offer FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
+                $connection->exec('LOAD DATA INFILE "'.$fileInfo->getRealPath().'" REPLACE INTO TABLE offer FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
                 $output->writeln('file csv loaded ' . $csvFilePath);
             }
         }

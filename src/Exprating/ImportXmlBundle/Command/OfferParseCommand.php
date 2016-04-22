@@ -100,7 +100,6 @@ class OfferParseCommand extends Command
     {
         $xmlReader = $this->xmlReader;
         $globPattern = $this->admitadPriceListFiles->getFolder().'/*.xml';
-        $em = $this->emImportXml;
 
         foreach (glob($globPattern) as $key => $xmlFilePath) {
             $filePriceListXml = new \SplFileInfo($xmlFilePath);
@@ -144,7 +143,7 @@ class OfferParseCommand extends Command
                         $categoryId = $offer->getCategoryId();
                         while (isset($categoriesPath[$categoryId])) {
                             $categoryId = $categoriesPath[$categoryId];
-                            $categoryPath .= $categories[$categoryId];
+                            $categoryPath .= ','.$categories[$categoryId];
                         }
                         $offer->setCategoryPath($categoryPath);
                         $offer->setCompany($company);
