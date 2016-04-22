@@ -70,7 +70,7 @@ class OfferCsvToDbCommand extends Command
             $fileInfo = new \SplFileInfo($csvFilePath);
             if ($fileInfo->isFile()) {
                 $output->writeln('file csv load ' . $csvFilePath);
-                $connection->exec('LOAD DATA INFILE "'.$fileInfo->getRealPath().'" REPLACE INTO TABLE offer FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
+                $connection->exec('LOAD DATA LOCAL INFILE "'.$fileInfo->getRealPath().'" REPLACE INTO TABLE offer FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
                 $output->writeln('file csv loaded ' . $csvFilePath);
             }
         }
