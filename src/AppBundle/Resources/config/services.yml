@@ -98,6 +98,10 @@ services:
     app.humanize.product_history_diff_humanize:
         class: AppBundle\Humanize\ProductHistoryDiffHumanize
 
+    app.event_listener.response_listener:
+        class: AppBundle\EventListener\ResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 imports:
     - { resource: "subscribers.yml" }
     - { resource: "mailer.yml" }
