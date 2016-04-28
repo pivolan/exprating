@@ -366,6 +366,13 @@ liip_imagine:
                 thumbnail: { size: [270, 270], mode: inset }
                 background: { size: [270, 270] color: '#fff' }
 
+        product_same_filter:
+            quality: 100
+            filters:
+                downscale: { max: [20, 20]}
+                thumbnail: { size: [20, 20], mode: inset }
+                background: { size: [20, 20] color: '#fff' }
+
         product_edit_filter:
             quality: 90
             filters:

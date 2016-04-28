@@ -129,7 +129,8 @@
 {% block characteristics %}
     {% for fields in form.productCharacteristics %}
         <div data-index="{{ loop.index0 }}" data-type="characteristic" class="row form-group">
-            <div class="col-sm-1"><span class="btn btn-info"><span class="glyphicon glyphicon-transfer"></span></span></div>
+            <div class="col-sm-1"><span class="btn btn-info"><span class="glyphicon glyphicon-transfer"></span></span>
+            </div>
             <div class="col-sm-3">{{ form_widget(fields.characteristic) }}</div>
             <div class="col-sm-4">{{ form_widget(fields.value) }}</div>
             <div class="col-sm-3">{{ form_widget(fields.headGroup) }}</div>
@@ -245,7 +246,7 @@
         </div>
     </div>
 {% endblock %}
-
+{% block product_partners %}{{ render(controller('AppBundle:PartnerProduct:list')) }}{% endblock %}
 {% block where_to_buy_title %}История изменений{% endblock %}
 {% block where_to_buy_body %}
     <div class="row history_edit">

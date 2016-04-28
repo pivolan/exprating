@@ -1,0 +1,85 @@
+{# @controller AppBundle:PartnerProduct:list #}
+<div class="tabs-container-inner">
+    <div class="clearfix row">
+        <div class="col-md-8">
+            <input class="form-control" type="text" placeholder="Поиск товара в базе партнеров"/>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-info">Поиск</button>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-info">Сохранить</button>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion">
+        {% for partnerProduct in partnerProducts %}
+            <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion"
+                     href="#collapse{{ partnerProduct.hash }}">
+                    <div class="panel-title">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img class="partner-product-preview"
+                                     src="{{ partnerProduct.pictures[0]|default('http://placehold.it/20x20') }}" alt=""
+                                     align="left">
+                                <span>{{ partnerProduct.name|raw }}</span>
+                            </div>
+                            <div class="col-md-3">{{ partnerProduct.company|raw }}</div>
+                            <div class="col-md-2">
+                                <del>{{ partnerProduct.oldPrice }}</del> {{ partnerProduct.price }}</div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-import"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapse{{ partnerProduct.hash }}" class="panel-collapse collapse">
+                    <div class="row">
+                        <div class="col-md-6 images">
+                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-import"></span> все</button>
+                            {% for picture in partnerProduct.pictures %}
+                                <div class="col-sm-4 partner-picture">
+                                    <img class="partner-product-picture" src="{{ picture }}" alt="">
+                                    <button type="button" class="btn btn-info btn-xs image-zoom-in"><span class="glyphicon glyphicon-zoom-in"></span></button>
+                                    <button type="button" class="btn btn-info btn-xs image-remove"><span class="glyphicon glyphicon-import"></span></button>
+                                </div>
+                            {% endfor %}
+                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-import"></span> все</button>
+                        </div>
+                        <div class="col-md-6 params">
+                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-import"></span> все</button>
+                            {% for paramName, param in partnerProduct.params %}
+                                <div class="row">
+                                    <div class="col-md-4"><h4>{{ paramName }}</h4></div>
+                                    <div class="col-md-4">{{ param }}</div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-info"><span class="glyphicon glyphicon-import"></span></button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-import"></span> все</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">{{ partnerProduct.description }}
+                        <div class="row">
+                            <div class="col-md-6">Старая цена: {{ partnerProduct.oldPrice }}</div>
+                            <div class="col-md-6">Новая цена: {{ partnerProduct.price }}</div>
+                        </div>
+                        <div>
+                            <a href="{{ partnerProduct.url }}" target="_blank" class="btn btn-info"><span
+                                        class="glyphicon glyphicon-share"></span></a>
+                            <ul class="list-group">
+                                <li class="list-group-item">Категория: {{ partnerProduct.categoryName }}</li>
+                                <li class="list-group-item">Полное название
+                                    категории: {{ partnerProduct.categoryPath }}</li>
+                                <li class="list-group-item">Категоря в яндекс
+                                    маркете: {{ partnerProduct.marketCategory }}</li>
+                                <li class="list-group-item">Брэнд: {{ partnerProduct.vendor }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
