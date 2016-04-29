@@ -21,7 +21,6 @@
         {% stylesheets '@common_css' output='bundles/common.css' %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
-        <link href="{{ asset('css/additional_style.css') }}" rel="stylesheet">
     {% endblock %}
 
 </head>
@@ -49,6 +48,13 @@
                     }, 4000)</script>
             </div>
         {% endfor %}
+        <div class="alert-message" id="alert-message" style="display:none;">
+            <!-- Блоков message-box можно добавлять сколько угодно 1 -->
+            <div class="message-box alert-success">
+                <!--<span class="close">X</span>-->
+                <p></p>
+            </div>
+        </div>
     </div>
     <!-- END Оповещения -->
     <div id="header">

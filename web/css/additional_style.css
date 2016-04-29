@@ -88,7 +88,10 @@ img.partner-product-picture {
     bottom: 0 !important;
     left: 0 !important;
 }
-.base__item .image-remove {
+.row .col-sm-4:hover .image-import {
+    display: block;
+}
+.base__item .images .image-import {
     top: 0 !important;
     bottom: 0 !important;
     right: 0 !important;
@@ -108,11 +111,19 @@ img.partner-product-picture {
     opacity:0.5;
     filter: blur(1px) grayscale(100%);
 }
+
+.base__item .images .image-import{
+    position: absolute;
+    top: 27px;
+    display: none;
+}
+
+.base__item .images .image-import {
+    right: 20px;
+}
+
 .base__item .images .disable .image-zoom-in,
-.base__item .images .disable .image-remove{display: none;}
-
-
-
+.base__item .images .disable .image-import{display: none;}
 
 
 
