@@ -249,6 +249,14 @@ class Product
      */
     private $productCharacteristics;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="imported_images", type="array", nullable=true,
+     *      options={"comment" = "значение берется из значения src при импортировании партнерского продукта "})
+     */
+    private $importedImages;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -258,6 +266,7 @@ class Product
         $this->productShopPrices = new ArrayCollection();
         $this->productCharacteristics = new ArrayCollection();
         $this->curatorDecisions = new ArrayCollection();
+        $this->importedImages = new ArrayCollection();
     }
 
     /**
@@ -1049,5 +1058,49 @@ class Product
         $criteria->where(Criteria::expr()->eq('isPublished', true));
 
         return $this->comments->matching($criteria);
+    }
+
+    /**
+     * Add $src
+     * @param $src
+     * @return int
+     */
+    public function addImportedImages($src)
+    {
+        $output = 0;
+        if(!$this->importedImages){
+            $this->importedImages = [];
+        }
+        if (!in_array($src, $this->importedImages, TRUE)) {
+            $this->importedImages[] = $src;
+            $output = 1;
+        }
+
+        return $output;
+    }
+
+    /**
+     * Get $importedImages
+     *
+     * @return array
+     */
+    public function getImportedImages()
+    {
+        return $this->importedImages;
+    }
+
+    /**
+     * Set $importedImages
+     * @param array $importedImages
+     * @return $this
+     */
+    public function setImportedImages(array $importedImages)
+    {
+        $this->importedImages = array();
+        foreach ($importedImages as $src) {
+            $this->addImportedImages($src);
+        }
+
+        return $this;
     }
 }

@@ -33,11 +33,14 @@ class PartnerProductController extends BaseController
     /**
      * @Route("/partner/products", name="partner_product_list")
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request, $product)
     {
         $emImportXml = $this->get('doctrine.orm.import_xml_entity_manager');
         /** @var Offer[] $partnerProducts */
         $partnerProducts = $emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->findBy([], null, 30);
-        return $this->render('PartnerProduct/list.html.twig', [self::KEY_PARTNER_PRODUCTS =>$partnerProducts]);
+        return $this->render('PartnerProduct/list.html.twig', [
+            self::KEY_PARTNER_PRODUCTS =>$partnerProducts,
+            self::KEY_PRODUCT => $product,
+        ]);
     }
 }

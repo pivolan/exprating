@@ -57,7 +57,7 @@
                 <div id="collapse{{ partnerProduct.hash }}" class="panel-collapse collapse">
                     <div class="row">
                         <div class="panel-body">
-                            <div class="col-md-6 images images50" data-url="{{ path('import_partner_product', {tovar: partnerProduct.id}) }}">
+                            <div class="col-md-6 images images50" data-url="{{ path('import_partner_product', {"slug": product}) }}">
                                 <div class="row text-center ">
                                     <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-import"></span>Импортировать все</button>
                                 </div>

@@ -35,6 +35,7 @@ class ProductImage
      */
     public function findFolder()
     {
+        $this->_mkDir();
         return $this->rootDir.'/../web'.$this->relativeFolder();
     }
 
@@ -48,6 +49,20 @@ class ProductImage
                $this->getProductId().'/';
     }
 
+    public function _mkDir(){
+        if(!$this->getProductId()){
+            return;
+        }
+        $f1 = $this->rootDir.'/../web'. '/uploads/product/'.$this->getProductId() % 10000 ;
+        if(!is_dir($f1)){
+            mkdir($f1);
+        }
+        $f2 = $this->rootDir.'/../web'. '/uploads/product/'.$this->getProductId() % 10000 .'/'. $this->getProductId().'/';
+
+        if(!is_dir($f2)){
+            mkdir($f2);
+        }
+    }
     /**
      * @return int
      */
