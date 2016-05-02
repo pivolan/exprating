@@ -29,6 +29,7 @@ class PartnerProductController extends BaseController
     const FLASH_COMMENT_MESSAGE = 'flash.comment.message';
     const KEY_COMMENTS = 'comments';
     const KEY_PARTNER_PRODUCTS = 'partnerProducts';
+    const KEY_PARTNER_IMAGES = 'partnerImages';
 
     /**
      * @Route("/partner/products", name="partner_product_list")
@@ -38,9 +39,13 @@ class PartnerProductController extends BaseController
         $emImportXml = $this->get('doctrine.orm.import_xml_entity_manager');
         /** @var Offer[] $partnerProducts */
         $partnerProducts = $emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->findBy([], null, 30);
-        return $this->render('PartnerProduct/list.html.twig', [
+        $products = $this->getEm()->getRepository('AppBundle:Product')->findOneBy(['slug' => $product]);
+        $images = $products->getImportedImages();
+        $output = [
             self::KEY_PARTNER_PRODUCTS =>$partnerProducts,
             self::KEY_PRODUCT => $product,
-        ]);
+            self::KEY_PARTNER_IMAGES => $images
+        ];
+        return $this->render('PartnerProduct/list.html.twig', $output);
     }
 }
