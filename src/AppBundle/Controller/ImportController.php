@@ -10,46 +10,39 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
-
+use AppBundle\DTO\ImportPictures\ImportImage;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use AppBundle\Event\ProductImportPicturesEvent;
+use AppBundle\Event\ProductEvents;
 class ImportController extends BaseController
 {
+    const FLASH_IMPORT_ERRORS = 'partner.product.error';
+
     /**
-     * @Route("/import/partner/{slug}", name="import_partner_product")
+     * @Route("/import/product/{slug}/pictures", name="import_partner_product")
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-
     public function importPicturesAction(Request $request, Product $product)
     {
-        $test = $request;
         $pathService = $this->get('app.path_finder.product_image');
-        $pathService->setProductId($product->getId());
-        $path = $pathService->findFolder();
-        $srcs = $request->request->get('url', []);
-        foreach ($srcs as $src) {
-            $pathParts = pathinfo($src);
-            $targetFileFull = $path . $pathParts['basename'];
-
-            $ch = curl_init($src);
-            $fp = fopen($targetFileFull, 'wb');
-            curl_setopt($ch, CURLOPT_FILE, $fp);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_exec($ch);
-            curl_close($ch);
-            fclose($fp);
-
-            $product->addImportedImages($src);
-            $this->getEm()->persist($product);
-
-//            $source = file_get_contents($src);
-//            file_put_contents($targetFileFull , $source );
+        /** @var ImportImage $importImage */
+        $importImage = $this->get('serializer')->denormalize($request->request->all(), ImportImage::class);
+        $importImage->setProduct($product);
+        $importImage->setPathService($pathService);
+        $validator = $this->get('validator');
+        $errors = $validator->validate($importImage);
+        if (count($errors) > 0) {
+            $this->addFlash(self::FLASH_IMPORT_ERRORS, (string)$errors);
+            throw new HttpException(403, (string)$errors);
         }
-        $this->getEm()->flush();
 
-        return new JsonResponse($test);
+        $this->get('event_dispatcher')->dispatch(
+            ProductEvents::IMPORT_PICTURES,
+            new ProductImportPicturesEvent($importImage)
+        );
+        return new JsonResponse('true');
     }
-
 }

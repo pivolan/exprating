@@ -22,6 +22,8 @@ use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Event\ProductReservationOverEvent;
 use AppBundle\Event\ProductVisitEvent;
 use AppBundle\Humanize\ProductHistoryDiffHumanize;
+use AppBundle\DTO\ImportPictures\ImportImage;
+use AppBundle\Event\ProductImportPicturesEvent;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -83,6 +85,7 @@ class ProductSubscriber implements EventSubscriberInterface
             ProductEvents::DECISION         => [['curatorDecision', 1]],
             ProductEvents::VISIT            => [['productVisited', 1], ['flush']],
             ProductEvents::EDITED           => [['productEdited', 1]],
+            ProductEvents::IMPORT_PICTURES  => [['importPictures', 1]],
         ];
     }
 
@@ -326,6 +329,29 @@ class ProductSubscriber implements EventSubscriberInterface
         } else {
             throw new \LogicException('Invalid status for create decision about product, maybe approve or reject only');
         }
+    }
+    public function importPictures(ProductImportPicturesEvent $event){
+
+        $importImage = $event->getImportImage();
+        $product = $importImage->getProduct();
+        $url = $importImage->getUrl();
+        $pathService = $importImage->getPathService();
+        $pathService->setProductId($product->getId());
+        $path = $pathService->findFolder();
+        foreach ($url as $src) {
+            $pathParts = pathinfo($src);
+            $targetFileFull = $path . $pathParts['basename'];
+            $ch = curl_init($src);
+            $fp = fopen($targetFileFull, 'wb');
+            curl_setopt($ch, CURLOPT_FILE, $fp);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_exec($ch);
+            curl_close($ch);
+            fclose($fp);
+            $product->addImportedImages($src);
+            $this->em->persist($product);
+        }
+        $this->em->flush();
     }
 
     public function flush()

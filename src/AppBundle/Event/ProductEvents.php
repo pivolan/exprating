@@ -20,4 +20,5 @@ final class ProductEvents
     const DECISION = 'curator_decision';
     const VISIT = 'product_visited';
     const EDITED = 'product_edited';
+    const IMPORT_PICTURES = 'partner_product_pictures';
 }
