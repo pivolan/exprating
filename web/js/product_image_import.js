@@ -19,7 +19,7 @@ $('document').ready(function(){
                 $.ajax({
                     url: url,
                     method: 'post',
-                    data: {url: [src]},
+                    data: {urls: [src]},
                     success: function(){
                         th.addClass('disable');
                         message('Импорт картинки прошел успешно');
@@ -35,7 +35,7 @@ $('document').ready(function(){
             $.ajax({
                 url: url,
                 method: 'post',
-                data: {url: data},
+                data: {urls: data},
                 success: function(){
                     d.find('.partner-picture').addClass('disable');
                     message('Импорт картинок прошел успешно');

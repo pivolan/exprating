@@ -246,7 +246,7 @@
         </div>
     </div>
 {% endblock %}
-{% block product_partners %}{{ render(controller('AppBundle:PartnerProduct:list', {'product': product.slug })) }}{% endblock %}
+{% block product_partners %}{{ render(controller('AppBundle:PartnerProduct:list', {'product': product })) }}{% endblock %}
 {% block where_to_buy_title %}История изменений{% endblock %}
 {% block where_to_buy_body %}
     <div class="row history_edit">

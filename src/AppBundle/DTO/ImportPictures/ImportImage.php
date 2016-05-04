@@ -15,25 +15,7 @@ class ImportImage {
     /** @var $product Product */
     protected $product;
     /** @var Array $url */
-    protected $url;
-    /** @var ProductImage $pathService */
-    protected $pathService;
-
-    /**
-     * @return ProductImage
-     */
-    public function getPathService()
-    {
-        return $this->pathService;
-    }
-
-    /**
-     * @param ProductImage $pathService
-     */
-    public function setPathService($pathService)
-    {
-        $this->pathService = $pathService;
-    }
+    protected $urls;
 
     /**
      * @return Product
@@ -54,17 +36,17 @@ class ImportImage {
     /**
      * @return Array
      */
-    public function getUrl()
+    public function getUrls()
     {
-        return $this->url;
+        return $this->urls;
     }
 
     /**
-     * @param Array $url
+     * @param Array $urls
      */
-    public function setUrl($url)
+    public function setUrls($urls)
     {
-        $this->url = $url;
+        $this->urls = $urls;
     }
 
 }

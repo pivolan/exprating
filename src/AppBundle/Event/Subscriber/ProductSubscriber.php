@@ -24,6 +24,7 @@ use AppBundle\Event\ProductVisitEvent;
 use AppBundle\Humanize\ProductHistoryDiffHumanize;
 use AppBundle\DTO\ImportPictures\ImportImage;
 use AppBundle\Event\ProductImportPicturesEvent;
+use AppBundle\PathFinder\ProductImage;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -54,17 +55,22 @@ class ProductSubscriber implements EventSubscriberInterface
      * @var ProductHistoryDiffHumanize
      */
     protected $humanize;
+    /**
+     * @var ProductImage
+     */
+    protected $pathService;
 
     public function __construct(
         \Swift_Mailer $mailer,
         EntityManager $em,
         \Twig_Environment $twig,
-        ProductHistoryDiffHumanize $humanize
+        ProductHistoryDiffHumanize $humanize, ProductImage $pathService
     ) {
         $this->mailer = $mailer;
         $this->em = $em;
         $this->twig = $twig;
         $this->humanize = $humanize;
+        $this->pathService = $pathService;
     }
 
     public static function getSubscribedEvents()
@@ -334,11 +340,12 @@ class ProductSubscriber implements EventSubscriberInterface
 
         $importImage = $event->getImportImage();
         $product = $importImage->getProduct();
-        $url = $importImage->getUrl();
-        $pathService = $importImage->getPathService();
-        $pathService->setProductId($product->getId());
-        $path = $pathService->findFolder();
-        foreach ($url as $src) {
+        $urls = $importImage->getUrls();
+        $this->pathService->setProductId($product->getId());
+        $path = $this->pathService->findFolder();
+        $this->_mkDir($path);
+
+        foreach ($urls as $src) {
             $pathParts = pathinfo($src);
             $targetFileFull = $path . $pathParts['basename'];
             $ch = curl_init($src);
@@ -353,6 +360,12 @@ class ProductSubscriber implements EventSubscriberInterface
         }
         $this->em->flush();
     }
+    private function _mkDir($path){
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
+        }
+    }
+
 
     public function flush()
     {

@@ -247,7 +247,7 @@ assetic:
                 - 'js/plugins/outer_html.plugin.js'
                 - 'js/plugins/update_position.js'
                 - 'js/product_edit.init.js'
-                - 'js/script.js'
+                - 'js/product_image_import.js'
         product_choose_category_js:
             inputs:
                 - 'js/external/jstree.min.js'

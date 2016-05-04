@@ -1,7 +1,7 @@
 services:
     product_subscriber:
         class: AppBundle\Event\Subscriber\ProductSubscriber
-        arguments: ['@mailer', '@doctrine.orm.entity_manager', '@twig', '@app.humanize.product_history_diff_humanize']
+        arguments: ['@mailer','@doctrine.orm.entity_manager','@twig','@app.humanize.product_history_diff_humanize','@app.path_finder.product_image']
         tags:
             - { name: kernel.event_subscriber }
 

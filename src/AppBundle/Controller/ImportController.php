@@ -27,11 +27,9 @@ class ImportController extends BaseController
      */
     public function importPicturesAction(Request $request, Product $product)
     {
-        $pathService = $this->get('app.path_finder.product_image');
         /** @var ImportImage $importImage */
         $importImage = $this->get('serializer')->denormalize($request->request->all(), ImportImage::class);
         $importImage->setProduct($product);
-        $importImage->setPathService($pathService);
         $validator = $this->get('validator');
         $errors = $validator->validate($importImage);
         if (count($errors) > 0) {

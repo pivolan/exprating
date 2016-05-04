@@ -39,12 +39,9 @@ class PartnerProductController extends BaseController
         $emImportXml = $this->get('doctrine.orm.import_xml_entity_manager');
         /** @var Offer[] $partnerProducts */
         $partnerProducts = $emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->findBy([], null, 30);
-        $products = $this->getEm()->getRepository('AppBundle:Product')->findOneBy(['slug' => $product]);
-        $images = $products->getImportedImages();
         $output = [
             self::KEY_PARTNER_PRODUCTS =>$partnerProducts,
             self::KEY_PRODUCT => $product,
-            self::KEY_PARTNER_IMAGES => $images
         ];
         return $this->render('PartnerProduct/list.html.twig', $output);
     }
