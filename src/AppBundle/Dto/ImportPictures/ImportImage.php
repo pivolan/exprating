@@ -6,7 +6,7 @@
  * Time: 23:03
  */
 
-namespace AppBundle\DTO\ImportPictures;
+namespace AppBundle\Dto\ImportPictures;
 
 use AppBundle\Entity\Product;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,7 +15,7 @@ use AppBundle\Validator\Constraints\ImportImageDuplicate;
 
 /**
  * Class ImportImage
- * @package AppBundle\DTO\ImportPictures
+ * @package AppBundle\Dto\ImportPictures
  *
  * @ImportImageDuplicate
  */

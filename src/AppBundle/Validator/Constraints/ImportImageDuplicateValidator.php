@@ -10,7 +10,7 @@ namespace AppBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Doctrine\ORM\EntityManager;
-use AppBundle\DTO\ImportPictures\ImportImage;
+use AppBundle\Dto\ImportPictures\ImportImage;
 
 class ImportImageDuplicateValidator extends ConstraintValidator
 {
@@ -31,19 +31,19 @@ class ImportImageDuplicateValidator extends ConstraintValidator
      * Checks if the passed value is valid.
      *
      * @param ImportImage $importImage The value that should be validated
-     * @param Constraint    $constraint     The constraint for the validation
+     * @param Constraint $constraint The constraint for the validation
      *
      * @return null
      */
-    public function validate($importImage , Constraint $constraint)
+    public function validate($importImage, Constraint $constraint)
     {
         $urls = $importImage->getUrls();
         $importedImages = $importImage->getProduct()->getImportedImages();
-        if(!$importedImages ){
+        if (!$importedImages) {
             $importedImages = [];
         }
 
-        foreach ($urls as $key=>$url) {
+        foreach ($urls as $key => $url) {
             if (in_array($url, $importedImages)) {
                 $this->context->buildViolation('Дублирование файла: ' . $url)
                     ->atPath("importedImages[$key].url")
