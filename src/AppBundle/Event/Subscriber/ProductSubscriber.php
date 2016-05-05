@@ -22,7 +22,7 @@ use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Event\ProductReservationOverEvent;
 use AppBundle\Event\ProductVisitEvent;
 use AppBundle\Humanize\ProductHistoryDiffHumanize;
-use AppBundle\DTO\ImportPictures\ImportImage;
+use AppBundle\Dto\ImportPictures\ImportImage;
 use AppBundle\Event\ProductImportPicturesEvent;
 use AppBundle\PathFinder\ProductImage;
 use Doctrine\ORM\EntityManager;
@@ -64,7 +64,8 @@ class ProductSubscriber implements EventSubscriberInterface
         \Swift_Mailer $mailer,
         EntityManager $em,
         \Twig_Environment $twig,
-        ProductHistoryDiffHumanize $humanize, ProductImage $pathService
+        ProductHistoryDiffHumanize $humanize,
+        ProductImage $pathService
     ) {
         $this->mailer = $mailer;
         $this->em = $em;
@@ -336,8 +337,9 @@ class ProductSubscriber implements EventSubscriberInterface
             throw new \LogicException('Invalid status for create decision about product, maybe approve or reject only');
         }
     }
-    public function importPictures(ProductImportPicturesEvent $event){
 
+    public function importPictures(ProductImportPicturesEvent $event)
+    {
         $importImage = $event->getImportImage();
         $product = $importImage->getProduct();
         $urls = $importImage->getUrls();
@@ -347,7 +349,7 @@ class ProductSubscriber implements EventSubscriberInterface
 
         foreach ($urls as $src) {
             $pathParts = pathinfo($src);
-            $targetFileFull = $path . $pathParts['basename'];
+            $targetFileFull = $path.$pathParts['basename'];
             $ch = curl_init($src);
             $fp = fopen($targetFileFull, 'wb');
             curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -360,8 +362,10 @@ class ProductSubscriber implements EventSubscriberInterface
         }
         $this->em->flush();
     }
-    private function _mkDir($path){
-        if(!is_dir($path)){
+
+    private function _mkDir($path)
+    {
+        if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
     }
