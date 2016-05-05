@@ -10,13 +10,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use AppBundle\DTO\ImportPictures\ImportImage;
+use AppBundle\Dto\ImportPictures\ImportImage;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use AppBundle\Event\ProductImportPicturesEvent;
 use AppBundle\Event\ProductEvents;
+
 class ImportController extends BaseController
 {
     const FLASH_IMPORT_ERRORS = 'partner.product.error';
+    const SUCCESS_RESPONSE_OK = 'ok';
 
     /**
      * @Route("/import/product/{slug}/pictures", name="import_partner_product")
@@ -33,14 +35,14 @@ class ImportController extends BaseController
         $validator = $this->get('validator');
         $errors = $validator->validate($importImage);
         if (count($errors) > 0) {
-            $this->addFlash(self::FLASH_IMPORT_ERRORS, (string)$errors);
-            throw new HttpException(403, (string)$errors);
+            return new JsonResponse((string)$errors);
         }
 
         $this->get('event_dispatcher')->dispatch(
             ProductEvents::IMPORT_PICTURES,
             new ProductImportPicturesEvent($importImage)
         );
-        return new JsonResponse('true');
+
+        return new JsonResponse(self::SUCCESS_RESPONSE_OK);
     }
 }

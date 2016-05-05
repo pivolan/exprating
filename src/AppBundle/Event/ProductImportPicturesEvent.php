@@ -8,7 +8,7 @@
 
 namespace AppBundle\Event;
 
-use AppBundle\DTO\ImportPictures\ImportImage;
+use AppBundle\Dto\ImportPictures\ImportImage;
 use Symfony\Component\EventDispatcher\Event;
 
 class ProductImportPicturesEvent extends Event

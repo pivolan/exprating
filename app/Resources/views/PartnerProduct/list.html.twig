@@ -32,7 +32,7 @@
     </div>
 
 
-    <div class="panel-group" id="accordion">
+    <div class="panel-group" id="accordion" data-url="{{ path('import_partner_product', {"slug": product}) }}">
         {% for partnerProduct in partnerProducts %}
             <div class="panel panel-default base__item">
                 <div class="panel-heading" data-toggle="collapse" data-parent="#accordion"
@@ -57,9 +57,9 @@
                 <div id="collapse{{ partnerProduct.hash }}" class="panel-collapse collapse">
                     <div class="row">
                         <div class="panel-body">
-                            <div class="col-md-6 images images50" data-url="{{ path('import_partner_product', {"slug": product}) }}">
+                            <div class="col-md-6 images">
                                 <div class="row text-center ">
-                                    <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-import"></span>Импортировать все</button>
+                                    <button type="button" class="btn btn-info image-import-all"><span class="glyphicon glyphicon-import"></span>Импортировать все</button>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
@@ -72,7 +72,6 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-{#                                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-import"></span> все</button>#}
                             </div>
                             <div class="col-md-6 params">
                                 <div class="row text-center ">
@@ -93,7 +92,6 @@
                                     </li>
                                 {% endfor %}
                                 </ul>
-                                    {#                                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-import"></span> все</button>#}
                             </div>
                         </div>
                     </div>
