@@ -9,8 +9,16 @@
 namespace AppBundle\DTO\ImportPictures;
 
 use AppBundle\Entity\Product;
-use AppBundle\PathFinder\ProductImage;
+use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints\ImportImageDuplicate;
 
+
+/**
+ * Class ImportImage
+ * @package AppBundle\DTO\ImportPictures
+ *
+ * @ImportImageDuplicate
+ */
 class ImportImage {
     /** @var $product Product */
     protected $product;

@@ -37,6 +37,13 @@ services:
         arguments: ['@doctrine.orm.default_entity_manager']
         tags:
             - { name: validator.constraint_validator, alias: 'request_curator_rights_validator'}
+    validator.import_image_duplicate:
+        class: AppBundle\Validator\Constraints\ImportImageDuplicateValidator
+        arguments: ['@doctrine.orm.default_entity_manager']
+        tags:
+            - { name: validator.constraint_validator, alias: 'import_image_duplicate'}
+
+
 
     app.product_voter:
         class: AppBundle\Security\ProductVoter

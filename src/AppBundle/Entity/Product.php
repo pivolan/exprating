@@ -1067,16 +1067,9 @@ class Product
      */
     public function addImportedImages($src)
     {
-        $output = 0;
-        if(!$this->importedImages){
-            $this->importedImages = [];
-        }
-        if (!in_array($src, $this->importedImages, TRUE)) {
-            $this->importedImages[] = $src;
-            $output = 1;
-        }
+        $this->importedImages[] = $src;
 
-        return $output;
+        return $this;
     }
 
     /**

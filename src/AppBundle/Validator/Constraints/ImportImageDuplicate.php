@@ -1,26 +1,26 @@
 <?php
-
 /**
- * Date: 16.02.16
- * Time: 17:00.
+ * Created by PhpStorm.
+ * User: victor
+ * Date: 05.05.16
+ * Time: 23:34
  */
 
 namespace AppBundle\Validator\Constraints;
-
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class FilterAccessRights.
+ * Class ImportImageDuplicate .
  *
  * @Annotation
  */
-class UniqueUser extends Constraint
+class ImportImageDuplicate extends Constraint
 {
-    public $message = 'Такой пользователь уже зарегистрирован в системе';
+    public $message = 'Файлы дубликаты';
 
     public function validatedBy()
     {
-        return 'unique_user_validator';
+        return 'import_image_duplicate';
     }
 
     public function getTargets()
