@@ -33,8 +33,8 @@ class StatusesControllerTest extends WebTestCase
             ['/expert/admin/'],
             ['/expert/curator/'],
             ['/expert/expert/'],
-            ['/rubric/avtozapchasti-2/1/filter/minPrice/ASC/STATUS_ALL/'],
-            ['/rubric/avtozapchasti-2/2/filter/minPrice/ASC/STATUS_ALL/'],
+            ['/rubric/avtozapchasti-2/1/filter/minPrice/ASC/STATUS_ALL/icon/'],
+            ['/rubric/avtozapchasti-2/2/filter/minPrice/ASC/STATUS_ALL/icon/'],
             ['/tovar/product_10/'],
             ['/tovar/search/1/'],
             ['/tovar/search/1/?search_params[string]=titl'],
@@ -69,8 +69,8 @@ class StatusesControllerTest extends WebTestCase
     public function getAdminUrls()
     {
         return [
-            ['/rubric/avtozapchasti-2/1/filter/minPrice/ASC/STATUS_FREE/'],
-            ['/rubric/avtozapchasti-2/1/filter/minPrice/ASC/STATUS_WAIT/'],
+            ['/rubric/avtozapchasti-2/1/filter/minPrice/ASC/STATUS_FREE/icon/'],
+            ['/rubric/avtozapchasti-2/1/filter/minPrice/ASC/STATUS_WAIT/icon/'],
             ['/tovar/product_10/choose_category'],
             ['/tovar/product_10/edit'],
             ['/tovar/product_10/change_expert'],

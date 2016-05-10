@@ -3,6 +3,11 @@ exprating_staticstic:
     type:     annotation
     prefix:   /
 
+exprating_import_xml:
+    resource: "@ExpratingImportXmlBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

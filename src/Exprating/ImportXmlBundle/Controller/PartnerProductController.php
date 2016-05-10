@@ -33,13 +33,18 @@ class PartnerProductController extends BaseController
     const KEY_PARTNER_IMAGES = 'partnerImages';
 
     /**
-     * @Route("/partner/products", name="partner_product_list")
+     * @Route("/partner/products/{slug}/", name="partner_product_list")
+     * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      */
-    public function listAction(Request $request, $product)
+    public function listAction(Request $request, Product $product)
     {
         $emImportXml = $this->getEm();
         /** @var Offer[] $partnerProducts */
-        $partnerProducts = $emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->findBy([], null, 30);
+        $partnerProducts = $emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->findBy(
+            ['name' => $request->get('name')],
+            null,
+            30
+        );
 
         return $this->render(
             'PartnerProduct/list.html.twig',
