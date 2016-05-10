@@ -103,6 +103,7 @@ class Builder implements ContainerAwareInterface
         $direction = $productFilter->getSortDirection();
         $status = $productFilter->getStatus();
         $sortField = $productFilter->getSortField();
+        $listType = $productFilter->getListType();
 
         $menu->addChild(
             'по цене',
@@ -113,6 +114,7 @@ class Builder implements ContainerAwareInterface
                     'sortField'     => ProductFilter::FIELD_MIN_PRICE,
                     'sortDirection' => $direction,
                     'status'        => $status,
+                    'listType'      => $listType,
                 ],
             ]
         )->setLinkAttribute('rel', 'nofollow');
@@ -126,6 +128,7 @@ class Builder implements ContainerAwareInterface
                     'sortField'     => ProductFilter::FIELD_ENABLED_AT,
                     'sortDirection' => $direction,
                     'status'        => $status,
+                    'listType'      => $listType,
                 ],
             ]
         )->setLinkAttribute('rel', 'nofollow');
@@ -139,6 +142,7 @@ class Builder implements ContainerAwareInterface
                     'sortField'     => ProductFilter::FIELD_RATING,
                     'sortDirection' => $direction,
                     'status'        => $status,
+                    'listType'      => $listType,
                 ],
             ]
         )->setLinkAttribute('rel', 'nofollow');
@@ -152,6 +156,7 @@ class Builder implements ContainerAwareInterface
                     'sortField'     => $sortField,
                     'sortDirection' => ProductFilter::DIRECTION_ASC,
                     'status'        => $status,
+                    'listType'      => $listType,
                 ],
             ]
         )->setLinkAttribute('rel', 'nofollow');
@@ -165,6 +170,7 @@ class Builder implements ContainerAwareInterface
                     'sortField'     => $sortField,
                     'sortDirection' => ProductFilter::DIRECTION_DESC,
                     'status'        => $status,
+                    'listType'      => $listType,
                 ],
             ]
         )->setLinkAttribute('rel', 'nofollow');

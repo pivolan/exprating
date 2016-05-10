@@ -25,12 +25,14 @@
 
 
                 <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary active">
-                        <input name="options" id="option1" type="radio"> <span class="glyphicon glyphicon-th-large"></span>
-                    </label>
-                    <label class="btn btn-primary">
-                        <input name="options" id="option2" type="radio"> <span class="glyphicon glyphicon-th-list"></span>
-                    </label>
+                    <a class="btn btn-primary {{ productFilter.listType == 'icon'?'active':'' }}"
+                    href="{{ path('product_list', {'slug':category.slug, 'listType': 'icon'}) }}">
+                        <span class="glyphicon glyphicon-th-large"></span>
+                    </a>
+                    <a class="btn btn-primary {{ productFilter.listType == 'line'?'active':'' }}"
+                    href="{{ path('product_list', {'slug':category.slug, 'listType': 'line'}) }}">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </a>
                 </div>
 
                 <div class="btn-group">
@@ -50,11 +52,20 @@
 
         <div class="rubric-wrapper">
             <div class="recommend-products p-stikers" style="margin-bottom: 40px;">
-                <ul>
-                    {% for product in pagination %}
-                        {{ include("_include/Product/_itemList.twig") }}
-                    {% endfor %}
-                </ul>
+                {% if productFilter.listType == 'icon' %}
+                    <ul>
+                        {% for product in pagination %}
+                            {{ include("_include/Product/_itemList.twig") }}
+                        {% endfor %}
+                    </ul>
+                {% elseif productFilter.listType == 'line' %}
+                    <div class="panel-group">
+                        {% for product in pagination %}
+                            {{ include("_include/Product/_itemLineList.twig") }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
             </div>
         </div>
 

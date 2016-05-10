@@ -31,6 +31,9 @@ class ProductFilter
     const STATUS_FREE = 'STATUS_FREE';
     const STATUS_ALL = 'STATUS_ALL';
 
+    const LIST_TYPE_ICON = 'icon';
+    const LIST_TYPE_LINE = 'line';
+
     /**
      * @var string
      *
@@ -52,6 +55,13 @@ class ProductFilter
      * @Assert\NotBlank()
      */
     protected $sortDirection = self::DIRECTION_ASC;
+
+    /**
+     * @var string
+     * @Assert\Choice(choices = {"icon", "line"}, message = "Выберите верное отображение списка")
+     * @Assert\NotBlank()
+     */
+    protected $listType = self::LIST_TYPE_ICON;
 
     public $page;
 
@@ -163,5 +173,21 @@ class ProductFilter
         $this->curator = $curator;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getListType()
+    {
+        return $this->listType;
+    }
+
+    /**
+     * @param string $listType
+     */
+    public function setListType($listType)
+    {
+        $this->listType = $listType;
     }
 }

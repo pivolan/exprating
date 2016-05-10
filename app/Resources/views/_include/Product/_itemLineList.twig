@@ -1,0 +1,21 @@
+<div class="panel panel-default base__item">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <div class="row">
+                <div class="col-md-5">
+                    <img class="partner-product-preview"
+                         src="{{ product.previewImage|default('/images/default.jpeg')|imagine_filter('product_same_filter') }}"
+                         alt=""
+                         align="left">
+                    <a href="{{ path('product_detail', {'slug':product.slug}) }}">{{ product.name }}</a>
+                </div>
+                <div class="col-md-3">{{ product.category.name }}</div>
+                <div class="col-md-2">
+                    {{ product.minPrice }} <span class="sign_ruble">p<span>уб.</span></span></div>
+                <div class="col-md-1">
+                    {{ product.rating }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
