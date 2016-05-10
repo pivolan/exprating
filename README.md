@@ -51,3 +51,7 @@ indexer --config app/config/Sphinx/sphinx.conf --rotate --all
     search_engine: sphinx
 
 Без этой настройки функционал остается таким же, но для поиска используется простой sql запрос.
+
+***Правила зависимостей по бандлам***
+
+[/doc/codestyle.md](ссылка)

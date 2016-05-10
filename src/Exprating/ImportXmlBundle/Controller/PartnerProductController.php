@@ -1,7 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace Exprating\ImportXmlBundle\Controller;
 
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;

@@ -1,7 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace Exprating\ImportXmlBundle\Controller;
 
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
