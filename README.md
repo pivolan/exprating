@@ -43,9 +43,9 @@ vendor/bin/phpunit
 ***Включить Sphinx***
 Если хочется локально потестить как работает поиск с помощью SPhinx:
 
-indexer --config app/config/Sphinx/sphinx.conf --rotate --all
-
 searchd --config app/config/Sphinx/sphinx.conf
+
+indexer --config app/config/Sphinx/sphinx.conf --rotate --all
 
 Поставить в конфиге parameters.yml:
     search_engine: sphinx
