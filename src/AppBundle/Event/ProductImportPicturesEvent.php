@@ -17,6 +17,7 @@ class ProductImportPicturesEvent extends Event
      * @var ImportImage
      */
     protected $importImage;
+
     /**
      * ProductImportPicturesEvent constructor.
      *

@@ -107,6 +107,7 @@ class ModeratorController extends BaseController
             } else {
                 throw new \LogicException('Нажата не существующая кнопка при модерации комментария');
             }
+
             return $this->redirectToRoute('moderator_comments');
         }
 

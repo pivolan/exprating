@@ -18,6 +18,6 @@ class UserRepositoryTest extends AbstractWebCaseTest
     {
         $em = $this->em;
         $emails = $em->getRepository('AppBundle:User')->findEmails();
-        $this->assertContains(['email'=>'category@exprating.lo'], $emails);
+        $this->assertContains(['email' => 'category@exprating.lo'], $emails);
     }
 }

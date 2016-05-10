@@ -210,7 +210,6 @@ class User extends BaseUser
     private $myDecisions;
 
 
-
     public function __construct()
     {
         parent::__construct();

@@ -75,37 +75,41 @@ class AssertValidatorTest extends \PHPUnit_Framework_TestCase
         //Нет возможности проверить Юнит тестированием права доступа к фильтру.
         return [
             [
-                ['category'  => new Category(),
-                 'status'    => 'invalid status',
-                 'direction' => 'dsf',
-                 'fieldName' => 'wer',
+                [
+                    'category'  => new Category(),
+                    'status'    => 'invalid status',
+                    'direction' => 'dsf',
+                    'fieldName' => 'wer',
                 ],
                 3,
                 ['Выберите верный тип сортировки', 'Выберите верный фильтр', 'Выберите верное направление сортировки'],
             ],
             [
-                ['category'  => new Category(),
-                 'status'    => 'inus',
-                 'direction' => ProductFilter::DIRECTION_ASC,
-                 'fieldName' => 'wer',
+                [
+                    'category'  => new Category(),
+                    'status'    => 'inus',
+                    'direction' => ProductFilter::DIRECTION_ASC,
+                    'fieldName' => 'wer',
                 ],
                 2,
                 ['Выберите верный тип сортировки', 'Выберите верный фильтр'],
             ],
             [
-                ['category'  => new Category(),
-                 'status'    => 'inus',
-                 'direction' => ProductFilter::DIRECTION_ASC,
-                 'fieldName' => ProductFilter::FIELD_ENABLED_AT,
+                [
+                    'category'  => new Category(),
+                    'status'    => 'inus',
+                    'direction' => ProductFilter::DIRECTION_ASC,
+                    'fieldName' => ProductFilter::FIELD_ENABLED_AT,
                 ],
                 1,
                 ['Выберите верный фильтр'],
             ],
             [
-                ['category'  => new Category(),
-                 'status'    => null,
-                 'direction' => 'j',
-                 'fieldName' => ProductFilter::FIELD_ENABLED_AT,
+                [
+                    'category'  => new Category(),
+                    'status'    => null,
+                    'direction' => 'j',
+                    'fieldName' => ProductFilter::FIELD_ENABLED_AT,
                 ],
                 1,
                 ['Выберите верное направление сортировки'],

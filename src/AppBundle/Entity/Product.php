@@ -1062,7 +1062,9 @@ class Product
 
     /**
      * Add $src
+     *
      * @param $src
+     *
      * @return int
      */
     public function addImportedImages($src)
@@ -1084,12 +1086,14 @@ class Product
 
     /**
      * Set $importedImages
+     *
      * @param array $importedImages
+     *
      * @return $this
      */
     public function setImportedImages(array $importedImages)
     {
-        $this->importedImages = array();
+        $this->importedImages = [];
         foreach ($importedImages as $src) {
             $this->addImportedImages($src);
         }

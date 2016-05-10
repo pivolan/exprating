@@ -31,7 +31,7 @@ class ImportImageDuplicateValidator extends ConstraintValidator
      * Checks if the passed value is valid.
      *
      * @param ImportImage $importImage The value that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param Constraint  $constraint  The constraint for the validation
      *
      * @return null
      */
@@ -45,7 +45,7 @@ class ImportImageDuplicateValidator extends ConstraintValidator
 
         foreach ($urls as $key => $url) {
             if (in_array($url, $importedImages)) {
-                $this->context->buildViolation('Дублирование файла: ' . $url)
+                $this->context->buildViolation('Дублирование файла: '.$url)
                     ->atPath("importedImages[$key].url")
                     ->addViolation();
             }

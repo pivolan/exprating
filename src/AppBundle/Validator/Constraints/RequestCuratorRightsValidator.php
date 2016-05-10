@@ -35,6 +35,7 @@ class RequestCuratorRightsValidator extends ConstraintValidator
 
     /**
      * @inheritdoc
+     *
      * @param RequestCuratorRights $requestCuratorRights
      * @param Constraint           $constraint
      *

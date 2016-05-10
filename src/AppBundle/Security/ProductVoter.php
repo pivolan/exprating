@@ -158,7 +158,6 @@ class ProductVoter extends Voter
         }
 
 
-
         return true;
     }
 

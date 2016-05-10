@@ -47,6 +47,7 @@ class AppExtension extends \Twig_Extension
                 unset($categories[$key]);
             }
         }
+
         return $this->twig->render(
             'AppBundle:Extensions:breadcrumbs.html.twig',
             [

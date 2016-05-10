@@ -33,7 +33,8 @@ class UniqueCategoryCharacteristicValidator extends ConstraintValidator
 
     /**
      * @inheritdoc
-     * @param Category   $category
+     *
+     * @param Category $category
      * @param Constraint $constraint
      *
      * @return bool
@@ -41,10 +42,12 @@ class UniqueCategoryCharacteristicValidator extends ConstraintValidator
     public function validate($category, Constraint $constraint)
     {
         $characteristics = [];
-        foreach ($category->getCategoryCharacteristics() as $key=>$categoryCharacteristic) {
+        foreach ($category->getCategoryCharacteristics() as $key => $categoryCharacteristic) {
             $slug = $categoryCharacteristic->getCharacteristic()->getSlug();
             if (in_array($slug, $characteristics)) {
-                $this->context->buildViolation('Дублирование характеристики: ' . $categoryCharacteristic->getCharacteristic()->getName())
+                $this->context->buildViolation(
+                    'Дублирование характеристики: '.$categoryCharacteristic->getCharacteristic()->getName()
+                )
                     ->atPath("categoryCharacteristics[$key].characteristic")
                     ->addViolation();
             }

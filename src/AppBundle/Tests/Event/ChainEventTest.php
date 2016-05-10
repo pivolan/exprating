@@ -30,10 +30,10 @@ class ChainEventTest extends AbstractWebCaseTest
     public function testPublish()
     {
         /**
-         * @var Product $product
+         * @var Product         $product
          * @var EventDispatcher $eventDispatcher
-         * @var EntityManager $em
-         * @var User $curator
+         * @var EntityManager   $em
+         * @var User            $curator
          */
         list($product, $eventDispatcher, $em, $curator, $count) = $this->reserveProduct();
 
@@ -58,7 +58,7 @@ class ChainEventTest extends AbstractWebCaseTest
     public function testReserveOver()
     {
         /**
-         * @var Product $product
+         * @var Product         $product
          * @var EventDispatcher $eventDispatcher
          */
         list($product, $eventDispatcher) = $this->reserveProduct();
@@ -71,10 +71,10 @@ class ChainEventTest extends AbstractWebCaseTest
     public function testReject()
     {
         /**
-         * @var Product $product
+         * @var Product         $product
          * @var EventDispatcher $eventDispatcher
-         * @var EntityManager $em
-         * @var User $curator
+         * @var EntityManager   $em
+         * @var User            $curator
          */
         list($product, $eventDispatcher, $em, $curator, $count) = $this->reserveProduct();
 

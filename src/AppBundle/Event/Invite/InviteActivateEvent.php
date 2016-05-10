@@ -21,7 +21,7 @@ class InviteActivateEvent extends Event implements InviteEventInterface
     /**
      * InviteActivateEvent constructor.
      *
-     * @param Invite   $invite
+     * @param Invite $invite
      */
     public function __construct(Invite $invite)
     {

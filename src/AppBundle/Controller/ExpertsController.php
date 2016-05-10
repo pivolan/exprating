@@ -86,6 +86,7 @@ class ExpertsController extends BaseController
         if ($form->isValid()) {
             $this->getEm()->flush();
             $this->addFlash(self::FLASH_PROFILE_SAVED, 'Изменения успешно сохранены');
+
             return $this->redirectToRoute('experts_detail_edit', ['username' => $expert->getUsername()]);
         }
 

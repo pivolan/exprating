@@ -100,8 +100,8 @@ class EditController extends BaseController
         return $this->render(
             $template,
             [
-                self::KEY_PRODUCT => $product,
-                self::KEY_FORM => $form->createView(),
+                self::KEY_PRODUCT      => $product,
+                self::KEY_FORM         => $form->createView(),
                 self::KEY_HISTORY_LOGS => $historyLogs,
             ]
         );

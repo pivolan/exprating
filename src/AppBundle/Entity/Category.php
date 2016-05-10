@@ -540,8 +540,9 @@ class Category
      *
      * @return Category
      */
-    public function addCategoryCharacteristic(\Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic)
-    {
+    public function addCategoryCharacteristic(
+        \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic
+    ) {
         $this->categoryCharacteristics[] = $categoryCharacteristic;
 
         return $this;
@@ -552,8 +553,9 @@ class Category
      *
      * @param \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic
      */
-    public function removeCategoryCharacteristic(\Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic)
-    {
+    public function removeCategoryCharacteristic(
+        \Exprating\CharacteristicBundle\Entity\CategoryCharacteristic $categoryCharacteristic
+    ) {
         $this->categoryCharacteristics->removeElement($categoryCharacteristic);
     }
 }

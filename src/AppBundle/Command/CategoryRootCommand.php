@@ -35,7 +35,7 @@ class CategoryRootCommand extends ContainerAwareCommand
         $categories = $em->getRepository('AppBundle:Category')->getRootNodes('lft');
         $rootCategory = (new Category())->setSlug('root')->setName('root');
         $em->persist($rootCategory);
-        foreach($categories as $category){
+        foreach ($categories as $category) {
             $category->setParent($rootCategory);
             $rootCategory->addChild($category);
         }

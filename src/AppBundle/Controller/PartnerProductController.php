@@ -40,9 +40,10 @@ class PartnerProductController extends BaseController
         /** @var Offer[] $partnerProducts */
         $partnerProducts = $emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->findBy([], null, 30);
         $output = [
-            self::KEY_PARTNER_PRODUCTS =>$partnerProducts,
-            self::KEY_PRODUCT => $product,
+            self::KEY_PARTNER_PRODUCTS => $partnerProducts,
+            self::KEY_PRODUCT          => $product,
         ];
+
         return $this->render('PartnerProduct/list.html.twig', $output);
     }
 }

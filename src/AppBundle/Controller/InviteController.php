@@ -64,7 +64,7 @@ class InviteController extends BaseController
      */
     public function inviteActivateAction(Request $request, Invite $invite)
     {
-        if(!$this->isGranted(InviteVoter::ACTIVATE_INVITE, $invite)){
+        if (!$this->isGranted(InviteVoter::ACTIVATE_INVITE, $invite)) {
             return $this->render('Invite/inviteAlreadyActivated.html.twig');
         }
         $this->get('event_dispatcher')->dispatch(

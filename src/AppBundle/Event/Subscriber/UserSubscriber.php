@@ -77,11 +77,11 @@ class UserSubscriber implements EventSubscriberInterface
                 $this->twig->render(
                     'Email/registrationRequest.html.twig',
                     [
-                        'curator' => $curator,
-                        'email' => $registrationRequest->getEmail(),
-                        'message' => $registrationRequest->getMessage(),
+                        'curator'    => $curator,
+                        'email'      => $registrationRequest->getEmail(),
+                        'message'    => $registrationRequest->getMessage(),
                         'categories' => $registrationRequest->getCategories(),
-                        'id' => $registrationRequest->getId(),
+                        'id'         => $registrationRequest->getId(),
                     ]
                 )
             );
