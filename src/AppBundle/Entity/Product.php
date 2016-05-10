@@ -192,6 +192,13 @@ class Product
     private $expertComment = 'n/a';
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="same_product_query_string", type="string", length=255, nullable=true)
+     */
+    private $sameProductsQueryString;
+
+    /**
      * @var Image[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="product",
      *     cascade={"all"}, orphanRemoval=true)
@@ -1099,5 +1106,29 @@ class Product
         }
 
         return $this;
+    }
+
+    /**
+     * Set sameProductsQueryString
+     *
+     * @param string $sameProductsQueryString
+     *
+     * @return Product
+     */
+    public function setSameProductsQueryString($sameProductsQueryString)
+    {
+        $this->sameProductsQueryString = $sameProductsQueryString;
+
+        return $this;
+    }
+
+    /**
+     * Get sameProductsQueryString
+     *
+     * @return string
+     */
+    public function getSameProductsQueryString()
+    {
+        return $this->sameProductsQueryString;
     }
 }
