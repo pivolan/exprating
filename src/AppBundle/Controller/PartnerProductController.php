@@ -36,7 +36,7 @@ class PartnerProductController extends BaseController
      */
     public function listAction(Request $request, $product)
     {
-        $emImportXml = $this->get('doctrine.orm.import_xml_entity_manager');
+        $emImportXml = $this->getEm();
         /** @var Offer[] $partnerProducts */
         $partnerProducts = $emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->findBy([], null, 30);
 
