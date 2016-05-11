@@ -32,7 +32,7 @@ class IndexControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/rubric/organizacii/2/filter/minPrice/ASC/STATUS_ALL/');
+        $crawler = $client->request('GET', '/rubric/organizacii/2/filter/minPrice/ASC/STATUS_ALL/icon/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
         $this->assertContains('Организации - рейтинг по мнению экспертов', $crawler->filter('.content h1')->text());
         $this->assertContains('rel="next"', $crawler->filter('ul.pagination')->html());

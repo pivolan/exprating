@@ -33,6 +33,7 @@ class StatusesControllerTest extends WebTestCase
             ['/expert/admin/'],
             ['/expert/curator/'],
             ['/expert/expert/'],
+            ['/rubric/avtozapchasti-2/1/filter/minPrice/ASC/STATUS_ALL/line/'],
             ['/rubric/avtozapchasti-2/1/filter/minPrice/ASC/STATUS_ALL/icon/'],
             ['/rubric/avtozapchasti-2/2/filter/minPrice/ASC/STATUS_ALL/icon/'],
             ['/tovar/product_10/'],
