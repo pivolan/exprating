@@ -7,7 +7,9 @@
 
 namespace Exprating\SearchBundle\Tests\Engine;
 
+use Exprating\SearchBundle\Dto\SearchCriteria;
 use Exprating\SearchBundle\Engine\SphinxEngine;
+use Exprating\SearchBundle\Sphinx\IndexNames;
 use IAkumaI\SphinxsearchBundle\Search\Sphinxsearch;
 
 class SphinxEngineTest extends \PHPUnit_Framework_TestCase
@@ -22,6 +24,9 @@ class SphinxEngineTest extends \PHPUnit_Framework_TestCase
             ->method('searchEx')
             ->will($this->returnValue(['matches' => [['entity' => 'value']]]));
         $engine = new SphinxEngine($sphinx);
-        $this->assertEquals(['value'], $engine->search('qwerty'));
+        $this->assertEquals(
+            ['value'],
+            $engine->search('qwerty', (new SearchCriteria())->setIndexName(IndexNames::INDEX_PRODUCT))
+        );
     }
 }
