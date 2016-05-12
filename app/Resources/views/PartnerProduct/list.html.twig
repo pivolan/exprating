@@ -37,8 +37,7 @@
                         <div class="col-md-2">
                             <del>{{ partnerProduct.oldPrice }}</del> {{ partnerProduct.price }}</div>
                         <div class="col-md-1">
-                            <button type="button" class="btn btn-info btn-xs"><span
-                                        class="glyphicon glyphicon-import"></span></button>
+
                         </div>
                     </div>
                 </div>
@@ -68,9 +67,6 @@
                         </div>
                         <div class="col-md-6 params">
                             <div class="row text-center ">
-                                <button type="button" class="btn btn-info"><span
-                                            class="glyphicon glyphicon-import"></span>Импортировать все
-                                </button>
                             </div>
                             <ul class="params__list list-group">
                                 {% for paramName, param in partnerProduct.params %}
@@ -82,8 +78,6 @@
                                             <span class="params__list-value">{{ param }}</span>
                                         </div>
                                         <div class="col-md-2">
-                                            <button type="button" class="btn btn-info btn-xs"><span
-                                                        class="glyphicon glyphicon-import"></span></button>
                                         </div>
                                     </li>
                                 {% endfor %}

@@ -42,8 +42,12 @@ $('document').ready(function () {
     $(document).on('click', 'button.image-import-all', function () {
         var srcList = [];
         $(this).parent().parent().find('img').each(function (index, img) {
-            srcList.push(img.src);
+            if (!$(img).parent().hasClass('disable')) {
+                srcList.push(img.src);
+            }
         });
-        importImages(srcList);
+        if (srcList.length > 0) {
+            importImages(srcList);
+        }
     });
 });
