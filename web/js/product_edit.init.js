@@ -113,5 +113,5 @@ $(document).ready(function () {
 
     //search partner products
 });
-Exp.post_ajax('search');
-Exp.post_ajax('save');
+Exp.post_ajax('#search');
+Exp.post_ajax('#save');

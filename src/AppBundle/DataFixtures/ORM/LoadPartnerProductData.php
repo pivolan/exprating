@@ -8,7 +8,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Exprating\ImportXmlBundle\Entity\PartnerProduct;
 
-class LoadOfferData extends AbstractFixture implements DependentFixtureInterface
+class LoadPartnerProductData extends AbstractFixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {

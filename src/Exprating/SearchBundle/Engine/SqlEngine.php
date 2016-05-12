@@ -28,21 +28,24 @@ class SqlEngine implements EngineInterface
      */
     public function search($string, SearchCriteria $searchCriteria)
     {
-        $qb = $this->entityManager->getRepository('AppBundle:Product')->createQueryBuilder('p');
-        $qb->where('p.isEnabled = :isEnabled')
-            ->setParameter('isEnabled', true);
+        $qb = $this->entityManager->getRepository($searchCriteria->getRepositoryName())->createQueryBuilder('p');
+        foreach ($searchCriteria->getCriteria() as $key => $value) {
+            $qb->andWhere("p.$key = :$key")
+                ->setParameter($key, $value);
+        }
 
         $words = explode(' ', $string);
         $sqlPart = [];
         foreach ($words as $key => $word) {
             $processedWord = trim($word);
             if (mb_strlen($processedWord, 'UTF-8') > 2) {
-                $sqlPart[] = "p.name LIKE :word$key";
-                $qb->setParameter("word$key", '%'.$processedWord.'%');
+                foreach ($searchCriteria->getFields() as $fieldName) {
+                    $sqlPart[] = "p.$fieldName LIKE :word$fieldName$key";
+                    $qb->setParameter("word$fieldName$key", '%'.$processedWord.'%');
+                }
             }
         }
-        $qb->andWhere(implode(' OR ', $sqlPart))
-            ->orderBy('p.id', 'ASC');
+        $qb->andWhere(implode(' OR ', $sqlPart));
         $query = $qb->getQuery();
 
         return $query->getResult();

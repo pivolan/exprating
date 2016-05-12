@@ -20,6 +20,7 @@ use AppBundle\Event\ProductPublishRequestEvent;
 use AppBundle\Event\ProductRejectEvent;
 use AppBundle\Event\ProductReservationEvent;
 use AppBundle\Event\ProductReservationOverEvent;
+use AppBundle\Event\ProductSaveQueryStringEvent;
 use AppBundle\Event\ProductVisitEvent;
 use AppBundle\Humanize\ProductHistoryDiffHumanize;
 use AppBundle\Dto\ImportPictures\ImportImage;
@@ -77,22 +78,23 @@ class ProductSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ProductEvents::RESERVATION      => [['reserveProduct', 0], ['flush']],
-            ProductEvents::PUBLISH_REQUEST  => [
+            ProductEvents::RESERVATION       => [['reserveProduct', 0], ['flush']],
+            ProductEvents::PUBLISH_REQUEST   => [
                 ['publishRequestProduct', 1],
                 ['notifyCurator'],
                 ['flush'],
             ],
-            ProductEvents::APPROVE          => [['approveProduct', 1], ['onApproveNotifyExpert'], ['flush']],
-            ProductEvents::REJECT           => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
-            ProductEvents::PUBLISH          => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
-            ProductEvents::CHANGE_EXPERT    => [['changeExpert', 1], ['onChangeExpertNotify'], ['flush']],
-            ProductEvents::RESERVATION_OVER => [['reserveOver', 0], ['onReserveOverNotifyExpert', 1], ['flush']],
-            ProductEvents::COMMENTED        => [['flush']],
-            ProductEvents::DECISION         => [['curatorDecision', 1]],
-            ProductEvents::VISIT            => [['productVisited', 1], ['flush']],
-            ProductEvents::EDITED           => [['productEdited', 1]],
-            ProductEvents::IMPORT_PICTURES  => [['importPictures', 1]],
+            ProductEvents::APPROVE           => [['approveProduct', 1], ['onApproveNotifyExpert'], ['flush']],
+            ProductEvents::REJECT            => [['rejectProduct', 1], ['onRejectNotifyExpert'], ['flush']],
+            ProductEvents::PUBLISH           => [['publishProduct', 1], ['onPublishNotifyExpert'], ['flush']],
+            ProductEvents::CHANGE_EXPERT     => [['changeExpert', 1], ['onChangeExpertNotify'], ['flush']],
+            ProductEvents::RESERVATION_OVER  => [['reserveOver', 0], ['onReserveOverNotifyExpert', 1], ['flush']],
+            ProductEvents::COMMENTED         => [['flush']],
+            ProductEvents::DECISION          => [['curatorDecision', 1]],
+            ProductEvents::VISIT             => [['productVisited', 1], ['flush']],
+            ProductEvents::EDITED            => [['productEdited', 1]],
+            ProductEvents::IMPORT_PICTURES   => [['importPictures', 1]],
+            ProductEvents::SAVE_QUERY_STRING => [['saveString', 1], ['flush']],
         ];
     }
 
@@ -345,7 +347,9 @@ class ProductSubscriber implements EventSubscriberInterface
         $urls = $importImage->getUrls();
         $this->pathService->setProductId($product->getId());
         $path = $this->pathService->findFolder();
-        $this->_mkDir($path);
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
 
         foreach ($urls as $src) {
             $pathParts = pathinfo($src);
@@ -363,13 +367,11 @@ class ProductSubscriber implements EventSubscriberInterface
         $this->em->flush();
     }
 
-    private function _mkDir($path)
+    public function saveString(ProductSaveQueryStringEvent $event)
     {
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
-        }
+        $product = $event->getProduct();
+        $product->setSameProductsQueryString($event->getSearchParams()->getString());
     }
-
 
     public function flush()
     {

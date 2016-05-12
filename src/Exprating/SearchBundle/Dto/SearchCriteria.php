@@ -33,7 +33,7 @@ class SearchCriteria
     protected $criteria;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getRepositoryName()
     {
@@ -41,11 +41,15 @@ class SearchCriteria
     }
 
     /**
-     * @param mixed $repositoryName
+     * @param string $repositoryName
+     *
+     * @return $this
      */
     public function setRepositoryName($repositoryName)
     {
         $this->repositoryName = $repositoryName;
+
+        return $this;
     }
 
     /**
@@ -57,15 +61,19 @@ class SearchCriteria
     }
 
     /**
-     * @param mixed $indexName
+     * @param string $indexName
+     *
+     * @return $this
      */
     public function setIndexName($indexName)
     {
         $this->indexName = $indexName;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getFields()
     {
@@ -73,11 +81,15 @@ class SearchCriteria
     }
 
     /**
-     * @param mixed $fields
+     * @param array $fields
+     *
+     * @return $this
      */
-    public function setFields($fields)
+    public function setFields(array $fields)
     {
         $this->fields = $fields;
+
+        return $this;
     }
 
     /**
@@ -89,10 +101,14 @@ class SearchCriteria
     }
 
     /**
-     * @param mixed $criteria
+     * @param array $criteria
+     *
+     * @return $this
      */
-    public function setCriteria($criteria)
+    public function setCriteria(array $criteria)
     {
         $this->criteria = $criteria;
+
+        return $this;
     }
 }

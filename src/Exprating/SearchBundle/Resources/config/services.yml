@@ -10,3 +10,7 @@ services:
     search_bundle.product_searcher:
         class: Exprating\SearchBundle\ProductSearch\ProductSearch
         arguments: ["@search_engine"]
+
+    search_bundle.partner_product_searcher:
+        class: Exprating\SearchBundle\ProductSearch\PartnerProductSearch
+        arguments: ["@search_engine"]

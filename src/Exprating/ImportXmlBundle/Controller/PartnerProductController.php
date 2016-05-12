@@ -35,7 +35,7 @@ class PartnerProductController extends BaseController
     const KEY_PARTNER_PRODUCTS = 'partnerProducts';
     const KEY_PARTNER_IMAGES = 'partnerImages';
     const KEY_ERRORS = 'errors';
-    const KEY_SEARCH_INPUT = 'searchInput';
+    const KEY_SEARCH_PARAMS = 'searchParams';
 
     /**
      * @Route("/partner/products/{slug}/", name="partner_product_list")
@@ -43,10 +43,10 @@ class PartnerProductController extends BaseController
      */
     public function searchAction(Request $request, Product $product)
     {
-        /** @var SearchInput $searchInput */
-        $searchInput = $this->get('serializer')->denormalize($request->request->all(), SearchInput::class);
+        /** @var SearchParams $searchParams */
+        $searchParams = $this->get('serializer')->denormalize($request->request->all(), SearchParams::class);
         $validator = $this->get('validator');
-        $errors = $validator->validate($searchInput);
+        $errors = $validator->validate($searchParams);
         if (count($errors) > 0) {
             return $this->render(
                 'PartnerProduct/saveSameProductsQueryString.error.html.twig',
@@ -55,11 +55,7 @@ class PartnerProductController extends BaseController
         }
 
         /** @var PartnerProduct[] $partnerProducts */
-        $partnerProducts = $this->getEm()->getRepository('ExpratingImportXmlBundle:PartnerProduct')->findBy(
-            ['name' => $searchInput->getSearch()],
-            null,
-            30
-        );
+        $partnerProducts = $this->get('search_bundle.partner_product_searcher')->find($searchParams);
 
         return $this->render(
             'PartnerProduct/list.html.twig',
@@ -71,19 +67,19 @@ class PartnerProductController extends BaseController
     }
 
     /**
-     * @Route("/product/{slug}/query/save/", name="product_query_save")
+     * @Route("/product/{slug}/save/sting/", name="product_string_save")
      * @param Request $request
      * @ParamConverter(name="product", class="AppBundle\Entity\Product", options={"mapping":{"slug":"slug"}})
      *
      * @Security("is_granted('EXPERTISE', product)")
      * @return Response
      */
-    public function saveSameProductsQueryStringAction(Request $request, Product $product)
+    public function saveStringAction(Request $request, Product $product)
     {
-        /** @var SearchInput $searchInput */
-        $searchInput = $this->get('serializer')->denormalize($request->request->all(), SearchInput::class);
+        /** @var SearchParams $searchParams */
+        $searchParams = $this->get('serializer')->denormalize($request->request->all(), SearchParams::class);
         $validator = $this->get('validator');
-        $errors = $validator->validate($searchInput);
+        $errors = $validator->validate($searchParams);
         if (count($errors) > 0) {
             return $this->render(
                 'PartnerProduct/saveSameProductsQueryString.error.html.twig',
@@ -93,7 +89,7 @@ class PartnerProductController extends BaseController
         try {
             $this->get('event_dispatcher')->dispatch(
                 ProductEvents::SAVE_QUERY_STRING,
-                new ProductSaveQueryStringEvent($searchInput, $product, $this->getUser())
+                new ProductSaveQueryStringEvent($searchParams, $product, $this->getUser())
             );
         } catch (\Exception $e) {
             return $this->render(
@@ -105,8 +101,8 @@ class PartnerProductController extends BaseController
         return $this->render(
             'PartnerProduct/saveSameProductsQueryString.success.html.twig',
             [
-                self::KEY_SEARCH_INPUT => $searchInput,
-                self::KEY_PRODUCT      => $product,
+                self::KEY_SEARCH_PARAMS => $searchParams,
+                self::KEY_PRODUCT       => $product,
             ]
         );
     }

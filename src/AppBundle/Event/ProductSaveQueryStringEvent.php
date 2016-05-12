@@ -10,15 +10,16 @@ namespace AppBundle\Event;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use Exprating\ImportXmlBundle\Dto\SearchInput;
+use Exprating\SearchBundle\Dto\SearchParams;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductSaveQueryStringEvent extends Event
 {
     /**
-     * @var SearchInput
+     * @var SearchParams
      */
-    protected $searchInput;
+    protected $searchParams;
 
     /**
      * @var Product
@@ -33,12 +34,12 @@ class ProductSaveQueryStringEvent extends Event
     /**
      * ProductSaveQueryStringEvent constructor.
      *
-     * @param SearchInput $searchInput
-     * @param User        $user
+     * @param SearchParams $searchParams
+     * @param User         $user
      */
-    public function __construct(SearchInput $searchInput, Product $product, User $user)
+    public function __construct(SearchParams $searchParams, Product $product, User $user)
     {
-        $this->searchInput = $searchInput;
+        $this->searchParams = $searchParams;
         $this->user = $user;
         $this->product = $product;
     }
@@ -73,5 +74,21 @@ class ProductSaveQueryStringEvent extends Event
     public function setProduct($product)
     {
         $this->product = $product;
+    }
+
+    /**
+     * @return SearchParams
+     */
+    public function getSearchParams()
+    {
+        return $this->searchParams;
+    }
+
+    /**
+     * @param SearchParams $searchParams
+     */
+    public function setSearchParams($searchParams)
+    {
+        $this->searchParams = $searchParams;
     }
 }

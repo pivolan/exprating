@@ -250,20 +250,21 @@
     <div class="tabs-container-inner">
         <div class="clearfix row search__form">
             <div class="col-md-9">
-                <input id="search-string" name="search" class="form-control" type="text" placeholder="Поиск товара в базе партнеров"
+                <input id="search-string" name="string" class="form-control" type="text" placeholder="Поиск товара в базе партнеров"
                        value="{{ product.sameProductsQueryString }}"/>
             </div>
             <div class="col-md-3">
                 <button type="button" class="btn btn-info pull-right" id="save"
                         data-src="search-string"
-                        data-target="search-content"
-                        data-url="">Сохранить</button>
+                        data-target="search-save"
+                        data-url="{{ path('product_string_save', {'slug':product.slug}) }}">Сохранить</button>
                 <button type="button" class="btn btn-info pull-right" id="search"
                         data-src="search-string"
                         data-target="search-content"
-                        data-url="">Поиск</button>
+                        data-url="{{ path('partner_product_list', {'slug':product.slug}) }}">Поиск</button>
             </div>
         </div>
+        <div id="search-save"></div>
         <div id="search-content"></div>
     </div>
 {% endblock %}

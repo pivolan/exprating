@@ -1,1 +1,12 @@
-Произошла ошибка
+<div class="search__items-title">
+    <div class="panel panel-primary">
+        <span>Ошибки:</span>
+        <ul>
+        {% for error in errors %}
+
+            <li>{{ error.message }}</li>
+        {% endfor %}
+        </ul>
+
+    </div>
+</div>

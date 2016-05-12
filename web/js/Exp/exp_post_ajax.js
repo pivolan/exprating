@@ -18,6 +18,7 @@ Exp.post_ajax = function (selectorButton, callback) {
         $('body').append($loader);
         $.ajax({
             url: $this.data('url'),
+            method: 'post',
             data: data,
             success: function (response) {
                 $html.css('opacity', '1');

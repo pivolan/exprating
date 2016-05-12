@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class SearchParams
- * Используется для передачи данных от клиеента к серверу. Появляется при обработке формы.
+ * Используется для передачи данных от клиента к серверу. Появляется при обработке формы.
  * Проверяет входящие данные.
  *
  * @package Exprating\SearchBundle\Dto

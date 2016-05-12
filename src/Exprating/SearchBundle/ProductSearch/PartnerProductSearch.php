@@ -13,7 +13,7 @@ use Exprating\SearchBundle\Engine\EngineInterface as SearchEngineInterface;
 use Exprating\SearchBundle\Dto\SearchParams;
 use Exprating\SearchBundle\Sphinx\IndexNames;
 
-class ProductSearch
+class PartnerProductSearch
 {
     /**
      * @var SearchEngineInterface
@@ -34,10 +34,10 @@ class ProductSearch
     {
         return $this->searchEngine->search(
             $searchParams->getString(),
-            (new SearchCriteria())->setIndexName(IndexNames::INDEX_PRODUCT)
-                ->setRepositoryName('AppBundle:Product')
+            (new SearchCriteria())->setIndexName(IndexNames::INDEX_PARTNER_PRODUCT)
+                ->setRepositoryName('ExpratingImportXmlBundle:PartnerProduct')
                 ->setFields(['name',])
-                ->setCriteria(['isEnabled' => true])
+                ->setCriteria(['available' => true])
         );
     }
 }
