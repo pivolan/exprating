@@ -8,6 +8,7 @@
 namespace AppBundle\Event\Subscriber;
 
 use AppBundle\Entity\CuratorDecision;
+use AppBundle\Entity\Image;
 use AppBundle\Entity\ProductEditHistory;
 use AppBundle\Entity\User;
 use AppBundle\Event\DecisionCreateEvent;
@@ -93,7 +94,7 @@ class ProductSubscriber implements EventSubscriberInterface
             ProductEvents::DECISION          => [['curatorDecision', 1]],
             ProductEvents::VISIT             => [['productVisited', 1], ['flush']],
             ProductEvents::EDITED            => [['productEdited', 1]],
-            ProductEvents::IMPORT_PICTURES   => [['importPictures', 1]],
+            ProductEvents::IMPORT_PICTURES   => [['importPictures', 1], ['flush']],
             ProductEvents::SAVE_QUERY_STRING => [['saveString', 1], ['flush']],
         ];
     }
@@ -346,14 +347,14 @@ class ProductSubscriber implements EventSubscriberInterface
         $product = $importImage->getProduct();
         $urls = $importImage->getUrls();
         $this->pathService->setProductId($product->getId());
-        $path = $this->pathService->findFolder();
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+        $absoluteFolderPath = $this->pathService->findFolder();
+        if (!is_dir($absoluteFolderPath)) {
+            mkdir($absoluteFolderPath, 0777, true);
         }
 
         foreach ($urls as $src) {
-            $pathParts = pathinfo($src);
-            $targetFileFull = $path.$pathParts['basename'];
+            $filename = $this->pathService->getRandomFilename();
+            $targetFileFull = $absoluteFolderPath.$filename;
             $ch = curl_init($src);
             $fp = fopen($targetFileFull, 'wb');
             curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -361,10 +362,13 @@ class ProductSubscriber implements EventSubscriberInterface
             curl_exec($ch);
             curl_close($ch);
             fclose($fp);
-            $product->addImportedImages($src);
-            $this->em->persist($product);
+            $product->addImportedImage($src);
+            $image = (new Image())->setProduct($product)
+                ->setFilename($this->pathService->relativeFolder().$filename)
+                ->setName($filename);
+            $product->addImage($image);
+            $this->em->persist($image);
         }
-        $this->em->flush();
     }
 
     public function saveString(ProductSaveQueryStringEvent $event)

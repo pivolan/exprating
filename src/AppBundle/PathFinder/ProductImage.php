@@ -48,6 +48,11 @@ class ProductImage
                $this->getProductId().'/';
     }
 
+    public function getRandomFilename()
+    {
+        return uniqid().'.jpg';
+    }
+
     /**
      * @return int
      */

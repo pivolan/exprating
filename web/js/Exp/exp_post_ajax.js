@@ -29,6 +29,7 @@ Exp.post_ajax = function (selectorButton, callback) {
                 }
             },
             error: function () {
+                $loader.remove();
                 alert('it was some error, try again.');
             }
         });

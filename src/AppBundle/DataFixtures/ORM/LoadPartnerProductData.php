@@ -26,7 +26,7 @@ class LoadPartnerProductData extends AbstractFixture implements DependentFixture
             ->setName('Name')
             ->setOldPrice(233)
             ->setParams(['first'=>'value', 'second'=>'value'])
-            ->setPictures(['http://placehold.it/100x100'])
+            ->setPictures(['http://www.shop.mts.ru/upload/iblock/c52/MTS-Qwerty-655-White.jpg'])
             ->setPrice(100)
             ->setUrl('https://clothia.com/item/234')
             ->setVendor('Nike')

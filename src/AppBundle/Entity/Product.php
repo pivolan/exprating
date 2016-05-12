@@ -259,10 +259,10 @@ class Product
     /**
      * @var array
      *
-     * @ORM\Column(name="imported_images", type="array", nullable=true,
+     * @ORM\Column(name="imported_images", type="json_array", nullable=true,
      *      options={"comment" = "значение берется из значения src при импортировании партнерского продукта "})
      */
-    private $importedImages;
+    private $importedImages = [];
 
     public function __construct()
     {
@@ -273,7 +273,6 @@ class Product
         $this->productShopPrices = new ArrayCollection();
         $this->productCharacteristics = new ArrayCollection();
         $this->curatorDecisions = new ArrayCollection();
-        $this->importedImages = new ArrayCollection();
     }
 
     /**
@@ -1074,7 +1073,7 @@ class Product
      *
      * @return int
      */
-    public function addImportedImages($src)
+    public function addImportedImage($src)
     {
         $this->importedImages[] = $src;
 
@@ -1100,10 +1099,7 @@ class Product
      */
     public function setImportedImages(array $importedImages)
     {
-        $this->importedImages = [];
-        foreach ($importedImages as $src) {
-            $this->addImportedImages($src);
-        }
+        $this->importedImages = $importedImages;
 
         return $this;
     }
