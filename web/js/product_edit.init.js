@@ -110,4 +110,8 @@ $(document).ready(function () {
         console.log('update');
         update_positions('div.orderIndex input');
     });
+
+    //search partner products
 });
+Exp.post_ajax('search');
+Exp.post_ajax('save');

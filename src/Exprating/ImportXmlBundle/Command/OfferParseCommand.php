@@ -8,7 +8,7 @@ namespace Exprating\ImportXmlBundle\Command;
 
 
 use Doctrine\ORM\EntityManager;
-use Exprating\ImportXmlBundle\Entity\Offer;
+use Exprating\ImportXmlBundle\Entity\PartnerProduct;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadFiles;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadPriceListFiles;
 use Exprating\ImportXmlBundle\Serialize\Normalizer\OfferNormalizer;
@@ -130,13 +130,13 @@ class OfferParseCommand extends Command
                         }
                         break;
                     }
-                    $hashes = $this->emImportXml->getRepository('ExpratingImportXmlBundle:Offer')->getHashesByCompany(
+                    $hashes = $this->emImportXml->getRepository('ExpratingImportXmlBundle:PartnerProduct')->getHashesByCompany(
                         $company
                     );
                     foreach ($xmlReader->getElementsData($filePriceListXml, self::XML_KEY_OFFER) as $offerData) {
                         $hash = md5(serialize($offerData));
-                        /** @var Offer $offer */
-                        $offer = $this->serializer->denormalize($offerData, Offer::class, OfferNormalizer::FORMAT);
+                        /** @var PartnerProduct $offer */
+                        $offer = $this->serializer->denormalize($offerData, PartnerProduct::class, OfferNormalizer::FORMAT);
                         $offer->setHash($hash);
                         $offer->setCategoryName($categories[$offer->getCategoryId()]);
                         $categoryPath = $offer->getCategoryName();
@@ -156,7 +156,7 @@ class OfferParseCommand extends Command
                     }
                     $hashesForRemove = array_keys($hashes);
                     $this->emImportXml
-                        ->getRepository('ExpratingImportXmlBundle:Offer')
+                        ->getRepository('ExpratingImportXmlBundle:PartnerProduct')
                         ->removeByHashes($hashesForRemove);
                 } catch (\Exception $e) {
                     $output->writeln($e->getMessage());

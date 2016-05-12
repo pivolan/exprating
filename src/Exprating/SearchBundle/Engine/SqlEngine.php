@@ -9,6 +9,7 @@ namespace Exprating\SearchBundle\Engine;
 
 use AppBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
+use Exprating\SearchBundle\Dto\SearchCriteria;
 
 class SqlEngine implements EngineInterface
 {
@@ -25,7 +26,7 @@ class SqlEngine implements EngineInterface
      *
      * @return Product[]
      */
-    public function search($string)
+    public function search($string, SearchCriteria $searchCriteria)
     {
         $qb = $this->entityManager->getRepository('AppBundle:Product')->createQueryBuilder('p');
         $qb->where('p.isEnabled = :isEnabled')

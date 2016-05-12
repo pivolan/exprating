@@ -5,10 +5,17 @@
  * Time: 16:36.
  */
 
-namespace Exprating\SearchBundle\SearchParams;
+namespace Exprating\SearchBundle\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Class SearchParams
+ * Используется для передачи данных от клиеента к серверу. Появляется при обработке формы.
+ * Проверяет входящие данные.
+ *
+ * @package Exprating\SearchBundle\Dto
+ */
 class SearchParams
 {
     /**

@@ -9,6 +9,7 @@ namespace Exprating\SearchBundle\Engine;
 
 use AppBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
+use Exprating\SearchBundle\Dto\SearchCriteria;
 use Exprating\SearchBundle\Sphinx\IndexNames;
 use IAkumaI\SphinxsearchBundle\Search\Sphinxsearch;
 
@@ -22,7 +23,7 @@ class SphinxEngine implements EngineInterface
     /**
      * SphinxEngine constructor.
      *
-     * @param Sphinxsearch  $sphinxSearch
+     * @param Sphinxsearch $sphinxSearch
      */
     public function __construct(Sphinxsearch $sphinxSearch)
     {
@@ -35,9 +36,9 @@ class SphinxEngine implements EngineInterface
      *
      * @return Product[]
      */
-    public function search($string)
+    public function search($string, SearchCriteria $searchCriteria)
     {
-        $result = $this->sphinxSearch->searchEx($string, IndexNames::INDEX_PRODUCT);
+        $result = $this->sphinxSearch->searchEx($string, $searchCriteria->getIndexName());
         $entities = [];
         foreach ($result['matches'] as $match) {
             $entities[] = $match['entity'];

@@ -10,7 +10,7 @@ use AppBundle\Event\ProductEvents;
 use AppBundle\Form\CommentType;
 use AppBundle\ProductFilter\ProductFilter;
 use Exprating\SearchBundle\Form\SearchParamsType;
-use Exprating\SearchBundle\SearchParams\SearchParams;
+use Exprating\SearchBundle\Dto\SearchParams;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

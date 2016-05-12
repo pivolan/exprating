@@ -8,7 +8,7 @@ namespace Exprating\ImportXmlBundle\Command;
 
 
 use Doctrine\ORM\EntityManager;
-use Exprating\ImportXmlBundle\Entity\Offer;
+use Exprating\ImportXmlBundle\Entity\PartnerProduct;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadFiles;
 use Exprating\ImportXmlBundle\Filesystem\AdmitadPriceListFiles;
 use Exprating\ImportXmlBundle\Serialize\Normalizer\OfferNormalizer;
@@ -70,7 +70,7 @@ class OfferCsvToDbCommand extends Command
             $fileInfo = new \SplFileInfo($csvFilePath);
             if ($fileInfo->isFile()) {
                 $output->writeln('file csv load ' . $csvFilePath);
-                $connection->exec('LOAD DATA LOCAL INFILE "'.$fileInfo->getRealPath().'" REPLACE INTO TABLE offer FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
+                $connection->exec('LOAD DATA LOCAL INFILE "'.$fileInfo->getRealPath().'" REPLACE INTO TABLE partner_product FIELDS TERMINATED BY "," ENCLOSED BY \'"\' LINES TERMINATED BY "\n";');
                 $output->writeln('file csv loaded ' . $csvFilePath);
             }
         }

@@ -365,6 +365,7 @@ sphinxsearch:
         # List of sphinx index names (key) and entity names (value)
         # to use it in searchEx() method
         expProductIdx: "AppBundle:Product"
+        expPartnerProductIdx: "ExpratingImportXmlBundle:Offer"
 
 twig_cache:
     service: file_system_cache

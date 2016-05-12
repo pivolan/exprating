@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * offer
  *
- * @ORM\Table(name="offer",
+ * @ORM\Table(name="partner_product",
  *     uniqueConstraints={@ORM\UniqueConstraint(name="id_company_unique", columns={"id", "company"})})
- * @ORM\Entity(repositoryClass="Exprating\ImportXmlBundle\Repository\OfferRepository")
+ * @ORM\Entity(repositoryClass="Exprating\ImportXmlBundle\Repository\PartnerProductRepository")
  */
-class Offer
+class PartnerProduct
 {
 
     /**
@@ -152,7 +152,7 @@ class Offer
      *
      * @param string $hash
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setHash($hash)
     {
@@ -176,7 +176,7 @@ class Offer
      *
      * @param string $id
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setId($id)
     {
@@ -200,7 +200,7 @@ class Offer
      *
      * @param string $company
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setCompany($company)
     {
@@ -224,7 +224,7 @@ class Offer
      *
      * @param string $name
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setName($name)
     {
@@ -248,7 +248,7 @@ class Offer
      *
      * @param integer $price
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setPrice($price)
     {
@@ -272,7 +272,7 @@ class Offer
      *
      * @param string $url
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setUrl($url)
     {
@@ -296,7 +296,7 @@ class Offer
      *
      * @param string $description
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setDescription($description)
     {
@@ -320,7 +320,7 @@ class Offer
      *
      * @param integer $oldPrice
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setOldPrice($oldPrice)
     {
@@ -344,7 +344,7 @@ class Offer
      *
      * @param integer $categoryId
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setCategoryId($categoryId)
     {
@@ -368,7 +368,7 @@ class Offer
      *
      * @param string $categoryName
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setCategoryName($categoryName)
     {
@@ -392,7 +392,7 @@ class Offer
      *
      * @param string $categoryPath
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setCategoryPath($categoryPath)
     {
@@ -416,7 +416,7 @@ class Offer
      *
      * @param string $marketCategory
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setMarketCategory($marketCategory)
     {
@@ -440,7 +440,7 @@ class Offer
      *
      * @param integer $amount
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setAmount($amount)
     {
@@ -464,7 +464,7 @@ class Offer
      *
      * @param boolean $available
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setAvailable($available)
     {
@@ -488,7 +488,7 @@ class Offer
      *
      * @param array $params
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setParams($params)
     {
@@ -512,7 +512,7 @@ class Offer
      *
      * @param array $pictures
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setPictures($pictures)
     {
@@ -536,7 +536,7 @@ class Offer
      *
      * @param integer $year
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setYear($year)
     {
@@ -560,7 +560,7 @@ class Offer
      *
      * @param string $vendor
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setVendor($vendor)
     {
@@ -584,7 +584,7 @@ class Offer
      *
      * @param string $vendorCode
      *
-     * @return Offer
+     * @return PartnerProduct
      */
     public function setVendorCode($vendorCode)
     {

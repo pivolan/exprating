@@ -9,7 +9,7 @@ namespace Exprating\SearchBundle\ProductSearch;
 
 use AppBundle\Entity\Product;
 use Exprating\SearchBundle\Engine\EngineInterface as SearchEngineInterface;
-use Exprating\SearchBundle\SearchParams\SearchParams;
+use Exprating\SearchBundle\Dto\SearchParams;
 
 class ProductSearch
 {

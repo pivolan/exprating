@@ -8,6 +8,7 @@
 namespace Exprating\SearchBundle\Engine;
 
 use AppBundle\Entity\Product;
+use Exprating\SearchBundle\Dto\SearchCriteria;
 
 interface EngineInterface
 {
@@ -16,5 +17,5 @@ interface EngineInterface
      *
      * @return Product[]
      */
-    public function search($string);
+    public function search($string, SearchCriteria $searchCriteria);
 }

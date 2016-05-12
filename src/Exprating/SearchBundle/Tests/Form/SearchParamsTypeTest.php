@@ -8,7 +8,7 @@
 namespace Exprating\SearchBundle\Tests\Form;
 
 use Exprating\SearchBundle\Form\SearchParamsType;
-use Exprating\SearchBundle\SearchParams\SearchParams;
+use Exprating\SearchBundle\Dto\SearchParams;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class SearchParamsTypeTest extends TypeTestCase

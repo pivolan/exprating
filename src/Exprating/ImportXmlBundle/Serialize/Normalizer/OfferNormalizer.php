@@ -1,7 +1,7 @@
 <?php
 namespace Exprating\ImportXmlBundle\Serialize\Normalizer;
 
-use Exprating\ImportXmlBundle\Entity\Offer;
+use Exprating\ImportXmlBundle\Entity\PartnerProduct;
 use Exprating\ImportXmlBundle\XmlDto\AdmitadAdv;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
@@ -11,7 +11,7 @@ class OfferNormalizer extends ObjectNormalizer
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        /** @var Offer $offer */
+        /** @var PartnerProduct $offer */
         $offer = parent::denormalize($data, $class, $format, $context);
 
         //Fill old price, if no old_price key found
@@ -75,11 +75,11 @@ class OfferNormalizer extends ObjectNormalizer
 
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return ($type == Offer::class) && ($format == self::FORMAT);
+        return ($type == PartnerProduct::class) && ($format == self::FORMAT);
     }
 
     public function supportsNormalization($data, $format = null)
     {
-        return ($data instanceof Offer) && ($format == self::FORMAT);
+        return ($data instanceof PartnerProduct) && ($format == self::FORMAT);
     }
 }

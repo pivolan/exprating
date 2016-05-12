@@ -9,4 +9,5 @@ namespace Exprating\SearchBundle\Sphinx;
 final class IndexNames
 {
     const INDEX_PRODUCT = 'expProductIdx';
+    const INDEX_PARTNER_PRODUCT = 'expPartnerProductIdx';
 }

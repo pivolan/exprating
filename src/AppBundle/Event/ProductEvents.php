@@ -21,4 +21,5 @@ final class ProductEvents
     const VISIT = 'product_visited';
     const EDITED = 'product_edited';
     const IMPORT_PICTURES = 'partner_product_pictures';
+    const SAVE_QUERY_STRING = 'save_query_string';
 }

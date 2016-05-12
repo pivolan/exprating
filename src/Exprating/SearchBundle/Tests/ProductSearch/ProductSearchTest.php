@@ -10,7 +10,7 @@ namespace Exprating\SearchBundle\Tests\ProductSearch;
 use Exprating\SearchBundle\Engine\EngineInterface;
 use Exprating\SearchBundle\Engine\SqlEngine;
 use Exprating\SearchBundle\ProductSearch\ProductSearch;
-use Exprating\SearchBundle\SearchParams\SearchParams;
+use Exprating\SearchBundle\Dto\SearchParams;
 
 class ProductSearchTest extends \PHPUnit_Framework_TestCase
 {

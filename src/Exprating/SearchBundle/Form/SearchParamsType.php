@@ -2,7 +2,7 @@
 
 namespace Exprating\SearchBundle\Form;
 
-use Exprating\SearchBundle\SearchParams\SearchParams;
+use Exprating\SearchBundle\Dto\SearchParams;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
