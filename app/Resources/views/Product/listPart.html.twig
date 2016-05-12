@@ -26,22 +26,22 @@
 
                 <div class="btn-group" data-toggle="buttons">
                     <a class="btn btn-primary {{ productFilter.listType == 'icon'?'active':'' }}"
-                    href="{{ path('product_list', {'slug':category.slug, 'listType': 'icon'}) }}">
+                    href="{{ path('product_list', {'slug':category.slug, 'listType': 'icon', 'status': productFilter.status}) }}">
                         <span class="glyphicon glyphicon-th-large"></span>
                     </a>
                     <a class="btn btn-primary {{ productFilter.listType == 'line'?'active':'' }}"
-                    href="{{ path('product_list', {'slug':category.slug, 'listType': 'line'}) }}">
+                    href="{{ path('product_list', {'slug':category.slug, 'listType': 'line', 'status': productFilter.status}) }}">
                         <span class="glyphicon glyphicon-th-list"></span>
                     </a>
                 </div>
 
                 <div class="btn-group">
                     {% if is_granted('VIEW_FREE', category) %}
-                        <a href="{{ path('product_list', {'slug':category.slug, 'status': productFilter.status == 'STATUS_FREE'?'STATUS_ALL':'STATUS_FREE'}) }}"
+                        <a href="{{ path('product_list', {'slug':category.slug, 'listType': productFilter.listType, 'status': productFilter.status == 'STATUS_FREE'?'STATUS_ALL':'STATUS_FREE'}) }}"
                            class="btn btn-info {{ productFilter.status == 'STATUS_FREE'?'active':'' }}">Посмотреть свободные товары</a>
                     {% endif %}
                     {% if is_granted('VIEW_WAIT', category) %}
-                        <a href="{{ path('product_list', {'slug': category.slug, 'status': productFilter.status == 'STATUS_WAIT'?'STATUS_ALL':'STATUS_WAIT'}) }}"
+                        <a href="{{ path('product_list', {'slug': category.slug, 'listType': productFilter.listType, 'status': productFilter.status == 'STATUS_WAIT'?'STATUS_ALL':'STATUS_WAIT'}) }}"
                            class="btn btn-info {{ productFilter.status == 'STATUS_WAIT'?'active':'' }}">Смотреть ожидающие подтверждения</a>
                     {% endif %}
                 </div>
