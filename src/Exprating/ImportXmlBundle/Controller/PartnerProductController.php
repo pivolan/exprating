@@ -106,4 +106,22 @@ class PartnerProductController extends BaseController
             ]
         );
     }
+
+    /**
+     * @Route("/product/where_to_buy/{slug}/", name="product_where_to_buy")
+     * @param Product $product
+     *
+     * @return Response
+     */
+    public function whereToBuyAction(Product $product)
+    {
+        $partnerProducts = $this->get('search_bundle.partner_product_searcher')->find(
+            (new SearchParams())->setString($product->getSameProductsQueryString())
+        );
+
+        return $this->render(
+            'Product/whereToBuy.html.twig',
+            [self::KEY_PARTNER_PRODUCTS => $partnerProducts]
+        );
+    }
 }

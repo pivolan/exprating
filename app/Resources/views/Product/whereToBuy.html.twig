@@ -1,0 +1,16 @@
+<h3>Где купить</h3>
+<table class="where-by">
+    <tbody>
+    {% for partnerProduct in partnerProducts %}
+        <tr>
+            <td><img class="where-to-by-img" src="{{ partnerProduct.pictures.0|default('http://placehold.it/200x130') }}"></td>
+            <td><a href="{{ partnerProduct.url }}">{{ partnerProduct.company }}</a></td>
+            <td>{{ partnerProduct.price }} <span
+                        class="sign_ruble">p<span>уб.</span></span></td>
+            <td><a href="{{ partnerProduct.url }}" target="_blank" class="btn btn-primary btn-md" role="button"><span
+                            class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

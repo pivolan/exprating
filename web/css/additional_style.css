@@ -125,7 +125,10 @@ img.partner-product-picture {
 .base__item .images .disable .image-zoom-in,
 .base__item .images .disable .image-import{display: none;}
 
-
+img.where-to-by-img {
+    width: 150px;
+    height: 58px;
+}
 
 
 

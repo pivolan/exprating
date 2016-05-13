@@ -168,38 +168,42 @@
                 <div class="tabs-container-inner clearfix">
 
                     <ul class="nav nav-tabs" style="clear: both">
-                        <li class="active"><a href="#test" data-toggle="tab">Заключение</a></li>
+                        <li class="active"><a href="#opinion" data-toggle="tab">Заключение</a></li>
                         <li><a href="#props" data-toggle="tab">Характеристики</a></li>
                         <li><a href="#maintainer" data-toggle="tab">Изготовитель</a></li>
                         <li><a href="#comments" data-toggle="tab">Отзывы</a></li>
-                        <li><a href="#buy" data-toggle="tab">{% block where_to_buy_title %}Где купить{% endblock %}</a></li>
+                        <li><a href="#buy" data-toggle="tab" data-type="ajax" data-target="#buy" data-url="{{ path('product_where_to_buy', {'slug': product.slug}) }}">{% block where_to_buy_title %}Где купить{% endblock %}</a></li>
                     </ul>
 
                     <div class="tabs-content">
-                        <div class="tab-pane fade active in" id="test">
+                        <div class="tab-pane fade active in" id="opinion">
                             {% block expert_opinion %}
                                 {{ product.expertOpinion | markdown }}
                             {% endblock %}
                         </div>
-                        <div class="tab-pane fade" id="buy">
-                            <h3>{{ block('where_to_buy_title') }}</h3>
-                            {% block where_to_buy_body %}
-                                <table class="where-by">
-                                    <tbody>
-                                    {% for productShopPrice in product.productShopPrices %}
-                                        <tr>
-                                            <td><img src="{{ productShopPrice.shop.image }}"></td>
-                                            <td><a href="">{{ productShopPrice.shop.name }}</a></td>
-                                            <td>{{ productShopPrice.price }} <span
-                                                        class="sign_ruble">p<span>уб.</span></span></td>
-                                            <td><a class="btn btn-primary btn-md" role="button"><span
-                                                            class="glyphicon glyphicon-shopping-cart"></span> Купить</a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% endblock %}
+                        <div class="tab-pane fade" id="props">
+                            <div id="props-wrapper">
+                                <h2 class="props-title">Характеристики</h2>
+                                {% block characteristics %}
+                                    {{ productCharacteristics(product.productCharacteristics)|raw }}
+                                {% endblock %}
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="maintainer">
+                            <h3>Изготовитель</h3>
+
+                            <div class="logo-wrapper">
+                                <img src="{{ product.manufacturer.image|default('http://placehold.it/150x58') }}">
+                            </div>
+                            <div>
+                                <h4>{{ product.manufacturer.name|default('N/A') }}</h4>
+
+                                <div class="maintainer-text">
+                                    {{ product.manufacturer.description|default('N/A') }}
+                                </div>
+                                <div><a href="">Отзывы</a> 0 | <a href="">Товары</a> 309</div>
+
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="comments">
                             <h3>Отзывы покупателей</h3>
@@ -236,30 +240,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                        <div class="tab-pane fade" id="props">
-                            <div id="props-wrapper">
-                                <h2 class="props-title">Характеристики</h2>
-                                {% block characteristics %}
-                                    {{ productCharacteristics(product.productCharacteristics)|raw }}
-                                {% endblock %}
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="maintainer">
-                            <h3>Изготовитель</h3>
-
-                            <div class="logo-wrapper">
-                                <img src="{{ product.manufacturer.image|default('http://placehold.it/150x58') }}">
-                            </div>
-                            <div>
-                                <h4>{{ product.manufacturer.name|default('N/A') }}</h4>
-
-                                <div class="maintainer-text">
-                                    {{ product.manufacturer.description|default('N/A') }}
-                                </div>
-                                <div><a href="">Отзывы</a> 0 | <a href="">Товары</a> 309</div>
-
-                            </div>
-                        </div>
+                        <div class="tab-pane fade" id="buy"></div>
                     </div>
 
                     <div class="comments-wrapper">

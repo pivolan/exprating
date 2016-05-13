@@ -201,6 +201,7 @@ assetic:
                 - 'js/external/jquery.form.min.js'
                 - 'js/external/showdown.min.js'
                 - 'js/Exp/exp_form_ajax.js'
+                - 'js/Exp/exp_ajax_load.js'
                 - 'js/product_detail.init.js'
                 - 'js/plugins/log_visit.js'
         product_edit_js:
