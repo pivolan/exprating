@@ -279,4 +279,16 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('a')
             ->getQuery();
     }
+
+    /**
+     * Получить товары, категория которых не листовая, т.е. не последняя и имеет потомков
+     * @return \Doctrine\ORM\Query
+     */
+    public function getWithNotLisnCategoryQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.category', 'b')
+            ->innerJoin('b.children', 'c')
+            ->getQuery();
+    }
 }

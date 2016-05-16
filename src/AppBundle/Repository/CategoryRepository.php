@@ -140,11 +140,12 @@ class CategoryRepository extends NestedTreeRepository
     public function getAll()
     {
         return $this->createQueryBuilder('a')
-            ->select('a, c, d')
+            ->select('a, c, d, e')
             ->where('a.slug != :root')
             ->setParameter('root', Category::ROOT_SLUG)
             ->leftJoin('a.ratingSettings', 'c')
             ->leftJoin('a.seo', 'd')
+            ->leftJoin('a.children', 'e')
             ->orderBy('a.lft')
             ->getQuery()
             ->getResult();

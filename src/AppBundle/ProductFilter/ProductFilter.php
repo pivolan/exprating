@@ -63,6 +63,11 @@ class ProductFilter
      */
     protected $listType = self::LIST_TYPE_ICON;
 
+    /**
+     * @var string
+     */
+    protected $searchString;
+
     public $page;
 
     /**
@@ -189,5 +194,21 @@ class ProductFilter
     public function setListType($listType)
     {
         $this->listType = $listType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSearchString()
+    {
+        return $this->searchString;
+    }
+
+    /**
+     * @param string $searchString
+     */
+    public function setSearchString($searchString)
+    {
+        $this->searchString = $searchString;
     }
 }
