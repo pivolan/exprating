@@ -27,6 +27,7 @@ class IndexController extends BaseController
     const KEY_SORT_PRODUCT = 'productFilter';
     const FLASH_COMMENT_MESSAGE = 'flash.comment.message';
     const KEY_COMMENTS = 'comments';
+    const KEY_SEARCH_STRING = 'q';
 
     /**
      * @Route("/", name="homepage")
@@ -151,6 +152,7 @@ class IndexController extends BaseController
         /** @var ProductFilter $productFilter */
         $productFilter = $this->get('serializer')->denormalize($request->attributes->all(), ProductFilter::class);
         $productFilter->setCurator($this->getUser());
+        $productFilter->setSearchString($request->get(self::KEY_SEARCH_STRING));
         $validator = $this->get('validator');
         $errors = $validator->validate($productFilter);
         if (count($errors) > 0) {

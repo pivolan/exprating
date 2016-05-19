@@ -22,9 +22,6 @@
                 <div class="btn-group">
                     {{ include('_include/sortMenu.html.twig') }}
                 </div>
-                <div class="btn-group">
-                    {{ form(form_search) }}
-                </div>
 
 
                 <div class="btn-group" data-toggle="buttons">
@@ -45,8 +42,15 @@
                     {% endif %}
                     {% if is_granted('VIEW_WAIT', category) %}
                         <a href="{{ path('product_list', {'slug': category.slug, 'listType': productFilter.listType, 'status': productFilter.status == 'STATUS_WAIT'?'STATUS_ALL':'STATUS_WAIT'}) }}"
-                           class="btn btn-info {{ productFilter.status == 'STATUS_WAIT'?'active':'' }}">Смотреть ожидающие подтверждения</a>
+                           class="btn btn-info {{ productFilter.status == 'STATUS_WAIT'?'active':'' }}">Смотреть
+                            ожидающие подтверждения</a>
                     {% endif %}
+                </div>
+                <div class="search">
+                    <form name="search" action="" method="get">
+                        <input class="col-md-8" name="q" type="text" placeholder="Название товара" value="{{ productFilter.searchString }}"/>
+                        <input class="btn btn-success col-md-4" type="submit" value="Поиск"/>
+                    </form>
                 </div>
             </div>
         {% endblock %}
@@ -59,12 +63,16 @@
                     <ul>
                         {% for product in pagination %}
                             {{ include("_include/Product/_itemList.twig") }}
+                        {% else %}
+                            <div class="col-md-12 alert alert-danger">Ничего не найдено</div>
                         {% endfor %}
                     </ul>
                 {% elseif productFilter.listType == 'line' %}
                     <div class="panel-group">
                         {% for product in pagination %}
                             {{ include("_include/Product/_itemLineList.twig") }}
+                        {% else %}
+                            <div class="col-md-12 alert alert-danger">Ничего не найдено</div>
                         {% endfor %}
                     </div>
                 {% endif %}

@@ -51,6 +51,10 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('status', CuratorDecision::STATUS_WAIT);
             }
         }
+        if ($productFilter->getSearchString()) {
+            $qb->andWhere('a.name LIKE :searchString')
+                ->setParameter('searchString', '%'.$productFilter->getSearchString().'%');
+        }
         $qb->orderBy('a.'.$productFilter->getSortField(), $productFilter->getSortDirection());
 
         return $qb->getQuery();
