@@ -23,7 +23,6 @@ class WantToBecomeExpertController extends BaseController
 
     /**
      * @Route("/want-to-become-an-expert/", name="request_create_expert")
-     * @Security("is_granted('ADMIN')")
      */
     public function requestAction(Request $request)
     {
