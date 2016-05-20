@@ -10,13 +10,7 @@ namespace Exprating\ImportBundle\Command;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
-use Exprating\CharacteristicBundle\Entity\CategoryCharacteristic;
-use Exprating\CharacteristicBundle\Entity\Characteristic;
-use Exprating\CharacteristicBundle\Entity\ProductCharacteristic;
-use Exprating\ImportBundle\Entity\AliasItem;
-use Exprating\ImportBundle\Entity\Categories;
-use Exprating\ImportBundle\Entity\Item;
-use Cocur\Slugify\Slugify;
+use Exprating\ImportBundle\CompareText\EvalTextRus;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,11 +29,24 @@ class DetectCategoryCommand extends ContainerAwareCommand
     protected $em;
 
     /**
+     * @var EvalTextRus
+     */
+    protected $evalTextRus;
+
+    /**
      * @param EntityManager $em
      */
     public function setEm(EntityManager $em)
     {
         $this->em = $em;
+    }
+
+    /**
+     * @param EvalTextRus $evalTextRus
+     */
+    public function setEvalTextRus($evalTextRus)
+    {
+        $this->evalTextRus = $evalTextRus;
     }
 
     protected function configure()
@@ -55,11 +62,29 @@ class DetectCategoryCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em->getRepository('AppBundle:Category')->getAll();
-        /** @var Product[] $products */
-        $products = $this->em->getRepository('AppBundle:Product')->getWithNotLisnCategoryQuery()->iterate();
+        /**
+         * Достаем товары с не листовыми категориями
+         * @var Product[] $products
+         */
+        $products = $this->em->getRepository('AppBundle:Product')->getWithNotLisnCategoryQuery()->getResult();
         foreach ($products as $product) {
+            /** @var Category[] $lastLevelCategories */
             $lastLevelCategories = [];
+            //Получаем листовые вложенные категории для этого товара.
             $this->recursive($product->getCategory(), $lastLevelCategories);
+            //Определяем наиболее подходящую категорию для этого товара
+            $prevPercent = 0.0;
+            foreach ($lastLevelCategories as $category) {
+                $percent = $this->evalTextRus->evaltextRus($category->getName(), $product->getName());
+                if ($percent > $prevPercent) {
+                    $product->setCategory($category);
+                    $output->writeln(
+                        "For Product name '{$product->getName()}' set category '{$category->getName()}'
+                         with percent: {$percent}"
+                    );
+                    $prevPercent = $percent;
+                }
+            }
         }
         $this->em->flush();
     }

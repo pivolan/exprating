@@ -26,5 +26,17 @@ services:
         tags:
             -  { name: console.command }
 
+    import.command.detect_category_command:
+        class: Exprating\ImportBundle\Command\DetectCategoryCommand
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setEvalTextRus, ['@import.exval_text_rus']]
+        tags:
+            -  { name: console.command }
+
     import.exval_text_rus:
         class: Exprating\ImportBundle\CompareText\EvalTextRus
+
+    exprating_import.detector.detector_category:
+        class: Exprating\ImportBundle\Detector\DetectorCategory
+        arguments: [ '@doctrine.orm.import_entity_manager' ]
