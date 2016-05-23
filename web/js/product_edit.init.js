@@ -45,7 +45,7 @@ $(document).on('submit', 'form[name="product"],form[name="product_change_expert"
 $(document).on('click', '.dropdown-menu', function (event) {
     event.stopPropagation();
 });
-function addImage(filename){
+function addImage(filename) {
     var $htmlImage = $('div.product-images div[data-type="prototype"]').clone();
     $htmlImage.find('img').attr('src', filename);
     $htmlImage.removeClass('hidden').removeAttr('data-type');
@@ -118,3 +118,9 @@ $(document).ready(function () {
 });
 Exp.post_ajax('#search');
 Exp.post_ajax('#save');
+$(document).on('keypress', "#search-string", function (event) {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+        Exp.post_ajax_action($('#search'));
+    }
+});
