@@ -40,6 +40,20 @@ class CategoryRepository extends NestedTreeRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return Category[]
+     */
+    public function getNotLastLevel()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.children', 'children')
+            ->groupBy('a.slug')
+            ->having('count(children.slug) > :counter')
+            ->setParameter('counter', 0);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getFirstLevel()
     {
         $qb = $this->createQueryBuilder('a')

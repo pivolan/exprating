@@ -295,4 +295,17 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('b.children', 'c')
             ->getQuery();
     }
+
+    /**
+     * @param Category $category
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getQueryByCategory(Category $category)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.category = :category')
+            ->setParameter('category', $category)
+            ->getQuery();
+    }
 }

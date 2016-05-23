@@ -62,29 +62,30 @@ class DetectCategoryCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em->getRepository('AppBundle:Category')->getAll();
-        /**
-         * Достаем товары с не листовыми категориями
-         * @var Product[] $products
-         */
-        $products = $this->em->getRepository('AppBundle:Product')->getWithNotLisnCategoryQuery()->getResult();
-        foreach ($products as $product) {
-            /** @var Category[] $lastLevelCategories */
-            $lastLevelCategories = [];
-            //Получаем листовые вложенные категории для этого товара.
-            $this->recursive($product->getCategory(), $lastLevelCategories);
-            //Определяем наиболее подходящую категорию для этого товара
-            $prevPercent = 0.0;
-            foreach ($lastLevelCategories as $category) {
-                $percent = $this->evalTextRus->evaltextRus($category->getName(), $product->getName());
-                if ($percent > $prevPercent) {
-                    $product->setCategory($category);
-                    $output->writeln(
-                        "For Product name '{$product->getName()}' set category '{$category->getName()}'
+        $categories = $this->em->getRepository('AppBundle:Category')->getNotLastLevel();
+        foreach ($categories as $category) {
+            $output->writeln("{$category->getName()}:{$category->getProducts()->count()}");
+            $products = $this->em->getRepository('AppBundle:Product')->getQueryByCategory($category)->iterate();
+            foreach ($products as $product) {
+                /** @var Category[] $lastLevelCategories */
+                $lastLevelCategories = [];
+                //Получаем листовые вложенные категории для этого товара.
+                $this->recursive($product->getCategory(), $lastLevelCategories);
+                //Определяем наиболее подходящую категорию для этого товара
+                $prevPercent = 0.0;
+                foreach ($lastLevelCategories as $lastLevelCategory) {
+                    $percent = $this->evalTextRus->evaltextRus($lastLevelCategory->getName(), $product->getName());
+                    if ($percent > $prevPercent) {
+                        $product->setCategory($lastLevelCategory);
+                        $output->writeln(
+                            "For Product name '{$product->getName()}' set category '{$lastLevelCategory->getName()}'
                          with percent: {$percent}"
-                    );
-                    $prevPercent = $percent;
+                        );
+                        $prevPercent = $percent;
+                    }
                 }
             }
+            $this->em->flush();
         }
         $this->em->flush();
     }
