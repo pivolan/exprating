@@ -292,6 +292,7 @@ exprating_search:
     engine: '%search_engine%'
 
 liip_imagine:
+    default_image: '/images/default.jpeg'
     resolvers:
        default:
           web_path: ~

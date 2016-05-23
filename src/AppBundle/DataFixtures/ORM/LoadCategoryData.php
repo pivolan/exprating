@@ -29,7 +29,7 @@ class LoadCategoryData extends AbstractFixture implements
 
     public function load(ObjectManager $manager)
     {
-        $categoriesTree = include(__DIR__.'/categories.php');
+        $categoriesTree = json_decode(file_get_contents(__DIR__.'/categories.json'), true);
         /** @var Slugify $slugify */
         $slugify = $this->container->get('appbundle.slugify');
         $curator = $this->getReference(LoadUserData::REFERENCE_CURATOR_USER);

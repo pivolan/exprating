@@ -17,7 +17,7 @@ class LoadImageData extends AbstractFixture implements DependentFixtureInterface
         foreach ($products as $product) {
             for ($i = 1; $i <= 3; $i++) {
                 $image = new Image();
-                $image->setFilename('http://placehold.it/270x270?'.$product->getSlug()."-$i.jpg")
+                $image->setFilename('/images/default.jpeg?'.$product->getSlug()."-$i.jpg")
                     ->setName($product->getName()."-$i")
                     ->setProduct($product);
                 if ($i == 1) {
