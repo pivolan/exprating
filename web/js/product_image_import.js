@@ -19,6 +19,7 @@ function importImages(srcList) {
                 for (i in srcList) {
                     var src = srcList[i];
                     $('img[src="' + src + '"]').addClass('disable');
+                    addImage(src);
                     message('Импорт картинки прошел успешно');
                 }
             } else {
