@@ -294,7 +294,7 @@
                                 {% for similarProduct in similarProducts %}
                                     <li class="links-item">
                                         <a href="{{ path('product_detail', {'slug': similarProduct.slug}) }}">
-                                            <img src="{{ similarProduct.previewImage }}">
+                                            <img src="{{ similarProduct.previewImage|default('/images/default.jpeg')|imagine_filter('product_same_preview_filter') }}">
 
                                             <div class="link-title">{{ similarProduct.name }}</div>
                                         </a>

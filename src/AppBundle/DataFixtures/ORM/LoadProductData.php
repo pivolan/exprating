@@ -33,6 +33,7 @@ class LoadProductData extends AbstractFixture implements DependentFixtureInterfa
                 ->setEnabledAt(new \DateTime())
                 ->setSlug('product_'.$i)
                 ->setCategory($category)
+                ->setPreviewImage('/images/default.jpeg')
                 ->setManufacturer($manufacturer)
                 ->setExpertUser(($isEnabled || rand(0, 1)) ? $user : null)
                 ->setExpertComment(

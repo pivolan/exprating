@@ -115,9 +115,12 @@ class PartnerProductController extends BaseController
      */
     public function whereToBuyAction(Product $product)
     {
-        $partnerProducts = $this->get('search_bundle.partner_product_searcher')->find(
-            (new SearchParams())->setString($product->getSameProductsQueryString())
-        );
+        $partnerProducts = [];
+        if ($product->getSameProductsQueryString()) {
+            $partnerProducts = $this->get('search_bundle.partner_product_searcher')->find(
+                (new SearchParams())->setString($product->getSameProductsQueryString())
+            );
+        }
 
         return $this->render(
             'Product/whereToBuy.html.twig',
