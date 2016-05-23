@@ -66,7 +66,9 @@ class DetectCategoryCommand extends ContainerAwareCommand
         foreach ($categories as $category) {
             $output->writeln("{$category->getName()}:{$category->getProducts()->count()}");
             $products = $this->em->getRepository('AppBundle:Product')->getQueryByCategory($category)->iterate();
-            foreach ($products as $product) {
+            foreach ($products as $productRow) {
+                /** @var Product $product */
+                $product = $productRow[0];
                 /** @var Category[] $lastLevelCategories */
                 $lastLevelCategories = [];
                 //Получаем листовые вложенные категории для этого товара.
