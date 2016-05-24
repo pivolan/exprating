@@ -70,15 +70,15 @@ class AjaxFormAutoComplete extends BaseController
         $categories = $categoryRepository->getForJsTree($user, $admin);
         $categoriesIndexed = [];
         foreach ($categories as $categoryArray) {
-            $categoriesIndexed[$categoryArray['id']] = $categoryArray;
+            $categoriesIndexed[$categoryArray->id] = $categoryArray;
         }
 
         foreach ($categories as $categoryArray) {
-            $parent = $categoryArray['parent_id'] ?: '#';
-            if ($categoryArray['parent_id'] && !isset($categoriesIndexed[$categoryArray['parent_id']])) {
+            $parent = $categoryArray->parent_id ?: '#';
+            if ($categoryArray->parent_id && !isset($categoriesIndexed[$categoryArray->parent_id])) {
                 /** @var Category[] $parentCategories */
                 $parentCategories = $categoryRepository->getPath(
-                    $categoryRepository->find($categoryArray['parent_id'])
+                    $categoryRepository->find($categoryArray->parent_id)
                 );
                 foreach ($parentCategories as $categoryParent) {
                     if (!isset($categoriesIndexed[$categoryParent->getSlug()])) {
@@ -86,7 +86,7 @@ class AjaxFormAutoComplete extends BaseController
                         $result[] = [
                             'id'     => $categoryParent->getSlug(),
                             'parent' => $categoryParent->getParent() ? $categoryParent->getParent()->getSlug() : '#',
-                            'text'   => $categoryParent->getName(),
+                            'text'   => $categoryParent->getName()."({$categoryParent->getProducts()->count()})",
                             'a_attr' => [
                                 'href'      => $this->generateUrl($route, ['slug' => $categoryParent->getSlug()]),
                                 'data_slug' => $categoryParent->getSlug(),
@@ -100,15 +100,15 @@ class AjaxFormAutoComplete extends BaseController
                 }
             }
             $result[] = [
-                'id'     => $categoryArray['id'],
+                'id'     => $categoryArray->id,
                 'parent' => $parent,
-                'text'   => $categoryArray['name'],
+                'text'   => $categoryArray->name."({$categoryArray->product_count})",
                 'a_attr' => [
-                    'href'      => $this->generateUrl($route, ['slug' => $categoryArray['id']]),
-                    'data_slug' => $categoryArray['id'],
+                    'href'      => $this->generateUrl($route, ['slug' => $categoryArray->id]),
+                    'data_slug' => $categoryArray->id,
                 ],
                 'state'  => [
-                    'selected' => ($categoryArray['id'] == $category),
+                    'selected' => ($categoryArray->id == $category),
                     'opened'   => true,
                 ],
             ];

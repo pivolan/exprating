@@ -7,6 +7,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Dto\CategoryJsTree;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Doctrine\ORM\AbstractQuery;
@@ -100,12 +101,13 @@ class CategoryRepository extends NestedTreeRepository
      * @param User|null $user
      * @param User|null $admin
      *
-     * @return array
+     * @return CategoryJsTree[]
      */
     public function getForJsTree(User $user = null, User $admin = null)
     {
         $qb = $this->createQueryBuilder('a')
             ->select('a.name, a.slug as id, b.slug as parent_id')
+            ->addSelect('(SELECT count(f.id) FROM AppBundle\\Entity\\Product f WHERE f.category=a.slug) as product_count')
             ->leftJoin('a.parent', 'b');
         if ($user && !$user->hasRole(User::ROLE_ADMIN)) {
             $qb->innerJoin('a.experts', 'e')
@@ -122,7 +124,12 @@ class CategoryRepository extends NestedTreeRepository
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
         $result = [];
         foreach ($categories as $category) {
-            $result[$category['id']] = $category;
+            $categoryJsTree = new CategoryJsTree();
+            $categoryJsTree->id = $category['id'];
+            $categoryJsTree->name = $category['name'];
+            $categoryJsTree->parent_id = $category['parent_id'];
+            $categoryJsTree->product_count = $category['product_count'];
+            $result[$category['id']] = $categoryJsTree;
         }
 
         return $result;
