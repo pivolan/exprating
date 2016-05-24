@@ -22,14 +22,19 @@ use AppBundle\Validator\Constraints\ImportImageDuplicate;
 class ImportImage
 {
     /**
-     * @var $product Product
+     * @var Product
      */
     protected $product;
 
     /**
-     * @var \array $url
+     * @var \array
      */
     protected $urls;
+
+    /**
+     * @var \array
+     */
+    protected $importedUrls;
 
     /**
      * @return Product
@@ -62,4 +67,22 @@ class ImportImage
     {
         $this->urls = $urls;
     }
+
+    /**
+     * @return array
+     */
+    public function getImportedUrls()
+    {
+        return $this->importedUrls;
+    }
+
+    /**
+     * @param array $importedUrls
+     */
+    public function setImportedUrls($importedUrls)
+    {
+        $this->importedUrls = $importedUrls;
+    }
+
+
 }

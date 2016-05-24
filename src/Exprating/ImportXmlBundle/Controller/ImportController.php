@@ -19,6 +19,8 @@ use AppBundle\Event\ProductEvents;
 class ImportController extends BaseController
 {
     const FLASH_IMPORT_ERRORS = 'partner.product.error';
+    const KEY_STATUS = 'status';
+    const KEY_SRC_LIST = 'srcList';
 
     /**
      * @Route("/import/product/{slug}/pictures", name="import_partner_product")
@@ -43,6 +45,8 @@ class ImportController extends BaseController
             new ProductImportPicturesEvent($importImage)
         );
 
-        return new JsonResponse(self::SUCCESS_RESPONSE_OK);
+        return new JsonResponse(
+            [self::KEY_STATUS => self::SUCCESS_RESPONSE_OK, self::KEY_SRC_LIST => $importImage->getImportedUrls()]
+        );
     }
 }

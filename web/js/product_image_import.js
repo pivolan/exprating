@@ -15,11 +15,11 @@ function importImages(srcList) {
         dataType: 'json',
         data: {urls: srcList},
         success: function (data) {
-            if (data == 'ok') {
+            if (data.status == 'ok') {
                 for (i in srcList) {
                     var src = srcList[i];
                     $('img[src="' + src + '"]').addClass('disable');
-                    addImage(src);
+                    addImage(data.srcList[i]);
                     message('Импорт картинки прошел успешно');
                 }
             } else {
@@ -36,7 +36,7 @@ $('document').ready(function () {
     });
     //Просмотр картинки, увеличение
     $(document).on('click', 'button.image-zoom-in', function () {
-        var src = $(this).parent().find('img').attr('src');
+        var src = $(this).data('src');
         $.colorbox({href: src});
     });
     //Импорт сразу всех картинок

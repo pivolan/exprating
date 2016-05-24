@@ -28,9 +28,12 @@ class PartnerProductSearch
     /**
      * @param SearchParams $searchParams
      *
-     * @return array|Product[]
+     * @param int          $limit
+     * @param int          $offset
+     *
+     * @return \AppBundle\Entity\Product[]|array
      */
-    public function find(SearchParams $searchParams)
+    public function find(SearchParams $searchParams, $limit = 0, $offset = 0)
     {
         return $this->searchEngine->search(
             $searchParams->getString(),
@@ -38,6 +41,8 @@ class PartnerProductSearch
                 ->setRepositoryName('ExpratingImportXmlBundle:PartnerProduct')
                 ->setFields(['name',])
                 ->setCriteria(['available' => true])
+                ->setLimit($limit)
+                ->setOffset($offset)
         );
     }
 }

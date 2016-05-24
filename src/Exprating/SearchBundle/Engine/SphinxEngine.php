@@ -38,6 +38,7 @@ class SphinxEngine implements EngineInterface
      */
     public function search($string, SearchCriteria $searchCriteria)
     {
+        $this->sphinxSearch->SetLimits($searchCriteria->getOffset(), $searchCriteria->getLimit());
         $result = $this->sphinxSearch->searchEx($string, $searchCriteria->getIndexName());
         $entities = [];
         foreach ($result['matches'] as $match) {

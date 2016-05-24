@@ -351,7 +351,7 @@ class ProductSubscriber implements EventSubscriberInterface
         if (!is_dir($absoluteFolderPath)) {
             mkdir($absoluteFolderPath, 0777, true);
         }
-
+        $importedUrls = [];
         foreach ($urls as $src) {
             $filename = $this->pathService->getRandomFilename();
             $targetFileFull = $absoluteFolderPath.$filename;
@@ -367,8 +367,10 @@ class ProductSubscriber implements EventSubscriberInterface
                 ->setFilename($this->pathService->relativeFolder().$filename)
                 ->setName($filename);
             $product->addImage($image);
+            $importedUrls[] = $image->getFilename();
             $this->em->persist($image);
         }
+        $importImage->setImportedUrls($importedUrls);
     }
 
     public function saveString(ProductSaveQueryStringEvent $event)

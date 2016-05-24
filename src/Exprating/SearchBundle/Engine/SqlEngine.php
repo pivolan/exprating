@@ -45,7 +45,9 @@ class SqlEngine implements EngineInterface
                 }
             }
         }
-        $qb->andWhere(implode(' OR ', $sqlPart));
+        $qb->andWhere(implode(' OR ', $sqlPart))
+            ->setMaxResults($searchCriteria->getLimit())
+            ->setFirstResult($searchCriteria->getOffset());
         $query = $qb->getQuery();
 
         return $query->getResult();

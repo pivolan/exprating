@@ -48,6 +48,7 @@ $(document).on('click', '.dropdown-menu', function (event) {
 function addImage(filename) {
     var $htmlImage = $('div.product-images div[data-type="prototype"]').clone();
     $htmlImage.find('img').attr('src', filename);
+    $htmlImage.find('button.image-zoom-in').attr('data-src', filename);
     $htmlImage.removeClass('hidden').removeAttr('data-type');
     var $htmlForm = $('div.image-form > div[data-type="prototype"]');
     var htmlForm = $htmlForm.outerHTML();

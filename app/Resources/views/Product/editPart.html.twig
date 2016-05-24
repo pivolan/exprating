@@ -156,7 +156,7 @@
         <span class="glyphicon glyphicon-remove"></span>
     </a>
 {% endblock %}
-{% block sidebar_left_after_price %}
+{% block images_edit %}
     <div>
         <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}" multiple/>
         <input type="hidden" name="product_id" value="{{ product.id }}"/>
@@ -168,21 +168,15 @@
         </div>
         <div class="row product-images">
             {% for image in product.images %}
-                <div class="col-sm-4">
+                <div class="col-sm-4 image-box">
                     <img src="{{ image.filename | imagine_filter('product_edit_filter') }}"
                          height="80"
                          width="80"
                          alt="{{ image.alt }}">
                     <button class="btn btn-info btn-xs image-zoom-in" type="button"
-                            aria-haspopup="true"
-                            aria-expanded="true" data-toggle="dropdown">
+                            data-src="{{ image.filename | imagine_filter('original_filter') }}">
                         <span class="glyphicon glyphicon-zoom-in"></span>
                     </button>
-                    <ul class="dropdown-menu form-group">
-                        <li>
-                            <img src="{{ image.filename | imagine_filter('original_filter') }}" alt="">
-                        </li>
-                    </ul>
                     <button class="btn btn-danger btn-xs image-remove"
                             type="button"
                             data-image_id="{{ loop.index0 }}"
@@ -199,21 +193,15 @@
                     />
                 </div>
             {% endfor %}
-            <div class="col-sm-4 hidden" data-type="prototype">
+            <div class="col-sm-4 image-box hidden" data-type="prototype">
                 <img src=""
                      height="80"
                      width="80"
                      alt="">
                 <button class="btn btn-info btn-xs image-zoom-in" type="button"
-                        aria-haspopup="true"
-                        aria-expanded="true" data-toggle="dropdown">
+                        data-src="">
                     <span class="glyphicon glyphicon-zoom-in"></span>
                 </button>
-                <ul class="dropdown-menu form-group">
-                    <li>
-                        <img src="" alt="">
-                    </li>
-                </ul>
                 <button class="btn btn-danger btn-xs image-remove"
                         type="button"
                         data-image_id="__name__"

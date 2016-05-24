@@ -28,9 +28,12 @@ class ProductSearch
     /**
      * @param SearchParams $searchParams
      *
-     * @return array|Product[]
+     * @param int          $limit
+     * @param int          $offset
+     *
+     * @return \AppBundle\Entity\Product[]|array
      */
-    public function find(SearchParams $searchParams)
+    public function find(SearchParams $searchParams, $limit = 0, $offset = 0)
     {
         return $this->searchEngine->search(
             $searchParams->getString(),
@@ -38,6 +41,8 @@ class ProductSearch
                 ->setRepositoryName('AppBundle:Product')
                 ->setFields(['name',])
                 ->setCriteria(['isEnabled' => true])
+                ->setLimit($limit)
+                ->setOffset($offset)
         );
     }
 }

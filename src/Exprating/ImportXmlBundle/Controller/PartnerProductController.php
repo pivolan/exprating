@@ -36,6 +36,8 @@ class PartnerProductController extends BaseController
     const KEY_PARTNER_IMAGES = 'partnerImages';
     const KEY_ERRORS = 'errors';
     const KEY_SEARCH_PARAMS = 'searchParams';
+    const WHERE_TO_BUY_LIMIT = 3;
+    const PARTNER_PRODUCTS_LIMIT = 30;
 
     /**
      * @Route("/partner/products/{slug}/", name="partner_product_list")
@@ -55,7 +57,10 @@ class PartnerProductController extends BaseController
         }
 
         /** @var PartnerProduct[] $partnerProducts */
-        $partnerProducts = $this->get('search_bundle.partner_product_searcher')->find($searchParams);
+        $partnerProducts = $this->get('search_bundle.partner_product_searcher')->find(
+            $searchParams,
+            self::PARTNER_PRODUCTS_LIMIT
+        );
 
         return $this->render(
             'PartnerProduct/list.html.twig',
@@ -118,7 +123,8 @@ class PartnerProductController extends BaseController
         $partnerProducts = [];
         if ($product->getSameProductsQueryString()) {
             $partnerProducts = $this->get('search_bundle.partner_product_searcher')->find(
-                (new SearchParams())->setString($product->getSameProductsQueryString())
+                (new SearchParams())->setString($product->getSameProductsQueryString()),
+                self::WHERE_TO_BUY_LIMIT
             );
         }
 
