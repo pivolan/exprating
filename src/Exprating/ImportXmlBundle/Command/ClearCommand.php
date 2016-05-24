@@ -40,11 +40,12 @@ class ClearCommand extends Command
         $type = $input->getArgument(self::ARG_TYPE);
         if ($type == self::TYPE_ACTIONPAY) {
             exec("rm -R {$this->rootDir}/../var/import_xml/actionpay/");
-
         } elseif ($type == self::TYPE_ADMITAD) {
             exec("rm -R {$this->rootDir}/../var/import_xml/admitad/");
         } else {
             $output->writeln('Неверно указан тип');
+            return;
         }
+        exec("rm -R {$this->rootDir}/../var/import_xml/offers/");
     }
 }
