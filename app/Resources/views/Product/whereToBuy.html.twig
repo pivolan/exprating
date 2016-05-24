@@ -3,7 +3,7 @@
     <tbody>
     {% for partnerProduct in partnerProducts %}
         <tr>
-            <td><img class="where-to-by-img" src="{{ partnerProduct.pictures.0|default('http://placehold.it/200x130') }}"></td>
+            <td><div class="where-to-by-img" style="background-image: url('{{ partnerProduct.pictures.0|default('http://placehold.it/150x58') }}');"></div></td>
             <td><a href="{{ partnerProduct.url }}">{{ partnerProduct.company }}</a></td>
             <td>{{ partnerProduct.price }} <span
                         class="sign_ruble">p<span>уб.</span></span></td>

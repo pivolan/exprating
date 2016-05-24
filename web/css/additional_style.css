@@ -158,4 +158,11 @@ div.search {
     margin-top: 20px;
 }
 
-
+div.where-to-by-img {
+    background-size: 150px auto;
+    background-position: left center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    height: 58px;
+    width: 150px;
+}

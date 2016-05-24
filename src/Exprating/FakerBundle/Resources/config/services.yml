@@ -5,6 +5,7 @@ services:
     service.faker:
         class: Faker\Generator
         factory: [Faker\Factory, create]
+        arguments: [ 'ru_RU' ]
         calls:
             - [seed, [1]]
 
