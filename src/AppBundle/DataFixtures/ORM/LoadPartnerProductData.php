@@ -7,32 +7,47 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Exprating\ImportXmlBundle\Entity\PartnerProduct;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadPartnerProductData extends AbstractFixture implements DependentFixtureInterface
+class LoadPartnerProductData extends AbstractFixture implements DependentFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     public function load(ObjectManager $manager)
     {
-        $offer = (new PartnerProduct())
-            ->setHash(md5('#$'))
-            ->setAmount(123)
-            ->setAvailable(true)
-            ->setCategoryId(1)
-            ->setCategoryName('Accessories')
-            ->setCategoryPath('Qwe qwe qwe')
-            ->setCompany('Mtc')
-            ->setDescription("Some description with line break \n and next line ")
-            ->setId(12)
-            ->setMarketCategory('Cars')
-            ->setName('Name')
-            ->setOldPrice(233)
-            ->setParams(['first'=>'value', 'second'=>'value'])
-            ->setPictures(['http://www.shop.mts.ru/upload/iblock/c52/MTS-Qwerty-655-White.jpg'])
-            ->setPrice(100)
-            ->setUrl('https://clothia.com/item/234')
-            ->setVendor('Nike')
-            ->setVendorCode(90)
-            ->setYear(2016);
-        $manager->persist($offer);
+        $faker = $this->container->get('service.faker');
+        foreach (range(1, 1000) as $num) {
+            $offer = (new PartnerProduct())
+                ->setHash(md5("$num#$"))
+                ->setAmount(rand(100, 1000))
+                ->setAvailable(true)
+                ->setCategoryId($num)
+                ->setCategoryName($faker->name)
+                ->setCategoryPath($faker->title)
+                ->setCompany($faker->company)
+                ->setDescription($faker->realText())
+                ->setId($num)
+                ->setMarketCategory($faker->word)
+                ->setName($faker->streetName)
+                ->setOldPrice(rand(100, 1000))
+                ->setParams([$faker->word => $faker->word, 'color' => $faker->colorName, 'city' => $faker->city])
+                ->setPictures([$faker->imageUrl()])
+                ->setPrice(rand(100, 1000))
+                ->setUrl($faker->url)
+                ->setVendor($faker->company)
+                ->setVendorCode(90)
+                ->setYear($faker->year);
+            $manager->persist($offer);
+        }
         $manager->flush();
     }
 
