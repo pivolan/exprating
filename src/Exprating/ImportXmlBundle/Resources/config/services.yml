@@ -101,6 +101,13 @@ services:
         tags:
             - { name: console.command }
 
+    exprating_import_xml.command.clear_command:
+        class: Exprating\ImportXmlBundle\Command\ClearCommand
+        calls:
+            - [ setRootDir, ['%kernel.root_dir%'] ]
+        tags:
+            - { name: console.command }
+
     exprating_import_xml.serialize_normalizer.admitad_adv_normalizer:
         class: Exprating\ImportXmlBundle\Serialize\Normalizer\AdmitadAdvNormalizer
         tags:
