@@ -27,7 +27,7 @@ class LoadPartnerProductData extends AbstractFixture implements DependentFixture
         $faker = $this->container->get('service.faker');
         foreach (range(1, 1000) as $num) {
             $offer = (new PartnerProduct())
-                ->setHash(md5("$num#$"))
+                ->setHash(crc32("$num#$"))
                 ->setAmount(rand(100, 1000))
                 ->setAvailable(true)
                 ->setCategoryId($num)

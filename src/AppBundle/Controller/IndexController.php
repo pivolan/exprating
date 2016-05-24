@@ -66,7 +66,7 @@ class IndexController extends BaseController
         if ($form->isValid()) {
             /** @var SearchParams $searchParams */
             $searchParams = $form->getData();
-            $products = $this->get('search_bundle.product_searcher')->find($searchParams);
+            $products = $this->get('search_bundle.product_searcher')->find($searchParams, self::LIMIT_PER_PAGE);
         }
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

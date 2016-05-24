@@ -4,10 +4,10 @@
             <div class="row">
                 <div class="col-md-5">
                     <img class="partner-product-preview"
-                         src="{{ product.previewImage|default('/images/default.jpeg')|imagine_filter('product_same_filter') }}"
+                         src="{{ product.previewImage|default('/images/default.jpeg')|imagine_filter('product_list_list_filter') }}"
                          alt=""
                          align="left">
-                    <a href="{{ path('product_detail', {'slug':product.slug}) }}">{{ product.name }}</a>
+                    <a class="col-md-offset-2" href="{{ path('product_detail', {'slug':product.slug}) }}">{{ product.name }}</a>
                 </div>
                 <div class="col-md-3">{{ product.category.name }}</div>
                 <div class="col-md-2">

@@ -134,7 +134,7 @@ class OfferParseCommand extends Command
                         $company
                     );
                     foreach ($xmlReader->getElementsData($filePriceListXml, self::XML_KEY_OFFER) as $offerData) {
-                        $hash = md5(serialize($offerData));
+                        $hash = crc32(serialize($offerData));
                         /** @var PartnerProduct $offer */
                         $offer = $this->serializer->denormalize($offerData, PartnerProduct::class, OfferNormalizer::FORMAT);
                         $offer->setHash($hash);
