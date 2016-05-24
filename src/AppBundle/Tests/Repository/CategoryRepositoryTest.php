@@ -7,6 +7,7 @@
 
 namespace AppBundle\Tests\Repository;
 
+use AppBundle\Dto\CategoryJsTree;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
@@ -61,12 +62,14 @@ class CategoryRepositoryTest extends AbstractWebCaseTest
         $this->em->flush();
         $categories = $this->em->getRepository('AppBundle:Category')->getForJsTree($user);
         $this->assertCount(1, $categories);
+        $categoryJsTree = new CategoryJsTree();
+        $categoryJsTree->name = 'Аккумуляторные батареи';
+        $categoryJsTree->id = $categorySlug;
+        $categoryJsTree->parent_id = 'avtozapchasti-2';
+        $categoryJsTree->product_count = 15;
+
         $expectedResult = [
-            $categorySlug => [
-                'name'      => 'Аккумуляторные батареи',
-                'id'        => $categorySlug,
-                'parent_id' => 'avtozapchasti-2',
-            ],
+            $categorySlug => $categoryJsTree,
         ];
         $this->assertEquals(
             $expectedResult,
