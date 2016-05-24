@@ -11,7 +11,7 @@ use Exprating\ImportXmlBundle\XmlDto\AdmitadAdv;
 
 class AdmitadPriceListFiles
 {
-    const FOLDER_ADMITAD = '/../var/offers';
+    const FOLDER_ADMITAD = '/../var/import_xml/offers';
 
     /**
      * @var string

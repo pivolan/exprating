@@ -10,7 +10,7 @@ namespace Exprating\ImportXmlBundle\Filesystem;
 class AdmitadFiles
 {
     const FILENAME_ADMINER_CSV = '/admitad.csv';
-    const FOLDER_ADMINER = '/../var/admitad';
+    const FOLDER_ADMINER = '/../var/import_xml/admitad';
     const FILENAME_ADMINER_XML = '/admitad.xml';
     /**
      * @var string

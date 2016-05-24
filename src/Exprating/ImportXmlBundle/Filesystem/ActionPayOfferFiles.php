@@ -11,7 +11,7 @@ use Exprating\ImportXmlBundle\XmlDto\ActionPayOffer;
 
 class ActionPayOfferFiles
 {
-    const FOLDER_ACTIONPAY = '/../var/actionpay_offers';
+    const FOLDER_ACTIONPAY = '/../var/import_xml/actionpay/actionpay_offers';
     /**
      * @var string
      */
