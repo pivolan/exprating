@@ -20,12 +20,13 @@ class SphinxEngineTest extends \PHPUnit_Framework_TestCase
         $sphinx = $this->getMockBuilder(Sphinxsearch::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $stdClass = new \stdClass();
         $sphinx->expects($this->once())
             ->method('searchEx')
-            ->will($this->returnValue(['matches' => [['entity' => 'value']]]));
+            ->will($this->returnValue(['matches' => [['entity' => $stdClass]]]));
         $engine = new SphinxEngine($sphinx);
         $this->assertEquals(
-            ['value'],
+            [$stdClass],
             $engine->search('qwerty', (new SearchCriteria())->setIndexName(IndexNames::INDEX_PRODUCT))
         );
     }
