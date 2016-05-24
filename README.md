@@ -55,3 +55,6 @@ indexer --config app/config/Sphinx/sphinx.conf --rotate --all
 ***Правила зависимостей по бандлам***
 
 [/doc/codestyle.md](ссылка)
+
+***Импорт партнерских товаров***
+[/doc/import_partners.md](link)
