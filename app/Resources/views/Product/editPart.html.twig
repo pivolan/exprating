@@ -259,9 +259,11 @@
         <div id="search-content"></div>
     </div>
 {% endblock %}
-{% block where_to_buy_title %}История изменений{% endblock %}
-{% block where_to_buy_body %}
-    <div class="row history_edit">
+{% block last_tab %}
+    <li><a href="#history_edit" data-toggle="tab">История изменений</a></li>
+{% endblock %}
+{% block last_tab_body %}
+    <div class="row history_edit" id="history_edit">
         <div class="col-md-12">
             {% for history in historyLogs %}
                 <div class="well well-sm">

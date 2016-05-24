@@ -172,7 +172,9 @@
                         <li><a href="#props" data-toggle="tab">Характеристики</a></li>
                         <li><a href="#maintainer" data-toggle="tab">Изготовитель</a></li>
                         <li><a href="#comments" data-toggle="tab">Отзывы</a></li>
-                        <li><a href="#buy" data-toggle="tab" data-type="ajax" data-target="#buy" data-url="{{ path('product_where_to_buy', {'slug': product.slug}) }}">{% block where_to_buy_title %}Где купить{% endblock %}</a></li>
+                        {% block last_tab %}
+                            <li><a href="#buy" data-toggle="tab" data-type="ajax" data-target="#buy" data-url="{{ path('product_where_to_buy', {'slug': product.slug}) }}">Где купить</a></li>
+                        {% endblock %}
                     </ul>
 
                     <div class="tabs-content">
@@ -240,7 +242,9 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                        <div class="tab-pane fade" id="buy"></div>
+                        {% block last_tab_body %}
+                            <div class="tab-pane fade" id="buy"></div>
+                        {% endblock %}
                     </div>
 
                     <div class="comments-wrapper">
