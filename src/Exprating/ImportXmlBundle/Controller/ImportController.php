@@ -19,7 +19,6 @@ use AppBundle\Event\ProductEvents;
 class ImportController extends BaseController
 {
     const FLASH_IMPORT_ERRORS = 'partner.product.error';
-    const SUCCESS_RESPONSE_OK = 'ok';
 
     /**
      * @Route("/import/product/{slug}/pictures", name="import_partner_product")

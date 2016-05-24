@@ -6,6 +6,7 @@
 
 namespace AppBundle\Event\Subscriber;
 
+use AppBundle\Entity\Notification;
 use AppBundle\Entity\RegistrationRequest;
 use AppBundle\Entity\RequestCuratorRights;
 use AppBundle\Entity\User;
@@ -232,11 +233,20 @@ class InviteSubscriber implements EventSubscriberInterface
             ->setTo($curator->getEmail())
             ->setBody(
                 $this->twig->render(
-                    'Email/requestRightsNotify.html.twig',
+                    'Email/requestRightsNotify.text.twig',
                     ['expert' => $expert,]
                 )
             );
         $this->mailer->send($message);
+        $notification = (new Notification())
+            ->setMessage(
+                $this->twig->render(
+                    'Email/requestRightsNotify.html.twig',
+                    ['expert' => $expert]
+                )
+            )
+            ->setUser($curator);
+        $this->em->persist($notification);
     }
 
     public function flush()

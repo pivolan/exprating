@@ -30,6 +30,14 @@
     <!-- Оповещения -->
     <div class="alert-message">
         <!-- Блоков message-box можно добавлять сколько угодно 1 -->
+        {% if app.user %}
+            {% for notification_message in app.user.notifications %}
+                <div class="message-box alert-success">
+                    <span class="close" data-toggle="ajax" data-url="{{ path('notification_remove', {'id': notification_message.id}) }}">X</span>
+                    <p>{{ notification_message.message|raw }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
         {% for flash_message in app.session.flashbag.get('flash.message') %}
             <div id="flash_error_{{ loop.index }}" class="message-box alert-success">
                 <span class="close">X</span>

@@ -25,6 +25,8 @@ abstract class BaseController extends Controller
     const KEY_USER = 'user';
     const KEY_PAGE = 'page';
 
+    const SUCCESS_RESPONSE_OK = 'ok';
+
     const FLASH_MESSAGE = 'flash.message';
     const FLASH_ERROR_MESSAGE = 'flash.error_message';
 

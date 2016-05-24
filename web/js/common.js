@@ -4,6 +4,21 @@ $(document).ready(function () {
         var target = $(e.target).attr("href");
     });
 
+    $(document).on('click', '[data-toggle="ajax"]', function (event) {
+        var $this = $(this);
+        $.ajax({
+            url: $this.data('url'),
+            method: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log('Операция прошла успешно');
+            },
+            error: function () {
+                console.log('Some error happened');
+            }
+        });
+    });
+
 
     $("#mainSiteMenuMMenuNav").append($("#mainSiteMenu").clone().attr("id", "mainSiteMenuMMenu").attr("class", ""));
     $("#mainSiteMenuMMenuNav ul").removeAttr('class');
@@ -14,19 +29,19 @@ $(document).ready(function () {
         configuration: {
             pageNodetype: "div"
         },
-        extensions 	: [ "border-none" ],
-        navbar 		: false,
-        navbars		: {
+        extensions: ["border-none"],
+        navbar: false,
+        navbars: {
             //content : [ "searchfield" ],
-            height 	: 1
+            height: 1
         },
         //searchfield: {
         //    add: true,
         //    placeholder: 'Поиск'
         //}
     });
-    var API = $("#mainSiteMenuMMenuNav").data( "mmenu" );
-    
+    var API = $("#mainSiteMenuMMenuNav").data("mmenu");
+
     $(".navbar-toggle").click(function () {
         API.open();
         return false;

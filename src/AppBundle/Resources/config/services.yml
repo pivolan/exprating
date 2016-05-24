@@ -59,6 +59,13 @@ services:
         tags:
             - { name: security.voter }
 
+    app.notification_voter:
+        class: AppBundle\Security\NotificationVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
     app.user_voter:
         class: AppBundle\Security\UserVoter
         arguments: ['@security.access.decision_manager']

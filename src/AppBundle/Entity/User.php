@@ -209,6 +209,12 @@ class User extends BaseUser
      */
     private $myDecisions;
 
+    /**
+     * @var Notification[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Notification", mappedBy="user")
+     */
+    private $notifications;
+
 
     public function __construct()
     {
@@ -220,6 +226,7 @@ class User extends BaseUser
         $this->adminCategories = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->myDecisions = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
 
@@ -837,5 +844,39 @@ class User extends BaseUser
     public function getMyDecisions()
     {
         return $this->myDecisions;
+    }
+
+    /**
+     * Add notification
+     *
+     * @param \AppBundle\Entity\Notification $notification
+     *
+     * @return User
+     */
+    public function addNotification(\AppBundle\Entity\Notification $notification)
+    {
+        $this->notifications[] = $notification;
+
+        return $this;
+    }
+
+    /**
+     * Remove notification
+     *
+     * @param \AppBundle\Entity\Notification $notification
+     */
+    public function removeNotification(\AppBundle\Entity\Notification $notification)
+    {
+        $this->notifications->removeElement($notification);
+    }
+
+    /**
+     * Get notifications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
     }
 }
