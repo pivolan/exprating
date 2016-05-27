@@ -45,6 +45,8 @@ vendor/bin/phpunit
 Запускать из папки проекта
 Если хочется локально потестить как работает поиск с помощью SPhinx:
 
+indexer --config app/config/Sphinx/sphinx.conf --all
+
 searchd --config app/config/Sphinx/sphinx.conf
 
 indexer --config app/config/Sphinx/sphinx.conf --rotate --all
