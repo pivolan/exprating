@@ -61,25 +61,28 @@ class CommonProductSearchTypeTest extends AbstractWebCaseTest
         );
         $em->flush();
 
-        $object = new CommonProductSearch();
-        $object->setName('test_name');
+        $commonProductSearch = new CommonProductSearch();
+        $commonProductSearch->setName('test_name');
         $characteristicInt = (new CharacteristicSearchParameter())->setName('test_filter_int');
-        $object->addCharacteristics($characteristicInt);
+        $commonProductSearch->addCharacteristics($characteristicInt);
         $characteristicStr = (new CharacteristicSearchParameter())->setName('test_filter_str');
-        $object->addCharacteristics($characteristicStr);
+        $commonProductSearch->addCharacteristics($characteristicStr);
         $characteristicDec = (new CharacteristicSearchParameter())->setName('test_filter_dec');
-        $object->addCharacteristics($characteristicDec);
+        $commonProductSearch->addCharacteristics($characteristicDec);
 
-        $form = $this->client->getContainer()->get('form.factory')->create(CommonProductSearchType::class, $object);
+        $form = $this->client->getContainer()->get('form.factory')->create(
+            CommonProductSearchType::class,
+            $commonProductSearch
+        );
 
-        $object2 = new CommonProductSearch();
-        $object2->setName('test_name');
-        $object2->setPriceGTE(100.25);
-        $object2->setPriceLTE(200.55);
+        $commonProductSearch2 = new CommonProductSearch();
+        $commonProductSearch2->setName('test_name');
+        $commonProductSearch2->setPriceGTE(100.25);
+        $commonProductSearch2->setPriceLTE(200.55);
         $characteristicDec->setValueLTE(200.36)->setValueGTE(100.25)->setType(Characteristic::TYPE_DECIMAL);
         $characteristicInt->setValueLTE(200)->setValueGTE(100)->setType(Characteristic::TYPE_INT);
         $characteristicStr->setValue('this is a string')->setType(Characteristic::TYPE_STRING);
-        $object2
+        $commonProductSearch2
             ->addCharacteristics($characteristicInt)
             ->addCharacteristics($characteristicStr)
             ->addCharacteristics($characteristicDec);
@@ -88,7 +91,14 @@ class CommonProductSearchTypeTest extends AbstractWebCaseTest
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($object2, $form->getData());
+        $this->assertEquals($commonProductSearch2, $form->getData());
+
+        $commonProductSearch2->setCharacteristics([]);
+        $this->assertEquals([], $commonProductSearch2->getCharacteristics());
+
+        $commonProductSearch->removeCharacteristics($characteristicDec);
+        $this->assertCount(2, $commonProductSearch->getCharacteristics());
+
 
         $view = $form->createView();
         $children = $view->children;

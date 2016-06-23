@@ -61,6 +61,8 @@ class CommonProductSearch
 
     /**
      * @param CharacteristicSearchParameter $characteristic
+     *
+     * @return $this
      */
     public function addCharacteristics(CharacteristicSearchParameter $characteristic)
     {
@@ -87,6 +89,8 @@ class CommonProductSearch
 
     /**
      * @param string $name
+     *
+     * @return $this
      */
     public function setName($name)
     {
@@ -105,6 +109,8 @@ class CommonProductSearch
 
     /**
      * @param mixed $priceGTE
+     *
+     * @return $this
      */
     public function setPriceGTE($priceGTE)
     {
@@ -123,6 +129,8 @@ class CommonProductSearch
 
     /**
      * @param float $priceLTE
+     *
+     * @return $this
      */
     public function setPriceLTE($priceLTE)
     {

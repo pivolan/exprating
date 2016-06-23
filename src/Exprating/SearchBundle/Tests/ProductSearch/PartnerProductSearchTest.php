@@ -8,10 +8,11 @@ namespace Exprating\SearchBundle\Tests\ProductSearch;
 
 
 use Exprating\SearchBundle\Engine\EngineInterface;
-use Exprating\SearchBundle\ProductSearch\PartnerProductSearch;
+use Exprating\SearchBundle\Engine\SqlEngine;
+use Exprating\SearchBundle\ProductSearch\ProductSearch;
 use Exprating\SearchBundle\Dto\SearchParams;
 
-class PartnerProductSearchTest extends \PHPUnit_Framework_TestCase
+class ProductSearchTest extends \PHPUnit_Framework_TestCase
 {
     public function testAll()
     {
@@ -19,7 +20,7 @@ class PartnerProductSearchTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $engine->method('search')
             ->willReturn([]);
-        $productSearch = new PartnerProductSearch($engine);
+        $productSearch = new ProductSearch($engine);
         $this->assertEquals([], $productSearch->find(new SearchParams()));
     }
 }

@@ -52,6 +52,10 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             ->setSearchweightsummer('wer')
             ->setSearchweightwinter('sdf')
             ->setParserlinkingenabled(true)
+            ->setShowman(true)
+            ->setShowwoman(true)
+            ->setShowchild(true)
+            ->setShowall(true)
             ->setParent(new SiteProductRubrics())
             ->addChild($child)
             ->removeChild($child);
@@ -68,5 +72,9 @@ class EntityTest extends \PHPUnit_Framework_TestCase
         $siteProductRubrics->getSearchweightwinter();
         $siteProductRubrics->getParserlinkingenabled();
         $siteProductRubrics->getParent();
+        $siteProductRubrics->getShowman();
+        $siteProductRubrics->getShowwoman();
+        $siteProductRubrics->getShowchild();
+        $siteProductRubrics->getShowall();
     }
 }
