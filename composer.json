@@ -27,10 +27,6 @@
         },
         {
             "type": "git",
-            "url": "git@github.com:pivolan/select2entity-bundle.git"
-        },
-        {
-            "type": "git",
             "url": "git@github.com:pivolan/assetic.git"
         }
     ],
@@ -64,7 +60,7 @@
         "oneup/uploader-bundle": "~1.5",
         "knplabs/knp-markdown-bundle": "~1.3",
         "iakumai/sphinxsearch-bundle": "0.2.6",
-        "tetranz/select2entity-bundle": "^2.3",
+        "tetranz/select2entity-bundle": "^2.7",
         "glifery/entity-hidden-type-bundle": "^1.3",
         "emanueleminotto/twig-cache-bundle": "^1.0",
         "paquettg/php-html-parser": "^1.6"
