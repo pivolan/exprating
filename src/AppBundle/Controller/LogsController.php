@@ -14,11 +14,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LogsController extends BaseController
 {
-    const KEY_EXPERT_OPINIONS = 'expertOpinions';
-    const LIMIT_OPINIONS_PER_PAGE = 5;
-    const KEY_EXPERT = 'expert';
-    const KEY_INVITE = 'invite';
-    const FLASH_INVITE_SENDED = 'flash.invite_sended';
 
     /**
      * @Route("/logs/product/{slug}", name="logs_product")
