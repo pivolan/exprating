@@ -40,7 +40,7 @@ class CharacteristicCreateEvent extends Event
      * @param Characteristic $characteristic
      * @param User           $user
      * @param Category       $category
-     * @param Product        $product
+     * @param Product|null   $product
      */
     public function __construct(Characteristic $characteristic, User $user, Category $category, Product $product = null)
     {
