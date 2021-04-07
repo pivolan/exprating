@@ -22,8 +22,8 @@ services:
     volumes:
       - .:/var/www/html
 
-  mariadb:
-    image: mariadb:10.3
+  mysql:
+    image: library/mysql:5.7.33
     environment:
       - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_DATABASE=exprating
