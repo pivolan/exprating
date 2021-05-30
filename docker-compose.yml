@@ -22,8 +22,18 @@ services:
     volumes:
       - .:/var/www/html
 
-  mysql:
-    image: library/mysql:5.7.33
+  php-init:
+    tty: true # Enables debugging capabilities when attached to this container.
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    entrypoint: []
+    command:
+    volumes:
+      - .:/var/www/html
+
+  mariadb:
+    image: mariadb:10.3
     environment:
       - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_DATABASE=exprating
