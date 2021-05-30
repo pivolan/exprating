@@ -5,7 +5,7 @@ RUN apk --no-cache add \
         nano \
         git \
         bash \
-        php5-apcu
+        php5-apcu \
         bash
 RUN docker-php-ext-install pdo pdo_mysql
 RUN echo 'date.timezone="UTC"' >> /usr/local/etc/php/php.ini
