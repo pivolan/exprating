@@ -23,6 +23,7 @@ services:
     volumes:
       - .:/var/www/html
       - ./web:/var/www/html/web/:delegated
+    tmpfs:
       - /var/www/html/var
 
   mariadb:

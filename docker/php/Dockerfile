@@ -1,6 +1,6 @@
-FROM php:latest
+FROM php:5.6-fpm
 
-
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN install-php-extensions gd xdebug pdo_mysql imagick apcu
