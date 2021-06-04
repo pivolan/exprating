@@ -19,8 +19,11 @@ services:
     build:
       context: ./docker/php
       dockerfile: Dockerfile
+    working_dir: /var/www/html
     volumes:
       - .:/var/www/html
+      - ./web:/var/www/html/web/:delegated
+      - /var/www/html/var
 
   mariadb:
     image: mariadb:10.3
