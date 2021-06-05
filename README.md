@@ -17,6 +17,12 @@ bin/console doctrine:fixtures:load
 
 ***Тестирование***:
 
+bin/console doctrine:database:create --env=test
+
+bin/console doctrine:migrations:migrate --env=test
+
+bin/console doctrine:fixtures:load --env=test
+
 vendor/bin/phpunit
 запускать находясь в корне проекта. Автоматически подхватится конфиг phpunit.xml.dist
 
