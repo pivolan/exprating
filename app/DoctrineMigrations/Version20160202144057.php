@@ -19,7 +19,6 @@ class Version20160202144057 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE comment ADD product_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526C4584665A FOREIGN KEY (product_id) REFERENCES product (id)');
         $this->addSql('CREATE INDEX IDX_9474526C4584665A ON comment (product_id)');
     }
 
@@ -31,7 +30,6 @@ class Version20160202144057 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE comment DROP FOREIGN KEY FK_9474526C4584665A');
         $this->addSql('DROP INDEX IDX_9474526C4584665A ON comment');
         $this->addSql('ALTER TABLE comment DROP product_id');
     }

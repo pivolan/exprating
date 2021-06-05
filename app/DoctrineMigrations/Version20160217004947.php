@@ -19,7 +19,6 @@ class Version20160217004947 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE fos_user ADD curator_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE fos_user ADD CONSTRAINT FK_957A6479733D5B5D FOREIGN KEY (curator_id) REFERENCES fos_user (id)');
         $this->addSql('CREATE INDEX IDX_957A6479733D5B5D ON fos_user (curator_id)');
     }
 
@@ -31,7 +30,6 @@ class Version20160217004947 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE fos_user DROP FOREIGN KEY FK_957A6479733D5B5D');
         $this->addSql('DROP INDEX IDX_957A6479733D5B5D ON fos_user');
         $this->addSql('ALTER TABLE fos_user DROP curator_id');
     }

@@ -19,7 +19,6 @@ class Version20160204225821 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE rating_label (id INT AUTO_INCREMENT NOT NULL, category_id VARCHAR(255) DEFAULT NULL, rating1 VARCHAR(255) NOT NULL, rating2 VARCHAR(255) NOT NULL, rating3 VARCHAR(255) NOT NULL, rating4 VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_93B15FD412469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE rating_label ADD CONSTRAINT FK_93B15FD412469DE2 FOREIGN KEY (category_id) REFERENCES category (slug)');
         $this->addSql('ALTER TABLE product ADD rating1 INT DEFAULT NULL, ADD rating2 INT DEFAULT NULL, ADD rating3 INT DEFAULT NULL, ADD rating4 INT DEFAULT NULL, CHANGE rating rating INT DEFAULT NULL');
     }
 
