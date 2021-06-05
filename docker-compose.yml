@@ -21,10 +21,10 @@ services:
       dockerfile: Dockerfile
     working_dir: /var/www/html
     volumes:
-      - .:/var/www/html
+      - .:/var/www/html:cached
       - ./web:/var/www/html/web/:delegated
-    tmpfs:
       - /var/www/html/var
+    command: sh -c "chown -R www-data ./var && php-fpm"
 
   mariadb:
     image: mariadb:10.3
