@@ -29,9 +29,6 @@
     </php>
 
     <testsuites>
-        <testsuite name="MigrationsTestSuite">
-            <directory>tests</directory>
-        </testsuite>
         <testsuite name="AppTestSuite">
             <directory>src/*Bundle/Tests</directory>
             <directory>src/*/*Bundle/Tests</directory>

@@ -191,7 +191,7 @@ class Image
      */
     public function setIsMain($isMain)
     {
-        $this->isMain = $isMain;
+        $this->isMain = $isMain ?: false;
 
         return $this;
     }
