@@ -19,7 +19,7 @@ class OtzyvProParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParse($html, $htmlChild)
     {
-        $curl = $this->getMock(CurlInterface::class);
+        $curl = $this->createMock(CurlInterface::class);
         $curl->expects($this->at(0))->method('get')->willReturn($htmlChild);
         $parser = new OtzyvProParser($curl);
         $result = $parser->parse($html);

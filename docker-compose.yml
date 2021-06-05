@@ -24,10 +24,12 @@ services:
       - .:/var/www/html:cached
       - ./web:/var/www/html/web/:delegated
       - /var/www/html/var
-    command: sh -c "chown -R www-data ./var && php-fpm"
+    command: sh -c "chown -R www-data ./ ; php-fpm"
 
   mariadb:
     image: mariadb:10.3
+    ports:
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_DATABASE=exprating
@@ -36,6 +38,8 @@ services:
 
   mariadb_test:
     image: mariadb:10.3
+    ports:
+      - 33061:3306
     environment:
       - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_DATABASE=exprating_test
